@@ -40,6 +40,9 @@
     <Reference Include="Microsoft.Xna.Framework.Content.Pipeline.VideoImporters, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=MSIL">
       <Private>False</Private>
     </Reference>
+    <Reference Include="ProjectMercury.ContentPipeline">
+      <HintPath>..\..\..\..\..\..\Desktop\Mercury Particle Engine 3.1 for XNA 4.0 (Binaries)\Mercury Particle Engine 3.1 for XNA 4.0 (Binaries)\References\X86\ProjectMercury.ContentPipeline.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Fonts\Arial.spritefont">
@@ -47,6 +50,11 @@
       <Importer>FontDescriptionImporter</Importer>
       <Processor>FontDescriptionProcessor</Processor>
     </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="ParticleEffects\" />
+    <Folder Include="Sounds\" />
+    <Folder Include="Sprites\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\$(XnaFrameworkVersion)\Microsoft.Xna.GameStudio.ContentPipeline.targets" />
   <!--  To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -8,7 +8,15 @@ using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
+
+//Klassen unserer eigenen Engine
 using Silhouette.Engine;
+
+//Partikel-Engine Klassen
+using ProjectMercury;
+using ProjectMercury.Emitters;
+using ProjectMercury.Modifiers;
+using ProjectMercury.Renderers;
 
 namespace Silhouette
 {
