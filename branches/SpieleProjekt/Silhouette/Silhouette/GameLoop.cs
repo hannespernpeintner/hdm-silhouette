@@ -13,6 +13,7 @@ using Microsoft.Xna.Framework.Media;
 using Silhouette.Engine;
 
 //Sascha: Partikel-Engine Klassen
+using Silhouette.PartikelEngine;
 using ProjectMercury;
 using ProjectMercury.Emitters;
 using ProjectMercury.Modifiers;
@@ -28,10 +29,14 @@ namespace Silhouette
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
+        ParticleManager particleManager;
+
         public GameLoop()
         {
             graphics = new GraphicsDeviceManager(this);
-            Content.RootDirectory = "Content";        
+            Content.RootDirectory = "Content";
+
+            particleManager = new ParticleManager();
         }
 
         /// <summary>
@@ -43,6 +48,7 @@ namespace Silhouette
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
+            particleManager.initialize(graphics);
             base.Initialize();
         }
 
@@ -57,6 +63,7 @@ namespace Silhouette
 
             // TODO: use this.Content to load your game content here
             FontManager.loadFonts(this);    //Sascha: Lädt alle Fonts, die im FontManager deklariert wurden
+            particleManager.loadParticles(this);
         }
 
         /// <summary>
@@ -80,7 +87,7 @@ namespace Silhouette
                 this.Exit();
 
             // TODO: Add your update logic here
-
+            particleManager.updateParticles(gameTime);
             base.Update(gameTime);
         }
 
@@ -93,7 +100,7 @@ namespace Silhouette
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             // TODO: Add your drawing code here
-
+            particleManager.drawParticles();
             base.Draw(gameTime);
         }
     }

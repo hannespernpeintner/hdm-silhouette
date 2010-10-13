@@ -113,6 +113,8 @@
   <ItemGroup>
     <Compile Include="Engine\Animator.cs" />
     <Compile Include="Engine\FontManager.cs" />
+    <Compile Include="PartikelEngine\ParticleEffectWrapper.cs" />
+    <Compile Include="PartikelEngine\ParticleManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="GameLoop.cs" />
