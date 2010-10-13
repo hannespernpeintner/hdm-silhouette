@@ -41,7 +41,7 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="ProjectMercury.ContentPipeline">
-      <HintPath>..\..\..\..\..\..\Desktop\Mercury Particle Engine 3.1 for XNA 4.0 (Binaries)\Mercury Particle Engine 3.1 for XNA 4.0 (Binaries)\References\X86\ProjectMercury.ContentPipeline.dll</HintPath>
+      <HintPath>..\Silhouette\PartikelEngine\ProjectMercury.ContentPipeline.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -49,6 +49,7 @@
       <Name>Arial</Name>
       <Importer>FontDescriptionImporter</Importer>
       <Processor>FontDescriptionProcessor</Processor>
+      <SubType>Designer</SubType>
     </Compile>
   </ItemGroup>
   <ItemGroup>
