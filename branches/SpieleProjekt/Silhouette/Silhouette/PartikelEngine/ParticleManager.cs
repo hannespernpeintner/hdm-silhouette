@@ -31,7 +31,7 @@ namespace Silhouette.PartikelEngine
 
         public void loadParticles(GameLoop game)
         { 
-            particleList.Add(new ParticleEffectWrapper(new ParticleEffect(),new Vector2(500,200))); //Sascha: Nur provisorisch, wird später durch XML-Abfrage ersetzt
+            particleList.Add(new ParticleEffectWrapper(new ParticleEffect(),new Vector2(500,100))); //Sascha: Nur provisorisch, wird später durch XML-Abfrage ersetzt
             
             foreach(ParticleEffectWrapper p in particleList)
             {

@@ -31,7 +31,7 @@
       <ParticleTextureAssetName>ParticleEffects/ParticleTextures/Water001</ParticleTextureAssetName>
       <Modifiers>
         <Item Type="Modifiers:LinearGravityModifier">
-          <Gravity>0 100</Gravity>
+          <Gravity>0 1500</Gravity>
         </Item>
         <Item Type="Modifiers:TrajectoryRotationModifier">
           <RotationOffset>0</RotationOffset>
@@ -89,7 +89,7 @@
       <ParticleTextureAssetName>ParticleEffects/ParticleTextures/Spray001</ParticleTextureAssetName>
       <Modifiers>
         <Item Type="Modifiers:LinearGravityModifier">
-          <Gravity>0 100</Gravity>
+          <Gravity>0 1500</Gravity>
         </Item>
         <Item Type="Modifiers:TrajectoryRotationModifier">
           <RotationOffset>0</RotationOffset>
