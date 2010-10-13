@@ -19,6 +19,7 @@ namespace Silhouette.Engine
 {
     static class FontManager
     { 
+        //Sascha: Diese Klasse dient dazu, den Zugriff auf Fonts global zu kapseln um Debugging zu vereinfachen
         public static SpriteFont Arial;
 
         public static void loadFonts(GameLoop Game)

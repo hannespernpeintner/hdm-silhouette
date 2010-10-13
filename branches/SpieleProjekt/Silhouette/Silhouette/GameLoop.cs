@@ -9,10 +9,10 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 
-//Klassen unserer eigenen Engine
+//Sascha: Klassen unserer eigenen Engine
 using Silhouette.Engine;
 
-//Partikel-Engine Klassen
+//Sascha: Partikel-Engine Klassen
 using ProjectMercury;
 using ProjectMercury.Emitters;
 using ProjectMercury.Modifiers;
@@ -56,7 +56,7 @@ namespace Silhouette
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             // TODO: use this.Content to load your game content here
-            FontManager.loadFonts(this);
+            FontManager.loadFonts(this);    //Sascha: Lädt alle Fonts, die im FontManager deklariert wurden
         }
 
         /// <summary>
