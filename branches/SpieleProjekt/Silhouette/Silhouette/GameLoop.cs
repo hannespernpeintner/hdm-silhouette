@@ -21,6 +21,9 @@ using ProjectMercury.Renderers;
 
 //Sascha: Physik-Engine Klassen
 using FarseerPhysics;
+using FarseerPhysics.Dynamics;
+using FarseerPhysics.Factories;
+using FarseerPhysics.Collision;
 
 namespace Silhouette
 {
