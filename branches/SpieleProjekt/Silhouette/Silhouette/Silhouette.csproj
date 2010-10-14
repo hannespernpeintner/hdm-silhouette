@@ -111,7 +111,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Engine\Animator.cs" />
+    <Compile Include="Engine\AnimatedSprite.cs" />
     <Compile Include="Engine\FontManager.cs" />
     <Compile Include="PartikelEngine\ParticleEffectWrapper.cs" />
     <Compile Include="PartikelEngine\ParticleManager.cs" />
