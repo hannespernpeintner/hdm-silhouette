@@ -77,7 +77,7 @@ namespace Silhouette
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             // TODO: use this.Content to load your game content here
-            FontManager.loadFonts(this);    //Sascha: L臈t alle Fonts, die im FontManager deklariert wurden
+            FontManager.loadFonts(this);    //Sascha: Lädt alle Fonts, die im FontManager deklariert wurden
             particleManager.loadParticles(this);
         }
 
