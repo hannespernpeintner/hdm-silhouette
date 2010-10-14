@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Xna.Framework;
@@ -37,6 +37,9 @@ namespace Silhouette
 
         ParticleManager particleManager;
 
+        World physicSimulation;
+        Vector2 gravitation;
+
         public GameLoop()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -53,8 +56,14 @@ namespace Silhouette
         /// </summary>
         protected override void Initialize()
         {
-            // TODO: Add your initialization logic here
+            //Sascha: Initialisierung der Partikelenginehelferklasse ParticleManager
             particleManager.initialize(graphics);
+
+            //Sascha: Initialisierung der Physikengine mit Übergabe der Gravitationsstärke
+            gravitation = new Vector2(0, -20);
+            physicSimulation = new World(gravitation);
+
+
             base.Initialize();
         }
 
@@ -68,7 +77,7 @@ namespace Silhouette
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             // TODO: use this.Content to load your game content here
-            FontManager.loadFonts(this);    //Sascha: L�dt alle Fonts, die im FontManager deklariert wurden
+            FontManager.loadFonts(this);    //Sascha: L臈t alle Fonts, die im FontManager deklariert wurden
             particleManager.loadParticles(this);
         }
 
