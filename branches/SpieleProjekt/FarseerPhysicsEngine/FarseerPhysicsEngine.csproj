@@ -111,7 +111,6 @@
     <Compile Include="Common\LineTools.cs" />
     <Compile Include="Common\Math.cs" />
     <Compile Include="Common\MathHelper.cs" />
-    <Compile Include="Common\Matrix.cs" />
     <Compile Include="Common\Path.cs" />
     <Compile Include="Common\PathManager.cs" />
     <Compile Include="Common\PolygonManipulation\BooleanTools.cs" />
@@ -121,8 +120,6 @@
     <Compile Include="Common\PolygonTools.cs" />
     <Compile Include="Common\Settings.cs" />
     <Compile Include="Common\TextureConverter.cs" />
-    <Compile Include="Common\Vector2.cs" />
-    <Compile Include="Common\Vector3.cs" />
     <Compile Include="Common\Vertices.cs" />
     <Compile Include="Controllers\Controller.cs" />
     <Compile Include="Controllers\GravityController.cs" />
