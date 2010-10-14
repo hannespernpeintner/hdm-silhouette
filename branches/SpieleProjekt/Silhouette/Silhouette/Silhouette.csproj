@@ -126,6 +126,10 @@
     <Content Include="PartikelEngine\ProjectMercury.dll" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\FarseerPhysicsEngine\FarseerPhysicsEngine.csproj">
+      <Project>{9C431338-63F2-49BA-9A3B-6BEBEC330FFA}</Project>
+      <Name>FarseerPhysicsEngine</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SilhouetteContent\SilhouetteContent.contentproj">
       <Name>SilhouetteContent %28Content%29</Name>
       <XnaReferenceType>Content</XnaReferenceType>
