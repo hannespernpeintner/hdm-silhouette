@@ -19,6 +19,9 @@ using ProjectMercury.Emitters;
 using ProjectMercury.Modifiers;
 using ProjectMercury.Renderers;
 
+//Sascha: Physik-Engine Klassen
+using FarseerPhysics;
+
 namespace Silhouette
 {
     /// <summary>
