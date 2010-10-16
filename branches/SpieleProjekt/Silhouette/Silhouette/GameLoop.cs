@@ -27,9 +27,6 @@ using FarseerPhysics.Collision;
 
 namespace Silhouette
 {
-    /// <summary>
-    /// This is the main type for your game
-    /// </summary>
     public class GameLoop : Microsoft.Xna.Framework.Game
     {
         GraphicsDeviceManager graphics;
@@ -39,6 +36,11 @@ namespace Silhouette
 
         World physicSimulation;
         Vector2 gravitation;
+        const float pixelsPerMeter = 100.0f;        //Umwandlungseinheit von Pixel in die physikalische Einheit der Physikengine
+
+        Texture2D plattformTexture, boxTexture;     //Physiktest
+        Fixture plattformFixture, boxFixture;       //Physiktest
+        Vector2 plattformPosition, boxPosition;     //Physiktest
 
         public GameLoop()
         {
@@ -48,74 +50,77 @@ namespace Silhouette
             particleManager = new ParticleManager();
         }
 
-        /// <summary>
-        /// Allows the game to perform any initialization it needs to before starting to run.
-        /// This is where it can query for any required services and load any non-graphic
-        /// related content.  Calling base.Initialize will enumerate through any components
-        /// and initialize them as well.
-        /// </summary>
         protected override void Initialize()
         {
+            //Voreinstellungen gemäß der Spezifikationen
+            graphics.PreferredBackBufferWidth = 1280;
+            graphics.PreferredBackBufferHeight = 768;
+            graphics.ApplyChanges();
+
             //Initialisierung der Partikelenginehelferklasse ParticleManager
             particleManager.initialize(graphics, this);
 
             //Initialisierung der Physikengine mit Übergabe der Gravitationsstärke
-            gravitation = new Vector2(0, -20);
+            gravitation = new Vector2(0.0f, 9.0f);
             physicSimulation = new World(gravitation);
 
 
             base.Initialize();
         }
 
-        /// <summary>
-        /// LoadContent will be called once per game and is the place to load
-        /// all of your content.
-        /// </summary>
         protected override void LoadContent()
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            // TODO: use this.Content to load your game content here
-            FontManager.loadFonts(this);    //Sascha: Lädt alle Fonts, die im FontManager deklariert wurden
-            particleManager.loadParticles(this);
+            FontManager.loadFonts(this);            //Lädt alle Fonts, die im FontManager deklariert wurden
+            particleManager.loadParticles(this);    //Lädt und initialisiert alle Partikel
+
+
+            //Physiktest
+            plattformTexture = Content.Load<Texture2D>("Sprites/Plattform");
+            plattformFixture = FixtureFactory.CreateRectangle(physicSimulation, plattformTexture.Width / pixelsPerMeter, plattformTexture.Height / pixelsPerMeter, 1);
+            plattformPosition.X = graphics.PreferredBackBufferWidth / 2;
+            plattformPosition.Y = 600;
+            plattformFixture.Body.Position = new Vector2(plattformPosition.X / pixelsPerMeter, plattformPosition.Y / pixelsPerMeter);
+            plattformFixture.Body.BodyType = BodyType.Static;
+
+            boxTexture = Content.Load<Texture2D>("Sprites/Box");
+            boxFixture = FixtureFactory.CreateRectangle(physicSimulation, boxTexture.Width / pixelsPerMeter, boxTexture.Height / pixelsPerMeter, 1);
+            boxPosition.X = graphics.PreferredBackBufferWidth / 2;
+            boxPosition.Y = 100;
+            boxFixture.Body.Position = new Vector2(boxPosition.X / pixelsPerMeter, boxPosition.Y / pixelsPerMeter);
+            boxFixture.Body.BodyType = BodyType.Dynamic;
         }
 
-        /// <summary>
-        /// UnloadContent will be called once per game and is the place to unload
-        /// all content.
-        /// </summary>
-        protected override void UnloadContent()
-        {
-            // TODO: Unload any non ContentManager content here
-        }
+        protected override void UnloadContent(){}
 
-        /// <summary>
-        /// Allows the game to run logic such as updating the world,
-        /// checking for collisions, gathering input, and playing audio.
-        /// </summary>
-        /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-            // Allows the game to exit
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
-                this.Exit();
+            KeyboardState kb = Keyboard.GetState();
 
-            // TODO: Add your update logic here
+            if (kb.IsKeyDown(Keys.A))
+            { 
+                boxFixture.Body.ApplyForce(new Vector2(0.0f, -10f));
+            }
+            boxPosition.X = boxFixture.Body.Position.X * pixelsPerMeter;
+            boxPosition.Y = boxFixture.Body.Position.Y * pixelsPerMeter;
+            //Aktualisiert alle Partikel, die im Partikelmanager angemeldet sind
             particleManager.updateParticles(gameTime);
+            //Aktualisiert die Physiksimulation
+            physicSimulation.Step(Math.Min((float)gameTime.ElapsedGameTime.TotalMilliseconds * 0.001f, (1f / 30f)));
             base.Update(gameTime);
         }
 
-        /// <summary>
-        /// This is called when the game should draw itself.
-        /// </summary>
-        /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.Black);
+            GraphicsDevice.Clear(Color.Black);  //Hintergrundfarbe Schwarz
 
-            // TODO: Add your drawing code here
-            particleManager.drawParticles();
+            spriteBatch.Begin();
+            spriteBatch.Draw(boxTexture, boxPosition, Color.White);
+            spriteBatch.Draw(plattformTexture, plattformPosition, Color.White);
+            spriteBatch.End();
+            particleManager.drawParticles();    //Zeichnet alle Partikeleffekte
             base.Draw(gameTime);
         }
     }

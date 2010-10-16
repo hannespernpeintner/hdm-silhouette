@@ -32,15 +32,15 @@ namespace Silhouette.PartikelEngine
 
         private ParticleEffect waterfall;
 
-        public void initialize(GraphicsDeviceManager g, GameLoop game)
+        public void initialize(GraphicsDeviceManager g, GameLoop Game)
         {
             particleRenderer = new SpriteBatchRenderer { GraphicsDeviceService = g }; //Sascha: Eigener Renderer für alle Partikel wegen Zusatzeffekten wie Shader
             particleList = new ArrayList();
 
-            waterfall = game.Content.Load<ParticleEffect>("ParticleEffects/Water");
+            waterfall = Game.Content.Load<ParticleEffect>("ParticleEffects/Water");
         }
 
-        public void loadParticles(GameLoop game)
+        public void loadParticles(GameLoop Game)
         { 
             //Sascha: Alle Partikeleffekte werden aus der XML-Datei des Levels geladen und initialisiert
             particleList.Add(new ParticleEffectWrapper(new ParticleEffect(),new Vector2(500,100)));
@@ -48,10 +48,10 @@ namespace Silhouette.PartikelEngine
             foreach(ParticleEffectWrapper p in particleList)
             {
                 p.getEffect = waterfall.DeepCopy(); //Sascha: Kopie des entsprechenden Effekts wird erzeugt und übergeben
-                p.getEffect.LoadContent(game.Content);
+                p.getEffect.LoadContent(Game.Content);
                 p.getEffect.Initialise();
             }
-            particleRenderer.LoadContent(game.Content);
+            particleRenderer.LoadContent(Game.Content);
         }
 
         public void updateParticles(GameTime gt)
