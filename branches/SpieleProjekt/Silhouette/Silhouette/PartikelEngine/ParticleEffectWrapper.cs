@@ -19,9 +19,16 @@ namespace Silhouette.PartikelEngine
 {
     class ParticleEffectWrapper
     {
+        /* Sascha:
+        Klasse hat den Zweck alle Zusatzinformationen über Partikeleffekte zu speichern, 
+        die für unseren Renderer bzw. unser Levelformat nötig sind
+        */
+
+        //Sascha: Zusatzinformationen
         private ParticleEffect particleEffect;
         private Vector2 particlePosition;
 
+        //Sascha: Zugriff auf Zusatzinformationen über Properties
         public ParticleEffect getEffect
         {
             get { return particleEffect; }

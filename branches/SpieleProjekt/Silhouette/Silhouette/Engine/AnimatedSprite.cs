@@ -12,7 +12,17 @@ using Microsoft.Xna.Framework.Media;
 
 public class AnimatedSprite
 {
-    public Texture2D Texture;       // Textur
+    //Sascha: Die Klasse ist dafür da, die Animationen so behandeln zu können, als wären sie einfache Sprites
+
+    /* Sascha:
+     Der technische Hintergrund ist, dass XNA auch bei 2D-Grafik mit 3D-Beschleunigung arbeitet. Das heißt es 
+     wird per DirectX ein Polygon auf den Bildschirm gezeichnet, auf den dann das Sprite als Textur gemappt wird. 
+     Hat man jetzt eine Animation aus einzelnen Bildern, muss bei jedem Bildwechsel neu gemappt werden, was extrem 
+     Performance frisst, wenn man viele Animationen auf dem Schirm hat. Meine Idee dazu war, dass man einfach wie jeder 
+     normale Spieleentwickler alle zusammen gehörenden Animationen in ein Sprite packt und dann über die Engine jeweils 
+     den richtigen Ausschnitt wählen lässt. So muss man nur einmal mappen pro Objekt, was enorm viel Ressourcen spart.
+    */
+    public Texture2D Texture;     // Textur
 
     private float totalElapsed;   // Abgelaufene Zeit
 
