@@ -57,7 +57,7 @@ namespace Silhouette
         protected override void Initialize()
         {
             //Sascha: Initialisierung der Partikelenginehelferklasse ParticleManager
-            particleManager.initialize(graphics);
+            particleManager.initialize(graphics, this);
 
             //Sascha: Initialisierung der Physikengine mit Übergabe der Gravitationsstärke
             gravitation = new Vector2(0, -20);

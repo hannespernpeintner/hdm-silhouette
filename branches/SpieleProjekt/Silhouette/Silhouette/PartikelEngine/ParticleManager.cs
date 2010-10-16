@@ -20,22 +20,34 @@ namespace Silhouette.PartikelEngine
 {
     class ParticleManager
     {
+        //Sascha: Klasse hat den Zweck alle Partikeleffekte im Level zentral zu verwalten
+
+        /* Sascha:
+        Wegen Problemen mit der ContentPipeline müssen wir alle Partikeleffekte zentral hier im Manager speichern und dann
+        beim Auslesen aus der XML-Datei eine Kopie des entsprechenden Effekts übergeben. Ansonsten zeigen alle Effekte mit
+        dem gleichen Content auf das selbe Objekt und es kommt zu massiven Darstellungsfehlern.
+        */
         private Renderer particleRenderer;
         private ArrayList particleList;
 
-        public void initialize(GraphicsDeviceManager g)
+        private ParticleEffect waterfall;
+
+        public void initialize(GraphicsDeviceManager g, GameLoop game)
         {
-            particleRenderer = new SpriteBatchRenderer { GraphicsDeviceService = g };
+            particleRenderer = new SpriteBatchRenderer { GraphicsDeviceService = g }; //Sascha: Eigener Renderer für alle Partikel wegen Zusatzeffekten wie Shader
             particleList = new ArrayList();
+
+            waterfall = game.Content.Load<ParticleEffect>("ParticleEffects/Water");
         }
 
         public void loadParticles(GameLoop game)
         { 
-            particleList.Add(new ParticleEffectWrapper(new ParticleEffect(),new Vector2(500,100))); //Sascha: Nur provisorisch, wird später durch XML-Abfrage ersetzt
+            //Sascha: Alle Partikeleffekte werden aus der XML-Datei des Levels geladen und initialisiert
+            particleList.Add(new ParticleEffectWrapper(new ParticleEffect(),new Vector2(500,100)));
 
             foreach(ParticleEffectWrapper p in particleList)
             {
-                p.getEffect = game.Content.Load<ParticleEffect>("ParticleEffects/Water"); //Sascha: Nur provisorisch, wird später durch XML-Abfrage ersetzt
+                p.getEffect = waterfall.DeepCopy(); //Sascha: Kopie des entsprechenden Effekts wird erzeugt und übergeben
                 p.getEffect.LoadContent(game.Content);
                 p.getEffect.Initialise();
             }
@@ -46,8 +58,8 @@ namespace Silhouette.PartikelEngine
         {
             foreach (ParticleEffectWrapper p in particleList)
             {
-                p.getEffect.Trigger(p.getPosition);
-                p.getEffect.Update((float)gt.ElapsedGameTime.TotalSeconds);
+                p.getEffect.Trigger(p.getPosition); //Sascha: Auslöser für den Partikeleffekt wird auf der Map gesetzt
+                p.getEffect.Update((float)gt.ElapsedGameTime.TotalSeconds); //Sascha: Die Partikel des Effekts werden abhängig von der Spielzeit upgedated
             }
         }
 
@@ -55,7 +67,7 @@ namespace Silhouette.PartikelEngine
         {
             foreach (ParticleEffectWrapper p in particleList)
             {
-                particleRenderer.RenderEffect(p.getEffect);
+                particleRenderer.RenderEffect(p.getEffect); //Sascha: Der Renderer rendert alle Partikeleffekte unabhängig vom SpriteBatch
             }
         }
     }
