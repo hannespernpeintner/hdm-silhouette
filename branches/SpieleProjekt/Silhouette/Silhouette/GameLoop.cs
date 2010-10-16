@@ -9,17 +9,17 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 
-//Sascha: Klassen unserer eigenen Engine
+//Klassen unserer eigenen Engine
 using Silhouette.Engine;
 
-//Sascha: Partikel-Engine Klassen
+//Partikel-Engine Klassen
 using Silhouette.PartikelEngine;
 using ProjectMercury;
 using ProjectMercury.Emitters;
 using ProjectMercury.Modifiers;
 using ProjectMercury.Renderers;
 
-//Sascha: Physik-Engine Klassen
+//Physik-Engine Klassen
 using FarseerPhysics;
 using FarseerPhysics.Dynamics;
 using FarseerPhysics.Factories;
@@ -56,10 +56,10 @@ namespace Silhouette
         /// </summary>
         protected override void Initialize()
         {
-            //Sascha: Initialisierung der Partikelenginehelferklasse ParticleManager
+            //Initialisierung der Partikelenginehelferklasse ParticleManager
             particleManager.initialize(graphics, this);
 
-            //Sascha: Initialisierung der Physikengine mit Übergabe der Gravitationsstärke
+            //Initialisierung der Physikengine mit Übergabe der Gravitationsstärke
             gravitation = new Vector2(0, -20);
             physicSimulation = new World(gravitation);
 
