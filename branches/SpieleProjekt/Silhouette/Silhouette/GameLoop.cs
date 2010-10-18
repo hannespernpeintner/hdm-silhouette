@@ -64,7 +64,6 @@ namespace Silhouette
             gravitation = new Vector2(0.0f, 9.0f);
             physicSimulation = new World(gravitation);
 
-
             base.Initialize();
         }
 
@@ -82,7 +81,7 @@ namespace Silhouette
             plattformFixture = FixtureFactory.CreateRectangle(physicSimulation, plattformTexture.Width / pixelsPerMeter, plattformTexture.Height / pixelsPerMeter, 1);
             plattformPosition.X = graphics.PreferredBackBufferWidth / 2;
             plattformPosition.Y = 600;
-            plattformFixture.Body.Position = new Vector2(plattformPosition.X / pixelsPerMeter, plattformPosition.Y / pixelsPerMeter);
+            plattformFixture.Body.Position = new Vector2((plattformPosition.X + (plattformTexture.Width / 2)) / pixelsPerMeter, (plattformPosition.Y + (plattformTexture.Height / 2)) / pixelsPerMeter);
             plattformFixture.Body.BodyType = BodyType.Static;
 
             boxTexture = Content.Load<Texture2D>("Sprites/Box");
@@ -103,6 +102,14 @@ namespace Silhouette
             { 
                 boxFixture.Body.ApplyForce(new Vector2(0.0f, -10f));
             }
+            if (kb.IsKeyDown(Keys.D))
+            {
+                boxFixture.Body.ApplyForce(new Vector2(1.0f, 0.0f));
+            }
+            if (kb.IsKeyDown(Keys.S))
+            {
+                boxFixture.Body.ApplyForce(new Vector2(-1.0f, 0.0f));
+            }
             boxPosition.X = boxFixture.Body.Position.X * pixelsPerMeter;
             boxPosition.Y = boxFixture.Body.Position.Y * pixelsPerMeter;
             //Aktualisiert alle Partikel, die im Partikelmanager angemeldet sind
@@ -117,7 +124,7 @@ namespace Silhouette
             GraphicsDevice.Clear(Color.Black);  //Hintergrundfarbe Schwarz
 
             spriteBatch.Begin();
-            spriteBatch.Draw(boxTexture, boxPosition, Color.White);
+            spriteBatch.Draw(boxTexture, new Vector2(boxPosition.X - (boxTexture.Width/2), boxPosition.Y - (boxTexture.Height/2)), Color.White);
             spriteBatch.Draw(plattformTexture, plattformPosition, Color.White);
             spriteBatch.End();
             particleManager.drawParticles();    //Zeichnet alle Partikeleffekte
