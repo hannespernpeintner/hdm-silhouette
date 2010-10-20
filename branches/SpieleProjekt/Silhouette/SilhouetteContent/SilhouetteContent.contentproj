@@ -41,7 +41,7 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="ProjectMercury.ContentPipeline">
-      <HintPath>..\Silhouette\PartikelEngine\ProjectMercury.ContentPipeline.dll</HintPath>
+      <HintPath>..\Silhouette\Engine\PartikelEngine\ProjectMercury.ContentPipeline.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -54,6 +54,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Sounds\" />
+    <Folder Include="Sprites\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ParticleEffects\Water.xml">
@@ -76,18 +77,6 @@
     </Compile>
     <Compile Include="ParticleEffects\ParticleTextures\Water002.png">
       <Name>Water002</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Sprites\Box.png">
-      <Name>Box</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="Sprites\Plattform.png">
-      <Name>Plattform</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
