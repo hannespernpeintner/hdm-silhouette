@@ -1,0 +1,463 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<modelStoreModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm4="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm5="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/LogicalClassDesigner"
+  dslVersion="1.0.0.0"
+  Id="f18096da-eda5-4c9b-8b85-3325b4f12cbe"
+  name="ModelingProject2" xmlns="http://schemas.microsoft.com/dsltools/ModelStore">
+  <profileInstances>
+    <packageHasProfileInstances
+      Id="0caec977-1f8c-4ba3-a7db-8cc9ad9cc73b">
+      <profileInstance
+        Id="e34d544e-0fea-4ed6-ac5e-1b74119ac791"
+        name="StandardProfileL2" />
+    </packageHasProfileInstances>
+    <packageHasProfileInstances
+      Id="29349502-908c-4fda-9054-c48619c59ed0">
+      <profileInstance
+        Id="532ea607-fb19-44b8-8502-3351b05452be"
+        name="StandardProfileL3" />
+    </packageHasProfileInstances>
+  </profileInstances>
+  <packagedElements>
+    <packageHasNamedElement>
+      <class
+        Id="5a077de8-955a-4a6d-b836-357844f94b8d"
+        name="GameLoop"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <targetEnds>
+          <association
+            Id="c76dd940-cbb8-42e0-92b9-4e74f95ebe81"
+            isDerived="false"
+            sourceEndRoleName="GameLoop"
+            targetEndRoleName="GameSettings"
+            isLeaf="false"
+            isAbstract="false">
+            <classMoniker
+              Id="e7f044e7-7444-42cc-ada1-4de53731be50"
+              LastKnownName="GameSettings"
+              LastKnownLocation="SilhouetteModelDefinition.uml" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="254bb19f-7345-4408-815d-5028758e43c5"
+                  name="GameLoop"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="Composite"
+                  isComposite="false"
+                  isNavigableOwned="false" />
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="388d4e01-f58d-47bd-a08a-333746a0ac04"
+                  name="GameSettings"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="true" />
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
+          <association
+            Id="d1653475-62d0-4857-b3bc-e903ea9b0717"
+            isDerived="false"
+            sourceEndRoleName="GameLoop"
+            targetEndRoleName="Level"
+            isLeaf="false"
+            isAbstract="false">
+            <classMoniker
+              Id="3adabcb1-1a97-42e0-8bba-5c285b7adf2c"
+              LastKnownName="Level"
+              LastKnownLocation="Package_2102.uml" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="f97449ec-6e09-4c76-bd91-b819d70aa47a"
+                  name="GameLoop"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="Composite"
+                  isComposite="false"
+                  isNavigableOwned="false" />
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="98407c75-7b63-4ab2-a626-f159f438243c"
+                  name="Level"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="true">
+                  <lowerValueInternal>
+                    <literalString
+                      Id="cf276efe-b232-4c2d-b056-620fc61e3ac8"
+                      name="Lower"
+                      value="*" />
+                  </lowerValueInternal>
+                  <upperValueInternal>
+                    <literalString
+                      Id="26a47b2d-de27-4266-b3ed-cd41d95a089a"
+                      name="Upper"
+                      value="*" />
+                  </upperValueInternal>
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
+          <association
+            Id="6a07da48-66f1-419f-b5ce-d27d0b1f204f"
+            isDerived="false"
+            sourceEndRoleName="GameLoop"
+            targetEndRoleName="FontManager"
+            isLeaf="false"
+            isAbstract="false">
+            <classMoniker
+              Id="3eb511b2-0473-4b99-a6b1-fb1985a60a75"
+              LastKnownName="FontManager"
+              LastKnownLocation="Package_2107.uml" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="07f183d9-8e45-410f-b577-29f02dffa770"
+                  name="GameLoop"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false"
+                  isNavigableOwned="false" />
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="a802a8bd-b665-412f-929b-f3543942d9e9"
+                  name="FontManager"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false" />
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
+        </targetEnds>
+        <ownedAttributesInternal>
+          <property
+            Id="104611e0-d84f-452a-b93a-e8375eee285d"
+            name="GraphicsDeviceManager graphics"
+            visibility="Package"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isUnique="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false" />
+          <property
+            Id="50ebe1bc-3a30-43f7-b2c7-50786255ac5a"
+            name="SpriteBatch spriteBatch"
+            visibility="Package"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isUnique="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false" />
+        </ownedAttributesInternal>
+        <ownedOperationsInternal>
+          <operation
+            Id="95e982da-8f9b-47c3-8322-2a81c4f4243c"
+            name="Draw"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="d1f6b4b3-da8f-441b-b975-d106935f9217"
+                  name="GameTime gameTime"
+                  direction="In"
+                  isUnique="false" />
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation
+            Id="240b9778-a72f-4eb4-ba54-da590af08fb0"
+            name="Initialize"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+          <operation
+            Id="42ee1741-250b-4585-8a0c-35c41c97f0d8"
+            name="LoadContent"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+          <operation
+            Id="82d971a3-6ce2-4fcc-955a-d48a083befa3"
+            name="Update"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="e5dfc973-1e0e-493c-b194-49c87f44e4a9"
+                  name="GameTime gameTime"
+                  direction="In"
+                  isUnique="false" />
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+        </ownedOperationsInternal>
+      </class>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="e7f044e7-7444-42cc-ada1-4de53731be50"
+        name="GameSettings"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="909d5260-009a-4552-8a8c-0057cffa4de5"
+        name="LevelObject"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <Interface
+        Id="c594d8c3-905d-43bc-a703-1b1549cf2a29"
+        name="ILevelObject"
+        isAbstract="false"
+        isLeaf="false">
+        <ownedOperations>
+          <operation
+            Id="4dd16169-84aa-4f03-a377-5b854e6d3f43"
+            name="Initialise"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="true"
+            concurrency="Sequential"
+            isQuery="false" />
+          <operation
+            Id="1974b3a8-7605-4f7c-89a3-aa9feb438a41"
+            name="LoadContent"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="true"
+            concurrency="Sequential"
+            isQuery="false">
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="212337f1-033e-46c5-b4e2-dd3db7daf282"
+                  name="GameLoop Game"
+                  direction="In"
+                  isUnique="false" />
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation
+            Id="bbb25df1-94b3-43b2-baf5-663f27918e31"
+            name="Update"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="true"
+            concurrency="Sequential"
+            isQuery="false">
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="ad051a67-f37e-453a-a42b-20945be8a511"
+                  name="GameTime gameTime"
+                  direction="In"
+                  isUnique="false" />
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+        </ownedOperations>
+      </Interface>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <Interface
+        Id="0cba1b68-e5e9-4a42-846c-1ed471341c47"
+        name="IDrawableLevelObject"
+        isAbstract="false"
+        isLeaf="false">
+        <ownedOperations>
+          <operation
+            Id="0169908b-dc3c-4915-85e1-26e26c1b5783"
+            name="LoadContent"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="true"
+            concurrency="Sequential"
+            isQuery="false">
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="4e30991c-4078-4e11-a087-60bd6e971d37"
+                  name="GameLoop Game"
+                  direction="In"
+                  isUnique="false" />
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation
+            Id="73e33ea1-4b01-464e-b843-83c69b1459c4"
+            name="Initialise"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="true"
+            concurrency="Sequential"
+            isQuery="false" />
+          <operation
+            Id="78c610cc-adb0-438a-8dae-ec5fc0a8c36e"
+            name="Update"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="true"
+            concurrency="Sequential"
+            isQuery="false">
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="f6365629-d160-45c3-91ef-aaba392cd35e"
+                  name="GameTime gameTime"
+                  direction="In"
+                  isUnique="false" />
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation
+            Id="72e166b1-58d1-4757-b171-483e09335f99"
+            name="Draw"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="true"
+            concurrency="Sequential"
+            isQuery="false">
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="7d327c88-73a2-4cc2-8655-b42c44ce9516"
+                  name="SpriteBatch sb"
+                  direction="In"
+                  isUnique="false" />
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+        </ownedOperations>
+      </Interface>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="19fa6bcc-07b8-42d6-b6bd-e6619e7cea4a"
+        name="StaticCamera"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <generalsInternal>
+          <generalization
+            Id="527b1b60-7290-4d3a-b76d-cdc9c5ca4833"
+            isSubstitutable="false">
+            <classMoniker
+              Id="f0b21f13-a16e-487f-a8cb-af2744fb9ed4"
+              LastKnownName="Camera"
+              LastKnownLocation="Package_2100.uml" />
+          </generalization>
+        </generalsInternal>
+      </class>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="947ae1d6-b53f-43f4-99ce-2bdb6f940eda"
+        name="DynamicCamera"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <generalsInternal>
+          <generalization
+            Id="736673d4-2a09-4291-a7eb-19d66a9f2e81"
+            isSubstitutable="false">
+            <classMoniker
+              Id="f0b21f13-a16e-487f-a8cb-af2744fb9ed4"
+              LastKnownName="Camera"
+              LastKnownLocation="Package_2100.uml" />
+          </generalization>
+        </generalsInternal>
+      </class>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <packageMoniker
+        Id="3fd23a8b-0dea-4481-ae1e-b092f1826d78"
+        LastKnownName="GameMechs"
+        LastKnownLocation="Package_2100.uml" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <packageMoniker
+        Id="bedd4082-5a2e-491c-b51d-a38b33cddccd"
+        LastKnownName="Engine"
+        LastKnownLocation="Package_2102.uml" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="14e0818b-2ec8-4ea2-801f-a786cef437b5"
+        name="DisplayFPS"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false" />
+    </packageHasNamedElement>
+  </packagedElements>
+  <primitiveType
+    Id="220a3521-e091-4221-bae9-3ef9018e845c"
+    name="Integer"
+    isAbstract="false"
+    isLeaf="false" />
+  <primitiveType
+    Id="8943dc84-709e-4f62-b15a-a3273aa6f165"
+    name="Boolean"
+    isAbstract="false"
+    isLeaf="false" />
+  <primitiveType
+    Id="59259974-6d55-42c6-b7bd-763d77ac8ef9"
+    name="String"
+    isAbstract="false"
+    isLeaf="false" />
+  <primitiveType
+    Id="3ab42e7d-4969-445a-b209-471f5cb8209c"
+    name="UnlimitedNatural"
+    isAbstract="false"
+    isLeaf="false" />
+</modelStoreModel>
