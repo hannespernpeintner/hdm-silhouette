@@ -231,6 +231,14 @@
     <logicalClassDesignerModelHasTypes>
       <class Id="301519ed-4fa7-4563-8896-de33c7b26537" name="LevelObject" isAbstract="false" isLeaf="false" isActiveClass="false">
         <elementDefinition Id="0485cd5e-3e6c-4b8e-8fa9-3793cf19b49f" />
+        <ownedAttributesInternal>
+          <property Id="a9c87638-8094-440e-a8bb-4f5f8c777513" name="Fixture _fixture" visibility="Private" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+            <elementDefinition Id="b7979279-eb81-409f-bace-b95e312a184f" />
+          </property>
+          <property Id="4219c000-2c54-4e95-a269-7c63d3ef69fc" name="Vector2 _Position" visibility="Private" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+            <elementDefinition Id="2ab286cc-b5eb-4368-95ef-09d632ca8414" />
+          </property>
+        </ownedAttributesInternal>
         <ownedOperationsInternal>
           <operation Id="8247b8ff-6b8b-4e56-b38a-a1fa65b6b455" name="Initialise" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
             <elementDefinition Id="9de1ace2-5b74-4bd8-adb5-6ac10d595c19" />
@@ -261,6 +269,14 @@
     <logicalClassDesignerModelHasTypes>
       <class Id="6bee1d6b-bb23-4395-8097-33e02159b2b7" name="DrawableLevelObject" isAbstract="false" isLeaf="false" isActiveClass="false">
         <elementDefinition Id="1f0caebe-13aa-40c4-ae41-5642c12f5ab2" />
+        <ownedAttributesInternal>
+          <property Id="521485e4-ad98-4839-a533-45edf2c051e0" name="Vector2 _Position" visibility="Private" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+            <elementDefinition Id="e5fdf53a-1cce-4901-9d29-d28c8b6c62a1" />
+          </property>
+          <property Id="4a231cd8-cd36-42c9-902b-dd8137b644b9" name="Fixture _fixture" visibility="Private" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+            <elementDefinition Id="91c393ea-9654-41a0-8e59-35bc31528e59" />
+          </property>
+        </ownedAttributesInternal>
         <ownedOperationsInternal>
           <operation Id="1417ca65-4b23-441c-888c-1f7afcbb7a12" name="LoadContent" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
             <elementDefinition Id="62c48f83-5301-472e-9799-3fdd31a23254" />
@@ -296,6 +312,50 @@
             </ownedParameters>
           </operation>
         </ownedOperationsInternal>
+      </class>
+    </logicalClassDesignerModelHasTypes>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="5830f44c-01c2-4718-a388-2aca55a5adf4" name="Enemy" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="393f29b7-3eec-4d38-b2ef-32d951a5c06e" />
+        <generalsInternal>
+          <generalization Id="f386bd21-620c-4a57-999a-af483b17b4bc" isSubstitutable="false">
+            <classMoniker Id="6bee1d6b-bb23-4395-8097-33e02159b2b7" LastKnownName="DrawableLevelObject" />
+            <elementDefinition Id="6a426d32-5cad-48b3-b87e-348eac18f4ff" />
+          </generalization>
+        </generalsInternal>
+        <targetEnds>
+          <association Id="0a1d47e1-1b49-44e6-8003-109f1ba21d6b" isDerived="false" sourceEndRoleName="Enemy" targetEndRoleName="EnemyBehavior" isLeaf="false" isAbstract="false">
+            <classMoniker Id="82950f7c-833d-4df9-9bb7-2965f2df380b" LastKnownName="EnemyBehavior" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd Id="7969ecb4-e06e-4823-ae4e-ddd4f51f3a56" name="Enemy" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="Shared" isComposite="false" isNavigableOwned="false">
+                  <elementDefinition Id="2a840b32-7e31-4156-8fd8-42462b857f06" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd Id="465f6566-730b-4ec3-b572-a06603736b33" name="EnemyBehavior" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                  <lowerValueInternal>
+                    <literalString Id="73dee6f5-aa16-4932-b267-afd2d03fe576" name="Lower" value="*">
+                      <elementDefinition Id="405d7e44-46fa-40d7-bbdb-7eafb807d007" />
+                    </literalString>
+                  </lowerValueInternal>
+                  <upperValueInternal>
+                    <literalString Id="95b79ac3-775c-4e97-b40d-3418b0496784" name="Upper" value="*">
+                      <elementDefinition Id="2f610a89-ea74-468d-8275-c78ff05cee2a" />
+                    </literalString>
+                  </upperValueInternal>
+                  <elementDefinition Id="6095346b-fad7-42fa-8a92-8bc06241cfbf" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+            <elementDefinition Id="5c2c2fa8-b427-4906-92d3-9e8bc1640ead" />
+          </association>
+        </targetEnds>
+      </class>
+    </logicalClassDesignerModelHasTypes>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="82950f7c-833d-4df9-9bb7-2965f2df380b" name="EnemyBehavior" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="93702669-0cca-441b-a062-66ec0f6316ec" />
       </class>
     </logicalClassDesignerModelHasTypes>
   </packagedElements>
