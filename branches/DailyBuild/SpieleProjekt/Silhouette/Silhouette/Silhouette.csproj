@@ -117,7 +117,7 @@
   <ItemGroup>
     <Compile Include="Engine\AnimatedSprite.cs" />
     <Compile Include="Engine\Camera.cs" />
-    <Compile Include="Engine\FontManager.cs" />
+    <Compile Include="Engine\Manager\FontManager.cs" />
     <Compile Include="Engine\PartikelEngine\ParticleManager.cs" />
     <Compile Include="Engine\PartikelEngine\ParticleEffectWrapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

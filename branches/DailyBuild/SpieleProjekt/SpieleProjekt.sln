@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SilhouetteContent", "Silhou
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FarseerPhysicsEngine", "FarseerPhysicsEngine\FarseerPhysicsEngine.csproj", "{9C431338-63F2-49BA-9A3B-6BEBEC330FFA}"
 EndProject
-Project("{F088123C-0E9E-452A-89E6-6BA2F21D5CAC}") = "SilhouetteUML", "ModelingProject2\SilhouetteUML.modelproj", "{99FDE882-6ED4-4663-9C2B-676DDF450D9F}"
+Project("{F088123C-0E9E-452A-89E6-6BA2F21D5CAC}") = "SilhouetteUML", "SilhouetteUML\SilhouetteUML.modelproj", "{99FDE882-6ED4-4663-9C2B-676DDF450D9F}"
 EndProject
 Global
 	GlobalSection(SubversionScc) = preSolution
