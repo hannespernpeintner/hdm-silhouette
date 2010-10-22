@@ -32,19 +32,10 @@ namespace Silhouette
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
-        ParticleManager particleManager;
-
-        World physicSimulation;
-        Vector2 gravitation;
-        const float pixelsPerMeter = 100.0f;        //Umwandlungseinheit von Pixel in die physikalische Einheit der Physikengine
-
         public GameLoop()
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
-
-            particleManager = new ParticleManager(this, graphics);
-            Components.Add(particleManager);
         }
 
         protected override void Initialize()
@@ -53,11 +44,6 @@ namespace Silhouette
             graphics.PreferredBackBufferWidth = 1280;
             graphics.PreferredBackBufferHeight = 768;
             graphics.ApplyChanges();
-
-            //Initialisierung der Physikengine mit Übergabe der Gravitationsstärke
-            gravitation = new Vector2(0.0f, 9.0f);
-            physicSimulation = new World(gravitation);
-
             base.Initialize();
         }
 
@@ -65,7 +51,6 @@ namespace Silhouette
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-
             FontManager.loadFonts(this);            //Lädt alle Fonts, die im FontManager deklariert wurden
         }
 
@@ -73,8 +58,6 @@ namespace Silhouette
 
         protected override void Update(GameTime gameTime)
         {
-            //Aktualisiert die Physiksimulation
-            physicSimulation.Step(Math.Min((float)gameTime.ElapsedGameTime.TotalMilliseconds * 0.001f, (1f / 30f)));
             base.Update(gameTime);
         }
 
