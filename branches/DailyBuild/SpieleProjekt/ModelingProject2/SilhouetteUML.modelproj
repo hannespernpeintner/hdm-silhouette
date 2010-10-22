@@ -7,7 +7,7 @@
     <ProjectGuid>{99fde882-6ed4-4663-9c2b-676ddf450d9f}</ProjectGuid>
     <ArchitectureToolsVersion>1.0.0.0</ArchitectureToolsVersion>
     <Name>SilhouetteUML</Name>
-    <RootNamespace>ModelingProject2</RootNamespace>
+    <RootNamespace>SilhouetteUML</RootNamespace>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <OutputPath>bin\Debug\</OutputPath>
@@ -17,15 +17,27 @@
   </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v10.0\ArchitectureTools\Microsoft.VisualStudio.TeamArchitect.ModelingProject.targets" />
   <ItemGroup>
-    <Content Include="Projekt.classdiagram">
+    <Content Include="ModelDefinition\Package1_2102.uml">
       <SubType>Content</SubType>
     </Content>
-    <Content Include="Projekt.classdiagram.layout">
+    <Content Include="ModelDefinition\Package_2100.uml">
       <SubType>Content</SubType>
-      <DependentUpon>Projekt.classdiagram</DependentUpon>
+    </Content>
+    <Content Include="ModelDefinition\Package_2102.uml">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="ModelDefinition\Package_2107.uml">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="SilhouetteArchitektur.classdiagram">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="SilhouetteArchitektur.classdiagram.layout">
+      <SubType>Content</SubType>
+      <DependentUpon>SilhouetteArchitektur.classdiagram</DependentUpon>
     </Content>
     <Folder Include="ModelDefinition\" />
-    <Content Include="ModelDefinition\ModelingProject2.uml">
+    <Content Include="ModelDefinition\SilhouetteModelDefinition.uml">
       <SubType>Content</SubType>
     </Content>
   </ItemGroup>
