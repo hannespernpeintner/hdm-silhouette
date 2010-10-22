@@ -25,25 +25,25 @@ namespace Silhouette.Engine.PartikelEngine
         */
 
         //Sascha: Zusatzinformationen
-        private ParticleEffect particleEffect;
-        private Vector2 particlePosition;
+        private ParticleEffect _particleEffect;
+        private Vector2 _particlePosition;
 
         //Sascha: Zugriff auf Zusatzinformationen über Properties
-        public ParticleEffect getEffect
+        public ParticleEffect particleEffect
         {
-            get { return particleEffect; }
-            set { particleEffect = value; }
+            get { return _particleEffect; }
+            set { _particleEffect = value; }
         }
 
-        public Vector2 getPosition
+        public Vector2 particlePosition
         {
-            get { return particlePosition; }
+            get { return _particlePosition; }
         }
 
         public ParticleEffectWrapper(ParticleEffect p, Vector2 v)
         {
-            particleEffect = p;
-            particlePosition = v;
+            _particleEffect = p;
+            _particlePosition = v;
         }
     }
 }

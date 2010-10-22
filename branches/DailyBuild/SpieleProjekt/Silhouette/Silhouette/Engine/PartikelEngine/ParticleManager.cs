@@ -19,7 +19,7 @@ using ProjectMercury.Renderers;
 namespace Silhouette.Engine.PartikelEngine
 {
 
-    public class ParticleManager : Microsoft.Xna.Framework.DrawableGameComponent
+    public class ParticleManager
     {
         //Sascha: Klasse hat den Zweck alle Partikeleffekte im Level zentral zu verwalten
 
@@ -34,14 +34,13 @@ namespace Silhouette.Engine.PartikelEngine
 
         private ParticleEffect waterfall;
 
-        public ParticleManager(Game game, GraphicsDeviceManager g)
-            : base(game)
+        public ParticleManager(GraphicsDeviceManager g)
         {
             particleRenderer = new SpriteBatchRenderer { GraphicsDeviceService = g}; //Sascha: Eigener Renderer für alle Partikel wegen Zusatzeffekten wie Shader
             particleList = new ArrayList();
         }
 
-        protected override void LoadContent()
+        protected void loadParticles(Game Game)
         {
             waterfall = Game.Content.Load<ParticleEffect>("ParticleEffects/Water");
 
@@ -50,36 +49,28 @@ namespace Silhouette.Engine.PartikelEngine
 
             foreach (ParticleEffectWrapper p in particleList)
             {
-                p.getEffect = waterfall.DeepCopy();                                 //Sascha: Kopie des entsprechenden Effekts wird erzeugt und übergeben
-                p.getEffect.LoadContent(Game.Content);
-                p.getEffect.Initialise();
+                p.particleEffect = waterfall.DeepCopy();                                 //Sascha: Kopie des entsprechenden Effekts wird erzeugt und übergeben
+                p.particleEffect.LoadContent(Game.Content);
+                p.particleEffect.Initialise();
             }
             particleRenderer.LoadContent(Game.Content);
-            base.LoadContent();
         }
 
-        public override void Initialize()
-        {
-            base.Initialize();
-        }
-
-        public override void Update(GameTime gameTime)
+        public void updateParticles(GameTime gameTime)
         {
             foreach (ParticleEffectWrapper p in particleList)
             {
-                p.getEffect.Trigger(p.getPosition);                                 //Sascha: Auslöser für den Partikeleffekt wird auf der Map gesetzt
-                p.getEffect.Update((float)gameTime.ElapsedGameTime.TotalSeconds);   //Sascha: Die Partikel des Effekts werden abhängig von der Spielzeit upgedated
+                p.particleEffect.Trigger(p.particlePosition);                            //Sascha: Auslöser für den Partikeleffekt wird auf der Map gesetzt
+                p.particleEffect.Update((float)gameTime.ElapsedGameTime.TotalSeconds);   //Sascha: Die Partikel des Effekts werden abhängig von der Spielzeit upgedated
             }
-            base.Update(gameTime);
         }
 
-        public override void Draw(GameTime gameTime)
+        public void drawParticles(GameTime gameTime)
         {
             foreach (ParticleEffectWrapper p in particleList)
             {
-                particleRenderer.RenderEffect(p.getEffect);                 //Sascha: Der Renderer rendert alle Partikeleffekte unabhängig vom SpriteBatch
+                particleRenderer.RenderEffect(p.particleEffect);                 //Sascha: Der Renderer rendert alle Partikeleffekte unabhängig vom SpriteBatch
             }
-            base.Draw(gameTime);
         }
     }
 }
