@@ -1,0 +1,123 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm4="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm5="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/LogicalClassDesigner"
+  dslVersion="1.0.0.0"
+  Id="bedd4082-5a2e-491c-b51d-a38b33cddccd"
+  name="Engine" xmlns="http://schemas.microsoft.com/dsltools/ModelStore">
+  <packagedElements>
+    <packageHasNamedElement>
+      <packageMoniker
+        Id="92703792-cab5-477a-bc15-f0d4f88957b3"
+        LastKnownName="PartikelEngine"
+        LastKnownLocation="Package1_2102.uml" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <packageMoniker
+        Id="86bf683f-764f-4a90-baea-b1100418859e"
+        LastKnownName="Manager"
+        LastKnownLocation="Package_2107.uml" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="905e6150-84bb-40c1-86e5-3e8f8d627de3"
+        name="Screen"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="27a4eb5e-169e-46b6-abdd-3602fe0d5e4e"
+        name="FirstBackgroundScreen"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <generalsInternal>
+          <generalization
+            Id="71b02618-c91c-4ff9-9bdd-663518b3eebe"
+            isSubstitutable="false">
+            <classMoniker
+              Id="905e6150-84bb-40c1-86e5-3e8f8d627de3"
+              LastKnownName="Screen"
+              LastKnownLocation="Package_2102.uml" />
+          </generalization>
+        </generalsInternal>
+      </class>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="9437a970-50a1-4395-bbca-d7dfa12006f3"
+        name="SecondBackgroundScreen"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <generalsInternal>
+          <generalization
+            Id="3f17b117-c51c-4dad-95c0-4bc3bdbae818"
+            isSubstitutable="false">
+            <classMoniker
+              Id="905e6150-84bb-40c1-86e5-3e8f8d627de3"
+              LastKnownName="Screen"
+              LastKnownLocation="Package_2102.uml" />
+          </generalization>
+        </generalsInternal>
+      </class>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="73d9783b-26d3-45c5-9214-a51b738435a3"
+        name="ForegroundScreen"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <generalsInternal>
+          <generalization
+            Id="49603bda-7d8a-4f58-bca4-06a8ff8a29ac"
+            isSubstitutable="false">
+            <classMoniker
+              Id="905e6150-84bb-40c1-86e5-3e8f8d627de3"
+              LastKnownName="Screen"
+              LastKnownLocation="Package_2102.uml" />
+          </generalization>
+        </generalsInternal>
+      </class>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="af7fdc7e-5e68-49d5-9cf5-2294ba483811"
+        name="PlayerScreen"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <generalsInternal>
+          <generalization
+            Id="84d71546-b143-4039-80b8-bf7d6d08b125"
+            isSubstitutable="false">
+            <classMoniker
+              Id="905e6150-84bb-40c1-86e5-3e8f8d627de3"
+              LastKnownName="Screen"
+              LastKnownLocation="Package_2102.uml" />
+          </generalization>
+        </generalsInternal>
+      </class>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="01496edb-407c-4652-a7a8-0c7b54b359db"
+        name="MenuScreen"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <generalsInternal>
+          <generalization
+            Id="5109978d-c6ba-455d-b509-f07bb0745043"
+            isSubstitutable="false">
+            <classMoniker
+              Id="905e6150-84bb-40c1-86e5-3e8f8d627de3"
+              LastKnownName="Screen"
+              LastKnownLocation="Package_2102.uml" />
+          </generalization>
+        </generalsInternal>
+      </class>
+    </packageHasNamedElement>
+  </packagedElements>
+</package>
