@@ -626,6 +626,32 @@
         isAbstract="false"
         isLeaf="false"
         isActiveClass="false">
+        <ownedAttributesInternal>
+          <property
+            Id="b7979279-eb81-409f-bace-b95e312a184f"
+            name="Fixture _fixture"
+            visibility="Private"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isUnique="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false" />
+          <property
+            Id="2ab286cc-b5eb-4368-95ef-09d632ca8414"
+            name="Vector2 _Position"
+            visibility="Private"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isUnique="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false" />
+        </ownedAttributesInternal>
         <ownedOperationsInternal>
           <operation
             Id="9de1ace2-5b74-4bd8-adb5-6ac10d595c19"
@@ -681,6 +707,32 @@
         isAbstract="false"
         isLeaf="false"
         isActiveClass="false">
+        <ownedAttributesInternal>
+          <property
+            Id="e5fdf53a-1cce-4901-9d29-d28c8b6c62a1"
+            name="Vector2 _Position"
+            visibility="Private"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isUnique="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false" />
+          <property
+            Id="91c393ea-9654-41a0-8e59-35bc31528e59"
+            name="Fixture _fixture"
+            visibility="Private"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isUnique="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false" />
+        </ownedAttributesInternal>
         <ownedOperationsInternal>
           <operation
             Id="62c48f83-5301-472e-9799-3fdd31a23254"
@@ -746,6 +798,87 @@
           </operation>
         </ownedOperationsInternal>
       </class>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="393f29b7-3eec-4d38-b2ef-32d951a5c06e"
+        name="Enemy"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <generalsInternal>
+          <generalization
+            Id="6a426d32-5cad-48b3-b87e-348eac18f4ff"
+            isSubstitutable="false">
+            <classMoniker
+              Id="1f0caebe-13aa-40c4-ae41-5642c12f5ab2"
+              LastKnownName="DrawableLevelObject"
+              LastKnownLocation="ModelingProject2.uml" />
+          </generalization>
+        </generalsInternal>
+        <targetEnds>
+          <association
+            Id="5c2c2fa8-b427-4906-92d3-9e8bc1640ead"
+            isDerived="false"
+            sourceEndRoleName="Enemy"
+            targetEndRoleName="EnemyBehavior"
+            isLeaf="false"
+            isAbstract="false">
+            <classMoniker
+              Id="93702669-0cca-441b-a062-66ec0f6316ec"
+              LastKnownName="EnemyBehavior"
+              LastKnownLocation="ModelingProject2.uml" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="2a840b32-7e31-4156-8fd8-42462b857f06"
+                  name="Enemy"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="Shared"
+                  isComposite="false"
+                  isNavigableOwned="false" />
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="6095346b-fad7-42fa-8a92-8bc06241cfbf"
+                  name="EnemyBehavior"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false">
+                  <lowerValueInternal>
+                    <literalString
+                      Id="405d7e44-46fa-40d7-bbdb-7eafb807d007"
+                      name="Lower"
+                      value="*" />
+                  </lowerValueInternal>
+                  <upperValueInternal>
+                    <literalString
+                      Id="2f610a89-ea74-468d-8275-c78ff05cee2a"
+                      name="Upper"
+                      value="*" />
+                  </upperValueInternal>
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
+        </targetEnds>
+      </class>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="93702669-0cca-441b-a062-66ec0f6316ec"
+        name="EnemyBehavior"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false" />
     </packageHasNamedElement>
   </packagedElements>
   <primitiveType
