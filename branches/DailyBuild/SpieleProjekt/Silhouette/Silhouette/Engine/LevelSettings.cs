@@ -18,6 +18,9 @@ namespace Silhouette.Engine
 
         public Vector2 gravitation { get { return _gravitation; } set { _gravitation = value; } }
 
+        private Color _backgroundColor = Color.Black;
+        public Color backgroundColor { get { return _backgroundColor; } set { _backgroundColor = value; } }
+
         private LevelSettings() {}
 
         private static LevelSettings _instance;

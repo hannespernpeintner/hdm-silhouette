@@ -72,7 +72,6 @@ namespace Silhouette
 
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.Black);  //Hintergrundfarbe Schwarz
             base.Draw(gameTime);
         }
     }

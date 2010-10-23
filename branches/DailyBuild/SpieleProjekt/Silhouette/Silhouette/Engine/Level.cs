@@ -45,6 +45,7 @@ namespace Silhouette.Engine
 
         public override void Draw(GameTime gameTime)
         {
+            GraphicsDevice.Clear(LevelSettings.Default.backgroundColor);
             base.Draw(gameTime);
         }
     }
