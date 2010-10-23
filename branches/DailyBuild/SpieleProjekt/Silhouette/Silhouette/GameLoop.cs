@@ -51,7 +51,8 @@ namespace Silhouette
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            FontManager.loadFonts(this);            //Lädt alle Fonts, die im FontManager deklariert wurden
+            //Lädt alle Fonts, die im FontManager deklariert wurden
+            FontManager.loadFonts(this);
         }
 
         protected override void UnloadContent(){}

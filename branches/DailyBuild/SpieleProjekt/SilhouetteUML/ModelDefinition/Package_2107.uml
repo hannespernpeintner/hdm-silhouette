@@ -75,8 +75,8 @@
           <association
             Id="d07fd64e-44ea-494e-aaba-377884fd71c0"
             isDerived="false"
-            sourceEndRoleName="ScreenManager"
-            targetEndRoleName="Screen"
+            sourceEndRoleName=""
+            targetEndRoleName=""
             isLeaf="false"
             isAbstract="false">
             <classMoniker
@@ -87,7 +87,6 @@
               <associationHasOwnedEnds>
                 <memberEnd
                   Id="51e18d38-0f4f-4c51-8fc2-4774092cdbdb"
-                  name="ScreenManager"
                   isLeaf="false"
                   isStatic="false"
                   isReadOnly="false"
@@ -100,7 +99,6 @@
               <associationHasOwnedEnds>
                 <memberEnd
                   Id="8173b209-8f75-4c8c-a4e9-e83a104ed52e"
-                  name="Screen"
                   isLeaf="false"
                   isStatic="false"
                   isReadOnly="false"
@@ -134,6 +132,45 @@
         isAbstract="false"
         isLeaf="false"
         isActiveClass="false">
+        <targetEnds>
+          <association
+            Id="05f9e82a-1995-4c28-9159-f21e0b1cc854"
+            isDerived="false"
+            sourceEndRoleName=""
+            targetEndRoleName=""
+            isLeaf="false"
+            isAbstract="false">
+            <classMoniker
+              Id="5a077de8-955a-4a6d-b836-357844f94b8d"
+              LastKnownName="GameLoop"
+              LastKnownLocation="SilhouetteModelDefinition.uml" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="02bed9eb-e8bc-4687-a81f-1a9e7c829cf6"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false"
+                  isNavigableOwned="false" />
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="0a1d81c2-ba56-4236-ae66-14236a0f4426"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false" />
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
+        </targetEnds>
         <ownedOperationsInternal>
           <operation
             Id="9ef5d80a-28b7-4a91-a5ff-73a09aab535c"
