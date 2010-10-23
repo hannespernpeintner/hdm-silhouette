@@ -18,5 +18,17 @@ namespace Silhouette.Engine.Manager
 {
     public static class FileManager
     {
+        public static FileStream LoadConfigFile(string relativePath)
+        {
+            if (File.Exists(relativePath) == false)
+                return null;
+            else
+                return File.Open(relativePath, FileMode.Open, FileAccess.Read);
+        }
+
+        public static FileStream SaveConfigFile(string relativePath)
+        {
+            return File.Open(relativePath, FileMode.OpenOrCreate, FileAccess.Write);
+        }
     }
 }

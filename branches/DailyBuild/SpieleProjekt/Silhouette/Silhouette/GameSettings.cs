@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.IO;
+using System.Xml.Serialization;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
@@ -8,6 +10,8 @@ using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
+using Silhouette.Engine;
+using Silhouette.Engine.Manager;
 
 
 namespace Silhouette
@@ -32,7 +36,12 @@ namespace Silhouette
                     else
                         return MinResolutionWidth;
                 } 
-                set { _resolutionWidth = value; } 
+                set 
+                {
+                    if (_resolutionWidth != value)
+                        Changed = true;
+                    _resolutionWidth = value; 
+                } 
             }
             public int resolutionHeight 
             { 
@@ -43,19 +52,52 @@ namespace Silhouette
                     else
                         return MinResolutionHeight;
                 } 
-                set { _resolutionHeight = value; } 
+                set 
+                {
+                    if (_resolutionHeight != value)
+                        Changed = true;
+                    _resolutionHeight = value; 
+                } 
             }
 
             private bool _fullscreen = false;
-            public bool fullscreen { get { return _fullscreen; } set { _fullscreen = value; } }
+            public bool fullscreen 
+            { 
+                get { return _fullscreen; } 
+                set 
+                {
+                    if (_fullscreen != value)
+                        Changed = true;
+                    _fullscreen = value; 
+                }
+            }
 
             private float _soundVolume = 1.0f;
             private float _musicVolume = 1.0f;
 
-            public float soundVolume { get { return _soundVolume; } set { _soundVolume = value; } }
-            public float musicVolume { get { return _musicVolume; } set { _musicVolume = value; } }
+            public float soundVolume 
+            { 
+                get { return _soundVolume; } 
+                set 
+                {
+                    if (_soundVolume != value)
+                        Changed = true;
+                    _soundVolume = value; 
+                } 
+            }
+            public float musicVolume 
+            { 
+                get { return _musicVolume; } 
+                set 
+                {
+                    if (_musicVolume != value)
+                        Changed = true;
+                    _musicVolume = value; 
+                } 
+            }
         #endregion
 
+        private static bool Changed = false;
         private const string GameSettingsFilename = "GameSettings.xml";
         private static GameSettings _instance;
         public static GameSettings Default { get { return _instance; } }
@@ -77,13 +119,30 @@ namespace Silhouette
         }
 
         public static void LoadSettings()
-        { 
-            
+        {
+            FileStream file = FileManager.LoadConfigFile(GameSettingsFilename);
+
+            if (file == null)
+            {
+                Changed = true;
+                return;
+            }
+
+            GameSettings loadedGameSettings = (GameSettings)new XmlSerializer(typeof(GameSettings)).Deserialize(file);
+            if (loadedGameSettings != null)
+                _instance = loadedGameSettings;
+            file.Close();
         }
 
         public static void SaveSettings()
-        { 
-        
+        {
+            if (!Changed)
+                return;
+
+            Changed = false;
+            FileStream file = FileManager.SaveConfigFile(GameSettingsFilename);
+            new XmlSerializer(typeof(GameSettings)).Serialize(file, _instance);
+            file.Close();
         }
     }
 }
