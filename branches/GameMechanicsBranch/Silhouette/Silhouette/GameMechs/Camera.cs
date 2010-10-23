@@ -5,18 +5,28 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Graphics;
+using Silhouette.GameMechs;
+using FarseerPhysics.Dynamics;
 
 namespace Silhouette.Engine
 {
-    public class Camera
+    class Camera:LevelObject
     {
-        public Vector2 position;            // Hannes: Position, Zoomfaktor (1 ist normal, 2 ist reingezoomt, 0,5 rausgezoomt),
-        public float zoom = 1.0f;           // Transformationsmatrix ist an der Camera gespeichert.
-        public Matrix matrix;
+        Vector2 _position;            // Hannes: Position, Zoomfaktor (1 ist normal, 2 ist reingezoomt, 0,5 rausgezoomt),
+        float _zoom;           // Transformationsmatrix ist an der Camera gespeichert.
+        Matrix _matrix;
+        bool _isFix;
+        private Fixture _fixture;
+
+        public Vector2 position { get { return _position; } set { _position = value; } }
+        public Fixture fixture { get { return _fixture; } set { _fixture = value; } }
+        public Matrix matrix { get}
 
         public Camera(Vector2 position)
         {
-            this.position = position;
+            _position = position;
+            _zoom = 1.0f;
+            _isFix = false;
         }
 
         public void Update(GameTime gameTime, Viewport port, Vector2 position)              // Viewport muss leider übergeben
