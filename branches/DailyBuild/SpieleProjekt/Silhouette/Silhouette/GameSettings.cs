@@ -14,6 +14,5 @@ namespace Silhouette
 {
     public class GameSettings
     {
-    
     }
 }
