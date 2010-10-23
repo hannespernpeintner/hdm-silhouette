@@ -32,10 +32,15 @@ namespace Silhouette
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
+        DisplayFPS displayFPS;
+
         public GameLoop()
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
+
+            displayFPS = new DisplayFPS(this);
+            Components.Add(displayFPS);
         }
 
         protected override void Initialize()
