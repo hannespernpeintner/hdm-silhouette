@@ -123,7 +123,6 @@
     <Compile Include="Engine\Manager\FontManager.cs" />
     <Compile Include="Engine\Manager\ScreenManager.cs" />
     <Compile Include="Engine\Manager\ParticleManager.cs" />
-    <Compile Include="Engine\PartikelEngine\ParticleEffectWrapper.cs" />
     <Compile Include="DisplayFPS.cs" />
     <Compile Include="Engine\Screens\Screen.cs" />
     <Compile Include="Engine\Screens\FirstBackgroundScreen.cs" />

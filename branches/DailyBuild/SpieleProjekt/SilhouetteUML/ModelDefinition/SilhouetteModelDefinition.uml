@@ -27,43 +27,6 @@
         isActiveClass="false">
         <targetEnds>
           <association
-            Id="c76dd940-cbb8-42e0-92b9-4e74f95ebe81"
-            isDerived="false"
-            sourceEndRoleName=""
-            targetEndRoleName=""
-            isLeaf="false"
-            isAbstract="false">
-            <classMoniker
-              Id="e7f044e7-7444-42cc-ada1-4de53731be50"
-              LastKnownName="GameSettings"
-              LastKnownLocation="SilhouetteModelDefinition.uml" />
-            <relationshipOwnedElementsInternal>
-              <associationHasOwnedEnds>
-                <memberEnd
-                  Id="254bb19f-7345-4408-815d-5028758e43c5"
-                  isLeaf="false"
-                  isStatic="false"
-                  isReadOnly="false"
-                  isDerived="false"
-                  isDerivedUnion="false"
-                  aggregation="Composite"
-                  isComposite="false"
-                  isNavigableOwned="false" />
-              </associationHasOwnedEnds>
-              <associationHasOwnedEnds>
-                <memberEnd
-                  Id="388d4e01-f58d-47bd-a08a-333746a0ac04"
-                  isLeaf="false"
-                  isStatic="false"
-                  isReadOnly="false"
-                  isDerived="false"
-                  isDerivedUnion="false"
-                  aggregation="None"
-                  isComposite="true" />
-              </associationHasOwnedEnds>
-            </relationshipOwnedElementsInternal>
-          </association>
-          <association
             Id="d1653475-62d0-4857-b3bc-e903ea9b0717"
             isDerived="false"
             sourceEndRoleName=""
@@ -110,6 +73,43 @@
                       value="*" />
                   </upperValueInternal>
                 </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
+          <association
+            Id="574f87b5-f089-457f-b68b-62133eb8ec1f"
+            isDerived="false"
+            sourceEndRoleName=""
+            targetEndRoleName=""
+            isLeaf="false"
+            isAbstract="false">
+            <classMoniker
+              Id="e7f044e7-7444-42cc-ada1-4de53731be50"
+              LastKnownName="GameSettings"
+              LastKnownLocation="SilhouetteModelDefinition.uml" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="7e068cbe-3aea-4514-8988-dfe27d83a2c0"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false"
+                  isNavigableOwned="false" />
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="505042fe-0623-4d1a-81dc-4fb4b62af4fd"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false" />
               </associationHasOwnedEnds>
             </relationshipOwnedElementsInternal>
           </association>
@@ -394,7 +394,17 @@
         name="DisplayFPS"
         isAbstract="false"
         isLeaf="false"
-        isActiveClass="false" />
+        isActiveClass="false">
+        <suppliersInternal>
+          <dependency
+            Id="79902f36-3ba6-4138-83bb-44f4c99f5d23">
+            <classMoniker
+              Id="5a077de8-955a-4a6d-b836-357844f94b8d"
+              LastKnownName="GameLoop"
+              LastKnownLocation="SilhouetteModelDefinition.uml" />
+          </dependency>
+        </suppliersInternal>
+      </class>
     </packageHasNamedElement>
   </packagedElements>
   <primitiveType

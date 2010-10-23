@@ -12,6 +12,7 @@ using Microsoft.Xna.Framework.Media;
 
 namespace Silhouette.Engine
 {
+    [Serializable]
     public class LevelSettings
     {
         private Vector2 _gravitation = new Vector2(0.0f, 9.8f);

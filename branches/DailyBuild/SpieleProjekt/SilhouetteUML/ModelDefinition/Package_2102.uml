@@ -89,44 +89,7 @@
         isActiveClass="false">
         <targetEnds>
           <association
-            Id="588f689c-ee0b-4fbb-a27e-4a214c55d599"
-            isDerived="false"
-            sourceEndRoleName=""
-            targetEndRoleName=""
-            isLeaf="false"
-            isAbstract="false">
-            <classMoniker
-              Id="2c5ce185-d6d9-4540-aaf0-75ff1a276496"
-              LastKnownName="LevelSettings"
-              LastKnownLocation="Package_2102.uml" />
-            <relationshipOwnedElementsInternal>
-              <associationHasOwnedEnds>
-                <memberEnd
-                  Id="04a34868-7e18-4ff6-ba61-a046147f65f9"
-                  isLeaf="false"
-                  isStatic="false"
-                  isReadOnly="false"
-                  isDerived="false"
-                  isDerivedUnion="false"
-                  aggregation="Composite"
-                  isComposite="false"
-                  isNavigableOwned="false" />
-              </associationHasOwnedEnds>
-              <associationHasOwnedEnds>
-                <memberEnd
-                  Id="8fad1a2d-b22e-4ff1-9fe0-3e4001f5e521"
-                  isLeaf="false"
-                  isStatic="false"
-                  isReadOnly="false"
-                  isDerived="false"
-                  isDerivedUnion="false"
-                  aggregation="None"
-                  isComposite="true" />
-              </associationHasOwnedEnds>
-            </relationshipOwnedElementsInternal>
-          </association>
-          <association
-            Id="d03185e2-ab14-431b-bdf8-2e31a2ac1ad5"
+            Id="45b2570d-27b5-47db-ba1b-12e940e2700b"
             isDerived="false"
             sourceEndRoleName=""
             targetEndRoleName=""
@@ -139,19 +102,56 @@
             <relationshipOwnedElementsInternal>
               <associationHasOwnedEnds>
                 <memberEnd
-                  Id="b0f39085-9195-435e-8493-f484aac29688"
+                  Id="7ee58440-3462-4840-9c56-025b1c4091d8"
                   isLeaf="false"
                   isStatic="false"
                   isReadOnly="false"
                   isDerived="false"
                   isDerivedUnion="false"
-                  aggregation="Shared"
+                  aggregation="Composite"
                   isComposite="false"
                   isNavigableOwned="false" />
               </associationHasOwnedEnds>
               <associationHasOwnedEnds>
                 <memberEnd
-                  Id="f3d491df-8140-412e-984d-7c76ed759e11"
+                  Id="707b1885-4031-437a-aa89-514920c29c3c"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="true" />
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
+          <association
+            Id="9a91d56a-fcce-4aa9-be8d-e7a979bd7ed4"
+            isDerived="false"
+            sourceEndRoleName=""
+            targetEndRoleName=""
+            isLeaf="false"
+            isAbstract="false">
+            <classMoniker
+              Id="2c5ce185-d6d9-4540-aaf0-75ff1a276496"
+              LastKnownName="LevelSettings"
+              LastKnownLocation="Package_2102.uml" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="72f5ec54-080f-4240-b022-1cc0bc9311ba"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false"
+                  isNavigableOwned="false" />
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="229255e5-d02c-4904-8292-1fedfcfee328"
                   isLeaf="false"
                   isStatic="false"
                   isReadOnly="false"
