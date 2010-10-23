@@ -19,7 +19,7 @@ using ProjectMercury.Renderers;
 namespace Silhouette.Engine.PartikelEngine
 {
 
-    public class ParticleManager
+    public static class ParticleManager
     {
         //Sascha: Klasse hat den Zweck alle Partikeleffekte im Level zentral zu verwalten
 
@@ -29,48 +29,13 @@ namespace Silhouette.Engine.PartikelEngine
         dem gleichen Content auf das selbe Objekt und es kommt zu massiven Darstellungsfehlern.
         */
 
-        private Renderer particleRenderer;
-        private ArrayList particleList;
+        private static ParticleEffect _waterfall;
 
-        private ParticleEffect waterfall;
+        public static ParticleEffect waterfall { get; set; }
 
-        public ParticleManager(GraphicsDeviceManager g)
+        public static void initialise(GameLoop Game)
         {
-            particleRenderer = new SpriteBatchRenderer { GraphicsDeviceService = g}; //Sascha: Eigener Renderer für alle Partikel wegen Zusatzeffekten wie Shader
-            particleList = new ArrayList();
-        }
-
-        protected void loadParticles(Game Game)
-        {
-            waterfall = Game.Content.Load<ParticleEffect>("ParticleEffects/Water");
-
-            //Sascha: Alle Partikeleffekte werden aus der XML-Datei des Levels geladen und initialisiert
-            particleList.Add(new ParticleEffectWrapper(new ParticleEffect(), new Vector2(500, 100)));
-
-            foreach (ParticleEffectWrapper p in particleList)
-            {
-                p.particleEffect = waterfall.DeepCopy();                                 //Sascha: Kopie des entsprechenden Effekts wird erzeugt und übergeben
-                p.particleEffect.LoadContent(Game.Content);
-                p.particleEffect.Initialise();
-            }
-            particleRenderer.LoadContent(Game.Content);
-        }
-
-        public void updateParticles(GameTime gameTime)
-        {
-            foreach (ParticleEffectWrapper p in particleList)
-            {
-                p.particleEffect.Trigger(p.particlePosition);                            //Sascha: Auslöser für den Partikeleffekt wird auf der Map gesetzt
-                p.particleEffect.Update((float)gameTime.ElapsedGameTime.TotalSeconds);   //Sascha: Die Partikel des Effekts werden abhängig von der Spielzeit upgedated
-            }
-        }
-
-        public void drawParticles(GameTime gameTime)
-        {
-            foreach (ParticleEffectWrapper p in particleList)
-            {
-                particleRenderer.RenderEffect(p.particleEffect);                 //Sascha: Der Renderer rendert alle Partikeleffekte unabhängig vom SpriteBatch
-            }
+            _waterfall = Game.Content.Load<ParticleEffect>("ParticleEffects/Water");
         }
     }
 }

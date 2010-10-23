@@ -54,7 +54,7 @@ namespace Silhouette
 
             if (timeSinceLastUpdate > updateInterval)
             {
-                fps = frameCounter / timeSinceLastUpdate;
+                fps = (int)(frameCounter / timeSinceLastUpdate);
                 frameCounter = 0;
                 timeSinceLastUpdate -= updateInterval;
             }
