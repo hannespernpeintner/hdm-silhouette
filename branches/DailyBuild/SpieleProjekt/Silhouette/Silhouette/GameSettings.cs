@@ -54,7 +54,6 @@ namespace Silhouette
 
             public float soundVolume { get { return _soundVolume; } set { _soundVolume = value; } }
             public float musicVolume { get { return _musicVolume; } set { _musicVolume = value; } }
-
         #endregion
 
         private const string GameSettingsFilename = "GameSettings.xml";
