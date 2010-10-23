@@ -241,8 +241,8 @@
           <association
             Id="5c2c2fa8-b427-4906-92d3-9e8bc1640ead"
             isDerived="false"
-            sourceEndRoleName="Enemy"
-            targetEndRoleName="EnemyBehavior"
+            sourceEndRoleName=""
+            targetEndRoleName=""
             isLeaf="false"
             isAbstract="false">
             <classMoniker
@@ -253,7 +253,6 @@
               <associationHasOwnedEnds>
                 <memberEnd
                   Id="2a840b32-7e31-4156-8fd8-42462b857f06"
-                  name="Enemy"
                   isLeaf="false"
                   isStatic="false"
                   isReadOnly="false"
@@ -266,7 +265,6 @@
               <associationHasOwnedEnds>
                 <memberEnd
                   Id="6095346b-fad7-42fa-8a92-8bc06241cfbf"
-                  name="EnemyBehavior"
                   isLeaf="false"
                   isStatic="false"
                   isReadOnly="false"
