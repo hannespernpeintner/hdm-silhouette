@@ -39,8 +39,7 @@ namespace Silhouette
 
         private const string GameSettingsFilename = "GameSettings.xml";
         private static GameSettings _instance;
-
-        public GameSettings instance { get; set; }
+        public static GameSettings instance { get { return _instance; } }
 
         private GameSettings() { }
 
