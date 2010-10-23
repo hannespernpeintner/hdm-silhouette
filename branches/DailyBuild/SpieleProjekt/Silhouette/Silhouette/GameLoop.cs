@@ -50,9 +50,8 @@ namespace Silhouette
         protected override void Initialize()
         {
             //Voreinstellungen gemäß der Spezifikationen
-            graphics.PreferredBackBufferWidth = 1280;
-            graphics.PreferredBackBufferHeight = 768;
-            graphics.ApplyChanges();
+            GameSettings.Initialise();
+            GameSettings.ApplyChanges(ref graphics);
             base.Initialize();
         }
 

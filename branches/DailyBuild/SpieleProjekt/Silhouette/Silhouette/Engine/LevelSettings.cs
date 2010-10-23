@@ -14,16 +14,16 @@ namespace Silhouette.Engine
 {
     public class LevelSettings
     {
-        private Vector2 _gravitation;
+        private Vector2 _gravitation = new Vector2(0.0f, 9.8f);
 
         public Vector2 gravitation { get { return _gravitation; } set { _gravitation = value; } }
 
         private LevelSettings() {}
 
         private static LevelSettings _instance;
-        public static LevelSettings instance { get {return _instance; } }
+        public static LevelSettings Default { get {return _instance; } }
 
-        public static void initialise()
+        public static void Initialise()
         {
             _instance = new LevelSettings();
         }
