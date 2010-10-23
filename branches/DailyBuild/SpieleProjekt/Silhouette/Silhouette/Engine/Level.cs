@@ -20,7 +20,6 @@ namespace Silhouette.Engine
     public class Level : Microsoft.Xna.Framework.DrawableGameComponent
     {
         public static World Physics;
-        private LevelSettings settings;
 
         public Level(Game game)
             : base(game)
@@ -29,9 +28,8 @@ namespace Silhouette.Engine
 
         protected override void LoadContent()
         {
-            LevelSettings.initialise();
-            settings = LevelSettings.instance;
-            Physics = new World(settings.gravitation);
+            LevelSettings.Initialise();
+            Physics = new World(LevelSettings.Default.gravitation);
             base.LoadContent();
         }
         public override void Initialize()
