@@ -131,6 +131,8 @@
     <Compile Include="Engine\Screens\ForegroundScreen.cs" />
     <Compile Include="Engine\Screens\MenuScreen.cs" />
     <Compile Include="GameMechs\DrawableLevelObject.cs" />
+    <Compile Include="GameMechs\Enemy.cs" />
+    <Compile Include="GameMechs\EnemyBehaviour.cs" />
     <Compile Include="GameMechs\LevelObject.cs" />
     <Compile Include="GameMechs\Player.cs" />
     <Compile Include="GameSettings.cs" />
