@@ -9,7 +9,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Silhouette.GameMechs;
-
+/*
 namespace Silhouette.Engine
 {
     class Camera:LevelObject
@@ -119,3 +119,4 @@ namespace Silhouette.Engine
         }
     }
 }
+    */

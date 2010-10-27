@@ -33,6 +33,7 @@ namespace Silhouette
         SpriteBatch spriteBatch;
 
         DisplayFPS displayFPS;
+        GameMechs.Player testPlayer = new GameMechs.Player();
 
         public GameLoop()
         {
@@ -49,6 +50,7 @@ namespace Silhouette
             graphics.PreferredBackBufferWidth = 1280;
             graphics.PreferredBackBufferHeight = 768;
             graphics.ApplyChanges();
+            testPlayer.Initialise();
             base.Initialize();
         }
 
@@ -56,6 +58,7 @@ namespace Silhouette
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
+            testPlayer.LoadContent(this);
             //Lädt alle Fonts, die im FontManager deklariert wurden
             FontManager.loadFonts(this);
         }
@@ -64,12 +67,19 @@ namespace Silhouette
 
         protected override void Update(GameTime gameTime)
         {
+            testPlayer.Update(gameTime);
             base.Update(gameTime);
         }
 
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.Black);  //Hintergrundfarbe Schwarz
+            spriteBatch.Begin();
+            testPlayer.Draw(spriteBatch);
+            spriteBatch.End();
+
+
+
             base.Draw(gameTime);
         }
     }

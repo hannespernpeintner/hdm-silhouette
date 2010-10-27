@@ -104,6 +104,49 @@
                   <elementDefinition Id="c1c52a04-f110-4edd-8799-f2041b901dda" />
                 </generalization>
               </generalsInternal>
+              <ownedAttributesInternal>
+                <property Id="1f1b7e97-327f-4634-a3bc-e52e815fd7b9" name="Animated Sprite Sprite" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                  <elementDefinition Id="8b8349ab-cda2-485b-bd25-399dfd1bc3d2" />
+                </property>
+                <property Id="e70f9e17-c936-4500-a4bc-881e0f4a9265" name="Fixture fixture" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                  <elementDefinition Id="fe22ddd7-014f-41da-ab54-e54b1640d217" />
+                </property>
+                <property Id="1c5ee403-9015-48d5-8e9e-8020980f3c3a" name="Vector2 Position" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                  <elementDefinition Id="46b661d4-6f01-4e7e-a99f-249f01303195" />
+                </property>
+              </ownedAttributesInternal>
+              <ownedOperationsInternal>
+                <operation Id="474dbe07-314f-41c1-9969-bd1c0141ce9c" name="LoadContent" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+                  <elementDefinition Id="32c63493-d585-480d-82cd-64f822220d4d" />
+                  <ownedParameters>
+                    <operationHasOwnedParameters>
+                      <parameter Id="2707e76c-ce1c-47a3-954a-df697bc3a47e" name="GameLoop game" direction="In" isUnique="false">
+                        <elementDefinition Id="74b345d4-5eba-4c9e-a05e-d3f1303d1115" />
+                      </parameter>
+                    </operationHasOwnedParameters>
+                  </ownedParameters>
+                </operation>
+                <operation Id="b38a5ace-62e4-442a-9b21-aa431c62d30f" name="Update" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+                  <elementDefinition Id="44a2dfe7-db7d-4ed1-85db-59c77f918a59" />
+                  <ownedParameters>
+                    <operationHasOwnedParameters>
+                      <parameter Id="b762fa8e-cc27-43ae-87b8-6cb2ff2614e8" name="GameTime gameTime" direction="In" isUnique="false">
+                        <elementDefinition Id="d1a18b13-9955-41ab-85ef-7ff726159348" />
+                      </parameter>
+                    </operationHasOwnedParameters>
+                  </ownedParameters>
+                </operation>
+                <operation Id="7501bb7c-a74f-4700-98c8-59c3bfa14266" name="Draw" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+                  <elementDefinition Id="847a14a2-4cc8-406c-bbc3-925c744b9339" />
+                  <ownedParameters>
+                    <operationHasOwnedParameters>
+                      <parameter Id="40f949c1-ca79-446c-8946-2ff41f87ce55" name="SpriteBatch spriteBatch" direction="In" isUnique="false">
+                        <elementDefinition Id="af34b089-b357-4674-8c31-62d0e7ac954f" />
+                      </parameter>
+                    </operationHasOwnedParameters>
+                  </ownedParameters>
+                </operation>
+              </ownedOperationsInternal>
             </class>
           </packageHasNamedElement>
           <packageHasNamedElement>
