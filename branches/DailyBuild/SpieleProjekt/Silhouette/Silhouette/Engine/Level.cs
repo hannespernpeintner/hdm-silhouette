@@ -23,6 +23,9 @@ namespace Silhouette.Engine
 {
     public class Level : Microsoft.Xna.Framework.DrawableGameComponent
     {
+        /* Sascha:
+         * Die Repräsentation eines Levels im Spiel.
+        */
         public static World Physics;
         private const string LevelFilePath = "/Level";
 
@@ -54,8 +57,18 @@ namespace Silhouette.Engine
             base.Draw(gameTime);
         }
 
-        public void LoadLevel(string relativePath)
+        public void LoadLevel(string relativePath, int levelNumber)
         {
+            FileStream file = FileManager.LoadLevelFile(LevelFilePath, levelNumber);
+
+            if (file == null)
+            {
+                //Sascha: Abbruchmeldung im Menü, da Fehler
+            }
+            else
+            { 
+                //Sascha: Level laden
+            }
         }
     }
 }
