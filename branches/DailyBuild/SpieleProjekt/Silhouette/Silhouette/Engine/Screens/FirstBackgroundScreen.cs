@@ -12,7 +12,19 @@ using Microsoft.Xna.Framework.Media;
 
 namespace Silhouette.Engine.Screens
 {
-    public class FirstBackgroundScreen
+    public class FirstBackgroundScreen : Screen
     {
+        private Texture2D backgroundTexture;
+        private SpriteBatch spriteBatch;
+
+        public void initialiseScreen() 
+        {
+        
+        }
+        public void loadScreen() { }
+        public void updateScreen() { }
+        public void drawScreen() { }
+
+        public void scrollScreen() { }
     }
 }

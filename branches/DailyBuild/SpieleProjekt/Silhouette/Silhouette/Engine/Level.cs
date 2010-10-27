@@ -26,23 +26,37 @@ namespace Silhouette.Engine
         /* Sascha:
          * Die Repräsentation eines Levels im Spiel.
         */
-        public static World Physics;
+        GameLoop currentGame;
+
+        private static World _Physics;
+
+        public static World Physics
+        {
+            get { return _Physics; }
+        }
+
         private const string LevelFilePath = "/Level";
+
+        ScreenManager screenManager;
 
         public Level(Game game)
             : base(game)
         {
+            currentGame = (GameLoop)game;
+        }
+
+        public override void Initialize()
+        {
+            LevelSettings.Initialise();
+            _Physics = new World(LevelSettings.Default.gravitation);
+
+            ScreenManager.Initialise(currentGame);
+            base.Initialize();
         }
 
         protected override void LoadContent()
         {
-            LevelSettings.Initialise();
-            Physics = new World(LevelSettings.Default.gravitation);
             base.LoadContent();
-        }
-        public override void Initialize()
-        {
-            base.Initialize();
         }
 
         public override void Update(GameTime gameTime)
