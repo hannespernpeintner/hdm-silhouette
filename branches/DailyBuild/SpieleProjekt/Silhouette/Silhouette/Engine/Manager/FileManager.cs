@@ -18,9 +18,14 @@ namespace Silhouette.Engine.Manager
 {
     public static class FileManager
     {
+        /* Sascha:
+         * Managed den Zugriff auf Dateien. Für jeden Typ Datei gibt es eine eigene Zugriffsfunktion,
+         * da wir ein stark spezialisiertes System haben, dass gerade im Hinblick auf den Leveleditor
+         * flexibel sein muss.
+        */ 
         public static FileStream LoadConfigFile(string relativePath)
         {
-            if (File.Exists(relativePath) == false)
+            if (!File.Exists(relativePath))
                 return null;
             else
                 return File.Open(relativePath, FileMode.Open, FileAccess.Read);
@@ -29,6 +34,19 @@ namespace Silhouette.Engine.Manager
         public static FileStream SaveConfigFile(string relativePath)
         {
             return File.Open(relativePath, FileMode.OpenOrCreate, FileAccess.Write);
+        }
+
+        public static FileStream LoadLevelFile(string relativePath)
+        {
+            if (!Directory.Exists("./Levels"))
+            {
+                Directory.CreateDirectory("./Levels");
+            }
+
+            if (!File.Exists(relativePath))
+                return null;
+            else
+                return File.Open(relativePath, FileMode.Open, FileAccess.Read);
         }
     }
 }
