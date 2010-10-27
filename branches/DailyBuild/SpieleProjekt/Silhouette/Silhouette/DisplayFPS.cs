@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.IO;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
@@ -15,6 +16,10 @@ namespace Silhouette
 {
     public class DisplayFPS : Microsoft.Xna.Framework.DrawableGameComponent
     {
+        /* Sascha:
+         * Klasse zum Anzeigen der aktuellen Frames per Second (FPS). Klasse wurde als DrawableGameComponent realisiert,
+         * weil die Integration zu Level so einfacher zu machen war.
+        */
 
         private float updateInterval = 1.0f;
         private float timeSinceLastUpdate = 0.0f;

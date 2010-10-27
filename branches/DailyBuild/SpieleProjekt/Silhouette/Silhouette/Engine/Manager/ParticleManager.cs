@@ -24,9 +24,9 @@ namespace Silhouette.Engine.PartikelEngine
         //Sascha: Klasse hat den Zweck alle Partikeleffekte im Level zentral zu verwalten
 
         /* Sascha:
-        Wegen Problemen mit der ContentPipeline müssen wir alle Partikeleffekte zentral hier im Manager speichern und dann
-        beim Auslesen aus der XML-Datei eine Kopie des entsprechenden Effekts übergeben. Ansonsten zeigen alle Effekte mit
-        dem gleichen Content auf das selbe Objekt und es kommt zu massiven Darstellungsfehlern.
+         * Wegen Problemen mit der ContentPipeline müssen wir alle Partikeleffekte zentral hier im Manager speichern und dann
+         * beim Auslesen aus der XML-Datei eine Kopie des entsprechenden Effekts übergeben. Ansonsten zeigen alle Effekte mit
+         * dem gleichen Content auf das selbe Objekt und es kommt zu massiven Darstellungsfehlern.
         */
 
         private static ParticleEffect _waterfall;

@@ -15,6 +15,10 @@ namespace Silhouette.Engine
     [Serializable]
     public class LevelSettings
     {
+        /* Sascha:
+         * Speichert die Voreinstellungen eines Levels, wie Gravitationsstärke oder Grundfarbton. Lädt beim Start des Levels aus einer XML-Datei
+         * die Einstellungen und setzt sie um. Die XML-Datei kann man entweder selbst schreiben oder den Editor benutzen.
+        */ 
         private Vector2 _gravitation = new Vector2(0.0f, 9.8f);
 
         public Vector2 gravitation { get { return _gravitation; } set { _gravitation = value; } }
@@ -24,7 +28,7 @@ namespace Silhouette.Engine
 
         private LevelSettings() {}
 
-        private static LevelSettings _instance;
+        private static LevelSettings _instance;     //Sascha: Singleton-Pattern
         public static LevelSettings Default { get {return _instance; } }
 
         public static void Initialise()
