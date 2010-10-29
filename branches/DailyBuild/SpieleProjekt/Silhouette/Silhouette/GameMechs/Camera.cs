@@ -79,6 +79,11 @@ namespace Silhouette.Engine
                     {
                         ZoomOut(0.5f, 0.25f);
                     }
+
+                    if (Keyboard.GetState().IsKeyUp(Keys.Add) && Keyboard.GetState().IsKeyUp(Keys.Subtract))
+                    {
+                        Reset(0.25f);
+                    }
                 }
 
                 matrix = Matrix.CreateTranslation(new Vector3(-position.X, -position.Y, 0)) *
