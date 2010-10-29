@@ -2,87 +2,101 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using FarseerPhysics.Dynamics;
+using FarseerPhysics.Dynamics.Joints;
+using FarseerPhysics.Factories;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
+using Silhouette.GameMechs;
 
 namespace Silhouette.Engine
 {
-    public class Camera
+    //Camera ist eine sehr frühe Fassung. Vorerst statisch, zu debug-Zwecken. Einbindung mit Physik ist erdacht, aber auskommentiert.
+    class Camera:LevelObject
     {
-        public Vector2 position;            // Hannes: Position, Zoomfaktor (1 ist normal, 2 ist reingezoomt, 0,5 rausgezoomt),
-        public float zoom = 1.0f;           // Transformationsmatrix ist an der Camera gespeichert.
-        public Matrix matrix;
+        public static Vector2 position { get; set; }
+        public static Fixture fixture { get; set; }
+        public static Fixture anchorPoint { get; set; }
+        public static Matrix matrix { get; set; }
+        public static float zoom { get; set; }
+        //public static bool isFix { get; set; }
+        //public static Joint joint;
 
-        public Camera(Vector2 position)
+        public Camera(GameLoop game, Vector2 position)
         {
-            this.position = position;
+            Camera.position = position;
+            zoom = 1.0f;
+            //isFix = true;
+            //fixture = FixtureFactory.CreateRectangle(Level.Physics, 1, 1, 1.0f);
+            //fixture.Body.IgnoreGravity = true;
+            //joint = null;
+
         }
 
-        public void Update(GameTime gameTime, Viewport port, Vector2 position)              // Viewport muss leider übergeben
-        {                                                                                   // werden. Position kann zB die
-                float elapsed = gameTime.ElapsedGameTime.Milliseconds;                      // Position der Spielfigur sein.
-                //this.position = position;                                                 // Wird beim Testen nicht benutzt.
-
-                if (Keyboard.GetState().IsKeyDown(Keys.Left))                               // Pfeiltasten bewegen, X und Y zoomen
-                {
-                    MoveLeft(3.0f);
-                }
-
-                if (Keyboard.GetState().IsKeyDown(Keys.Right))
-                {
-                    MoveRight(3.0f);
-                }
-
-                if (Keyboard.GetState().IsKeyDown(Keys.Up))
-                {
-                    MoveUp(3.0f);
-                }
-
-                if (Keyboard.GetState().IsKeyDown(Keys.Down))
-                {
-                    MoveDown(3.0f);
-                }
-
-                if (Keyboard.GetState().IsKeyDown(Keys.Y))
-                {
-                    ZoomOut(0.4f, 0.1f);
-                }
-
-                if (Keyboard.GetState().IsKeyDown(Keys.X))
-                {
-                    ZoomIn(2.0f, 0.1f);
-                }
-
-                if (Keyboard.GetState().IsKeyUp(Keys.X) && Keyboard.GetState().IsKeyUp(Keys.Y)) { Reset(0.2f); }
-
-                matrix = Matrix.CreateTranslation(new Vector3(-this.position.X, -this.position.Y, 0)) *
-                                         Matrix.CreateRotationZ(0) *
-                                         Matrix.CreateScale(new Vector3(zoom, zoom, 0)) *
-                                         Matrix.CreateTranslation(new Vector3( port.Width* 0.5f, port.Height * 0.5f, 0));
+        /*public void Link(Fixture fixture)
+        {
+            anchorPoint = fixture;
+            joint = JointFactory.CreateDistanceJoint(Level.Physics, this.fixture.Body, anchorPoint.Body, Vector2.Zero, Vector2.Zero);
             
         }
 
+        public void Delink()
+        {
+            anchorPoint = null;
+            joint = null;
+        }*/
 
+        public void Update(GameTime gameTime, Viewport port, Vector2 position)              // Viewport muss leider übergeben
+        {                                                                                   // werden. Position kann zB die
+                                                                                            // des Players sein. Wird geändert,
+                float elapsed = gameTime.ElapsedGameTime.Milliseconds;                      // sodass nur game übergeben werden muss.
+
+                //if (!isFix) { this.position = position; }
+                //else
+                {
+                    if (Keyboard.GetState().IsKeyDown(Keys.Up))
+                    {
+                        MoveUp(2);
+                    }
+                    if (Keyboard.GetState().IsKeyDown(Keys.Left))
+                    {
+                        MoveLeft(2);
+                    }
+                    if (Keyboard.GetState().IsKeyDown(Keys.Down))
+                    {
+                        MoveDown(2);
+                    }
+                    if (Keyboard.GetState().IsKeyDown(Keys.Right))
+                    {
+                        MoveRight(2);
+                    }
+                }
+
+                matrix = Matrix.CreateTranslation(new Vector3(-position.X, -position.Y, 0)) *
+                                                    Matrix.CreateRotationZ(0) *
+                                                    Matrix.CreateScale(new Vector3(zoom, zoom, 0)) *
+                                                    Matrix.CreateTranslation(new Vector3( port.Width* 0.5f, port.Height * 0.5f, 0)); //!!!
+        }
 
         public void MoveLeft(float speed)
         {
-            position.X -= speed;
+            position = position - new Vector2(speed,0);
         }
 
         public void MoveRight(float speed)
         {
-            position.X += speed;
+            position = position + new Vector2(speed, 0);
         }
 
         public void MoveUp(float speed)
         {
-            position.Y += speed;
+            position = position - new Vector2(0, speed);
         }
 
         public void MoveDown(float speed)
         {
-            position.Y -= speed;
+            position = position + new Vector2(0, speed);
         }
 
         public void ZoomIn(float max, float speed)
@@ -102,11 +116,5 @@ namespace Silhouette.Engine
             if (zoom > 1.0f) { zoom -= speed; }
             if (zoom < 1.0f) { zoom += speed; }
         }
-
-        public Matrix GetMatrix()                                   // Diese Matrix wird dem spriteBatch übergeben, der
-        {                                                           // das ganze Bild zeichnet.
-            return matrix;
-        }
-
     }
 }
