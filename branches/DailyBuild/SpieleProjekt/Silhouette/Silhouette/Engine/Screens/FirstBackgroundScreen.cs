@@ -16,7 +16,6 @@ namespace Silhouette.Engine.Screens
     public class FirstBackgroundScreen : Screen
     {
         private Texture2D backgroundTexture;
-        private SpriteBatch spriteBatch;
 
         public void initialiseScreen() 
         {
@@ -33,13 +32,8 @@ namespace Silhouette.Engine.Screens
         
         }
 
-        public void drawScreen() 
-        { 
-        
-        }
-
-        public void scrollScreen() 
-        { 
+        public void drawScreen(SpriteBatch spriteBatch) 
+        {
         
         }
     }

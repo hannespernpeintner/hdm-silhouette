@@ -14,11 +14,29 @@ namespace Silhouette.Engine.Screens
 {
     public class MenuScreen : Screen
     {
-        public void initialiseScreen() { }
-        public void loadScreen() { }
-        public void updateScreen() { }
-        public void drawScreen() { }
+        public void initialiseScreen() 
+        { 
+        
+        }
 
-        public void scrollScreen() { }
+        public void loadScreen() 
+        { 
+        
+        }
+
+        public void updateScreen() 
+        { 
+        
+        }
+
+        public void drawScreen(SpriteBatch spriteBatch) 
+        { 
+        
+        }
+
+        public void scrollScreen() 
+        { 
+        
+        }
     }
 }
