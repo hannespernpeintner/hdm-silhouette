@@ -9,6 +9,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 
+
 namespace Silhouette.Engine
 {
     static class FontManager
@@ -16,9 +17,9 @@ namespace Silhouette.Engine
         //Sascha: Diese Klasse dient dazu, den Zugriff auf Fonts global zu kapseln um Debugging zu vereinfachen
         public static SpriteFont Arial; //Sascha: Kann jetzt einfach über FontManager.Arial überall aufgerufen werden
 
-        public static void loadFonts(GameLoop Game)
+        public static void loadFonts()
         {
-            Arial = Game.Content.Load<SpriteFont>("Fonts/Arial");
+            Arial = GameLoop.gameInstance.Content.Load<SpriteFont>("Fonts/Arial");
         }
     }
 }

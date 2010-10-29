@@ -33,6 +33,8 @@ namespace Silhouette
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
+        public static GameLoop gameInstance;
+
         Level level;
         DisplayFPS displayFPS;
 
@@ -50,6 +52,7 @@ namespace Silhouette
 
         protected override void Initialize()
         {
+            gameInstance = this;
             //Voreinstellungen gemäß der Spezifikationen
             GameSettings.Initialise();
             GameSettings.ApplyChanges(ref graphics);
@@ -61,7 +64,7 @@ namespace Silhouette
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
             //Lädt alle Fonts, die im FontManager deklariert wurden
-            FontManager.loadFonts(this);
+            FontManager.loadFonts();
         }
 
         protected override void UnloadContent(){}
