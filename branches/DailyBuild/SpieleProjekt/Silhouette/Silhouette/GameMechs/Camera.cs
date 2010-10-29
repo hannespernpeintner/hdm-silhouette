@@ -71,6 +71,14 @@ namespace Silhouette.Engine
                     {
                         MoveRight(2);
                     }
+                    if (Keyboard.GetState().IsKeyDown(Keys.Add))
+                    {
+                        ZoomIn(2.0f,0.25f);
+                    }
+                    if (Keyboard.GetState().IsKeyDown(Keys.Subtract))
+                    {
+                        ZoomOut(0.5f, 0.25f);
+                    }
                 }
 
                 matrix = Matrix.CreateTranslation(new Vector3(-position.X, -position.Y, 0)) *
