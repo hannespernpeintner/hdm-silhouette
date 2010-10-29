@@ -33,9 +33,9 @@ namespace Silhouette.Engine.PartikelEngine
 
         public static ParticleEffect waterfall { get; set; }
 
-        public static void initialise(GameLoop Game)
+        public static void initialise()
         {
-            _waterfall = Game.Content.Load<ParticleEffect>("ParticleEffects/Water");
+            _waterfall = GameLoop.gameInstance.Content.Load<ParticleEffect>("ParticleEffects/Water");
         }
     }
 }

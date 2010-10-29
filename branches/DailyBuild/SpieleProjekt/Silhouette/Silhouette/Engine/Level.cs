@@ -26,7 +26,6 @@ namespace Silhouette.Engine
         /* Sascha:
          * Die Repräsentation eines Levels im Spiel.
         */
-        GameLoop currentGame;
 
         private static World _Physics;
 
@@ -40,7 +39,6 @@ namespace Silhouette.Engine
         public Level(Game game)
             : base(game)
         {
-            currentGame = (GameLoop)game;
         }
 
         public override void Initialize()
@@ -48,7 +46,7 @@ namespace Silhouette.Engine
             LevelSettings.Initialise();
             _Physics = new World(LevelSettings.Default.gravitation);
 
-            ScreenManager.Initialise(currentGame);
+            ScreenManager.Initialise();
             base.Initialize();
         }
 

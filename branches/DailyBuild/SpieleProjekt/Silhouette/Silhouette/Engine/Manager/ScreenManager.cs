@@ -66,13 +66,13 @@ namespace Silhouette.Engine.Manager
         #endregion
 
         #region Singleton
-            public static void Initialise(GameLoop Game)
+            public static void Initialise()
             {
                 if (_instance == null)
-                    _instance = new ScreenManager(Game);
+                    _instance = new ScreenManager();
             }
 
-            private ScreenManager(GameLoop Game) { spriteBatch = new SpriteBatch(Game.GraphicsDevice); }
+            private ScreenManager() { spriteBatch = new SpriteBatch(GameLoop.gameInstance.GraphicsDevice); }
         #endregion
 
         public void LoadScreens()
