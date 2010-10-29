@@ -17,8 +17,6 @@ namespace Silhouette.Engine.Screens
         void initialiseScreen();
         void loadScreen();
         void updateScreen();
-        void drawScreen();
-
-        void scrollScreen();
+        void drawScreen(SpriteBatch spriteBatch);
     }
 }

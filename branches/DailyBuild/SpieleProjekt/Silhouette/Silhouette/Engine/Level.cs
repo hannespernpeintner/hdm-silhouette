@@ -12,6 +12,7 @@ using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 
 using Silhouette.Engine.Manager;
+using Silhouette.Engine.Screens;
 
 //Physik-Engine Klassen
 using FarseerPhysics;
@@ -28,10 +29,16 @@ namespace Silhouette.Engine
         */
 
         private static World _Physics;
+        private const float _PixelPerMeter = 100.0f;
 
         public static World Physics
         {
             get { return _Physics; }
+        }
+
+        public static float PixelPerMeter
+        {
+            get { return _PixelPerMeter; }
         }
 
         private const string LevelFilePath = "/Level";
@@ -82,7 +89,6 @@ namespace Silhouette.Engine
                 //Sascha: Level laden
             }
             */
-
             ScreenManager.Default.LoadScreens();
         }
     }

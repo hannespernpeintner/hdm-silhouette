@@ -63,6 +63,8 @@ namespace Silhouette.Engine.Manager
 
             private MenuScreen menuScreen;
             private MainMenuScreen mainMenuScreen;
+
+            List<Screen> gameScreens;
         #endregion
 
         #region Singleton
@@ -91,8 +93,13 @@ namespace Silhouette.Engine.Manager
         }
 
         public void DrawScreens(SpriteBatch spriteBatch)
-        { 
-        
+        {
+            spriteBatch.Begin();
+            ScreenManager.Default.firstBackgroundScreen.drawScreen(spriteBatch);
+            ScreenManager.Default.secondBackgroundScreen.drawScreen(spriteBatch);
+            ScreenManager.Default.playerScreen.drawScreen(spriteBatch);
+            ScreenManager.Default.foregroundScreen.drawScreen(spriteBatch);
+            spriteBatch.End();
         }
     }
 }
