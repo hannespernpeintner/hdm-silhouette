@@ -12,6 +12,7 @@ using Microsoft.Xna.Framework.Media;
 
 namespace Silhouette.Engine.Screens
 {
+    [Serializable]
     public class ForegroundScreen : Screen
     {
         public void initialiseScreen() { }

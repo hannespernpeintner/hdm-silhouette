@@ -12,13 +12,16 @@ using Microsoft.Xna.Framework.Media;
 
 namespace Silhouette.Engine.Screens
 {
-    interface Screen
+    public class MainMenuScreen : Screen
     {
-        void initialiseScreen();
-        void loadScreen();
-        void updateScreen();
-        void drawScreen();
+        public void initialiseScreen()
+        {
 
-        void scrollScreen();
+        }
+        public void loadScreen() { }
+        public void updateScreen() { }
+        public void drawScreen() { }
+
+        public void scrollScreen() { }
     }
 }

@@ -12,6 +12,7 @@ using Microsoft.Xna.Framework.Media;
 
 namespace Silhouette.Engine.Screens
 {
+    [Serializable]
     public class SecondBackgroundScreen : Screen
     {
         public void initialiseScreen() { }

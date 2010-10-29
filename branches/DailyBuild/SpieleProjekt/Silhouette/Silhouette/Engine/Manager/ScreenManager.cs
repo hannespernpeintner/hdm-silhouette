@@ -32,12 +32,37 @@ namespace Silhouette.Engine.Manager
                 set { _spriteBatch = value; }
             }
 
-            private ArrayList _gameScreens;
+            private FirstBackgroundScreen _firstBackgroundScreen;
+            private SecondBackgroundScreen _secondBackgroundScreen;
+            private PlayerScreen _playerScreen;
+            private ForegroundScreen _foregroundScreen;
 
-            public ArrayList gameScreens
+            public FirstBackgroundScreen firstBackgroundScreen
             {
-                get { return _gameScreens; }
+                get { return _firstBackgroundScreen; }
+                set { _firstBackgroundScreen = value; }
             }
+
+            public SecondBackgroundScreen secondBackgroundScreen
+            {
+                get { return _secondBackgroundScreen; }
+                set { _secondBackgroundScreen = value; }
+            }
+
+            public PlayerScreen playerScreen
+            {
+                get { return _playerScreen; }
+                set { _playerScreen = value; }
+            }
+
+            public ForegroundScreen foregroundScreen
+            {
+                get { return _foregroundScreen; }
+                set { _foregroundScreen = value; }
+            }
+
+            private MenuScreen menuScreen;
+            private MainMenuScreen mainMenuScreen;
         #endregion
 
         #region Singleton
@@ -49,5 +74,22 @@ namespace Silhouette.Engine.Manager
 
             private ScreenManager(GameLoop Game) { spriteBatch = new SpriteBatch(Game.GraphicsDevice); }
         #endregion
+
+        public void LoadScreens()
+        {
+            //Sascha: Normal Deserialisierung, aber da wir noch keinen LE haben wird es erstmal so gemacht
+
+            //Sascha: Spielescreens, die aus Levelfile geladen werden, da sie je nach Level unterschiedlich sind
+            ScreenManager.Default.firstBackgroundScreen = new FirstBackgroundScreen();
+            ScreenManager.Default.secondBackgroundScreen = new SecondBackgroundScreen();
+            ScreenManager.Default.playerScreen = new PlayerScreen();
+            ScreenManager.Default.foregroundScreen = new ForegroundScreen();
+
+            //Sascha: Menüs, die nicht aus Levelfile geladen werden, da sie überall gleich sind
+            ScreenManager.Default.menuScreen = new MenuScreen();
+            ScreenManager.Default.mainMenuScreen = new MainMenuScreen();
+        }
+
+
     }
 }
