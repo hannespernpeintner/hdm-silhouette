@@ -90,6 +90,9 @@ namespace Silhouette.Engine.Manager
             ScreenManager.Default.mainMenuScreen = new MainMenuScreen();
         }
 
-
+        public void DrawScreens(SpriteBatch spriteBatch)
+        { 
+        
+        }
     }
 }

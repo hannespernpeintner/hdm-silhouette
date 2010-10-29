@@ -118,6 +118,7 @@
     <Compile Include="Engine\Level.cs" />
     <Compile Include="Engine\LevelSettings.cs" />
     <Compile Include="Engine\Manager\FileManager.cs" />
+    <Compile Include="Engine\Manager\FixtureManager.cs" />
     <Compile Include="Engine\Screens\MainMenuScreen.cs" />
     <Compile Include="GameMechs\AnimatedSprite.cs" />
     <Compile Include="Engine\Manager\FontManager.cs" />
