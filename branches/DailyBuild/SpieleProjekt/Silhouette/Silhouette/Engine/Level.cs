@@ -37,8 +37,6 @@ namespace Silhouette.Engine
 
         private const string LevelFilePath = "/Level";
 
-        ScreenManager screenManager;
-
         public Level(Game game)
             : base(game)
         {
@@ -56,6 +54,7 @@ namespace Silhouette.Engine
 
         protected override void LoadContent()
         {
+            LoadLevel(LevelFilePath, 1);
             base.LoadContent();
         }
 
@@ -73,6 +72,7 @@ namespace Silhouette.Engine
 
         public void LoadLevel(string relativePath, int levelNumber)
         {
+            /* Sascha: Momentan noch ohne Funktion, da der Leveleditor fehlt
             FileStream file = FileManager.LoadLevelFile(LevelFilePath, levelNumber);
 
             if (file == null)
@@ -83,6 +83,9 @@ namespace Silhouette.Engine
             { 
                 //Sascha: Level laden
             }
+            */
+
+            ScreenManager.Default.LoadScreens();
         }
     }
 }
