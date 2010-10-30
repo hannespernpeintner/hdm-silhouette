@@ -25,7 +25,7 @@ namespace Silhouette.Engine.Screens
         
         }
 
-        public void updateScreen() 
+        public void updateScreen(GameTime gameTime) 
         { 
         
         }

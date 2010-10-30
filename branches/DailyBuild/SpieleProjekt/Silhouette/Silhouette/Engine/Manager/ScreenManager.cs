@@ -92,8 +92,18 @@ namespace Silhouette.Engine.Manager
             ScreenManager.Default.mainMenuScreen = new MainMenuScreen();
         }
 
-        public void DrawScreens(SpriteBatch spriteBatch)
+        public void UpdateScreens(GameTime gameTime)
         {
+            //Sascha: Provisorischer Code, wird später ersetzt
+            ScreenManager.Default.firstBackgroundScreen.updateScreen(gameTime);
+            ScreenManager.Default.secondBackgroundScreen.updateScreen(gameTime);
+            ScreenManager.Default.playerScreen.updateScreen(gameTime);
+            ScreenManager.Default.foregroundScreen.updateScreen(gameTime);
+        }
+
+        public void DrawScreens()
+        {
+            //Sascha: Provisorischer Code, wird später ersetzt
             spriteBatch.Begin();
             ScreenManager.Default.firstBackgroundScreen.drawScreen(spriteBatch);
             ScreenManager.Default.secondBackgroundScreen.drawScreen(spriteBatch);
