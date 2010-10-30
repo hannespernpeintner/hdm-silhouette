@@ -25,23 +25,25 @@ namespace Silhouette.Engine
     public class Level : Microsoft.Xna.Framework.DrawableGameComponent
     {
         /* Sascha:
-         * Die Repräsentation eines Levels im Spiel.
+         * Die Repräsentation eines Levels im Spiel. Momentan noch als GameComponent, später als eigenständige Klasse zwecks GameState.
         */
 
-        private static World _Physics;
-        private const float _PixelPerMeter = 100.0f;
+        #region Definitions
+            private static World _Physics;
+            private const float _PixelPerMeter = 100.0f;
 
-        public static World Physics
-        {
-            get { return _Physics; }
-        }
+            public static World Physics
+            {
+                get { return _Physics; }
+            }
 
-        public static float PixelPerMeter
-        {
-            get { return _PixelPerMeter; }
-        }
+            public static float PixelPerMeter
+            {
+                get { return _PixelPerMeter; }
+            }
 
-        private const string LevelFilePath = "/Level";
+            private const string LevelFilePath = "/Level";
+        #endregion
 
         public Level(Game game)
             : base(game)
@@ -66,12 +68,14 @@ namespace Silhouette.Engine
         public override void Update(GameTime gameTime)
         {
             Physics.Step(Math.Min((float)gameTime.ElapsedGameTime.TotalMilliseconds * 0.001f, (1f / 30f)));
+            ScreenManager.Default.UpdateScreens(gameTime);
             base.Update(gameTime);
         }
 
         public override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(LevelSettings.Default.backgroundColor);
+            ScreenManager.Default.DrawScreens();
             base.Draw(gameTime);
         }
 

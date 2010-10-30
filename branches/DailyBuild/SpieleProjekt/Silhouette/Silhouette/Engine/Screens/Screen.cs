@@ -16,7 +16,7 @@ namespace Silhouette.Engine.Screens
     {
         void initialiseScreen();
         void loadScreen();
-        void updateScreen();
+        void updateScreen(GameTime gameTime);
         void drawScreen(SpriteBatch spriteBatch);
     }
 }
