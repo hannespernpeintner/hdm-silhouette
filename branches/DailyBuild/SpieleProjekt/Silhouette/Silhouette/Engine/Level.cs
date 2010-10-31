@@ -50,7 +50,7 @@ namespace Silhouette.Engine
 
         public void LoadContent()
         {
-            LoadLevel(LevelFilePath, 1);
+
         }
 
         public void Update(GameTime gameTime)
