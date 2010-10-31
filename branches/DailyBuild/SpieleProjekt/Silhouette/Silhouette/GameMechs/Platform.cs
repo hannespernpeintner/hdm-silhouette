@@ -19,7 +19,7 @@ using Silhouette.Engine;
 
 namespace Silhouette.GameMechs
 {
-    public class Platform:DrawableLevelObject
+    public class Platform : DrawableLevelObject
     {
         // Hannes: Die Platform-Klasse wird für alle statischen Objekte des Levels verwendet. Also alles, was das Grundgerüst des
         // Levels bildet.

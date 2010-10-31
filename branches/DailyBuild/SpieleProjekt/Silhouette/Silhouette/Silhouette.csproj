@@ -125,8 +125,10 @@
     <Compile Include="Engine\Manager\ParticleManager.cs" />
     <Compile Include="DisplayFPS.cs" />
     <Compile Include="Engine\Screens\MenuScreen.cs" />
+    <Compile Include="Engine\Animation.cs" />
     <Compile Include="GameMechs\DrawableLevelObject.cs" />
     <Compile Include="GameMechs\LevelObject.cs" />
+    <Compile Include="GameMechs\Platform.cs" />
     <Compile Include="GameMechs\Player.cs" />
     <Compile Include="GameSettings.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
