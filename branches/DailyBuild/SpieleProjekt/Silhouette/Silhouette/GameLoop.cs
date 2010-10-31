@@ -36,6 +36,7 @@ namespace Silhouette
         public static GameLoop gameInstance;
 
         DisplayFPS displayFPS;
+        Level level;
 
         public GameLoop()
         {
@@ -49,6 +50,8 @@ namespace Silhouette
         protected override void Initialize()
         {
             gameInstance = this;
+            level = new Level();        //Provisorisch
+            level.Initialize();
             //Voreinstellungen gemäß der Spezifikationen
             GameSettings.Initialise();
             GameSettings.ApplyChanges(ref graphics);
@@ -61,18 +64,21 @@ namespace Silhouette
             spriteBatch = new SpriteBatch(GraphicsDevice);
             //Lädt alle Fonts, die im FontManager deklariert wurden
             FontManager.loadFonts();
+            level.LoadContent();        //Provisorisch
         }
 
         protected override void UnloadContent(){}
 
         protected override void Update(GameTime gameTime)
         {
+            level.Update(gameTime);     //Provisorisch
             base.Update(gameTime);
         }
 
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.Black);
+            level.Draw(gameTime);       //Provisorisch
             base.Draw(gameTime);
         }
     }
