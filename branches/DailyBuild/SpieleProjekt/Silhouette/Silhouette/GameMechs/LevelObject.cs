@@ -19,7 +19,7 @@ namespace Silhouette.GameMechs
 {
     public abstract class LevelObject
     {
-        Vector2 position;
+        public Vector2 position;
 
         public abstract void Initialise();
         public abstract void LoadContent();

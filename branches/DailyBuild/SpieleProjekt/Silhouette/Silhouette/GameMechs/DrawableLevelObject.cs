@@ -14,7 +14,7 @@ namespace Silhouette.GameMechs
 {
     public abstract class DrawableLevelObject
     {
-        Vector2 position;
+        public Vector2 position;
 
         public abstract void Initialise();
         public abstract void LoadContent();
