@@ -32,37 +32,58 @@ namespace Silhouette.Engine
         #region Definitions
 
             public static World Physics;
-            const float _PixelPerMeter = 100.0f;
+            private const float _PixelPerMeter = 100.0f;
             public static float PixelPerMeter { get { return _PixelPerMeter; } }
             Vector2 gravitation;
             SpriteBatch spriteBatch;
             List<Layer> layerList;
 
+            Camera camera;
+
             private const string LevelFilePath = "/Level";
         #endregion
+
+        public Level()
+        {
+            spriteBatch = new SpriteBatch(GameLoop.gameInstance.GraphicsDevice);
+            layerList = new List<Layer>();
+        }
 
         public void Initialize()
         {
             gravitation = new Vector2(0.0f, 9.8f);
             Physics = new World(gravitation);
+            camera = new Camera(GameSettings.Default.resolutionWidth, GameSettings.Default.resolutionHeight);
         }
 
         public void LoadContent()
         {
-
+            foreach (Layer l in layerList)
+            {
+                l.loadLayer();
+            }
         }
 
         public void Update(GameTime gameTime)
         {
             Physics.Step(Math.Min((float)gameTime.ElapsedGameTime.TotalMilliseconds * 0.001f, (1f / 30f)));
+            foreach (Layer l in layerList)
+            {
+                l.updateLayer(gameTime);
+            }
         }
 
         public void Draw(GameTime gameTime)
         {
-
+            foreach (Layer l in layerList)
+            {
+                spriteBatch.Begin(/*SpriteSortMode.Deferred, null, null, null, null, null, camera.matrix*/);
+                l.drawLayer(spriteBatch);
+                spriteBatch.End();
+            }
         }
 
-        public void LoadLevel(string relativePath, int levelNumber)
+        public void LoadLevelFile(int levelNumber)
         {
 
         }

@@ -45,16 +45,17 @@ namespace Silhouette
 
             displayFPS = new DisplayFPS(this);
             Components.Add(displayFPS);
+
+            gameInstance = this;
+            //Voreinstellungen gemäß der Spezifikationen
+            GameSettings.Initialise();
+            GameSettings.ApplyChanges(ref graphics);
         }
 
         protected override void Initialize()
         {
-            gameInstance = this;
             level = new Level();        //Provisorisch
             level.Initialize();
-            //Voreinstellungen gemäß der Spezifikationen
-            GameSettings.Initialise();
-            GameSettings.ApplyChanges(ref graphics);
             base.Initialize();
         }
 
