@@ -32,11 +32,10 @@ namespace Silhouette.Engine
         #region Definitions
 
             public static World Physics;
-            const float PixelPerMeter = 100.0f;
+            const float _PixelPerMeter = 100.0f;
+            public static float PixelPerMeter { get { return _PixelPerMeter; } }
             Vector2 gravitation;
-
             SpriteBatch spriteBatch;
-
             List<Layer> layerList;
 
             private const string LevelFilePath = "/Level";
