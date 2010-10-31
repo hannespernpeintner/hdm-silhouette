@@ -35,16 +35,12 @@ namespace Silhouette
 
         public static GameLoop gameInstance;
 
-        Level level;
         DisplayFPS displayFPS;
 
         public GameLoop()
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
-
-            level = new Level(this);
-            Components.Add(level);
 
             displayFPS = new DisplayFPS(this);
             Components.Add(displayFPS);
@@ -76,6 +72,7 @@ namespace Silhouette
 
         protected override void Draw(GameTime gameTime)
         {
+            GraphicsDevice.Clear(Color.Black);
             base.Draw(gameTime);
         }
     }

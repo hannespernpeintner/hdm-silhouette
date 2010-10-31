@@ -29,13 +29,11 @@ namespace Silhouette.Engine.PartikelEngine
          * dem gleichen Content auf das selbe Objekt und es kommt zu massiven Darstellungsfehlern.
         */
 
-        private static ParticleEffect _waterfall;
-
-        public static ParticleEffect waterfall { get; set; }
+        public static ParticleEffect waterfall;
 
         public static void initialise()
         {
-            _waterfall = GameLoop.gameInstance.Content.Load<ParticleEffect>("ParticleEffects/Water");
+            waterfall = GameLoop.gameInstance.Content.Load<ParticleEffect>("ParticleEffects/Water");
         }
     }
 }

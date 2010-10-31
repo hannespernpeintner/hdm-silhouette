@@ -22,78 +22,50 @@ using FarseerPhysics.Collision;
 
 namespace Silhouette.Engine
 {
-    public class Level : Microsoft.Xna.Framework.DrawableGameComponent
+    [Serializable]
+    public class Level
     {
         /* Sascha:
-         * Die Repräsentation eines Levels im Spiel. Momentan noch als GameComponent, später als eigenständige Klasse zwecks GameState.
+         * Die Repräsentation eines Levels im Spiel.
         */
 
         #region Definitions
-            private static World _Physics;
-            private const float _PixelPerMeter = 100.0f;
 
-            public static World Physics
-            {
-                get { return _Physics; }
-            }
+            public static World Physics;
+            const float PixelPerMeter = 100.0f;
+            Vector2 gravitation;
 
-            public static float PixelPerMeter
-            {
-                get { return _PixelPerMeter; }
-            }
+            SpriteBatch spriteBatch;
+
+            List<Layer> layerList;
 
             private const string LevelFilePath = "/Level";
         #endregion
 
-        public Level(Game game)
-            : base(game)
+        public void Initialize()
         {
+            gravitation = new Vector2(0.0f, 9.8f);
+            Physics = new World(gravitation);
         }
 
-        public override void Initialize()
-        {
-            LevelSettings.Initialise();
-            _Physics = new World(LevelSettings.Default.gravitation);
-
-            ScreenManager.Initialise();
-            base.Initialize();
-        }
-
-        protected override void LoadContent()
+        public void LoadContent()
         {
             LoadLevel(LevelFilePath, 1);
-            base.LoadContent();
         }
 
-        public override void Update(GameTime gameTime)
+        public void Update(GameTime gameTime)
         {
             Physics.Step(Math.Min((float)gameTime.ElapsedGameTime.TotalMilliseconds * 0.001f, (1f / 30f)));
-            ScreenManager.Default.UpdateScreens(gameTime);
-            base.Update(gameTime);
         }
 
-        public override void Draw(GameTime gameTime)
+        public void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(LevelSettings.Default.backgroundColor);
-            ScreenManager.Default.DrawScreens();
-            base.Draw(gameTime);
+
         }
 
         public void LoadLevel(string relativePath, int levelNumber)
         {
-            /* Sascha: Momentan noch ohne Funktion, da der Leveleditor fehlt
-            FileStream file = FileManager.LoadLevelFile(LevelFilePath, levelNumber);
 
-            if (file == null)
-            {
-                //Sascha: Abbruchmeldung im Menü, da Fehler
-            }
-            else
-            { 
-                //Sascha: Level laden
-            }
-            */
-            ScreenManager.Default.LoadScreens();
         }
     }
 }

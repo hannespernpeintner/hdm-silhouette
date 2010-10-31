@@ -115,21 +115,15 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Engine\Camera.cs" />
     <Compile Include="Engine\Level.cs" />
-    <Compile Include="Engine\LevelSettings.cs" />
     <Compile Include="Engine\Manager\FileManager.cs" />
     <Compile Include="Engine\Manager\FixtureManager.cs" />
+    <Compile Include="Engine\Layer.cs" />
     <Compile Include="Engine\Screens\MainMenuScreen.cs" />
-    <Compile Include="GameMechs\AnimatedSprite.cs" />
     <Compile Include="Engine\Manager\FontManager.cs" />
-    <Compile Include="Engine\Manager\ScreenManager.cs" />
     <Compile Include="Engine\Manager\ParticleManager.cs" />
     <Compile Include="DisplayFPS.cs" />
-    <Compile Include="Engine\Screens\Screen.cs" />
-    <Compile Include="Engine\Screens\FirstBackgroundScreen.cs" />
-    <Compile Include="Engine\Screens\SecondBackgroundScreen.cs" />
-    <Compile Include="Engine\Screens\PlayerScreen.cs" />
-    <Compile Include="Engine\Screens\ForegroundScreen.cs" />
     <Compile Include="Engine\Screens\MenuScreen.cs" />
     <Compile Include="GameMechs\DrawableLevelObject.cs" />
     <Compile Include="GameMechs\LevelObject.cs" />

@@ -14,16 +14,11 @@ namespace Silhouette.GameMechs
 {
     public abstract class DrawableLevelObject
     {
-        private Vector2 _position;
-
-        public Vector2 position { get { return _position; } set { _position = value; } }
+        Vector2 position;
 
         public abstract void Initialise();
-
         public abstract void LoadContent();
-
         public abstract void Update(GameTime gameTime);
-
         public abstract void Draw(SpriteBatch spriteBatch);
     }
 }

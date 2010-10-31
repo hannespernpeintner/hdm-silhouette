@@ -12,7 +12,7 @@ using Microsoft.Xna.Framework.Media;
 
 namespace Silhouette.Engine.Screens
 {
-    public class MainMenuScreen : Screen
+    public class MainMenuScreen
     {
         public void initialiseScreen()
         {
@@ -31,11 +31,6 @@ namespace Silhouette.Engine.Screens
 
         public void drawScreen(SpriteBatch spriteBatch) 
         { 
-        
-        }
-
-        public void scrollScreen()
-        {
         
         }
     }
