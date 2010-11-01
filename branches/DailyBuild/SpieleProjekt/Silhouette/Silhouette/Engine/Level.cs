@@ -46,6 +46,7 @@ namespace Silhouette.Engine
             List<Layer> layerList;
 
             public Camera camera;
+            Matrix proj;
 
             private const string LevelFilePath = "/Level";
         #endregion
@@ -61,11 +62,13 @@ namespace Silhouette.Engine
             gravitation = new Vector2(0.0f, 9.8f);
             Physics = new World(gravitation);
             debugView = new DebugViewXNA(Level.Physics);
-            camera = new Camera(GameSettings.Default.resolutionWidth, GameSettings.Default.resolutionHeight);
+            camera = new Camera(0, 0);
         }
 
         public void LoadContent()
         {
+            proj = Matrix.CreateOrthographicOffCenter(0, GameSettings.Default.resolutionWidth / PixelPerMeter, GameSettings.Default.resolutionHeight / PixelPerMeter, 0, 0, 1);
+
             foreach (Layer l in layerList)
             {
                 l.loadLayer();
@@ -118,8 +121,8 @@ namespace Silhouette.Engine
                 camera.Position = oldCameraPosition;
             }
 
-            if(DebugViewEnabled)
-                debugView.RenderDebugData(ref camera.matrix);
+            if(!DebugViewEnabled)
+                debugView.RenderDebugData(ref proj, ref camera.matrix);
         }
 
         public void LoadLevelFile(int levelNumber)

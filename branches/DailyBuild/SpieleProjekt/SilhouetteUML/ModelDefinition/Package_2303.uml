@@ -155,5 +155,21 @@
         isLeaf="false"
         isActiveClass="false" />
     </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="3ddcb5a1-3dd3-40c7-b1bc-705cae260012"
+        name="MenuScreen"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="9cc167e7-0253-42dc-9539-b8d6500f1e6c"
+        name="MainMenuScreen"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false" />
+    </packageHasNamedElement>
   </packagedElements>
 </package>
