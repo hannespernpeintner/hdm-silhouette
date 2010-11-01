@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Xml.Serialization;
 using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
@@ -30,15 +31,21 @@ namespace Silhouette.Engine
         */
 
         #region Definitions
+            [XmlAttribute()]
+            string name;
 
             public static World Physics;
             private const float _PixelPerMeter = 100.0f;
             public static float PixelPerMeter { get { return _PixelPerMeter; } }
             Vector2 gravitation;
+
+            DebugViewXNA debugView;
+            bool DebugViewEnabled = false;
+
             SpriteBatch spriteBatch;
             List<Layer> layerList;
 
-            Camera camera;
+            public Camera camera;
 
             private const string LevelFilePath = "/Level";
         #endregion
@@ -53,6 +60,7 @@ namespace Silhouette.Engine
         {
             gravitation = new Vector2(0.0f, 9.8f);
             Physics = new World(gravitation);
+            debugView = new DebugViewXNA(Level.Physics);
             camera = new Camera(GameSettings.Default.resolutionWidth, GameSettings.Default.resolutionHeight);
         }
 
@@ -71,21 +79,62 @@ namespace Silhouette.Engine
             {
                 l.updateLayer(gameTime);
             }
+            #region DebugView
+                KeyboardState kb = Keyboard.GetState();
+         
+                if (kb.IsKeyDown(Keys.F1))
+                    DebugViewEnabled = !DebugViewEnabled;
+                if (kb.IsKeyDown(Keys.F2))
+                    EnableOrDisableFlag(DebugViewFlags.DebugPanel);
+                if (kb.IsKeyDown(Keys.F3))
+                    EnableOrDisableFlag(DebugViewFlags.Shape);
+                if (kb.IsKeyDown(Keys.F4))
+                    EnableOrDisableFlag(DebugViewFlags.Joint);
+                if (kb.IsKeyDown(Keys.F5))
+                    EnableOrDisableFlag(DebugViewFlags.AABB);
+                if (kb.IsKeyDown(Keys.F6))
+                    EnableOrDisableFlag(DebugViewFlags.CenterOfMass);
+                if (kb.IsKeyDown(Keys.F7))
+                    EnableOrDisableFlag(DebugViewFlags.Pair);
+                if (kb.IsKeyDown(Keys.F8))
+                {
+                    EnableOrDisableFlag(DebugViewFlags.ContactPoints);
+                    EnableOrDisableFlag(DebugViewFlags.ContactNormals);
+                }
+                if (kb.IsKeyDown(Keys.F9))
+                    EnableOrDisableFlag(DebugViewFlags.PolygonPoints);
+            #endregion
         }
 
         public void Draw(GameTime gameTime)
         {
             foreach (Layer l in layerList)
             {
-                spriteBatch.Begin(/*SpriteSortMode.Deferred, null, null, null, null, null, camera.matrix*/);
+                Vector2 oldCameraPosition = camera.Position;
+                camera.Position *= l.scrollSpeed;
+                spriteBatch.Begin(SpriteSortMode.Deferred, null, null, null, null, null, camera.matrix);
                 l.drawLayer(spriteBatch);
                 spriteBatch.End();
+                camera.Position = oldCameraPosition;
             }
+
+            if(DebugViewEnabled)
+                debugView.RenderDebugData(ref camera.matrix);
         }
 
         public void LoadLevelFile(int levelNumber)
         {
 
         }
+
+        #region DebugViewMethods
+            private void EnableOrDisableFlag(DebugViewFlags flag)
+            {
+                if ((debugView.Flags & flag) == flag)
+                    debugView.RemoveFlags(flag);
+                else
+                    debugView.AppendFlags(flag);
+            }
+        #endregion
     }
 }

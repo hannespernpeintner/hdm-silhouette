@@ -8,12 +8,19 @@ using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
-
+using System.IO;
+using System.Xml.Serialization;
 
 namespace Silhouette.GameMechs
 {
     public abstract class DrawableLevelObject
     {
+        [XmlAttribute()]
+        string name;
+        [XmlAttribute()]
+        string type;
+
+        string assetName;
         public Vector2 position;
 
         public abstract void Initialise();

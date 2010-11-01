@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.IO;
+using System.Xml.Serialization;
 using System.Collections;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
@@ -17,17 +19,27 @@ namespace Silhouette.Engine.Screens
     [Serializable]
     class Layer
     {
+        [XmlAttribute()]
         string name;
+        [XmlAttribute()]
         bool isVisible;
-        Vector2 scrollSpeed;
+
+        public Vector2 scrollSpeed;
 
         List<LevelObject> loList;
         List<DrawableLevelObject> dloList;
 
-        public void initialiseLayer()
+        public Layer()
         {
             loList = new List<LevelObject>();
             dloList = new List<DrawableLevelObject>();
+        }
+
+        public void initialiseLayer(string name, Vector2 scrollSpeed, bool isVisible)
+        {
+            this.name = name;
+            this.scrollSpeed = scrollSpeed;
+            this.isVisible = isVisible;
         }
 
         public void loadLayer()
