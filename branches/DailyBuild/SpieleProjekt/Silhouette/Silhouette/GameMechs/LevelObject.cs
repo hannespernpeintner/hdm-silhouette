@@ -8,6 +8,8 @@ using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
+using System.IO;
+using System.Xml.Serialization;
 
 //Physik-Engine Klassen
 using FarseerPhysics;
@@ -19,6 +21,11 @@ namespace Silhouette.GameMechs
 {
     public abstract class LevelObject
     {
+        [XmlAttribute()]
+        string name;
+        [XmlAttribute()]
+        string type;
+
         public Vector2 position;
 
         public abstract void Initialise();

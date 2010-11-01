@@ -11,6 +11,7 @@ using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 
 //Klassen unserer eigenen Engine
+using Silhouette;
 using Silhouette.Engine;
 
 //Partikel-Engine Klassen
@@ -49,7 +50,7 @@ namespace Silhouette
             gameInstance = this;
             //Voreinstellungen gemäß der Spezifikationen
             GameSettings.Initialise();
-            GameSettings.ApplyChanges(ref graphics);
+            GameSettings.ApplyChanges(ref graphics);    
         }
 
         protected override void Initialize()
@@ -61,9 +62,8 @@ namespace Silhouette
 
         protected override void LoadContent()
         {
-            // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            //Lädt alle Fonts, die im FontManager deklariert wurden
+            DebugViewXNA.LoadContent(GameLoop.gameInstance.GraphicsDevice, GameLoop.gameInstance.Content);
             FontManager.loadFonts();
             level.LoadContent();        //Provisorisch
         }

@@ -76,7 +76,7 @@ namespace Silhouette.Engine
                      Matrix.CreateScale(_Scale) *
                      Matrix.CreateTranslation(viewport.X / 2, viewport.Y / 2, 0.0f);
         }
-
+       
         public void updateViewport(float width, float height)
         {
             viewport.X = width;
