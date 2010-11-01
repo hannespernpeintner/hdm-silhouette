@@ -236,17 +236,6 @@
               <elementDefinition Id="93702669-0cca-441b-a062-66ec0f6316ec" />
             </class>
           </packageHasNamedElement>
-          <packageHasNamedElement>
-            <class Id="67eef0c0-819c-4bd1-9c56-5d213695c5b2" name="Camera" isAbstract="false" isLeaf="false" isActiveClass="false">
-              <elementDefinition Id="f0b21f13-a16e-487f-a8cb-af2744fb9ed4" />
-              <generalsInternal>
-                <generalization Id="fd5f9e68-f2a8-4798-b896-f6a5c46cdaf5" isSubstitutable="false">
-                  <classMoniker Id="301519ed-4fa7-4563-8896-de33c7b26537" LastKnownName="LevelObject" />
-                  <elementDefinition Id="40fa8e36-f97f-4fff-ae60-7807494eda5d" />
-                </generalization>
-              </generalsInternal>
-            </class>
-          </packageHasNamedElement>
         </packagedElements>
       </package>
     </logicalClassDesignerModelHasPackages>
@@ -272,39 +261,6 @@
                 <packageHasNamedElement>
                   <class Id="b6fe9a2d-082e-49dd-bfd3-543ec493613e" name="ParticleManager" isAbstract="false" isLeaf="false" isActiveClass="false">
                     <elementDefinition Id="8f993d30-dcb1-4035-ab38-e292420a24fa" />
-                  </class>
-                </packageHasNamedElement>
-                <packageHasNamedElement>
-                  <class Id="c220b9a0-bdaa-4f97-a44f-3ec11fa6c718" name="ScreenManager" isAbstract="false" isLeaf="false" isActiveClass="false">
-                    <elementDefinition Id="19edd810-a2cd-431e-b5fb-e354b47e717d" />
-                    <targetEnds>
-                      <association Id="9bb8937d-544c-4f73-ac21-e527c7f44b26" isDerived="false" sourceEndRoleName="" targetEndRoleName="" isLeaf="false" isAbstract="false">
-                        <classMoniker Id="7b5ba140-fdee-4c02-bf1a-ed7aa63e513e" LastKnownName="Screen" />
-                        <relationshipOwnedElementsInternal>
-                          <associationHasOwnedEnds>
-                            <memberEnd Id="7b48a1da-0ac8-4f1f-8dcd-6a403eb72207" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="Composite" isComposite="false" isNavigableOwned="false">
-                              <elementDefinition Id="51e18d38-0f4f-4c51-8fc2-4774092cdbdb" />
-                            </memberEnd>
-                          </associationHasOwnedEnds>
-                          <associationHasOwnedEnds>
-                            <memberEnd Id="e33dd48c-da1e-41eb-a74f-68c62264262c" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="true">
-                              <lowerValueInternal>
-                                <literalString Id="3c85e2ce-c5e0-4392-857c-f214e962a3c0" name="Lower" value="*">
-                                  <elementDefinition Id="371293d2-ac00-413b-854c-2ba8fa69324e" />
-                                </literalString>
-                              </lowerValueInternal>
-                              <upperValueInternal>
-                                <literalString Id="ac0d0840-7b9a-4e41-95d8-df95f1c7844e" name="Upper" value="*">
-                                  <elementDefinition Id="40969cb4-2c68-42fe-bccb-f93be98153bb" />
-                                </literalString>
-                              </upperValueInternal>
-                              <elementDefinition Id="8173b209-8f75-4c8c-a4e9-e83a104ed52e" />
-                            </memberEnd>
-                          </associationHasOwnedEnds>
-                        </relationshipOwnedElementsInternal>
-                        <elementDefinition Id="d07fd64e-44ea-494e-aaba-377884fd71c0" />
-                      </association>
-                    </targetEnds>
                   </class>
                 </packageHasNamedElement>
                 <packageHasNamedElement>
@@ -369,6 +325,11 @@
                     </ownedOperationsInternal>
                   </class>
                 </packageHasNamedElement>
+                <packageHasNamedElement>
+                  <class Id="8ebabcda-5c43-4590-80b5-df3a03753bbc" name="FixtureManager" isAbstract="false" isLeaf="false" isActiveClass="false">
+                    <elementDefinition Id="75a2bc24-7e4b-48c9-ae2a-75291057b469" />
+                  </class>
+                </packageHasNamedElement>
               </packagedElements>
             </package>
           </packageHasNamedElement>
@@ -377,110 +338,67 @@
               <elementDefinition Id="60fa130e-55c0-4021-8345-37347da85956" />
               <packagedElements>
                 <packageHasNamedElement>
-                  <class Id="dbc3f6db-dfd8-46c6-9f71-7bf4e27f8d23" name="SecondBackgroundScreen" isAbstract="false" isLeaf="false" isActiveClass="false">
-                    <elementDefinition Id="9437a970-50a1-4395-bbca-d7dfa12006f3" />
-                    <generalsInternal>
-                      <generalization Id="ebb05348-dbf0-4176-b72b-1d25934d6ce4" isSubstitutable="false">
-                        <classMoniker Id="7b5ba140-fdee-4c02-bf1a-ed7aa63e513e" LastKnownName="Screen" />
-                        <elementDefinition Id="305a7d39-11dd-45cd-875c-1d55f069ea35" />
-                      </generalization>
-                    </generalsInternal>
+                  <class Id="2b2d5b4f-dc20-4acd-95e8-a3038754cf9a" name="MenuScreen" isAbstract="false" isLeaf="false" isActiveClass="false">
+                    <elementDefinition Id="3ddcb5a1-3dd3-40c7-b1bc-705cae260012" />
                   </class>
                 </packageHasNamedElement>
                 <packageHasNamedElement>
-                  <class Id="d9a73272-c3d3-4287-b886-1c7c14a905db" name="ForegroundScreen" isAbstract="false" isLeaf="false" isActiveClass="false">
-                    <elementDefinition Id="73d9783b-26d3-45c5-9214-a51b738435a3" />
-                    <generalsInternal>
-                      <generalization Id="f44dde50-bcf9-44b6-9ccb-a1b43cb05a14" isSubstitutable="false">
-                        <classMoniker Id="7b5ba140-fdee-4c02-bf1a-ed7aa63e513e" LastKnownName="Screen" />
-                        <elementDefinition Id="2c255128-f106-45f5-969e-90496d13c78a" />
-                      </generalization>
-                    </generalsInternal>
-                  </class>
-                </packageHasNamedElement>
-                <packageHasNamedElement>
-                  <class Id="7d9debcb-63f4-4fed-9d2b-7163cfd2677f" name="PlayerScreen" isAbstract="false" isLeaf="false" isActiveClass="false">
-                    <elementDefinition Id="af7fdc7e-5e68-49d5-9cf5-2294ba483811" />
-                    <generalsInternal>
-                      <generalization Id="8786b633-3dc1-4518-a918-55b09d425b28" isSubstitutable="false">
-                        <classMoniker Id="7b5ba140-fdee-4c02-bf1a-ed7aa63e513e" LastKnownName="Screen" />
-                        <elementDefinition Id="c832d05d-2e8a-45dc-86bb-0b7b6462504f" />
-                      </generalization>
-                    </generalsInternal>
-                  </class>
-                </packageHasNamedElement>
-                <packageHasNamedElement>
-                  <class Id="39385207-5f6d-4646-9f83-aa20058e12c6" name="MenuScreen" isAbstract="false" isLeaf="false" isActiveClass="false">
-                    <elementDefinition Id="01496edb-407c-4652-a7a8-0c7b54b359db" />
-                    <generalsInternal>
-                      <generalization Id="de0435f4-4b5c-4224-941d-aa5118cc6d78" isSubstitutable="false">
-                        <classMoniker Id="7b5ba140-fdee-4c02-bf1a-ed7aa63e513e" LastKnownName="Screen" />
-                        <elementDefinition Id="aa4ad1ea-a658-433f-a332-69b63210c7e1" />
-                      </generalization>
-                    </generalsInternal>
-                  </class>
-                </packageHasNamedElement>
-                <packageHasNamedElement>
-                  <class Id="8c43d488-88ee-4a37-a856-4e25f8470a82" name="FirstBackgroundScreen" isAbstract="false" isLeaf="false" isActiveClass="false">
-                    <elementDefinition Id="27a4eb5e-169e-46b6-abdd-3602fe0d5e4e" />
-                    <generalsInternal>
-                      <generalization Id="51d90e64-85eb-44bd-aaaf-130a6cdc6dd2" isSubstitutable="false">
-                        <classMoniker Id="7b5ba140-fdee-4c02-bf1a-ed7aa63e513e" LastKnownName="Screen" />
-                        <elementDefinition Id="e85e740f-ae10-411d-a394-b6a7772481be" />
-                      </generalization>
-                    </generalsInternal>
-                  </class>
-                </packageHasNamedElement>
-                <packageHasNamedElement>
-                  <class Id="7b5ba140-fdee-4c02-bf1a-ed7aa63e513e" name="Screen" isAbstract="false" isLeaf="false" isActiveClass="false">
-                    <elementDefinition Id="9b60ad3d-1407-4abd-83f7-06c6f240f294" />
+                  <class Id="b2a42fac-74bc-4708-9634-68806a03890d" name="MainMenuScreen" isAbstract="false" isLeaf="false" isActiveClass="false">
+                    <elementDefinition Id="9cc167e7-0253-42dc-9539-b8d6500f1e6c" />
                   </class>
                 </packageHasNamedElement>
               </packagedElements>
             </package>
           </packageHasNamedElement>
           <packageHasNamedElement>
-            <class Id="838a772e-fcd7-4de8-97fd-83253e18dc08" name="LevelSettings" isAbstract="false" isLeaf="false" isActiveClass="false">
-              <elementDefinition Id="2c5ce185-d6d9-4540-aaf0-75ff1a276496" />
-            </class>
-          </packageHasNamedElement>
-          <packageHasNamedElement>
             <class Id="3b482895-e370-4616-9111-0345b4511b2d" name="Level" isAbstract="false" isLeaf="false" isActiveClass="false">
               <elementDefinition Id="3adabcb1-1a97-42e0-8bba-5c285b7adf2c" />
               <targetEnds>
-                <association Id="63ff5a40-773f-412b-9dc4-8db8b4c113df" isDerived="false" sourceEndRoleName="" targetEndRoleName="" isLeaf="false" isAbstract="false">
-                  <classMoniker Id="c220b9a0-bdaa-4f97-a44f-3ec11fa6c718" LastKnownName="ScreenManager" />
+                <association Id="b1a943b6-3033-443c-a12c-125a4536f496" isDerived="false" sourceEndRoleName="Level" targetEndRoleName="Layer" isLeaf="false" isAbstract="false">
+                  <classMoniker Id="aad3b5b9-67cc-456a-9ce5-2665450fd358" LastKnownName="Layer" />
                   <relationshipOwnedElementsInternal>
                     <associationHasOwnedEnds>
-                      <memberEnd Id="abcc25ac-b7df-451a-803e-7f815477e3ae" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="Composite" isComposite="false" isNavigableOwned="false">
-                        <elementDefinition Id="7ee58440-3462-4840-9c56-025b1c4091d8" />
+                      <memberEnd Id="10ea8340-d17f-464b-9869-ff769f3ac197" name="Level" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="Composite" isComposite="false" isNavigableOwned="false">
+                        <elementDefinition Id="3573e297-8f68-4108-bb17-1901b65dfaaa" />
                       </memberEnd>
                     </associationHasOwnedEnds>
                     <associationHasOwnedEnds>
-                      <memberEnd Id="030ce8d9-60be-4a86-a96a-6ad839c80fc5" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="true">
-                        <elementDefinition Id="707b1885-4031-437a-aa89-514920c29c3c" />
+                      <memberEnd Id="f5a398c3-0526-49f9-9c0a-2289c1a66705" name="Layer" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="true">
+                        <elementDefinition Id="d06a5883-8bd8-485c-b1f8-2e16ad6fb0c8" />
                       </memberEnd>
                     </associationHasOwnedEnds>
                   </relationshipOwnedElementsInternal>
-                  <elementDefinition Id="45b2570d-27b5-47db-ba1b-12e940e2700b" />
-                </association>
-                <association Id="06081ab5-50e8-4b94-bae5-28d64d3f17bb" isDerived="false" sourceEndRoleName="" targetEndRoleName="" isLeaf="false" isAbstract="false">
-                  <classMoniker Id="838a772e-fcd7-4de8-97fd-83253e18dc08" LastKnownName="LevelSettings" />
-                  <relationshipOwnedElementsInternal>
-                    <associationHasOwnedEnds>
-                      <memberEnd Id="bb3762a5-ff9d-449f-8a04-d9de16fcc099" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">
-                        <elementDefinition Id="72f5ec54-080f-4240-b022-1cc0bc9311ba" />
-                      </memberEnd>
-                    </associationHasOwnedEnds>
-                    <associationHasOwnedEnds>
-                      <memberEnd Id="d88d95c6-6936-4df7-8251-9990dc5ffd11" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
-                        <elementDefinition Id="229255e5-d02c-4904-8292-1fedfcfee328" />
-                      </memberEnd>
-                    </associationHasOwnedEnds>
-                  </relationshipOwnedElementsInternal>
-                  <elementDefinition Id="9a91d56a-fcce-4aa9-be8d-e7a979bd7ed4" />
+                  <elementDefinition Id="38d38e1b-9b4e-456f-8fe7-506ab9bc76e3" />
                 </association>
               </targetEnds>
+            </class>
+          </packageHasNamedElement>
+          <packageHasNamedElement>
+            <class Id="aad3b5b9-67cc-456a-9ce5-2665450fd358" name="Layer" isAbstract="false" isLeaf="false" isActiveClass="false">
+              <elementDefinition Id="7cd28af9-8780-432b-8db8-37ffeb493a71" />
+              <targetEnds>
+                <association Id="f7fdcb53-e2b2-47a2-8df9-e86a1fc05fb3" isDerived="false" sourceEndRoleName="Layer" targetEndRoleName="Camera" isLeaf="false" isAbstract="false">
+                  <classMoniker Id="01f66dd4-e44d-475a-b276-2f1085b29270" LastKnownName="Camera" />
+                  <relationshipOwnedElementsInternal>
+                    <associationHasOwnedEnds>
+                      <memberEnd Id="73f0373f-8c04-42af-be72-cbb21f4ed9f3" name="Layer" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">
+                        <elementDefinition Id="a8fa751b-9f5e-47a4-8b02-efc6b6f89459" />
+                      </memberEnd>
+                    </associationHasOwnedEnds>
+                    <associationHasOwnedEnds>
+                      <memberEnd Id="ace6b1ae-92d5-4a88-8704-6b09d16d2f68" name="Camera" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                        <elementDefinition Id="ba75f5b5-d7ab-412a-afdf-4b1ec9f2e1c9" />
+                      </memberEnd>
+                    </associationHasOwnedEnds>
+                  </relationshipOwnedElementsInternal>
+                  <elementDefinition Id="0a5042dd-31b4-4ce2-a652-2383ceaf5c03" />
+                </association>
+              </targetEnds>
+            </class>
+          </packageHasNamedElement>
+          <packageHasNamedElement>
+            <class Id="01f66dd4-e44d-475a-b276-2f1085b29270" name="Camera" isAbstract="false" isLeaf="false" isActiveClass="false">
+              <elementDefinition Id="7348561d-b5d4-41b6-8de5-043b90be004e" />
             </class>
           </packageHasNamedElement>
         </packagedElements>
@@ -493,6 +411,17 @@
           <dependency Id="8bad5f53-f426-43e9-b626-9a8eaad8cfcb">
             <classMoniker Id="bfe6b8a6-3b47-4753-8426-955771e24d91" LastKnownName="GameLoop" />
             <elementDefinition Id="79902f36-3ba6-4138-83bb-44f4c99f5d23" />
+          </dependency>
+        </suppliersInternal>
+      </class>
+    </logicalClassDesignerModelHasTypes>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="cee576ea-83fe-47ea-ad3d-3d84d5894c1e" name="DebugViewXNA" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="9bbb88de-4f16-4a1c-9c73-d675779c3d02" />
+        <suppliersInternal>
+          <dependency Id="8b4fc713-d9fd-4964-a293-b1fa070bc04a">
+            <classMoniker Id="bfe6b8a6-3b47-4753-8426-955771e24d91" LastKnownName="GameLoop" />
+            <elementDefinition Id="f12aff3f-2ad9-4d95-8930-660b9bb1a991" />
           </dependency>
         </suppliersInternal>
       </class>

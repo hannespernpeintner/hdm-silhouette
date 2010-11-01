@@ -406,6 +406,24 @@
         </suppliersInternal>
       </class>
     </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="9bbb88de-4f16-4a1c-9c73-d675779c3d02"
+        name="DebugViewXNA"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <suppliersInternal>
+          <dependency
+            Id="f12aff3f-2ad9-4d95-8930-660b9bb1a991">
+            <classMoniker
+              Id="5a077de8-955a-4a6d-b836-357844f94b8d"
+              LastKnownName="GameLoop"
+              LastKnownLocation="SilhouetteModelDefinition.uml" />
+          </dependency>
+        </suppliersInternal>
+      </class>
+    </packageHasNamedElement>
   </packagedElements>
   <primitiveType
     Id="220a3521-e091-4221-bae9-3ef9018e845c"
