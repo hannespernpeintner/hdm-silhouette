@@ -52,9 +52,11 @@ namespace Silhouette.GameMechs
         public override void LoadContent()
         {
             animation.Load(pictureCount, path, animationSpeed);
+            /*
             polygon = FixtureManager.TextureToPolygon(animation.activePicture, 1.0f);
             polygon[0].Body.Position = position;
             polygon[0].Body.BodyType = BodyType.Static;
+            */
         }
 
         // Aufzurufen in der Update des Levels. Oder des Layers, entscheiden wir noch.

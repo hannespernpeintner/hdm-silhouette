@@ -20,10 +20,10 @@ using FarseerPhysics;
 using FarseerPhysics.Dynamics;
 using FarseerPhysics.Factories;
 using FarseerPhysics.Collision;
+using FarseerPhysics.Common.PolygonManipulation;
 
 namespace Silhouette.Engine
 {
-    [Serializable]
     public class Level
     {
         /* Sascha:
@@ -31,9 +31,6 @@ namespace Silhouette.Engine
         */
 
         #region Definitions
-            [XmlAttribute()]
-            string name;
-
             public static World Physics;
             private const float _PixelPerMeter = 100.0f;
             public static float PixelPerMeter { get { return _PixelPerMeter; } }
@@ -41,6 +38,7 @@ namespace Silhouette.Engine
 
             DebugViewXNA debugView;
             bool DebugViewEnabled = false;
+            bool GraphicsEnabled = false;
 
             SpriteBatch spriteBatch;
             List<Layer> layerList;
@@ -106,21 +104,25 @@ namespace Silhouette.Engine
                 }
                 if (kb.IsKeyDown(Keys.F9))
                     EnableOrDisableFlag(DebugViewFlags.PolygonPoints);
+                if(kb.IsKeyDown(Keys.F10))
+                    GraphicsEnabled = !GraphicsEnabled;
             #endregion
         }
 
         public void Draw(GameTime gameTime)
         {
-            foreach (Layer l in layerList)
+            if (!GraphicsEnabled)
             {
-                Vector2 oldCameraPosition = camera.Position;
-                camera.Position *= l.scrollSpeed;
-                spriteBatch.Begin(SpriteSortMode.Deferred, null, null, null, null, null, camera.matrix);
-                l.drawLayer(spriteBatch);
-                spriteBatch.End();
-                camera.Position = oldCameraPosition;
+                foreach (Layer l in layerList)
+                {
+                    Vector2 oldCameraPosition = camera.Position;
+                    camera.Position *= l.scrollSpeed;
+                    spriteBatch.Begin(SpriteSortMode.Deferred, null, null, null, null, null, camera.matrix);
+                    l.drawLayer(spriteBatch);
+                    spriteBatch.End();
+                    camera.Position = oldCameraPosition;
+                }
             }
-
             if(!DebugViewEnabled)
                 debugView.RenderDebugData(ref proj, ref camera.matrix);
         }
