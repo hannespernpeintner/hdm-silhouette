@@ -26,7 +26,7 @@ namespace Silhouette.Engine.Manager
             uint[] data = new uint[texture.Width * texture.Height];
             texture.GetData(data);
             Vertices vertices = PolygonTools.CreatePolygon(data, texture.Width, texture.Height, true);
-            Vector2 scale = new Vector2(0.01f, 0.01f);
+            Vector2 scale = new Vector2(0.005f, 0.005f);
             vertices.Scale(ref scale);
 
             List<Vertices> tempList = EarclipDecomposer.ConvexPartition(vertices);
@@ -67,7 +67,7 @@ namespace Silhouette.Engine.Manager
         public static Vector2 ToWorld(float width, float height, Vector2 position)
         {
             Vector2 offSet = new Vector2((float)(width / 2), (float)(height / 2));
-            return position - offSet;
+            return position + offSet;
         }
     }
 }
