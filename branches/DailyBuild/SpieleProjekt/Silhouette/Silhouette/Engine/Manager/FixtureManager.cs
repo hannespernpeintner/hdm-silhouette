@@ -26,7 +26,7 @@ namespace Silhouette.Engine.Manager
             uint[] data = new uint[texture.Width * texture.Height];
             texture.GetData(data);
             Vertices vertices = PolygonTools.CreatePolygon(data, texture.Width, texture.Height, true);
-            Vector2 scale = new Vector2(0.005f, 0.005f);
+            Vector2 scale = new Vector2(0.01f, 0.01f);
             vertices.Scale(ref scale);
 
             List<Vertices> tempList = EarclipDecomposer.ConvexPartition(vertices);
