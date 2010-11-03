@@ -76,6 +76,7 @@ namespace Silhouette.Engine
         public void Update(GameTime gameTime)
         {
             Physics.Step(Math.Min((float)gameTime.ElapsedGameTime.TotalMilliseconds * 0.001f, (1f / 30f)));
+
             foreach (Layer l in layerList)
             {
                 l.updateLayer(gameTime);
