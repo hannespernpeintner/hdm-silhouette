@@ -57,33 +57,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="ParticleEffects\ParticleTextures\" />
     <Folder Include="Sounds\" />
     <Folder Include="Sprites\" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="ParticleEffects\Water.xml">
-      <Name>Water</Name>
-      <Importer>XmlImporter</Importer>
-      <Processor>PassThroughProcessor</Processor>
-      <SubType>Designer</SubType>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="ParticleEffects\ParticleTextures\Spray001.png">
-      <Name>Spray001</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="ParticleEffects\ParticleTextures\Water001.png">
-      <Name>Water001</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="ParticleEffects\ParticleTextures\Water002.png">
-      <Name>Water002</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Fonts\DebugFont.spritefont">
