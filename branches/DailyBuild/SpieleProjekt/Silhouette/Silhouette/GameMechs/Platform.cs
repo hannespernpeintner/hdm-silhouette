@@ -46,6 +46,7 @@ namespace Silhouette.GameMechs
         // Aufzurufen in der Load des Levels. Oder des Layers, entscheiden wir noch.
         public override void LoadContent()
         {
+            texture = GameLoop.gameInstance.Content.Load<Texture2D>(path);
             polygon = FixtureManager.TextureToPolygon(texture, BodyType.Static, position, 1.0f);
         }
 
