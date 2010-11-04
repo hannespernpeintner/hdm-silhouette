@@ -1,0 +1,252 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm4="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm5="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/LogicalClassDesigner"
+  dslVersion="1.0.0.0"
+  Id="86bf683f-764f-4a90-baea-b1100418859e"
+  name="Manager" xmlns="http://schemas.microsoft.com/dsltools/ModelStore">
+  <packagedElements>
+    <packageHasNamedElement>
+      <class
+        Id="8f993d30-dcb1-4035-ab38-e292420a24fa"
+        name="ParticleManager"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="19edd810-a2cd-431e-b5fb-e354b47e717d"
+        name="ScreenManager"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <targetEnds>
+          <association
+            Id="a5590907-15ac-4403-a52a-ec1e04b5b7be"
+            isDerived="false"
+            sourceEndRoleName="ScreenManager"
+            targetEndRoleName="Screen"
+            isLeaf="false"
+            isAbstract="false">
+            <classMoniker
+              Id="905e6150-84bb-40c1-86e5-3e8f8d627de3"
+              LastKnownName="Screen"
+              LastKnownLocation="Package_2303.uml" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="c1f1682b-6713-4a3c-884c-002b2b501ffd"
+                  name="ScreenManager"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="Composite"
+                  isComposite="false"
+                  isNavigableOwned="false" />
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="aeb9b618-59df-4584-8a44-b4ddc747be20"
+                  name="Screen"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="true">
+                  <lowerValueInternal>
+                    <literalString
+                      Id="ad9c3811-e102-473a-8a53-d761a553ca35"
+                      name="Lower"
+                      value="*" />
+                  </lowerValueInternal>
+                  <upperValueInternal>
+                    <literalString
+                      Id="1956a733-12fa-4d58-8d5e-f44be8632ad5"
+                      name="Upper"
+                      value="*" />
+                  </upperValueInternal>
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
+          <association
+            Id="d07fd64e-44ea-494e-aaba-377884fd71c0"
+            isDerived="false"
+            sourceEndRoleName=""
+            targetEndRoleName=""
+            isLeaf="false"
+            isAbstract="false">
+            <classMoniker
+              Id="9b60ad3d-1407-4abd-83f7-06c6f240f294"
+              LastKnownName="Screen"
+              LastKnownLocation="Package_2303.uml" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="51e18d38-0f4f-4c51-8fc2-4774092cdbdb"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="Composite"
+                  isComposite="false"
+                  isNavigableOwned="false" />
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="8173b209-8f75-4c8c-a4e9-e83a104ed52e"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="true">
+                  <lowerValueInternal>
+                    <literalString
+                      Id="371293d2-ac00-413b-854c-2ba8fa69324e"
+                      name="Lower"
+                      value="*" />
+                  </lowerValueInternal>
+                  <upperValueInternal>
+                    <literalString
+                      Id="40969cb4-2c68-42fe-bccb-f93be98153bb"
+                      name="Upper"
+                      value="*" />
+                  </upperValueInternal>
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
+        </targetEnds>
+      </class>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="3eb511b2-0473-4b99-a6b1-fb1985a60a75"
+        name="FontManager"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <targetEnds>
+          <association
+            Id="05f9e82a-1995-4c28-9159-f21e0b1cc854"
+            isDerived="false"
+            sourceEndRoleName=""
+            targetEndRoleName=""
+            isLeaf="false"
+            isAbstract="false">
+            <classMoniker
+              Id="5a077de8-955a-4a6d-b836-357844f94b8d"
+              LastKnownName="GameLoop"
+              LastKnownLocation="SilhouetteModelDefinition.uml" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="02bed9eb-e8bc-4687-a81f-1a9e7c829cf6"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false"
+                  isNavigableOwned="false" />
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="0a1d81c2-ba56-4236-ae66-14236a0f4426"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false" />
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
+        </targetEnds>
+        <ownedOperationsInternal>
+          <operation
+            Id="9ef5d80a-28b7-4a91-a5ff-73a09aab535c"
+            name="loadFonts"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="06b3be89-38df-43cf-b880-a09086417209"
+                  name="GameLoop Game"
+                  direction="In"
+                  isUnique="false" />
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+        </ownedOperationsInternal>
+      </class>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="981b79fc-c0bb-44d3-996c-7d7de68d2350"
+        name="FileManager"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <ownedOperationsInternal>
+          <operation
+            Id="4e764613-3ea3-44e9-8ebc-a3325f4ab5ec"
+            name="FileStream LoadConfigFile"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="7afd4e5e-1fd8-4edb-9aa5-98cd49e0dbf3"
+                  name="string relativePath"
+                  direction="In"
+                  isUnique="false" />
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation
+            Id="b9a44306-9c81-46bf-9cd3-6027fdd7b4b1"
+            name="FileStream SaveConfigFile"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="5676b151-926d-4e1b-9c59-a7f437616cda"
+                  name="string relativePath"
+                  direction="In"
+                  isUnique="false" />
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+        </ownedOperationsInternal>
+      </class>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="75a2bc24-7e4b-48c9-ae2a-75291057b469"
+        name="FixtureManager"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false" />
+    </packageHasNamedElement>
+  </packagedElements>
+</package>
