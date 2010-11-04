@@ -8,6 +8,8 @@ using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
+using FarseerPhysics.Dynamics;
+using Silhouette.Engine.Manager;
 
 namespace Silhouette.GameMechs
 {
@@ -18,13 +20,14 @@ namespace Silhouette.GameMechs
         nicht mehr berechnet bekommen, hier eine neue Version für eine AnimatedSprite, der Kürze Halber Animation genannt. Es
         werden Einzelbilder verwendet, die zu ner Liste hinzugefügt werden. Eine Animation wird geladen, indem man beim
         Aufrufen von Load den Ordnerpfad angibt, sowie die Bilderzahl (!). Es werden nach und nach die durchnummerierten (!)
-        Bilder reingeladen. Abgespielt wird automatisch und endlos.
+        Bilder reingeladen. Abgespielt wird automatisch und endlos. Die Animation ist beweglich.
         */
 
         public List<Texture2D> pictures;                    // Liste mit Einzelbildern, Nummer des gerade aktiven Bildes,
-        public int activePictureNumber;                     // zur Sicherheit auch das aktive Bild selber, können wir später
-        public Texture2D activePicture;                     // rauslöschen, wenn keine weitere Verwendung, außerdem framespersecond
+        public int activeFrameNumber;                     // zur Sicherheit auch das aktive Bild selber, können wir später
+        public Texture2D activeTexture;                     // rauslöschen, wenn keine weitere Verwendung, außerdem framespersecond
         public float speed;
+        public Vector2 position;
 
         private float totalElapsed;
         private int amount;
@@ -40,39 +43,43 @@ namespace Silhouette.GameMechs
         {
             this.speed = (1 / speed) * 100;
             this.amount = amount;
+            this.position = Vector2.Zero;
+
             for (int i = 0; i <= amount-1; i++)
             {
                 String temp = path + i.ToString();
                 pictures.Add(GameLoop.gameInstance.Content.Load<Texture2D>(temp));
-                activePictureNumber = 0;
-                activePicture = pictures[0];
             }
+            activeFrameNumber = 0;
+            activeTexture = pictures[activeFrameNumber];
         }
 
-        public void Update(GameTime gameTime)
+        //Braucht die position des Trägers!
+        public void Update(GameTime gameTime, Vector2 position)
         {
             float elapsed = gameTime.ElapsedGameTime.Milliseconds;
             totalElapsed += elapsed;
+            this.position = position;
 
             if (totalElapsed > speed)
             {
                 totalElapsed -= speed;
-                if (activePictureNumber < amount-1)
+                if (activeFrameNumber < amount-1)
                 {
-                    activePictureNumber++;
+                    activeFrameNumber++;
                 }
-                else if (activePictureNumber == amount - 1)
+                else if (activeFrameNumber == amount - 1)
                 {
-                    activePictureNumber = 0;
+                    activeFrameNumber = 0;
                 }
             }
-            activePicture = pictures[activePictureNumber];
+            activeTexture = pictures[activeFrameNumber];
         }
 
         // Wird in der Draw des Trägers gerufen
-        public void Draw(SpriteBatch spriteBatch, Vector2 position, Color color)
+        public void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(activePicture, position, color);
+            spriteBatch.Draw(activeTexture, position, Color.White);
         }
     }
 }
