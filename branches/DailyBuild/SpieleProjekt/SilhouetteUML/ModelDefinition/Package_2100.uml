@@ -1,0 +1,331 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm4="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm5="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/LogicalClassDesigner"
+  dslVersion="1.0.0.0"
+  Id="3fd23a8b-0dea-4481-ae1e-b092f1826d78"
+  name="GameMechs" xmlns="http://schemas.microsoft.com/dsltools/ModelStore">
+  <packagedElements>
+    <packageHasNamedElement>
+      <class
+        Id="6a331bad-3e00-4b6e-be18-9e75214afb23"
+        name="Class1"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="6f1e96cb-4c56-4bd8-8cc2-712675085027"
+        name="Player"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <suppliersInternal>
+          <dependency
+            Id="ab949afb-4f47-4fc5-aaba-8724fab51154">
+            <interfaceMoniker
+              Id="0cba1b68-e5e9-4a42-846c-1ed471341c47"
+              LastKnownName="IDrawableLevelObject"
+              LastKnownLocation="SilhouetteModelDefinition.uml" />
+          </dependency>
+        </suppliersInternal>
+        <generalsInternal>
+          <generalization
+            Id="c1c52a04-f110-4edd-8799-f2041b901dda"
+            isSubstitutable="false">
+            <classMoniker
+              Id="1f0caebe-13aa-40c4-ae41-5642c12f5ab2"
+              LastKnownName="DrawableLevelObject"
+              LastKnownLocation="Package_2100.uml" />
+          </generalization>
+        </generalsInternal>
+      </class>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="0485cd5e-3e6c-4b8e-8fa9-3793cf19b49f"
+        name="LevelObject"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <ownedAttributesInternal>
+          <property
+            Id="b7979279-eb81-409f-bace-b95e312a184f"
+            name="Fixture _fixture"
+            visibility="Private"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isUnique="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false" />
+          <property
+            Id="2ab286cc-b5eb-4368-95ef-09d632ca8414"
+            name="Vector2 _Position"
+            visibility="Private"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isUnique="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false" />
+        </ownedAttributesInternal>
+        <ownedOperationsInternal>
+          <operation
+            Id="9de1ace2-5b74-4bd8-adb5-6ac10d595c19"
+            name="Initialise"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+          <operation
+            Id="ecf9e66b-bd9f-45fe-95a0-01922f97f7aa"
+            name="LoadContent"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="6d19eeb9-242f-49eb-8339-013a0c4ee6f2"
+                  name="GameLoop Game"
+                  direction="In"
+                  isUnique="false" />
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation
+            Id="6a824c9a-2597-4cd0-9e40-b706ae91d314"
+            name="Update"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="fd42f8cb-74f7-4bf9-bc61-20b6a620afcd"
+                  name="GameTime gameTime"
+                  direction="In"
+                  isUnique="false" />
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+        </ownedOperationsInternal>
+      </class>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="1f0caebe-13aa-40c4-ae41-5642c12f5ab2"
+        name="DrawableLevelObject"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <ownedAttributesInternal>
+          <property
+            Id="e5fdf53a-1cce-4901-9d29-d28c8b6c62a1"
+            name="Vector2 _Position"
+            visibility="Private"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isUnique="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false" />
+          <property
+            Id="91c393ea-9654-41a0-8e59-35bc31528e59"
+            name="Fixture _fixture"
+            visibility="Private"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isUnique="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false" />
+        </ownedAttributesInternal>
+        <ownedOperationsInternal>
+          <operation
+            Id="62c48f83-5301-472e-9799-3fdd31a23254"
+            name="LoadContent"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="08d6c900-c1d8-4880-b1b7-4b53465d1100"
+                  name="GameLoop Game"
+                  direction="In"
+                  isUnique="false" />
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation
+            Id="747c2c2f-442e-4939-98b2-1523577bb5ce"
+            name="Update"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="e943f679-ab1d-487a-851d-625fdfe301c9"
+                  name="GameTime gameTime"
+                  direction="In"
+                  isUnique="false" />
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation
+            Id="2bf6d404-1786-4d4e-be70-ba3a49f5c234"
+            name="Initialise"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+          <operation
+            Id="2956a66f-d019-4b38-a956-47a91084e50e"
+            name="Draw"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="7d2d6ded-ec33-4a05-b104-ebb71845b727"
+                  name="SpriteBatch spriteBatch"
+                  direction="In"
+                  isUnique="false" />
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+        </ownedOperationsInternal>
+      </class>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="393f29b7-3eec-4d38-b2ef-32d951a5c06e"
+        name="Enemy"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <generalsInternal>
+          <generalization
+            Id="6a426d32-5cad-48b3-b87e-348eac18f4ff"
+            isSubstitutable="false">
+            <classMoniker
+              Id="1f0caebe-13aa-40c4-ae41-5642c12f5ab2"
+              LastKnownName="DrawableLevelObject"
+              LastKnownLocation="Package_2100.uml" />
+          </generalization>
+        </generalsInternal>
+        <targetEnds>
+          <association
+            Id="5c2c2fa8-b427-4906-92d3-9e8bc1640ead"
+            isDerived="false"
+            sourceEndRoleName=""
+            targetEndRoleName=""
+            isLeaf="false"
+            isAbstract="false">
+            <classMoniker
+              Id="93702669-0cca-441b-a062-66ec0f6316ec"
+              LastKnownName="EnemyBehavior"
+              LastKnownLocation="Package_2100.uml" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="2a840b32-7e31-4156-8fd8-42462b857f06"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="Shared"
+                  isComposite="false"
+                  isNavigableOwned="false" />
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="6095346b-fad7-42fa-8a92-8bc06241cfbf"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false">
+                  <lowerValueInternal>
+                    <literalString
+                      Id="405d7e44-46fa-40d7-bbdb-7eafb807d007"
+                      name="Lower"
+                      value="*" />
+                  </lowerValueInternal>
+                  <upperValueInternal>
+                    <literalString
+                      Id="2f610a89-ea74-468d-8275-c78ff05cee2a"
+                      name="Upper"
+                      value="*" />
+                  </upperValueInternal>
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
+        </targetEnds>
+      </class>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="93702669-0cca-441b-a062-66ec0f6316ec"
+        name="EnemyBehavior"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="f0b21f13-a16e-487f-a8cb-af2744fb9ed4"
+        name="Camera"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <suppliersInternal>
+          <dependency
+            Id="0d186f18-30ba-474d-b528-faf380b02f3c">
+            <interfaceMoniker
+              Id="c594d8c3-905d-43bc-a703-1b1549cf2a29"
+              LastKnownName="ILevelObject"
+              LastKnownLocation="SilhouetteModelDefinition.uml" />
+          </dependency>
+        </suppliersInternal>
+        <generalsInternal>
+          <generalization
+            Id="40fa8e36-f97f-4fff-ae60-7807494eda5d"
+            isSubstitutable="false">
+            <classMoniker
+              Id="0485cd5e-3e6c-4b8e-8fa9-3793cf19b49f"
+              LastKnownName="LevelObject"
+              LastKnownLocation="Package_2100.uml" />
+          </generalization>
+        </generalsInternal>
+      </class>
+    </packageHasNamedElement>
+  </packagedElements>
+</package>
