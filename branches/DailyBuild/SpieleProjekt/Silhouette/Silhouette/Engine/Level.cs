@@ -46,6 +46,9 @@ namespace Silhouette.Engine
             public Camera camera;
             Matrix proj;
 
+            KeyboardState keyboardState;
+            KeyboardState oldKeyboardState;
+
             private const string LevelFilePath = "/Level";
         #endregion
 
@@ -82,31 +85,33 @@ namespace Silhouette.Engine
                 l.updateLayer(gameTime);
             }
             #region DebugView
-                KeyboardState kb = Keyboard.GetState();
-         
-                if (kb.IsKeyDown(Keys.F1))
+                keyboardState = Keyboard.GetState();
+
+                if (keyboardState.IsKeyDown(Keys.F1) && oldKeyboardState.IsKeyUp(Keys.F1))
                     DebugViewEnabled = !DebugViewEnabled;
-                if (kb.IsKeyDown(Keys.F2))
+                if (keyboardState.IsKeyDown(Keys.F2) && oldKeyboardState.IsKeyUp(Keys.F2))
                     EnableOrDisableFlag(DebugViewFlags.DebugPanel);
-                if (kb.IsKeyDown(Keys.F3))
+                if (keyboardState.IsKeyDown(Keys.F3) && oldKeyboardState.IsKeyUp(Keys.F3))
                     EnableOrDisableFlag(DebugViewFlags.Shape);
-                if (kb.IsKeyDown(Keys.F4))
+                if (keyboardState.IsKeyDown(Keys.F4) && oldKeyboardState.IsKeyUp(Keys.F4))
                     EnableOrDisableFlag(DebugViewFlags.Joint);
-                if (kb.IsKeyDown(Keys.F5))
+                if (keyboardState.IsKeyDown(Keys.F5) && oldKeyboardState.IsKeyUp(Keys.F5))
                     EnableOrDisableFlag(DebugViewFlags.AABB);
-                if (kb.IsKeyDown(Keys.F6))
+                if (keyboardState.IsKeyDown(Keys.F6) && oldKeyboardState.IsKeyUp(Keys.F6))
                     EnableOrDisableFlag(DebugViewFlags.CenterOfMass);
-                if (kb.IsKeyDown(Keys.F7))
+                if (keyboardState.IsKeyDown(Keys.F7) && oldKeyboardState.IsKeyUp(Keys.F7))
                     EnableOrDisableFlag(DebugViewFlags.Pair);
-                if (kb.IsKeyDown(Keys.F8))
+                if (keyboardState.IsKeyDown(Keys.F8) && oldKeyboardState.IsKeyUp(Keys.F8))
                 {
                     EnableOrDisableFlag(DebugViewFlags.ContactPoints);
                     EnableOrDisableFlag(DebugViewFlags.ContactNormals);
                 }
-                if (kb.IsKeyDown(Keys.F9))
+                if (keyboardState.IsKeyDown(Keys.F9) && oldKeyboardState.IsKeyDown(Keys.F9))
                     EnableOrDisableFlag(DebugViewFlags.PolygonPoints);
-                if(kb.IsKeyDown(Keys.F10))
+                if (keyboardState.IsKeyDown(Keys.F10) && oldKeyboardState.IsKeyDown(Keys.F10))
                     GraphicsEnabled = !GraphicsEnabled;
+
+                oldKeyboardState = keyboardState;
             #endregion
         }
 
