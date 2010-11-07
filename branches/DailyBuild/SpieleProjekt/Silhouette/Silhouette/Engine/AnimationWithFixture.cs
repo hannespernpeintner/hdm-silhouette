@@ -18,11 +18,11 @@ namespace Silhouette.Engine
 {
     public class AnimationWithFixture
     {
-        /*  Hannes: 
-            AnimationWithFixture verwenden wir für alle Objekte, die ihr Äußeres ändern (eine Animation) und dabei auch ihre Form. Wenn
-            diese zum Beispiel Einfluss auf Kollision mit dem Charakter hat. Ein gutes Beispiel ist ein Schaufelrad, auf dessen
-            Schaufelblätter man springen kann, um nach oben zu gelangen.
-            Für Animationen, die nur optischen Einfluss nehmen, verwenden wir Animation.
+        /* Hannes: 
+        AnimationWithFixture verwenden wir für alle Objekte, die ihr äußeres ändern (eine Animation) und dabei auch ihre Form. Wenn
+        diese zum Beispiel Einfluss auf Kollision mit dem Charakter hat. Ein gutes Beispiel ist ein Schaufelrad, auf dessen
+        Schaufelblätter man springen kann, um nach oben zu gelangen.
+        Für Animationen, die nur optischen Einfluss nehmen, verwenden wir Animation.
         */
 
         public Animation animation;

@@ -40,7 +40,7 @@ namespace Silhouette.GameMechs
         // Aufzurufen in der Initialise des Levels. Oder des Layers, entscheiden wir noch.
         public override void Initialise()
         {
-            
+
         }
 
         // Aufzurufen in der Load des Levels. Oder des Layers, entscheiden wir noch.
@@ -53,7 +53,7 @@ namespace Silhouette.GameMechs
         // Aufzurufen in der Update des Levels. Oder des Layers, entscheiden wir noch.
         public override void Update(GameTime gameTime)
         {
-        
+
         }
         // Aufzurufen in der Draw des Levels. Oder des Layers, entscheiden wir noch.
         public override void Draw(SpriteBatch spriteBatch)
