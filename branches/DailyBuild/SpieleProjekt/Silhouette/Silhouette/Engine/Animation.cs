@@ -24,8 +24,8 @@ namespace Silhouette.Engine
         */
 
         public List<Texture2D> pictures;                    // Liste mit Einzelbildern, Nummer des gerade aktiven Bildes,
-        public int activeFrameNumber;                     // zur Sicherheit auch das aktive Bild selber, können wir später
-        public Texture2D activeTexture;                     // rauslöschen, wenn keine weitere Verwendung, außerdem framespersecond
+        public int activeFrameNumber;                       // zur Sicherheit auch das aktive Bild selber, können wir später
+        public Texture2D activeTexture;                     // rauslöschen, wenn keine weitere Verwendung, auÃ erdem framespersecond
         public float speed;
         public Vector2 position;
 
@@ -33,7 +33,7 @@ namespace Silhouette.Engine
         private int amount;
 
         public Animation()
-        { 
+        {
             pictures = new List<Texture2D>();
             totalElapsed = 0;
         }
@@ -45,7 +45,7 @@ namespace Silhouette.Engine
             this.amount = amount;
             this.position = Vector2.Zero;
 
-            for (int i = 0; i <= amount-1; i++)
+            for (int i = 0; i <= amount - 1; i++)
             {
                 String temp = path + i.ToString();
                 pictures.Add(GameLoop.gameInstance.Content.Load<Texture2D>(temp));
@@ -64,7 +64,7 @@ namespace Silhouette.Engine
             if (totalElapsed > speed)
             {
                 totalElapsed -= speed;
-                if (activeFrameNumber < amount-1)
+                if (activeFrameNumber < amount - 1)
                 {
                     activeFrameNumber++;
                 }

@@ -27,13 +27,11 @@ namespace Silhouette.GameMechs
             animation = new Animation();
         }
 
-        public override void Initialise(){}
+        public Deco() { }
+
+        public override void Initialise() { }
 
         public override void LoadContent()
-        {
-
-        }
-        public void Load()
         {
             animation.Load(amount, path, speed);
         }
