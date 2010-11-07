@@ -116,6 +116,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DebugViewXNA.cs" />
+    <Compile Include="Engine\AnimationWithFixture.cs" />
     <Compile Include="Engine\Camera.cs" />
     <Compile Include="Engine\Level.cs" />
     <Compile Include="Engine\Manager\FileManager.cs" />
