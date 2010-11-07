@@ -11,7 +11,7 @@ using Microsoft.Xna.Framework.Media;
 using FarseerPhysics.Dynamics;
 using Silhouette.Engine.Manager;
 
-namespace Silhouette.GameMechs
+namespace Silhouette.Engine
 {
     public class Animation
     {
