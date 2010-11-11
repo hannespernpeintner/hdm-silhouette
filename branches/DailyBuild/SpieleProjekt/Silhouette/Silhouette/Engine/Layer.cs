@@ -16,7 +16,6 @@ using Silhouette.GameMechs;
 
 namespace Silhouette.Engine.Screens
 {
-    [Serializable]
     class Layer
     {
         [XmlAttribute()]
