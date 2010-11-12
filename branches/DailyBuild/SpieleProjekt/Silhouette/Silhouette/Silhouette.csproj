@@ -118,6 +118,10 @@
     <Compile Include="DebugViewXNA.cs" />
     <Compile Include="Engine\AnimationWithFixture.cs" />
     <Compile Include="Engine\Camera.cs" />
+    <Compile Include="Engine\CollisionLayer.cs" />
+    <Compile Include="Engine\CollisionLayer.Editor.cs" />
+    <Compile Include="Engine\EventLayer.cs" />
+    <Compile Include="Engine\EventLayer.Editor.cs" />
     <Compile Include="Engine\Level.cs" />
     <Compile Include="Engine\Manager\FileManager.cs" />
     <Compile Include="Engine\Manager\FixtureManager.cs" />
@@ -131,7 +135,6 @@
     <Compile Include="GameMechs\Deco.cs" />
     <Compile Include="GameMechs\DrawableLevelObject.cs" />
     <Compile Include="GameMechs\LevelObject.cs" />
-    <Compile Include="GameMechs\Platform.cs" />
     <Compile Include="GameMechs\Player.cs" />
     <Compile Include="GameSettings.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -182,7 +185,9 @@
       <Install>true</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="GameMechs\Events\" />
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\Microsoft.Xna.GameStudio.targets" />
   <!--

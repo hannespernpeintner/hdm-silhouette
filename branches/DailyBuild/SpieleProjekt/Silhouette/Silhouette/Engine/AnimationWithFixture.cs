@@ -38,7 +38,7 @@ namespace Silhouette.Engine
         // Wird in der Load des zugehörigen Trägers gerufen
         public void Load(int amount, String path, float speed)
         {
-            animation.Load(amount, path, speed);
+            animation.Load(amount, path, speed, true);
             polygons = FixtureManager.AnimationToPolygons(animation);
             activePolygon = polygons[animation.activeFrameNumber];
         }

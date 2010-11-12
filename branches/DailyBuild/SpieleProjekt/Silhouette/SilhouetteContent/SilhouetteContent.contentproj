@@ -59,7 +59,7 @@
   <ItemGroup>
     <Folder Include="ParticleEffects\ParticleTextures\" />
     <Folder Include="Sounds\" />
-    <Folder Include="Sprites\" />
+    <Folder Include="Sprites\Layer\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Fonts\DebugFont.spritefont">
