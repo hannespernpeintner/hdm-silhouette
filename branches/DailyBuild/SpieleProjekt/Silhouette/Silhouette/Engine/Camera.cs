@@ -12,10 +12,10 @@ using Microsoft.Xna.Framework.Media;
 
 namespace Silhouette.Engine
 {
-    public class Camera
+    public static class Camera
     {
-        Vector2 _Position;
-        public Vector2 Position
+        static Vector2 _Position;
+        public static Vector2 Position
         {
             get
             {
@@ -28,8 +28,8 @@ namespace Silhouette.Engine
             }
         }
 
-        float _Rotation;
-        public float Rotation
+        static float _Rotation;
+        public static float Rotation
         {
             get
             {
@@ -42,8 +42,8 @@ namespace Silhouette.Engine
             }
         }
 
-        float _Scale;
-        public float Scale
+        static float _Scale;
+        public static float Scale
         {
             get
             {
@@ -56,11 +56,11 @@ namespace Silhouette.Engine
             }
         }
 
-        public Matrix matrix;
-        Vector2 viewport; 
+        public static Matrix matrix;
+        static Vector2 viewport; 
 
 
-        public Camera(float width, float height)
+        public static void initialise(float width, float height)
         {
             _Position = Vector2.Zero;
             _Rotation = 0;
@@ -69,7 +69,7 @@ namespace Silhouette.Engine
             updateMatrix();
         }
 
-        void updateMatrix()
+        public static void updateMatrix()
         {
             matrix = Matrix.CreateTranslation(-_Position.X, -_Position.Y, 0.0f) *
                      Matrix.CreateRotationZ(_Rotation) *
@@ -77,7 +77,7 @@ namespace Silhouette.Engine
                      Matrix.CreateTranslation(viewport.X / 2, viewport.Y / 2, 0.0f);
         }
        
-        public void updateViewport(float width, float height)
+        public static void updateViewport(float width, float height)
         {
             viewport.X = width;
             viewport.Y = height;
