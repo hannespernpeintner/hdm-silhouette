@@ -16,7 +16,7 @@ using Silhouette.GameMechs;
 
 namespace Silhouette.Engine.Screens
 {
-    class Layer
+    public class Layer
     {
         [XmlAttribute()]
         string name;
@@ -27,6 +27,10 @@ namespace Silhouette.Engine.Screens
 
         List<LevelObject> loList;
         List<DrawableLevelObject> dloList;
+
+        Texture2D[,] layerTexture;
+        string[] assetName;
+        int width, height, amount;
 
         public Layer()
         {
@@ -39,6 +43,8 @@ namespace Silhouette.Engine.Screens
             this.name = name;
             this.scrollSpeed = scrollSpeed;
             this.isVisible = isVisible;
+            layerTexture = new Texture2D[width, height];
+            assetName = new string[amount];
         }
 
         public void loadLayer()
@@ -70,6 +76,11 @@ namespace Silhouette.Engine.Screens
             if (!isVisible)
                 return;
 
+            for (int x = 0; x < width; x++)
+                for (int y = 0; y < height; y++)
+                {
+                    spriteBatch.Draw(layerTexture[x, y], new Vector2(x * GameSettings.Default.resolutionWidth, y * GameSettings.Default.resolutionHeight), Color.White);
+                }
             foreach (DrawableLevelObject dlo in dloList)
             {
                 dlo.Draw(spriteBatch);
