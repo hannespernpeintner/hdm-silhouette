@@ -35,13 +35,13 @@ namespace Silhouette.GameMechs
             polygon = FixtureManager.TextureToPolygon(texture, BodyType.Dynamic, position, 1.0f);
         }
 
-        public void Update(GameTime gameTime)
+        public override void Update(GameTime gameTime)
         {
             position = polygon[0].Body.Position;
             rotation = polygon[0].Body.Rotation;
         }
 
-        public void Draw(SpriteBatch spriteBatch)
+        public override void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(texture, new Rectangle((int)position.X, (int)position.Y, texture.Width, texture.Height), new Rectangle(0, 0, texture.Width, texture.Height), Color.White, rotation, Vector2.Zero, SpriteEffects.None, 0.0f);
         }
