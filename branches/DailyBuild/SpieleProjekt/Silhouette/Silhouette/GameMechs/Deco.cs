@@ -5,6 +5,9 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Silhouette.Engine;
+using FarseerPhysics.Dynamics;
+using Silhouette.Engine.Manager;
+using FarseerPhysics.Dynamics.Contacts;
 
 namespace Silhouette.GameMechs
 {
@@ -17,6 +20,7 @@ namespace Silhouette.GameMechs
         public int amount;
         public float speed;
         public String path;
+        public Fixture fixture;
 
         public Deco(Vector2 position, int amount, String path, float speed)
         {
@@ -25,6 +29,9 @@ namespace Silhouette.GameMechs
             this.path = path;
             this.speed = speed;
             animation = new Animation();
+            fixture = FixtureManager.CreateRectangle(animation.activeTexture.Width, animation.activeTexture.Height, position, BodyType.Static, 1.0f);
+            fixture.OnCollision += this.OnCollision;
+            fixture.OnSeparation += this.OnSeperation;
         }
 
         public Deco() { }
@@ -33,7 +40,7 @@ namespace Silhouette.GameMechs
 
         public override void LoadContent()
         {
-            animation.Load(amount, path, speed);
+            animation.Load(amount, path, speed, false);
         }
 
         public override void Update(GameTime gameTime)
@@ -44,6 +51,17 @@ namespace Silhouette.GameMechs
         public override void Draw(SpriteBatch spriteBatch)
         {
             animation.Draw(spriteBatch);
+        }
+
+        public bool OnCollision(Fixture f1, Fixture f2, Contact contact) 
+        {
+            this.animation.start();
+            return true;
+        }
+
+        public void OnSeperation(Fixture f1, Fixture f2)
+        {
+            this.animation.playedOnce = false;
         }
     }
 }
