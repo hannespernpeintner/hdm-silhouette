@@ -28,7 +28,11 @@ namespace Silhouette.Engine
         public Texture2D activeTexture;                     // rauslöschen, wenn keine weitere Verwendung, auÃ erdem framespersecond
         public float speed;
         public Vector2 position;
+        public float rotation;
+        public bool looped;
+        public bool playedOnce;
 
+        private bool started;
         private float totalElapsed;
         private int amount;
 
@@ -36,14 +40,18 @@ namespace Silhouette.Engine
         {
             pictures = new List<Texture2D>();
             totalElapsed = 0;
+            this.playedOnce = false;
+            this.started = false;
         }
 
         // Wird in der Load des zugehörigen Trägers gerufen
-        public void Load(int amount, String path, float speed)
+        public void Load(int amount, String path, float speed, bool looped)
         {
             this.speed = (1 / speed) * 100;
             this.amount = amount;
             this.position = Vector2.Zero;
+            this.looped = looped;
+            
 
             for (int i = 0; i <= amount - 1; i++)
             {
@@ -61,16 +69,36 @@ namespace Silhouette.Engine
             totalElapsed += elapsed;
             this.position = position;
 
-            if (totalElapsed > speed)
+            if (looped && started)
             {
-                totalElapsed -= speed;
-                if (activeFrameNumber < amount - 1)
+                if (totalElapsed > speed)
                 {
-                    activeFrameNumber++;
+                    totalElapsed -= speed;
+                    if (activeFrameNumber < amount - 1)
+                    {
+                        activeFrameNumber++;
+                    }
+                    else if (activeFrameNumber == amount - 1)
+                    {
+                        activeFrameNumber = 0;
+                    }
                 }
-                else if (activeFrameNumber == amount - 1)
+            }
+
+            if (!looped && !playedOnce && started)
+            {
+                if (totalElapsed > speed)
                 {
-                    activeFrameNumber = 0;
+                    totalElapsed -= speed;
+                    if (activeFrameNumber < amount - 1)
+                    {
+                        activeFrameNumber++;
+                    }
+                    else if (activeFrameNumber == amount - 1)
+                    {
+                        activeFrameNumber = 0;
+                        playedOnce = true;
+                    }
                 }
             }
             activeTexture = pictures[activeFrameNumber];
@@ -79,7 +107,12 @@ namespace Silhouette.Engine
         // Wird in der Draw des Trägers gerufen
         public void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(activeTexture, position, Color.White);
+            spriteBatch.Draw(activeTexture,new Rectangle((int)position.X, (int)position.Y, activeTexture.Width, activeTexture.Height),new Rectangle(0,0,activeTexture.Width, activeTexture.Height), Color.White, this.rotation, Vector2.Zero, SpriteEffects.None, 0.0f);
+        }
+
+        public void start()
+        {
+            started = true;
         }
     }
 }
