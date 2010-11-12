@@ -41,6 +41,8 @@ namespace Silhouette.Engine
 
             SpriteBatch spriteBatch;
             List<Layer> layerList;
+            CollisionLayer collisionLayer;
+            EventLayer eventLayer;
 
             public Camera camera;
             Matrix proj;
