@@ -44,7 +44,6 @@ namespace Silhouette.Engine
             CollisionLayer collisionLayer;
             EventLayer eventLayer;
 
-            public Camera camera;
             Matrix proj;
 
             KeyboardState keyboardState;
@@ -64,7 +63,7 @@ namespace Silhouette.Engine
             gravitation = new Vector2(0.0f, 9.8f);
             Physics = new World(gravitation);
             debugView = new DebugViewXNA(Level.Physics);
-            camera = new Camera(0, 0);
+            Camera.initialise(0, 0);
         }
 
         public void LoadContent()
@@ -122,16 +121,16 @@ namespace Silhouette.Engine
             {
                 foreach (Layer l in layerList)
                 {
-                    Vector2 oldCameraPosition = camera.Position;
-                    camera.Position *= l.scrollSpeed;
-                    spriteBatch.Begin(SpriteSortMode.Deferred, null, null, null, null, null, camera.matrix);
+                    Vector2 oldCameraPosition = Camera.Position;
+                    Camera.Position *= l.scrollSpeed;
+                    spriteBatch.Begin(SpriteSortMode.Deferred, null, null, null, null, null, Camera.matrix);
                     l.drawLayer(spriteBatch);
                     spriteBatch.End();
-                    camera.Position = oldCameraPosition;
+                    Camera.Position = oldCameraPosition;
                 }
             }
             if(!DebugViewEnabled)
-                debugView.RenderDebugData(ref proj, ref camera.matrix);
+                debugView.RenderDebugData(ref proj, ref Camera.matrix);
         }
 
         public static void LoadLevelFile(int levelNumber)
