@@ -19,9 +19,9 @@ namespace Silhouette.Engine.Screens
     public class Layer
     {
         [XmlAttribute()]
-        string name;
+        public string name;
         [XmlAttribute()]
-        bool isVisible;
+        public bool isVisible;
 
         public Vector2 scrollSpeed;
 
@@ -29,26 +29,31 @@ namespace Silhouette.Engine.Screens
         List<DrawableLevelObject> dloList;
 
         Texture2D[,] layerTexture;
-        string[] assetName;
-        int width, height, amount;
+        string[,] assetName;
+        int width, height;
 
         public Layer()
         {
+            scrollSpeed = Vector2.One;
+            isVisible = true;
             loList = new List<LevelObject>();
             dloList = new List<DrawableLevelObject>();
         }
 
-        public void initialiseLayer(string name, Vector2 scrollSpeed, bool isVisible)
+        public void initializeLayer()
         {
-            this.name = name;
-            this.scrollSpeed = scrollSpeed;
-            this.isVisible = isVisible;
             layerTexture = new Texture2D[width, height];
-            assetName = new string[amount];
+            assetName = new string[width, height];
         }
 
         public void loadLayer()
         {
+            for(int x = 0; x < width; x++)
+                for (int y = 0; y < height; y++)
+                {
+                    layerTexture[x,y] = GameLoop.gameInstance.Content.Load<Texture2D>(assetName[x,y]);
+                }
+
             foreach (LevelObject lo in loList)
             {
                 lo.LoadContent();

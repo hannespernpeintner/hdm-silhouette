@@ -48,7 +48,7 @@ namespace SilhouetteEditor
 
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.Black);
+            GraphicsDevice.Clear(Color.White);
             base.Draw(gameTime);
         }
 

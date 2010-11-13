@@ -63,7 +63,12 @@ namespace Silhouette.Engine
             gravitation = new Vector2(0.0f, 9.8f);
             Physics = new World(gravitation);
             debugView = new DebugViewXNA(Level.Physics);
-            Camera.initialise(0, 0);
+            Camera.initialize(0, 0);
+
+            foreach (Layer l in layerList)
+            {
+                l.initializeLayer();
+            }
         }
 
         public void LoadContent()

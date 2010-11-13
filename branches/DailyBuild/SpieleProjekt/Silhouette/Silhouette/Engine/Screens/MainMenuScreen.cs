@@ -14,7 +14,7 @@ namespace Silhouette.Engine.Screens
 {
     public class MainMenuScreen
     {
-        public void initialiseScreen()
+        public void initializeScreen()
         {
 
         }
