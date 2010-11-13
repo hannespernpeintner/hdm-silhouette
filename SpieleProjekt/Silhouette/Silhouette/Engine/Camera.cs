@@ -60,7 +60,7 @@ namespace Silhouette.Engine
         static Vector2 viewport; 
 
 
-        public static void initialise(float width, float height)
+        public static void initialize(float width, float height)
         {
             _Position = Vector2.Zero;
             _Rotation = 0;
