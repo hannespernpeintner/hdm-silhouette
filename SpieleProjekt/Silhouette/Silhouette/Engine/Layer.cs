@@ -28,9 +28,9 @@ namespace Silhouette.Engine
         public List<LevelObject> loList;
         public List<DrawableLevelObject> dloList;
 
-        Texture2D[,] layerTexture;
-        string[,] assetName;
-        int width, height;
+        public Texture2D[,] layerTexture;
+        public string[,] assetName;
+        public int width, height;
 
         public Layer()
         {

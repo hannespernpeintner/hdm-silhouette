@@ -59,7 +59,15 @@
             this.GameView = new System.Windows.Forms.PictureBox();
             this.LevelContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.addLayerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.renameToolStripMenuItem = new System.Windows.Forms.ToolStripSeparator();
+            this.renameToolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
             this.LayerContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.automaticLayerCreationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.renameToolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
+            this.renameToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
+            this.copyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.MenuBar.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -72,6 +80,7 @@
             this.ToolBar.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.GameView)).BeginInit();
             this.LevelContextMenu.SuspendLayout();
+            this.LayerContextMenu.SuspendLayout();
             this.SuspendLayout();
             // 
             // StatusBar
@@ -187,12 +196,14 @@
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
             this.aboutToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
             this.aboutToolStripMenuItem.Text = "About";
+            this.aboutToolStripMenuItem.Click += new System.EventHandler(this.HelpAbout);
             // 
             // helpToolStripMenuItem1
             // 
             this.helpToolStripMenuItem1.Name = "helpToolStripMenuItem1";
             this.helpToolStripMenuItem1.Size = new System.Drawing.Size(107, 22);
             this.helpToolStripMenuItem1.Text = "Help";
+            this.helpToolStripMenuItem1.Click += new System.EventHandler(this.HelpHelp);
             // 
             // splitContainer1
             // 
@@ -318,21 +329,77 @@
             // LevelContextMenu
             // 
             this.LevelContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.addLayerToolStripMenuItem});
+            this.addLayerToolStripMenuItem,
+            this.renameToolStripMenuItem,
+            this.renameToolStripMenuItem3});
             this.LevelContextMenu.Name = "contextMenuStrip1";
-            this.LevelContextMenu.Size = new System.Drawing.Size(153, 48);
+            this.LevelContextMenu.Size = new System.Drawing.Size(128, 54);
             // 
             // addLayerToolStripMenuItem
             // 
             this.addLayerToolStripMenuItem.Name = "addLayerToolStripMenuItem";
-            this.addLayerToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.addLayerToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
             this.addLayerToolStripMenuItem.Text = "Add Layer";
             this.addLayerToolStripMenuItem.Click += new System.EventHandler(this.LevelToolStrip_AddLayer);
             // 
+            // renameToolStripMenuItem
+            // 
+            this.renameToolStripMenuItem.Name = "renameToolStripMenuItem";
+            this.renameToolStripMenuItem.Size = new System.Drawing.Size(124, 6);
+            // 
+            // renameToolStripMenuItem3
+            // 
+            this.renameToolStripMenuItem3.Name = "renameToolStripMenuItem3";
+            this.renameToolStripMenuItem3.Size = new System.Drawing.Size(127, 22);
+            this.renameToolStripMenuItem3.Text = "Rename";
+            // 
             // LayerContextMenu
             // 
+            this.LayerContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.automaticLayerCreationToolStripMenuItem,
+            this.toolStripMenuItem1,
+            this.renameToolStripMenuItem1,
+            this.renameToolStripMenuItem2,
+            this.copyToolStripMenuItem,
+            this.deleteToolStripMenuItem});
             this.LayerContextMenu.Name = "LayerContextMenu";
-            this.LayerContextMenu.Size = new System.Drawing.Size(61, 4);
+            this.LayerContextMenu.Size = new System.Drawing.Size(210, 120);
+            // 
+            // automaticLayerCreationToolStripMenuItem
+            // 
+            this.automaticLayerCreationToolStripMenuItem.Name = "automaticLayerCreationToolStripMenuItem";
+            this.automaticLayerCreationToolStripMenuItem.Size = new System.Drawing.Size(209, 22);
+            this.automaticLayerCreationToolStripMenuItem.Text = "Automatic Layer Creation";
+            this.automaticLayerCreationToolStripMenuItem.Click += new System.EventHandler(this.LayerToolStrip_AutomaticLevelCreation);
+            // 
+            // renameToolStripMenuItem1
+            // 
+            this.renameToolStripMenuItem1.Name = "renameToolStripMenuItem1";
+            this.renameToolStripMenuItem1.Size = new System.Drawing.Size(206, 6);
+            // 
+            // renameToolStripMenuItem2
+            // 
+            this.renameToolStripMenuItem2.Name = "renameToolStripMenuItem2";
+            this.renameToolStripMenuItem2.Size = new System.Drawing.Size(209, 22);
+            this.renameToolStripMenuItem2.Text = "Rename";
+            // 
+            // copyToolStripMenuItem
+            // 
+            this.copyToolStripMenuItem.Name = "copyToolStripMenuItem";
+            this.copyToolStripMenuItem.Size = new System.Drawing.Size(209, 22);
+            this.copyToolStripMenuItem.Text = "Copy";
+            // 
+            // deleteToolStripMenuItem
+            // 
+            this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
+            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(209, 22);
+            this.deleteToolStripMenuItem.Text = "Delete";
+            // 
+            // toolStripMenuItem1
+            // 
+            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(209, 22);
+            this.toolStripMenuItem1.Text = "Set Level Start Position";
             // 
             // MainForm
             // 
@@ -361,6 +428,7 @@
             this.ToolBar.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.GameView)).EndInit();
             this.LevelContextMenu.ResumeLayout(false);
+            this.LayerContextMenu.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -378,7 +446,7 @@
         private System.Windows.Forms.SplitContainer splitContainer2;
         private System.Windows.Forms.PictureBox GameView;
         private System.Windows.Forms.ToolStrip ToolBar;
-        private System.Windows.Forms.TreeView treeView1;
+        public System.Windows.Forms.TreeView treeView1;
         private System.Windows.Forms.PropertyGrid propertyGrid1;
         private System.Windows.Forms.ToolStripMenuItem newToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem openToolStripMenuItem;
@@ -398,5 +466,13 @@
         private System.Windows.Forms.ContextMenuStrip LevelContextMenu;
         private System.Windows.Forms.ContextMenuStrip LayerContextMenu;
         private System.Windows.Forms.ToolStripMenuItem addLayerToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem automaticLayerCreationToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator renameToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem renameToolStripMenuItem3;
+        private System.Windows.Forms.ToolStripSeparator renameToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem renameToolStripMenuItem2;
+        private System.Windows.Forms.ToolStripMenuItem copyToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem deleteToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
     }
 }
