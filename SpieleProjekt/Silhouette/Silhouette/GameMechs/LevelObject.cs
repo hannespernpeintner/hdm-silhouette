@@ -22,9 +22,9 @@ namespace Silhouette.GameMechs
     public abstract class LevelObject
     {
         [XmlAttribute()]
-        string name;
+        public string name;
         [XmlAttribute()]
-        string type;
+        public string type;
 
         public Vector2 position;
 
