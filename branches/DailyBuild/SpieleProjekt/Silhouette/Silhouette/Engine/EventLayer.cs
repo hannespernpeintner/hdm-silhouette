@@ -25,6 +25,23 @@ namespace Silhouette.Engine
 {
     public partial class EventLayer
     {
+        [XmlAttribute()]
+        public string name;
         public Vector2 scrollSpeed;
+
+        public void Initialize()
+        { 
+        
+        }
+
+        public void LoadContent()
+        { 
+        
+        }
+
+        public void updateEventLayer(GameTime gameTime)
+        { 
+        
+        }
     }
 }

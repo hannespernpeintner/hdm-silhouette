@@ -107,13 +107,19 @@ namespace Silhouette
         private static bool Changed = false;                                //Sascha: Statische Variable die prüft, ob etwas geändert wurde -> Speichern notwendig
         private const string GameSettingsFilename = "GameSettings.xml";     //Sascha: Relativer Pfad zur Datei, in der die Settings gespeichert werden
         private static GameSettings _instance;                              //Sascha: Singleton-Pattern
-        public static GameSettings Default { get { return _instance; } }
+        public static GameSettings Default 
+        { 
+            get 
+            {
+                if (_instance == null) _instance = new GameSettings();
+                return _instance; 
+            } 
+        }
 
         private GameSettings() { }
 
         public static void Initialise()
         { 
-            _instance = new GameSettings();
             LoadSettings();                     //Sascha: Lädt die Daten aus der XML-Datei
         }
 

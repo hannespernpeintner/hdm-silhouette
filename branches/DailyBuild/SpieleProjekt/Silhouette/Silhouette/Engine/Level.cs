@@ -24,7 +24,7 @@ using FarseerPhysics.Collision;
 
 namespace Silhouette.Engine
 {
-    public class Level
+    public partial class Level
     {
         /* Sascha:
          * Die Repräsentation eines Levels im Spiel.
@@ -38,6 +38,8 @@ namespace Silhouette.Engine
             public static float PixelPerMeter { get { return _PixelPerMeter; } }
             Vector2 gravitation;
 
+            public Vector2 levelStartPosition;
+
             DebugViewXNA debugView;
             bool DebugViewEnabled = false;
             bool GraphicsEnabled = false;
@@ -49,8 +51,8 @@ namespace Silhouette.Engine
             private EventLayer _eventLayer;
 
             public List<Layer> layerList { get { return _layerList; } }
-            public CollisionLayer collisionLayer { get { return _collisionLayer; } }
-            public EventLayer eventLayer { get { return _eventLayer; } }
+            public CollisionLayer collisionLayer { get { return _collisionLayer; } set { _collisionLayer = value; } }
+            public EventLayer eventLayer { get { return _eventLayer; } set { _eventLayer = value; } }
 
             Matrix proj;
 
@@ -67,7 +69,7 @@ namespace Silhouette.Engine
 
         public void Initialize()
         {
-            spriteBatch = new SpriteBatch(GameLoop.gameInstance.GraphicsDevice);
+            this.spriteBatch = new SpriteBatch(GameLoop.gameInstance.GraphicsDevice);
             gravitation = new Vector2(0.0f, 9.8f);
             Physics = new World(gravitation);
             debugView = new DebugViewXNA(Level.Physics);
@@ -77,6 +79,11 @@ namespace Silhouette.Engine
             {
                 l.initializeLayer();
             }
+
+            if(collisionLayer != null)
+                collisionLayer.Initialize();
+            if(eventLayer != null)
+                eventLayer.Initialize();
         }
 
         public void LoadContent()
@@ -87,6 +94,11 @@ namespace Silhouette.Engine
             {
                 l.loadLayer();
             }
+
+            if (collisionLayer != null)
+                collisionLayer.LoadContent();
+            if (eventLayer != null)
+            eventLayer.LoadContent();
         }
 
         public void Update(GameTime gameTime)
@@ -97,6 +109,12 @@ namespace Silhouette.Engine
             {
                 l.updateLayer(gameTime);
             }
+
+            if (collisionLayer != null)
+                collisionLayer.updateCollisionLayer(gameTime);
+            if (eventLayer != null)
+                eventLayer.updateEventLayer(gameTime);
+
             #region DebugView
                 keyboardState = Keyboard.GetState();
 
