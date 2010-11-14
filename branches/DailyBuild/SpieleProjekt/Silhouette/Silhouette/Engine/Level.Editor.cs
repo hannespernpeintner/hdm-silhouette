@@ -5,8 +5,7 @@ using System.Text;
 
 namespace Silhouette.Engine
 {
-    public partial class Layer
+    public partial class Level
     {
-
     }
 }

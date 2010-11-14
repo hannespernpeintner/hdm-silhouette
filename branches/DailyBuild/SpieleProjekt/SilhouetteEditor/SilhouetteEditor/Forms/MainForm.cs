@@ -60,18 +60,33 @@ namespace SilhouetteEditor.Forms
 
             if(Editor.Default.level.collisionLayer != null)
             {
-                TreeNode collisionTreeNode = levelTreeNode.Nodes.Add("Collision Layer");
+                TreeNode collisionTreeNode = levelTreeNode.Nodes.Add("Collision Layer: " + Editor.Default.level.collisionLayer.name);
             }
 
             if (Editor.Default.level.eventLayer != null)
             {
-                TreeNode eventTreeNode = levelTreeNode.Nodes.Add("Event Layer");
+                TreeNode eventTreeNode = levelTreeNode.Nodes.Add("Event Layer: " + Editor.Default.level.eventLayer.name);
             }
         }
 
         private void LevelToolStrip_AddLayer(object sender, EventArgs e)
         {
             new AddLayer().Show();
+        }
+
+        private void HelpAbout(object sender, EventArgs e)
+        {
+            new About().Show();
+        }
+
+        private void HelpHelp(object sender, EventArgs e)
+        {
+            new Help().Show();
+        }
+
+        private void LayerToolStrip_AutomaticLevelCreation(object sender, EventArgs e)
+        {
+
         }
     }
 }
