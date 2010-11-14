@@ -23,7 +23,7 @@ using FarseerPhysics.Collision;
 
 namespace Silhouette.Engine
 {
-    partial class EventLayer
+    public partial class EventLayer
     {
 
     }

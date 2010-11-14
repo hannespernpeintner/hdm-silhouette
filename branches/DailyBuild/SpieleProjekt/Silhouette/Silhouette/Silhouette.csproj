@@ -122,6 +122,7 @@
     <Compile Include="Engine\CollisionLayer.Editor.cs" />
     <Compile Include="Engine\EventLayer.cs" />
     <Compile Include="Engine\EventLayer.Editor.cs" />
+    <Compile Include="Engine\Layer.Editor.cs" />
     <Compile Include="Engine\Level.cs" />
     <Compile Include="Engine\Manager\FileManager.cs" />
     <Compile Include="Engine\Manager\FixtureManager.cs" />

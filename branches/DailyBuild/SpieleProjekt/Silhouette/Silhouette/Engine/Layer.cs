@@ -14,9 +14,9 @@ using Microsoft.Xna.Framework.Media;
 
 using Silhouette.GameMechs;
 
-namespace Silhouette.Engine.Screens
+namespace Silhouette.Engine
 {
-    public class Layer
+    public partial class Layer
     {
         [XmlAttribute()]
         public string name;
@@ -25,8 +25,8 @@ namespace Silhouette.Engine.Screens
 
         public Vector2 scrollSpeed;
 
-        List<LevelObject> loList;
-        List<DrawableLevelObject> dloList;
+        public List<LevelObject> loList;
+        public List<DrawableLevelObject> dloList;
 
         Texture2D[,] layerTexture;
         string[,] assetName;

@@ -23,7 +23,7 @@ using FarseerPhysics.Collision;
 
 namespace Silhouette.Engine
 {
-    partial class CollisionLayer
+    public partial class CollisionLayer
     {
         public void AddFixture(Fixture fixture)
         {
