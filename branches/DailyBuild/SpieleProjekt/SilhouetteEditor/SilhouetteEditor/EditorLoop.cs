@@ -15,11 +15,15 @@ namespace SilhouetteEditor
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+        static EditorLoop _editorLoopInstance;
+
+        public static EditorLoop EditorLoopInstance { get { return _editorLoopInstance; } }
 
         private IntPtr drawSurface;
 
         public EditorLoop(IntPtr drawSurface)
         {
+            _editorLoopInstance = this;
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             this.drawSurface = drawSurface;

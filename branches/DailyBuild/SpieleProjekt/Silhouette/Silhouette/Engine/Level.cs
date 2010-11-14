@@ -14,6 +14,7 @@ using Microsoft.Xna.Framework.Media;
 
 using Silhouette.Engine.Manager;
 using Silhouette.Engine.Screens;
+using Silhouette.Engine;
 
 //Physik-Engine Klassen
 using FarseerPhysics;
@@ -30,6 +31,8 @@ namespace Silhouette.Engine
         */
 
         #region Definitions
+            [XmlAttribute()]
+            public string name;
             public static World Physics;
             private const float _PixelPerMeter = 100.0f;
             public static float PixelPerMeter { get { return _PixelPerMeter; } }
@@ -40,9 +43,14 @@ namespace Silhouette.Engine
             bool GraphicsEnabled = false;
 
             SpriteBatch spriteBatch;
-            List<Layer> layerList;
-            CollisionLayer collisionLayer;
-            EventLayer eventLayer;
+
+            private List<Layer> _layerList;
+            private CollisionLayer _collisionLayer;
+            private EventLayer _eventLayer;
+
+            public List<Layer> layerList { get { return _layerList; } }
+            public CollisionLayer collisionLayer { get { return _collisionLayer; } }
+            public EventLayer eventLayer { get { return _eventLayer; } }
 
             Matrix proj;
 
@@ -54,12 +62,12 @@ namespace Silhouette.Engine
 
         public Level()
         {
-            spriteBatch = new SpriteBatch(GameLoop.gameInstance.GraphicsDevice);
-            layerList = new List<Layer>();
+            _layerList = new List<Layer>();
         }
 
         public void Initialize()
         {
+            spriteBatch = new SpriteBatch(GameLoop.gameInstance.GraphicsDevice);
             gravitation = new Vector2(0.0f, 9.8f);
             Physics = new World(gravitation);
             debugView = new DebugViewXNA(Level.Physics);

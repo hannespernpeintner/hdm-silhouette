@@ -16,9 +16,9 @@ namespace Silhouette.GameMechs
     public abstract class DrawableLevelObject
     {
         [XmlAttribute()]
-        string name;
+        public string name;
         [XmlAttribute()]
-        string type;
+        public string type;
 
         string assetName;
         public Vector2 position;
