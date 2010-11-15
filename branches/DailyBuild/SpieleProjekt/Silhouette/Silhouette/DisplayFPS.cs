@@ -69,7 +69,7 @@ namespace Silhouette
         public override void Draw(GameTime gameTime)
         {
             sb.Begin();
-            sb.DrawString(FontManager.Arial, fps.ToString(), new Vector2(10, 10), Color.White);
+            sb.DrawString(FontManager.Arial, fps.ToString(), new Vector2(10, 10), Color.Black);
             sb.End();
             base.Draw(gameTime);
         }

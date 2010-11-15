@@ -9,6 +9,7 @@ using Silhouette.GameMechs;
 using SilhouetteEditor.Forms;
 using System.IO;
 using System.Drawing;
+using System.Windows.Forms;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
@@ -19,6 +20,12 @@ using Microsoft.Xna.Framework.Media;
 
 namespace SilhouetteEditor
 {
+    enum FixtureType
+    { 
+        Rectangle,
+        Circle
+    }
+
     class Editor
     {
         static Editor Instance;
@@ -36,20 +43,33 @@ namespace SilhouetteEditor
 
         public Level level;
         public Layer selectedLayer;
+        public LevelObject selectedLevelObject;
+        public DrawableLevelObject selectedDrawableLevelObject;
+
+        public TextureWrapper currentTexture;
+        public FixtureType currentFixture;
+
+
+        KeyboardState kstate, oldkstate;
+        MouseState mstate, oldmstate;
 
         public void Initialize()
         {
             spriteBatch = new SpriteBatch(EditorLoop.EditorLoopInstance.GraphicsDevice);
         }
 
-        public void Update()
-        { 
-            
+        public void Update(GameTime gameTime)
+        {
+            if (level == null)
+                return;
         }
 
-        public void Draw()
-        { 
-            
+        public void Draw(GameTime gameTime)
+        {
+            if (level == null)
+                return;
+
+            level.Draw(gameTime);
         }
 
         public void NewLevel(string name)
@@ -62,6 +82,7 @@ namespace SilhouetteEditor
                 level.name = name;
 
             level.InitializeInEditor(spriteBatch);
+            level.LoadContentInEditor();
             MainForm.Default.UpdateTreeView();
         }
 
@@ -102,7 +123,7 @@ namespace SilhouetteEditor
             MainForm.Default.UpdateTreeView();
         }
 
-        public static Image getThumbNail(Bitmap bmp, int imgWidth, int imgHeight)
+        public Image getThumbNail(Bitmap bmp, int imgWidth, int imgHeight)
         {
             Bitmap retBmp = new Bitmap(imgWidth, imgHeight, System.Drawing.Imaging.PixelFormat.Format64bppPArgb);
             Graphics grp = Graphics.FromImage(retBmp);
@@ -116,6 +137,44 @@ namespace SilhouetteEditor
             grp.DrawImage(bmp, iLeft, iTop, tnWidth, tnHeight);
             retBmp.Tag = bmp;
             return retBmp;
+        }
+
+        public void createTextureWrapper(string path, int width, int height)
+        {
+            this.currentTexture = new TextureWrapper(path, width, height);
+            paintTextureWrapper();
+        }
+
+        public void destroyTextureWrapper()
+        {
+            this.currentTexture = null;
+        }
+
+        public void paintTextureWrapper()
+        {
+            if (selectedLayer == null)
+            {
+                System.Windows.Forms.MessageBox.Show("You have to choose a Layer in order to be able to add textures to it!");
+                destroyTextureWrapper();
+                return;
+            }
+
+            selectedLayer.layerTexture[currentTexture.width, currentTexture.height] = currentTexture.texture;
+            selectedLayer.assetName[currentTexture.width, currentTexture.height] = Path.GetFileNameWithoutExtension(currentTexture.fullPath);
+
+            MainForm.Default.UpdateTreeView();
+            destroyTextureWrapper();
+        }
+
+        public void selectLayer(Layer l)
+        {
+            selectedLayer = l;
+            MainForm.Default.propertyGrid1.SelectedObject = l;
+        }
+
+        public void selectLevel()
+        {
+            MainForm.Default.propertyGrid1.SelectedObject = this.level;
         }
     }
 }
