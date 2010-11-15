@@ -28,7 +28,7 @@ namespace Silhouette.Engine.Manager
             if (!File.Exists(relativePath))
                 return null;
             else
-                return File.Open(relativePath, FileMode.Open, FileAccess.Read);
+                return File.Open(relativePath, FileMode.Open, FileAccess.Read, FileShare.Read);
         }
 
         public static FileStream SaveConfigFile(string relativePath)

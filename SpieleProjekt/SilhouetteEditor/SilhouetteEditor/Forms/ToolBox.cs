@@ -52,7 +52,7 @@ namespace SilhouetteEditor.Forms
             foreach (FileInfo file in files)
             {
                 Bitmap bmp = new Bitmap(file.FullName);
-                imageList32.Images.Add(file.FullName, Editor.getThumbNail(bmp, 32, 32));
+                imageList32.Images.Add(file.FullName, Editor.Default.getThumbNail(bmp, 32, 32));
 
 
                 ListViewItem lvi = new ListViewItem();
@@ -63,6 +63,24 @@ namespace SilhouetteEditor.Forms
                 lvi.ToolTipText = file.Name + " (" + bmp.Width.ToString() + " x " + bmp.Height.ToString() + ")";
 
                 listView1.Items.Add(lvi);
+            }
+        }
+
+        private void listView1_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            string itemtype = listView1.FocusedItem.Tag.ToString();
+            if (itemtype == "folder")
+            {
+                loadFolder(listView1.FocusedItem.Name);
+            }
+            if (itemtype == "file")
+            {
+                if (textBox2.Text == "" || textBox3.Text == "")
+                {
+                    MessageBox.Show("Width and Height must be declared!");
+                    return;
+                }
+                Editor.Default.createTextureWrapper(listView1.FocusedItem.Name, Convert.ToInt32(textBox2.Text), Convert.ToInt32(textBox3.Text));
             }
         }
     }

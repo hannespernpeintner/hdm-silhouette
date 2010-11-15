@@ -84,7 +84,8 @@ namespace Silhouette.Engine
             for (int x = 0; x < width; x++)
                 for (int y = 0; y < height; y++)
                 {
-                    spriteBatch.Draw(layerTexture[x, y], new Vector2(x * GameSettings.Default.resolutionWidth, y * GameSettings.Default.resolutionHeight), Color.White);
+                    if(layerTexture[x,y] != null)
+                        spriteBatch.Draw(layerTexture[x, y], new Vector2(x * GameSettings.Default.resolutionWidth, y * GameSettings.Default.resolutionHeight), Color.White);
                 }
             foreach (DrawableLevelObject dlo in dloList)
             {
