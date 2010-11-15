@@ -33,6 +33,7 @@ namespace SilhouetteEditor
 
         protected override void Initialize()
         {
+            Editor.Default.Initialize();
             base.Initialize();
         }
 
@@ -47,12 +48,14 @@ namespace SilhouetteEditor
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 this.Exit();
+            Editor.Default.Update();
             base.Update(gameTime);
         }
 
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.White);
+            Editor.Default.Draw();
             base.Draw(gameTime);
         }
 
