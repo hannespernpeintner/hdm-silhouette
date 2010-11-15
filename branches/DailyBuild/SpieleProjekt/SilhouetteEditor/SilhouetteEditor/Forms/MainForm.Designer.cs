@@ -261,6 +261,7 @@
             this.treeView1.Name = "treeView1";
             this.treeView1.Size = new System.Drawing.Size(234, 259);
             this.treeView1.TabIndex = 1;
+            this.treeView1.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView1_AfterSelect);
             // 
             // ToolBar
             // 
@@ -286,6 +287,7 @@
             this.toolStripButton1.Name = "toolStripButton1";
             this.toolStripButton1.Size = new System.Drawing.Size(23, 22);
             this.toolStripButton1.Text = "toolStripButton1";
+            this.toolStripButton1.Click += new System.EventHandler(this.LevelToolStrip_AddLayer);
             // 
             // toolStripButton2
             // 
@@ -451,7 +453,7 @@
         private System.Windows.Forms.PictureBox GameView;
         private System.Windows.Forms.ToolStrip ToolBar;
         public System.Windows.Forms.TreeView treeView1;
-        private System.Windows.Forms.PropertyGrid propertyGrid1;
+        public System.Windows.Forms.PropertyGrid propertyGrid1;
         private System.Windows.Forms.ToolStripMenuItem newToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem openToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem saveToolStripMenuItem;

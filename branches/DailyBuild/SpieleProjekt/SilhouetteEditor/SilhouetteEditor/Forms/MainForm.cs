@@ -84,14 +84,22 @@ namespace SilhouetteEditor.Forms
             new Help().Show();
         }
 
-        private void LayerToolStrip_AutomaticLevelCreation(object sender, EventArgs e)
-        {
-
-        }
-
         private void ViewToolBox(object sender, EventArgs e)
         {
             new ToolBox().Show();
+        }
+
+        private void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
+        {
+            if (e.Node.Tag is Level)
+            {
+                Editor.Default.selectLevel();
+            }
+            if (e.Node.Tag is Layer)
+            {
+                Layer l = (Layer)e.Node.Tag;
+                Editor.Default.selectLayer(l);
+            }
         }
     }
 }

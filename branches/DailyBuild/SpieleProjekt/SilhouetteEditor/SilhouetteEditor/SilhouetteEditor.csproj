@@ -158,6 +158,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="EditorLoop.cs" />
     <Compile Include="Texture2DLoader.cs" />
+    <Compile Include="TextureWrapper.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Game.ico" />
