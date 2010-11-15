@@ -41,6 +41,7 @@
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.bearbeitenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ansichtToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolBoxToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.leveleinstellungenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.runToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -62,12 +63,11 @@
             this.renameToolStripMenuItem = new System.Windows.Forms.ToolStripSeparator();
             this.renameToolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
             this.LayerContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.automaticLayerCreationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.renameToolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
             this.renameToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             this.copyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.MenuBar.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -85,7 +85,7 @@
             // 
             // StatusBar
             // 
-            this.StatusBar.BackColor = System.Drawing.SystemColors.GrayText;
+            this.StatusBar.BackColor = System.Drawing.SystemColors.Window;
             this.StatusBar.Location = new System.Drawing.Point(0, 708);
             this.StatusBar.Name = "StatusBar";
             this.StatusBar.Size = new System.Drawing.Size(1264, 22);
@@ -94,7 +94,7 @@
             // 
             // MenuBar
             // 
-            this.MenuBar.BackColor = System.Drawing.SystemColors.GrayText;
+            this.MenuBar.BackColor = System.Drawing.SystemColors.Window;
             this.MenuBar.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.dateiToolStripMenuItem,
             this.bearbeitenToolStripMenuItem,
@@ -166,9 +166,18 @@
             // 
             // ansichtToolStripMenuItem
             // 
+            this.ansichtToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolBoxToolStripMenuItem});
             this.ansichtToolStripMenuItem.Name = "ansichtToolStripMenuItem";
             this.ansichtToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
             this.ansichtToolStripMenuItem.Text = "View";
+            // 
+            // toolBoxToolStripMenuItem
+            // 
+            this.toolBoxToolStripMenuItem.Name = "toolBoxToolStripMenuItem";
+            this.toolBoxToolStripMenuItem.Size = new System.Drawing.Size(117, 22);
+            this.toolBoxToolStripMenuItem.Text = "ToolBox";
+            this.toolBoxToolStripMenuItem.Click += new System.EventHandler(this.ViewToolBox);
             // 
             // leveleinstellungenToolStripMenuItem
             // 
@@ -207,6 +216,7 @@
             // 
             // splitContainer1
             // 
+            this.splitContainer1.BackColor = System.Drawing.SystemColors.Window;
             this.splitContainer1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.splitContainer1.Location = new System.Drawing.Point(0, 24);
@@ -225,6 +235,7 @@
             // 
             // splitContainer2
             // 
+            this.splitContainer2.BackColor = System.Drawing.SystemColors.Window;
             this.splitContainer2.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.splitContainer2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.splitContainer2.Location = new System.Drawing.Point(0, 0);
@@ -319,6 +330,7 @@
             // 
             // GameView
             // 
+            this.GameView.BackColor = System.Drawing.SystemColors.Window;
             this.GameView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.GameView.Location = new System.Drawing.Point(0, 0);
             this.GameView.Name = "GameView";
@@ -356,50 +368,42 @@
             // LayerContextMenu
             // 
             this.LayerContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.automaticLayerCreationToolStripMenuItem,
             this.toolStripMenuItem1,
             this.renameToolStripMenuItem1,
             this.renameToolStripMenuItem2,
             this.copyToolStripMenuItem,
             this.deleteToolStripMenuItem});
             this.LayerContextMenu.Name = "LayerContextMenu";
-            this.LayerContextMenu.Size = new System.Drawing.Size(210, 120);
+            this.LayerContextMenu.Size = new System.Drawing.Size(194, 98);
             // 
-            // automaticLayerCreationToolStripMenuItem
+            // toolStripMenuItem1
             // 
-            this.automaticLayerCreationToolStripMenuItem.Name = "automaticLayerCreationToolStripMenuItem";
-            this.automaticLayerCreationToolStripMenuItem.Size = new System.Drawing.Size(209, 22);
-            this.automaticLayerCreationToolStripMenuItem.Text = "Automatic Layer Creation";
-            this.automaticLayerCreationToolStripMenuItem.Click += new System.EventHandler(this.LayerToolStrip_AutomaticLevelCreation);
+            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(193, 22);
+            this.toolStripMenuItem1.Text = "Set Level Start Position";
             // 
             // renameToolStripMenuItem1
             // 
             this.renameToolStripMenuItem1.Name = "renameToolStripMenuItem1";
-            this.renameToolStripMenuItem1.Size = new System.Drawing.Size(206, 6);
+            this.renameToolStripMenuItem1.Size = new System.Drawing.Size(190, 6);
             // 
             // renameToolStripMenuItem2
             // 
             this.renameToolStripMenuItem2.Name = "renameToolStripMenuItem2";
-            this.renameToolStripMenuItem2.Size = new System.Drawing.Size(209, 22);
+            this.renameToolStripMenuItem2.Size = new System.Drawing.Size(193, 22);
             this.renameToolStripMenuItem2.Text = "Rename";
             // 
             // copyToolStripMenuItem
             // 
             this.copyToolStripMenuItem.Name = "copyToolStripMenuItem";
-            this.copyToolStripMenuItem.Size = new System.Drawing.Size(209, 22);
+            this.copyToolStripMenuItem.Size = new System.Drawing.Size(193, 22);
             this.copyToolStripMenuItem.Text = "Copy";
             // 
             // deleteToolStripMenuItem
             // 
             this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
-            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(209, 22);
+            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(193, 22);
             this.deleteToolStripMenuItem.Text = "Delete";
-            // 
-            // toolStripMenuItem1
-            // 
-            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(209, 22);
-            this.toolStripMenuItem1.Text = "Set Level Start Position";
             // 
             // MainForm
             // 
@@ -466,7 +470,6 @@
         private System.Windows.Forms.ContextMenuStrip LevelContextMenu;
         private System.Windows.Forms.ContextMenuStrip LayerContextMenu;
         private System.Windows.Forms.ToolStripMenuItem addLayerToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem automaticLayerCreationToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator renameToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem renameToolStripMenuItem3;
         private System.Windows.Forms.ToolStripSeparator renameToolStripMenuItem1;
@@ -474,5 +477,6 @@
         private System.Windows.Forms.ToolStripMenuItem copyToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem deleteToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem toolBoxToolStripMenuItem;
     }
 }

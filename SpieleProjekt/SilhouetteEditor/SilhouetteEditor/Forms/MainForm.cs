@@ -88,5 +88,10 @@ namespace SilhouetteEditor.Forms
         {
 
         }
+
+        private void ViewToolBox(object sender, EventArgs e)
+        {
+            new ToolBox().Show();
+        }
     }
 }
