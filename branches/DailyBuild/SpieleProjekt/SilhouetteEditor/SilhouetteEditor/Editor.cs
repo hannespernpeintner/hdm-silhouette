@@ -7,6 +7,15 @@ using Silhouette.Engine;
 using Silhouette.Engine.Manager;
 using Silhouette.GameMechs;
 using SilhouetteEditor.Forms;
+using System.IO;
+using System.Drawing;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
+using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.GamerServices;
+using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Media;
 
 namespace SilhouetteEditor
 {
@@ -23,12 +32,14 @@ namespace SilhouetteEditor
             }
         }
 
+        SpriteBatch spriteBatch;
+
         public Level level;
         public Layer selectedLayer;
 
         public void Initialize()
-        { 
-            
+        {
+            spriteBatch = new SpriteBatch(EditorLoop.EditorLoopInstance.GraphicsDevice);
         }
 
         public void Update()
@@ -50,6 +61,7 @@ namespace SilhouetteEditor
             else
                 level.name = name;
 
+            level.InitializeInEditor(spriteBatch);
             MainForm.Default.UpdateTreeView();
         }
 
@@ -90,9 +102,20 @@ namespace SilhouetteEditor
             MainForm.Default.UpdateTreeView();
         }
 
-        public void AutomaticLevelCreation(Layer l)
-        { 
-            
+        public static Image getThumbNail(Bitmap bmp, int imgWidth, int imgHeight)
+        {
+            Bitmap retBmp = new Bitmap(imgWidth, imgHeight, System.Drawing.Imaging.PixelFormat.Format64bppPArgb);
+            Graphics grp = Graphics.FromImage(retBmp);
+            int tnWidth = imgWidth, tnHeight = imgHeight;
+            if (bmp.Width > bmp.Height)
+                tnHeight = (int)(((float)bmp.Height / (float)bmp.Width) * tnWidth);
+            else if (bmp.Width < bmp.Height)
+                tnWidth = (int)(((float)bmp.Width / (float)bmp.Height) * tnHeight);
+            int iLeft = (imgWidth / 2) - (tnWidth / 2);
+            int iTop = (imgHeight / 2) - (tnHeight / 2);
+            grp.DrawImage(bmp, iLeft, iTop, tnWidth, tnHeight);
+            retBmp.Tag = bmp;
+            return retBmp;
         }
     }
 }
