@@ -60,8 +60,33 @@ namespace SilhouetteEditor
 
         public void Update(GameTime gameTime)
         {
+            kstate = Keyboard.GetState();
+            mstate = Mouse.GetState();
+
             if (level == null)
                 return;
+
+            #region CameraControl
+                if(kstate.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.A))
+                {
+                    Camera.PositionX -= Constants.CameraMovingSpeed;
+                }
+                if (kstate.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.D))
+                {
+                    Camera.PositionX += Constants.CameraMovingSpeed;
+                }
+                if (kstate.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.S))
+                {
+                    Camera.PositionY += Constants.CameraMovingSpeed;
+                }
+                if (kstate.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.W))
+                {
+                    Camera.PositionY -= Constants.CameraMovingSpeed;
+                }
+            #endregion
+             
+            oldkstate = kstate;
+            oldmstate = mstate;
         }
 
         public void Draw(GameTime gameTime)

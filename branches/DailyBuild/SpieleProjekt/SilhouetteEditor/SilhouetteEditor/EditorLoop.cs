@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
+using Silhouette;
 
 namespace SilhouetteEditor
 {
@@ -26,6 +27,8 @@ namespace SilhouetteEditor
             _editorLoopInstance = this;
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
+            GameSettings.Initialise();
+            GameSettings.ApplyChanges(ref graphics); 
             this.drawSurface = drawSurface;
             graphics.PreparingDeviceSettings += new EventHandler<PreparingDeviceSettingsEventArgs>(graphics_PreparingDeviceSettings);
             System.Windows.Forms.Control.FromHandle((this.Window.Handle)).VisibleChanged += new EventHandler(EditorLoop_VisibleChanged);
