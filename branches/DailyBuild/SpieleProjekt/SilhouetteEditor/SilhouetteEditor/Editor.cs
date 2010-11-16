@@ -18,6 +18,12 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 
+//Physik-Engine Klassen
+using FarseerPhysics;
+using FarseerPhysics.Dynamics;
+using FarseerPhysics.Factories;
+using FarseerPhysics.Collision;
+
 namespace SilhouetteEditor
 {
     enum FixtureType
@@ -65,6 +71,8 @@ namespace SilhouetteEditor
 
             if (level == null)
                 return;
+
+            level.UpdateInEditor(gameTime);
 
             #region CameraControl
                 if(kstate.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.A))
@@ -189,6 +197,25 @@ namespace SilhouetteEditor
 
             MainForm.Default.UpdateTreeView();
             destroyTextureWrapper();
+        }
+
+        public void AddFixture(FixtureType fixtureType)
+        { 
+            if(level.collisionLayer == null)
+            {
+                System.Windows.Forms.MessageBox.Show("There is no Collision Layer to add Fixtures to it.", "Error", MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
+                return;
+            }
+
+            if (fixtureType == FixtureType.Rectangle)
+            { 
+                level.collisionLayer.fixtureList.Add(FixtureManager.CreateRectangle(200,100, new Vector2(200,200), BodyType.Static, 1));
+            }
+
+            if (fixtureType == FixtureType.Circle)
+            {
+                level.collisionLayer.fixtureList.Add(FixtureManager.CreateCircle(50, new Vector2(200,200), BodyType.Static, 1));
+            }
         }
 
         public void selectLayer(Layer l)
