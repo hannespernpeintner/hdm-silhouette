@@ -160,8 +160,10 @@ namespace Silhouette.Engine
                     Camera.Position = oldCameraPosition;
                 }
             }
-            if(!DebugViewEnabled)
-                debugView.RenderDebugData(ref proj, ref Camera.matrix);
+            if (!DebugViewEnabled)
+            {
+                debugView.RenderDebugData(ref proj, ref Camera.debugMatrix);
+            }
         }
 
         public static void LoadLevelFile(int levelNumber)
