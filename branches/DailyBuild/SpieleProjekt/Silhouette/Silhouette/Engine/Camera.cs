@@ -28,6 +28,32 @@ namespace Silhouette.Engine
             }
         }
 
+        public static float PositionX 
+        { 
+            get 
+            {
+                return _Position.X;
+            }
+            set
+            {
+                _Position.X = value;
+                updateMatrix();
+            }   
+        }
+
+        public static float PositionY
+        {
+            get
+            {
+                return _Position.Y;
+            }
+            set
+            {
+                _Position.Y = value;
+                updateMatrix();
+            }
+        }
+
         static float _Rotation;
         public static float Rotation
         {

@@ -111,7 +111,6 @@ namespace Silhouette
         { 
             get 
             {
-                if (_instance == null) _instance = new GameSettings();
                 return _instance; 
             } 
         }
@@ -119,7 +118,8 @@ namespace Silhouette
         private GameSettings() { }
 
         public static void Initialise()
-        { 
+        {
+            _instance = new GameSettings();
             LoadSettings();                     //Sascha: Lädt die Daten aus der XML-Datei
         }
 
