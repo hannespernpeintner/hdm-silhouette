@@ -38,6 +38,14 @@ namespace Silhouette.Engine
         public void LoadContentInEditor()
         {
             proj = Matrix.CreateOrthographicOffCenter(0, GameSettings.Default.resolutionWidth / PixelPerMeter, GameSettings.Default.resolutionHeight / PixelPerMeter, 0, 0, 1);
+
+            f1 = FixtureManager.CreateRectangle(400, 100, new Vector2(100, 600), BodyType.Static, 1);
+            f2 = FixtureManager.CreateCircle(50, new Vector2(100, 100), BodyType.Dynamic, 1);
+        }
+
+        public void UpdateInEditor(GameTime gameTime)
+        {
+            Physics.Step(Math.Min((float)gameTime.ElapsedGameTime.TotalMilliseconds * 0.001f, (1f / 30f)));
         }
     }
 }

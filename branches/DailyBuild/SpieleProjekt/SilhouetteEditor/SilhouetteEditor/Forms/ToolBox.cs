@@ -77,7 +77,7 @@ namespace SilhouetteEditor.Forms
             {
                 if (textBox2.Text == "" || textBox3.Text == "")
                 {
-                    MessageBox.Show("Width and Height must be declared!", "Error");
+                    MessageBox.Show("Width and Height must be declared!", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
                 Editor.Default.createTextureWrapper(listView1.FocusedItem.Name, Convert.ToInt32(textBox2.Text), Convert.ToInt32(textBox3.Text));

@@ -107,5 +107,15 @@ namespace SilhouetteEditor.Forms
                 Editor.Default.selectLayer(l);
             }
         }
+
+        private void toolStripButton5_Click(object sender, EventArgs e)
+        {
+            Editor.Default.AddFixture(FixtureType.Rectangle);
+        }
+
+        private void toolStripButton6_Click(object sender, EventArgs e)
+        {
+            Editor.Default.AddFixture(FixtureType.Circle);
+        }
     }
 }

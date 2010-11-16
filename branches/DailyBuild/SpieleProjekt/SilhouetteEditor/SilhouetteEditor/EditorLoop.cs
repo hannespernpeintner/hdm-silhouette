@@ -43,6 +43,7 @@ namespace SilhouetteEditor
         protected override void LoadContent()
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
+            DebugViewXNA.LoadContent(EditorLoop.EditorLoopInstance.GraphicsDevice, EditorLoop.EditorLoopInstance.Content);
         }
 
         protected override void UnloadContent() {}
