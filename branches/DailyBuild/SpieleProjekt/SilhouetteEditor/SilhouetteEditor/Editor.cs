@@ -140,18 +140,16 @@ namespace SilhouetteEditor
             MainForm.Default.UpdateTreeView();
         }
 
-        public void AddCollisionLayer(string name)
+        public void AddCollisionLayer()
         {
             CollisionLayer cl = new CollisionLayer();
-            cl.name = name;
             level.collisionLayer = cl;
             MainForm.Default.UpdateTreeView();
         }
 
-        public void AddEventLayer(string name)
+        public void AddEventLayer()
         {
             EventLayer el = new EventLayer();
-            el.name = name;
             level.eventLayer = el;
             MainForm.Default.UpdateTreeView();
         }
@@ -208,13 +206,15 @@ namespace SilhouetteEditor
             }
 
             if (fixtureType == FixtureType.Rectangle)
-            { 
-                level.collisionLayer.fixtureList.Add(FixtureManager.CreateRectangle(200,100, new Vector2(200,200), BodyType.Static, 1));
+            {
+                Fixture f = FixtureManager.CreateRectangle(200, 100, new Vector2(200, 200), BodyType.Static, 1);
+                level.collisionLayer.fixtureList.Add(f);
             }
 
             if (fixtureType == FixtureType.Circle)
             {
-                level.collisionLayer.fixtureList.Add(FixtureManager.CreateCircle(50, new Vector2(200,200), BodyType.Static, 1));
+                Fixture f = FixtureManager.CreateCircle(50, new Vector2(200, 200), BodyType.Static, 1);
+                level.collisionLayer.fixtureList.Add(f);
             }
         }
 

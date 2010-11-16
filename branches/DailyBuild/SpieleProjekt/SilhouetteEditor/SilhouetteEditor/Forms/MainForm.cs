@@ -64,13 +64,13 @@ namespace SilhouetteEditor.Forms
 
             if(Editor.Default.level.collisionLayer != null)
             {
-                TreeNode collisionTreeNode = levelTreeNode.Nodes.Add("Collision Layer: " + Editor.Default.level.collisionLayer.name);
+                TreeNode collisionTreeNode = levelTreeNode.Nodes.Add("Collision Layer");
                 collisionTreeNode.Tag = Editor.Default.level.collisionLayer;
             }
 
             if (Editor.Default.level.eventLayer != null)
             {
-                TreeNode eventTreeNode = levelTreeNode.Nodes.Add("Event Layer: " + Editor.Default.level.eventLayer.name);
+                TreeNode eventTreeNode = levelTreeNode.Nodes.Add("Event Layer");
                 eventTreeNode.Tag = Editor.Default.level.eventLayer;
             }
         }
@@ -116,6 +116,16 @@ namespace SilhouetteEditor.Forms
         private void toolStripButton6_Click(object sender, EventArgs e)
         {
             Editor.Default.AddFixture(FixtureType.Circle);
+        }
+
+        private void toolStripMenuItem3_Click(object sender, EventArgs e)
+        {
+            Editor.Default.AddCollisionLayer();
+        }
+
+        private void toolStripMenuItem4_Click(object sender, EventArgs e)
+        {
+            Editor.Default.AddEventLayer();
         }
     }
 }

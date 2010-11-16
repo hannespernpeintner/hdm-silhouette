@@ -25,8 +25,6 @@ namespace Silhouette.Engine
 {
     public partial class CollisionLayer
     {
-        [XmlAttribute()]
-        public string name;
         public Vector2 scrollSpeed;
 
         public List<Fixture> fixtureList;
