@@ -29,7 +29,12 @@ namespace Silhouette.Engine
         public string name;
         public Vector2 scrollSpeed;
 
-        List<Fixture> fixtureList;
+        public List<Fixture> fixtureList;
+
+        public CollisionLayer()
+        {
+            fixtureList = new List<Fixture>();
+        }
 
         public void Initialize()
         { 
