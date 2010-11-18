@@ -9,6 +9,12 @@ using System.Windows.Forms;
 using Silhouette.Engine;
 using Silhouette.GameMechs;
 
+//Physik-Engine Klassen
+using FarseerPhysics;
+using FarseerPhysics.Dynamics;
+using FarseerPhysics.Factories;
+using FarseerPhysics.Collision;
+
 namespace SilhouetteEditor.Forms
 {
     public partial class MainForm : Form
@@ -26,6 +32,9 @@ namespace SilhouetteEditor.Forms
             return GameView.Handle;
         }
 
+
+        //---> MenuBar-Steuerung <---//
+
         private void FileExit(object sender, EventArgs e)
         {
             EditorLoop.EditorLoopInstance.Exit();
@@ -35,6 +44,56 @@ namespace SilhouetteEditor.Forms
         {
             new NewLevel().ShowDialog();
         }
+
+        private void HelpAbout(object sender, EventArgs e)
+        {
+            new About().Show();
+        }
+
+        private void HelpHelp(object sender, EventArgs e)
+        {
+            new Help().Show();
+        }
+
+        private void ToolsToolBox(object sender, EventArgs e)
+        {
+            new ToolBox().Show();
+        }
+
+        //---> ToolBar-Steuerung <---//
+
+        private void ToolStripButton_AddRectangleFixture(object sender, EventArgs e)
+        {
+            Editor.Default.AddFixture(FixtureType.Rectangle);
+        }
+
+        private void ToolStripButton_AddCircleFixture(object sender, EventArgs e)
+        {
+            Editor.Default.AddFixture(FixtureType.Circle);
+        }
+
+
+        //---> ContextMenu-Steuerungen <---//
+
+        //--->Level
+
+        private void LevelToolStrip_AddLayer(object sender, EventArgs e)
+        {
+            new AddLayer().ShowDialog();
+        }
+
+        private void LevelToolStrip_AddCollisionLayer(object sender, EventArgs e)
+        {
+            Editor.Default.AddCollisionLayer();
+        }
+
+        private void LevelToolStrip_AddEventLayer(object sender, EventArgs e)
+        {
+            Editor.Default.AddEventLayer();
+        }
+
+
+        //---> TreeView-Steuerung <---//
 
         public void UpdateTreeView()
         {
@@ -66,6 +125,14 @@ namespace SilhouetteEditor.Forms
             {
                 TreeNode collisionTreeNode = levelTreeNode.Nodes.Add("Collision Layer");
                 collisionTreeNode.Tag = Editor.Default.level.collisionLayer;
+
+                int fixtureCounter = 1;
+
+                foreach (Fixture f in Editor.Default.level.collisionLayer.fixtureList)
+                {
+                    TreeNode fixtureTreeNode = collisionTreeNode.Nodes.Add("Fixture " + fixtureCounter.ToString());
+                    fixtureCounter++;
+                }
             }
 
             if (Editor.Default.level.eventLayer != null)
@@ -73,26 +140,6 @@ namespace SilhouetteEditor.Forms
                 TreeNode eventTreeNode = levelTreeNode.Nodes.Add("Event Layer");
                 eventTreeNode.Tag = Editor.Default.level.eventLayer;
             }
-        }
-
-        private void LevelToolStrip_AddLayer(object sender, EventArgs e)
-        {
-            new AddLayer().ShowDialog();
-        }
-
-        private void HelpAbout(object sender, EventArgs e)
-        {
-            new About().Show();
-        }
-
-        private void HelpHelp(object sender, EventArgs e)
-        {
-            new Help().Show();
-        }
-
-        private void ViewToolBox(object sender, EventArgs e)
-        {
-            new ToolBox().Show();
         }
 
         private void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
@@ -106,26 +153,14 @@ namespace SilhouetteEditor.Forms
                 Layer l = (Layer)e.Node.Tag;
                 Editor.Default.selectLayer(l);
             }
-        }
-
-        private void toolStripButton5_Click(object sender, EventArgs e)
-        {
-            Editor.Default.AddFixture(FixtureType.Rectangle);
-        }
-
-        private void toolStripButton6_Click(object sender, EventArgs e)
-        {
-            Editor.Default.AddFixture(FixtureType.Circle);
-        }
-
-        private void toolStripMenuItem3_Click(object sender, EventArgs e)
-        {
-            Editor.Default.AddCollisionLayer();
-        }
-
-        private void toolStripMenuItem4_Click(object sender, EventArgs e)
-        {
-            Editor.Default.AddEventLayer();
+            if (e.Node.Tag is CollisionLayer)
+            {
+                Editor.Default.selectCollisionLayer();
+            }
+            if (e.Node.Tag is EventLayer)
+            {
+                Editor.Default.selectEventLayer();
+            }
         }
     }
 }

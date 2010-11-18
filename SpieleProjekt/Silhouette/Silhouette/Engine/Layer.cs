@@ -10,6 +10,7 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System.ComponentModel;
 using Microsoft.Xna.Framework.Media;
 
 using Silhouette.GameMechs;
@@ -23,7 +24,16 @@ namespace Silhouette.Engine
         [XmlAttribute()]
         public bool isVisible;
 
-        public Vector2 scrollSpeed;
+        private Vector2 scrollSpeed;
+
+        [DisplayName("ScrollSpeed"), Category("General")]
+        [Description("The Scroll Speed relative to the main camera. The X and Y components are interpreted as factors, " +
+        "so Vector2.One means same scrolling speed as the main camera. To be used for parallax scrolling.")]
+        public Vector2 ScrollSpeed
+        {
+            get { return scrollSpeed; }
+            set { scrollSpeed = value; }
+        }
 
         public List<LevelObject> loList;
         public List<DrawableLevelObject> dloList;
