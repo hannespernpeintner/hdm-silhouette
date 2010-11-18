@@ -5,15 +5,10 @@ using System.Text;
 using System.IO;
 using Microsoft.Xna.Framework.Graphics;
 using Silhouette.Engine.Manager;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
-using System.IO;
 
 namespace SilhouetteEditor
 {
@@ -47,7 +42,7 @@ namespace SilhouetteEditor
                 }
                 catch (IOException e)
                 {
-                    MessageBox.Show("Fehler beim Laden der Textur!", "Error");
+                    MessageBox.Show("Error while loading texture! Check if the Resource is in use!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return null;
                 }
             }

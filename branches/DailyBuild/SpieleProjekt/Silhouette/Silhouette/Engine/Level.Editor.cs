@@ -29,8 +29,8 @@ namespace Silhouette.Engine
         public void InitializeInEditor(SpriteBatch spriteBatch)
         {
             this.spriteBatch = spriteBatch;
-            gravitation = new Vector2(0.0f, 9.8f);
-            Physics = new World(gravitation);
+            _Gravitation = new Vector2(0.0f, 9.8f);
+            Physics = new World(_Gravitation);
             debugView = new DebugViewXNA(Level.Physics);
             Camera.initialize(0, 0);
         }
