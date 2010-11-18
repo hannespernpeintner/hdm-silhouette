@@ -185,7 +185,7 @@ namespace SilhouetteEditor
         {
             if (selectedLayer == null)
             {
-                System.Windows.Forms.MessageBox.Show("You have to choose a Layer in order to be able to add textures to it!");
+                System.Windows.Forms.MessageBox.Show("You have to choose a Layer in order to be able to add textures to it!", "Warning", MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Warning);
                 destroyTextureWrapper();
                 return;
             }
@@ -218,10 +218,24 @@ namespace SilhouetteEditor
             }
         }
 
+        //---> Selection <---//
+
+        //---> TreeViewSelection
+
         public void selectLayer(Layer l)
         {
             selectedLayer = l;
             MainForm.Default.propertyGrid1.SelectedObject = l;
+        }
+
+        public void selectCollisionLayer()
+        {
+            MainForm.Default.propertyGrid1.SelectedObject = level.collisionLayer;
+        }
+
+        public void selectEventLayer()
+        {
+            MainForm.Default.propertyGrid1.SelectedObject = level.eventLayer;
         }
 
         public void selectLevel()

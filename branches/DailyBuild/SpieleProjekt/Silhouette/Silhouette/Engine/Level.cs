@@ -15,7 +15,7 @@ using Microsoft.Xna.Framework.Media;
 using Silhouette.Engine.Manager;
 using Silhouette.Engine.Screens;
 using Silhouette.Engine;
-
+using System.ComponentModel;
 //Physik-Engine Klassen
 using FarseerPhysics;
 using FarseerPhysics.Dynamics;
@@ -33,16 +33,38 @@ namespace Silhouette.Engine
         #region Definitions
             [XmlAttribute()]
             public string name;
+
+            [XmlIgnore()]
             public static World Physics;
+
             private const float _PixelPerMeter = 100.0f;
+            [XmlIgnore()]
             public static float PixelPerMeter { get { return _PixelPerMeter; } }
-            Vector2 gravitation;
 
-            public Vector2 levelStartPosition;
+            [XmlIgnore()]
+            private Vector2 _Gravitation;
 
-            DebugViewXNA debugView;
-            bool DebugViewEnabled = false;
-            bool GraphicsEnabled = false;
+            [DisplayName("Gravition"), Category("General")]
+            [Description("The Gravitation controls the force vectors applied to every dynamic fixture.")]
+            public Vector2 Gravitation
+            {
+                get { return _Gravitation; }
+                set { _Gravitation = value; }
+            }
+
+            private Vector2 _startPosition;
+
+            [DisplayName("Start Position"), Category("General")]
+            [Description("Defines the characters starting position.")]
+            public Vector2 startPosition
+            {
+                get { return _startPosition; }
+                set { _startPosition = value; }
+            }
+
+            private DebugViewXNA debugView;
+            private bool DebugViewEnabled = false;
+            private bool GraphicsEnabled = false;
 
             SpriteBatch spriteBatch;
 
@@ -50,14 +72,22 @@ namespace Silhouette.Engine
             private CollisionLayer _collisionLayer;
             private EventLayer _eventLayer;
 
+            [DisplayName("Layers"), Category("Layer")]
+            [Description("The Gravitation controls the force vectors applied to every dynamic fixture.")]
             public List<Layer> layerList { get { return _layerList; } }
+
+            [DisplayName("Collision Layer"), Category("Layer")]
+            [Description("The Gravitation controls the force vectors applied to every dynamic fixture.")]
             public CollisionLayer collisionLayer { get { return _collisionLayer; } set { _collisionLayer = value; } }
+
+            [DisplayName("Event Layer"), Category("Layer")]
+            [Description("The Gravitation controls the force vectors applied to every dynamic fixture.")]
             public EventLayer eventLayer { get { return _eventLayer; } set { _eventLayer = value; } }
 
-            Matrix proj;
+            private Matrix proj;
 
-            KeyboardState keyboardState;
-            KeyboardState oldKeyboardState;
+            private KeyboardState keyboardState;
+            private KeyboardState oldKeyboardState;
 
             private const string LevelFilePath = "/Level";
         #endregion
@@ -70,8 +100,8 @@ namespace Silhouette.Engine
         public void Initialize()
         {
             this.spriteBatch = new SpriteBatch(GameLoop.gameInstance.GraphicsDevice);
-            gravitation = new Vector2(0.0f, 9.8f);
-            Physics = new World(gravitation);
+            _Gravitation = new Vector2(0.0f, 9.8f);
+            Physics = new World(_Gravitation);
             debugView = new DebugViewXNA(Level.Physics);
             Camera.initialize(0, 0);
 
@@ -153,7 +183,7 @@ namespace Silhouette.Engine
                 foreach (Layer l in layerList)
                 {
                     Vector2 oldCameraPosition = Camera.Position;
-                    Camera.Position *= l.scrollSpeed;
+                    Camera.Position *= l.ScrollSpeed;
                     spriteBatch.Begin(SpriteSortMode.Deferred, null, null, null, null, null, Camera.matrix);
                     l.drawLayer(spriteBatch);
                     spriteBatch.End();
