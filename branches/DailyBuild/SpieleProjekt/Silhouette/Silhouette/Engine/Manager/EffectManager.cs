@@ -18,14 +18,12 @@ namespace Silhouette.Engine.Manager
         private static Effect blender;
         private static Effect blurrer;
         private static Effect bloomer;
-        private static Effect godRays;
 
         public static void loadEffects() 
         {
             blender = GameLoop.gameInstance.Content.Load<Effect>("Effects/blender");
             blurrer = GameLoop.gameInstance.Content.Load<Effect>("Effects/blurrer");
             bloomer = GameLoop.gameInstance.Content.Load<Effect>("Effects/bloom");
-            godRays = GameLoop.gameInstance.Content.Load<Effect>("Effects/GodRays");
         }
 
         public static Effect Blender()
@@ -42,11 +40,5 @@ namespace Silhouette.Engine.Manager
         {
             return bloomer;
         }
-
-        public static Effect GodRays()
-        {
-            return godRays;
-        }
-
     }
 }

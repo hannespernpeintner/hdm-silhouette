@@ -33,4 +33,10 @@ namespace SilhouetteEditor
             texture = Texture2DLoader.Instance.LoadFromFile(fullPath);
         }
     }
+
+    public class FixtureWrapper
+    {
+        public FixtureType fixtureType;
+        public Texture2D texture;
+    }
 }

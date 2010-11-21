@@ -114,7 +114,6 @@
     <Compile Include="Common\GrowableStack.cs" />
     <Compile Include="Common\LineTools.cs" />
     <Compile Include="Common\Math.cs" />
-    <Compile Include="Common\MathHelper.cs" />
     <Compile Include="Common\Path.cs" />
     <Compile Include="Common\PathManager.cs" />
     <Compile Include="Common\PolygonManipulation\BooleanTools.cs" />
