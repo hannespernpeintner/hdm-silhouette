@@ -69,20 +69,10 @@ namespace Silhouette.Engine
             SpriteBatch spriteBatch;
 
             private List<Layer> _layerList;
-            private CollisionLayer _collisionLayer;
-            private EventLayer _eventLayer;
 
             [DisplayName("Layers"), Category("Layer")]
-            [Description("The Gravitation controls the force vectors applied to every dynamic fixture.")]
+            [Description("The Layers of the Level.")]
             public List<Layer> layerList { get { return _layerList; } }
-
-            [DisplayName("Collision Layer"), Category("Layer")]
-            [Description("The Gravitation controls the force vectors applied to every dynamic fixture.")]
-            public CollisionLayer collisionLayer { get { return _collisionLayer; } set { _collisionLayer = value; } }
-
-            [DisplayName("Event Layer"), Category("Layer")]
-            [Description("The Gravitation controls the force vectors applied to every dynamic fixture.")]
-            public EventLayer eventLayer { get { return _eventLayer; } set { _eventLayer = value; } }
 
             private Matrix proj;
 
@@ -109,11 +99,6 @@ namespace Silhouette.Engine
             {
                 l.initializeLayer();
             }
-
-            if(collisionLayer != null)
-                collisionLayer.Initialize();
-            if(eventLayer != null)
-                eventLayer.Initialize();
         }
 
         public void LoadContent()
@@ -124,11 +109,6 @@ namespace Silhouette.Engine
             {
                 l.loadLayer();
             }
-
-            if (collisionLayer != null)
-                collisionLayer.LoadContent();
-            if (eventLayer != null)
-            eventLayer.LoadContent();
         }
 
         public void Update(GameTime gameTime)
@@ -139,11 +119,6 @@ namespace Silhouette.Engine
             {
                 l.updateLayer(gameTime);
             }
-
-            if (collisionLayer != null)
-                collisionLayer.updateCollisionLayer(gameTime);
-            if (eventLayer != null)
-                eventLayer.updateEventLayer(gameTime);
 
             #region DebugView
                 keyboardState = Keyboard.GetState();

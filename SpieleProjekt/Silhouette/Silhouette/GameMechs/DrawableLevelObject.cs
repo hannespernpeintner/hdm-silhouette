@@ -13,19 +13,11 @@ using System.Xml.Serialization;
 
 namespace Silhouette.GameMechs
 {
-    public abstract class DrawableLevelObject
+    public abstract class DrawableLevelObject : LevelObject
     {
-        [XmlAttribute()]
-        public string name;
-        [XmlAttribute()]
-        public string type;
-
         string assetName;
-        public Vector2 position;
 
-        public abstract void Initialise();
-        public abstract void LoadContent();
-        public abstract void Update(GameTime gameTime);
+        public DrawableLevelObject() { }
         public abstract void Draw(SpriteBatch spriteBatch);
     }
 }

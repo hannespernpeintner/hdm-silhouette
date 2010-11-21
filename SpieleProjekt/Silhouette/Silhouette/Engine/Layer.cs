@@ -36,7 +36,6 @@ namespace Silhouette.Engine
         }
 
         public List<LevelObject> loList;
-        public List<DrawableLevelObject> dloList;
 
         public Texture2D[,] layerTexture;
         public string[,] assetName;
@@ -47,7 +46,6 @@ namespace Silhouette.Engine
             scrollSpeed = Vector2.One;
             isVisible = true;
             loList = new List<LevelObject>();
-            dloList = new List<DrawableLevelObject>();
         }
 
         public void initializeLayer()
@@ -68,10 +66,6 @@ namespace Silhouette.Engine
             {
                 lo.LoadContent();
             }
-            foreach (DrawableLevelObject dlo in dloList)
-            {
-                dlo.LoadContent();
-            }
         }
 
         public void updateLayer(GameTime gameTime)
@@ -79,10 +73,6 @@ namespace Silhouette.Engine
             foreach (LevelObject lo in loList)
             {
                 lo.Update(gameTime);
-            }
-            foreach (DrawableLevelObject dlo in dloList)
-            {
-                dlo.Update(gameTime);
             }
         }
 
@@ -97,7 +87,7 @@ namespace Silhouette.Engine
                     if(layerTexture[x,y] != null)
                         spriteBatch.Draw(layerTexture[x, y], new Vector2(x * GameSettings.Default.resolutionWidth, y * GameSettings.Default.resolutionHeight), Color.White);
                 }
-            foreach (DrawableLevelObject dlo in dloList)
+            foreach (DrawableLevelObject dlo in loList)
             {
                 dlo.Draw(spriteBatch);
             }

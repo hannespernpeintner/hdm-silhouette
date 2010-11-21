@@ -35,7 +35,8 @@ namespace SilhouetteEditor
     public enum EditorState
     { 
         IDLE,
-        CAMERAMOVING
+        CAMERAMOVING,
+        CREATE
     }
 
     class Editor
@@ -60,8 +61,7 @@ namespace SilhouetteEditor
 
         public Level level;
         public Layer selectedLayer;
-        public LevelObject selectedLevelObject;
-        public DrawableLevelObject selectedDrawableLevelObject;
+        public List<LevelObject> selectedLevelObjects;
 
         public TextureWrapper currentTexture;
 
@@ -70,9 +70,12 @@ namespace SilhouetteEditor
         KeyboardState kstate, oldkstate;
         MouseState mstate, oldmstate;
 
+        //---> EditorLoop-Functions <---//
+
         public void Initialize()
         {
             spriteBatch = new SpriteBatch(EditorLoop.EditorLoopInstance.GraphicsDevice);
+            selectedLevelObjects = new List<LevelObject>();
             editorState = EditorState.IDLE;
         }
 
@@ -104,7 +107,27 @@ namespace SilhouetteEditor
                     Camera.PositionY -= Constants.CameraMovingSpeed;
                 }
             #endregion
-             
+
+            #region getMouseWorldPosition
+                Vector2 maincameraposition = Camera.Position;
+                if (selectedLayer != null) Camera.Position *= selectedLayer.ScrollSpeed;
+                MouseWorldPosition = Vector2.Transform(new Vector2(mstate.X, mstate.Y), Matrix.Invert(Camera.matrix));
+                MouseWorldPosition = MouseWorldPosition.Round();
+                MainForm.Default.MouseWorldPosition.Text = "Mouse: (" + MouseWorldPosition.X + ", " + MouseWorldPosition.Y + ")";
+                Camera.Position = maincameraposition;
+            #endregion
+
+            #region Editorstate-Logic
+                if (editorState == EditorState.IDLE)
+                { 
+                
+                }
+                if (editorState == EditorState.CREATE)
+                { 
+                
+                }
+            #endregion
+
             oldkstate = kstate;
             oldmstate = mstate;
         }
@@ -117,13 +140,7 @@ namespace SilhouetteEditor
             level.Draw(gameTime);
         }
 
-        public void SetMousePosition(int ScreenX, int ScreenY)
-        {
-            Vector2 maincameraposition = Camera.Position;
-            if (selectedLayer != null) Camera.Position *= selectedLayer.ScrollSpeed;
-            MouseWorldPosition = Vector2.Transform(new Vector2(ScreenX, ScreenY), Matrix.Invert(Camera.matrix));
-            Camera.Position = maincameraposition;
-        }
+        //---> New/Load/Save <---//
 
         public void NewLevel(string name)
         {
@@ -141,13 +158,15 @@ namespace SilhouetteEditor
 
         public void LoadLevel()
         {
- 
+
         }
 
         public void SaveLevel()
-        { 
-        
+        {
+
         }
+
+        //---> Add-Stuff <---//
 
         public void AddLayer(string name, int width, int height)
         {
@@ -160,19 +179,29 @@ namespace SilhouetteEditor
             MainForm.Default.UpdateTreeView();
         }
 
-        public void AddCollisionLayer()
+        public void AddFixture(FixtureType fixtureType)
         {
-            CollisionLayer cl = new CollisionLayer();
-            level.collisionLayer = cl;
-            MainForm.Default.UpdateTreeView();
+            if (level.layerList.Count() == 0)
+            {
+                System.Windows.Forms.MessageBox.Show("There is no Layer to add Fixtures to it.", "Error", MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
+                return;
+            }
+
+            if (selectedLayer == null)
+            {
+                System.Windows.Forms.MessageBox.Show("You have to select a Layer to add Fixtures to it.", "Error", MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
+            }
         }
 
-        public void AddEventLayer()
+        public void SetMousePosition(int ScreenX, int ScreenY)
         {
-            EventLayer el = new EventLayer();
-            level.eventLayer = el;
-            MainForm.Default.UpdateTreeView();
+            Vector2 maincameraposition = Camera.Position;
+            if (selectedLayer != null) Camera.Position *= selectedLayer.ScrollSpeed;
+            MouseWorldPosition = Vector2.Transform(new Vector2(ScreenX, ScreenY), Matrix.Invert(Camera.matrix));
+            Camera.Position = maincameraposition;
         }
+
+        
 
         public Image getThumbNail(Bitmap bmp, int imgWidth, int imgHeight)
         {
@@ -217,27 +246,6 @@ namespace SilhouetteEditor
             destroyTextureWrapper();
         }
 
-        public void AddFixture(FixtureType fixtureType)
-        { 
-            if(level.collisionLayer == null)
-            {
-                System.Windows.Forms.MessageBox.Show("There is no Collision Layer to add Fixtures to it.", "Error", MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
-                return;
-            }
-
-            if (fixtureType == FixtureType.Rectangle)
-            {
-                Fixture f = FixtureManager.CreateRectangle(200, 100, new Vector2(200, 200), BodyType.Static, 1);
-                level.collisionLayer.fixtureList.Add(f);
-            }
-
-            if (fixtureType == FixtureType.Circle)
-            {
-                Fixture f = FixtureManager.CreateCircle(50, new Vector2(200, 200), BodyType.Static, 1);
-                level.collisionLayer.fixtureList.Add(f);
-            }
-        }
-
         //---> Selection <---//
 
         //---> TreeViewSelection
@@ -246,16 +254,6 @@ namespace SilhouetteEditor
         {
             selectedLayer = l;
             MainForm.Default.propertyGrid1.SelectedObject = l;
-        }
-
-        public void selectCollisionLayer()
-        {
-            MainForm.Default.propertyGrid1.SelectedObject = level.collisionLayer;
-        }
-
-        public void selectEventLayer()
-        {
-            MainForm.Default.propertyGrid1.SelectedObject = level.eventLayer;
         }
 
         public void selectLevel()

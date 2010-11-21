@@ -32,11 +32,13 @@ namespace SilhouetteEditor
             this.height = height;
             texture = Texture2DLoader.Instance.LoadFromFile(fullPath);
         }
-    }
 
-    public class FixtureWrapper
-    {
-        public FixtureType fixtureType;
-        public Texture2D texture;
+        public string getPrefix()
+        {
+            string s = "Texture_";
+            return s;
+        }
     }
 }
+
+
