@@ -54,12 +54,6 @@ namespace Silhouette.GameMechs
             return rectangle.Contains(new Microsoft.Xna.Framework.Point((int)worldPosition.X, (int)worldPosition.Y));
         }
 
-        public void drawInEditor()
-        {
-            Color c = Color.Cyan;
-            
-        }
-
         public void ToFixture()
         {
             fixture = FixtureManager.CreateRectangle(width, height, position, BodyType.Static, 1);

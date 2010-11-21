@@ -71,6 +71,7 @@
             this.renameToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             this.copyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.SelectedItem = new System.Windows.Forms.ToolStripStatusLabel();
             this.StatusBar.SuspendLayout();
             this.MenuBar.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -92,6 +93,7 @@
             this.StatusBar.BackColor = System.Drawing.SystemColors.Window;
             this.StatusBar.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.Selection,
+            this.SelectedItem,
             this.MouseWorldPosition});
             this.StatusBar.Location = new System.Drawing.Point(0, 708);
             this.StatusBar.Name = "StatusBar";
@@ -104,8 +106,7 @@
             this.Selection.AutoSize = false;
             this.Selection.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.Selection.Name = "Selection";
-            this.Selection.Size = new System.Drawing.Size(242, 17);
-            this.Selection.Text = "Selection: ";
+            this.Selection.Size = new System.Drawing.Size(150, 17);
             this.Selection.TextAlign = System.Drawing.ContentAlignment.TopLeft;
             this.Selection.ToolTipText = "Displays the current selection.";
             // 
@@ -396,6 +397,8 @@
             this.GameView.Size = new System.Drawing.Size(1018, 680);
             this.GameView.TabIndex = 0;
             this.GameView.TabStop = false;
+            this.GameView.MouseEnter += new System.EventHandler(this.GameView_MouseEnter);
+            this.GameView.MouseLeave += new System.EventHandler(this.GameView_MouseLeave);
             // 
             // LevelContextMenu
             // 
@@ -451,6 +454,12 @@
             this.deleteToolStripMenuItem.Size = new System.Drawing.Size(117, 22);
             this.deleteToolStripMenuItem.Text = "Delete";
             // 
+            // SelectedItem
+            // 
+            this.SelectedItem.AutoSize = false;
+            this.SelectedItem.Name = "SelectedItem";
+            this.SelectedItem.Size = new System.Drawing.Size(92, 17);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -496,7 +505,6 @@
         private System.Windows.Forms.ToolStripMenuItem leveleinstellungenToolStripMenuItem;
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.SplitContainer splitContainer2;
-        private System.Windows.Forms.PictureBox GameView;
         private System.Windows.Forms.ToolStrip ToolBar;
         public System.Windows.Forms.TreeView treeView1;
         public System.Windows.Forms.PropertyGrid propertyGrid1;
@@ -529,5 +537,7 @@
         private System.Windows.Forms.ToolStripButton toolStripButton6;
         public System.Windows.Forms.ToolStripStatusLabel MouseWorldPosition;
         public System.Windows.Forms.ToolStripStatusLabel Selection;
+        public System.Windows.Forms.PictureBox GameView;
+        public System.Windows.Forms.ToolStripStatusLabel SelectedItem;
     }
 }

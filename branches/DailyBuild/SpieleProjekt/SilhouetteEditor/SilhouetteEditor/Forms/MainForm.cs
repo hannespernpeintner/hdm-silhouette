@@ -124,5 +124,15 @@ namespace SilhouetteEditor.Forms
                 Editor.Default.selectLayer(l);
             }
         }
+
+        private void GameView_MouseEnter(object sender, EventArgs e)
+        {
+            GameView.Select();
+        }
+
+        private void GameView_MouseLeave(object sender, EventArgs e)
+        {
+            MenuBar.Select();
+        }
     }
 }
