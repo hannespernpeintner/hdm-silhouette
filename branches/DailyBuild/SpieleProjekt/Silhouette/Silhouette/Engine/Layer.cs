@@ -87,9 +87,13 @@ namespace Silhouette.Engine
                     if(layerTexture[x,y] != null)
                         spriteBatch.Draw(layerTexture[x, y], new Vector2(x * GameSettings.Default.resolutionWidth, y * GameSettings.Default.resolutionHeight), Color.White);
                 }
-            foreach (DrawableLevelObject dlo in loList)
+            foreach (LevelObject lo in loList)
             {
-                dlo.Draw(spriteBatch);
+                if (lo is DrawableLevelObject)
+                {
+                    DrawableLevelObject dlo = (DrawableLevelObject)lo;
+                    dlo.Draw(spriteBatch);
+                }
             }
         }
     }

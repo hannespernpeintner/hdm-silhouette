@@ -36,7 +36,7 @@ namespace SilhouetteEditor
     { 
         IDLE,
         CAMERAMOVING,
-        CREATE
+        CREATE_FIXTURES
     }
 
     class Editor
@@ -64,7 +64,9 @@ namespace SilhouetteEditor
         public List<LevelObject> selectedLevelObjects;
 
         public TextureWrapper currentTexture;
+        public FixtureType currentPrimitive;
 
+        List<Vector2> clickedPoints;
         Vector2 MouseWorldPosition, GrabbedPoint;
 
         KeyboardState kstate, oldkstate;
@@ -76,6 +78,7 @@ namespace SilhouetteEditor
         {
             spriteBatch = new SpriteBatch(EditorLoop.EditorLoopInstance.GraphicsDevice);
             selectedLevelObjects = new List<LevelObject>();
+            clickedPoints = new List<Vector2>();
             editorState = EditorState.IDLE;
         }
 
@@ -119,12 +122,17 @@ namespace SilhouetteEditor
 
             #region Editorstate-Logic
                 if (editorState == EditorState.IDLE)
-                { 
-                
+                {
+                    LevelObject levelObject = getItemAtPosition(MouseWorldPosition);
+
+                    if (levelObject != null)
+                    {
+                        MainForm.Default.SelectedItem.Text = "Item: " + levelObject.name;
+                    }
                 }
-                if (editorState == EditorState.CREATE)
-                { 
-                
+                if (editorState == EditorState.CREATE_FIXTURES)
+                {
+
                 }
             #endregion
 
@@ -138,6 +146,7 @@ namespace SilhouetteEditor
                 return;
 
             level.Draw(gameTime);
+            drawEditorRelated();
         }
 
         //---> New/Load/Save <---//
@@ -186,11 +195,44 @@ namespace SilhouetteEditor
                 System.Windows.Forms.MessageBox.Show("There is no Layer to add Fixtures to it.", "Error", MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
                 return;
             }
-
             if (selectedLayer == null)
             {
                 System.Windows.Forms.MessageBox.Show("You have to select a Layer to add Fixtures to it.", "Error", MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
+                return;
             }
+
+            currentPrimitive = fixtureType;
+            editorState = EditorState.CREATE_FIXTURES;
+        }
+
+
+        public void drawEditorRelated()
+        { 
+            foreach (Layer l in level.layerList)
+            {
+                spriteBatch.Begin(SpriteSortMode.Deferred, null, null, null, null, null, Camera.matrix);
+                foreach (LevelObject lo in l.loList)
+                {
+                    if (lo is RectangleFixtureItem)
+                    { 
+                        RectangleFixtureItem r = (RectangleFixtureItem)lo;
+                        Primitives.Instance.drawBoxFilled(spriteBatch, r.rectangle, Microsoft.Xna.Framework.Color.Cyan);
+                    }
+                    if (lo is CircleFixtureItem)
+                    {
+                        CircleFixtureItem c = (CircleFixtureItem)lo;
+                        Primitives.Instance.drawCircleFilled(spriteBatch, c.position, c.radius, Microsoft.Xna.Framework.Color.Cyan);
+                    }
+                }
+                spriteBatch.End();
+            }
+        }
+
+        public LevelObject getItemAtPosition(Vector2 worldPosition)
+        {
+            if (selectedLayer == null)
+                return null;
+            return selectedLayer.getItemAtPosition(worldPosition);
         }
 
         public void SetMousePosition(int ScreenX, int ScreenY)
@@ -200,8 +242,6 @@ namespace SilhouetteEditor
             MouseWorldPosition = Vector2.Transform(new Vector2(ScreenX, ScreenY), Matrix.Invert(Camera.matrix));
             Camera.Position = maincameraposition;
         }
-
-        
 
         public Image getThumbNail(Bitmap bmp, int imgWidth, int imgHeight)
         {
@@ -254,6 +294,7 @@ namespace SilhouetteEditor
         {
             selectedLayer = l;
             MainForm.Default.propertyGrid1.SelectedObject = l;
+            MainForm.Default.Selection.Text = "Selected Layer: " + l.name;
         }
 
         public void selectLevel()

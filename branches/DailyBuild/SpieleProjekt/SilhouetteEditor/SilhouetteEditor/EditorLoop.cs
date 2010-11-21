@@ -9,6 +9,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 using Silhouette;
+using SilhouetteEditor.Forms;
 
 namespace SilhouetteEditor
 {
@@ -50,8 +51,8 @@ namespace SilhouetteEditor
 
         protected override void Update(GameTime gameTime)
         {
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
-                this.Exit();
+            if (!MainForm.Default.GameView.ContainsFocus) return;
+
             Editor.Default.Update(gameTime);
             base.Update(gameTime);
         }
