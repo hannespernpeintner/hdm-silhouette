@@ -26,14 +26,23 @@ using FarseerPhysics.Collision;
 
 namespace SilhouetteEditor
 {
-    enum FixtureType
+    public enum FixtureType
     { 
         Rectangle,
         Circle
     }
 
+    public enum EditorState
+    { 
+        IDLE,
+        CAMERAMOVING
+    }
+
     class Editor
     {
+        /* Sascha:
+         * Die Hauptklasse des Editors. Stellt alle direkt im Editor gebrauchten Funktionen zur Verfügung.
+        */
         static Editor Instance;
         public static Editor Default 
         {
@@ -47,14 +56,16 @@ namespace SilhouetteEditor
 
         SpriteBatch spriteBatch;
 
+        EditorState editorState;
+
         public Level level;
         public Layer selectedLayer;
         public LevelObject selectedLevelObject;
         public DrawableLevelObject selectedDrawableLevelObject;
 
         public TextureWrapper currentTexture;
-        public FixtureType currentFixture;
 
+        Vector2 MouseWorldPosition, GrabbedPoint;
 
         KeyboardState kstate, oldkstate;
         MouseState mstate, oldmstate;
@@ -62,6 +73,7 @@ namespace SilhouetteEditor
         public void Initialize()
         {
             spriteBatch = new SpriteBatch(EditorLoop.EditorLoopInstance.GraphicsDevice);
+            editorState = EditorState.IDLE;
         }
 
         public void Update(GameTime gameTime)
@@ -103,6 +115,14 @@ namespace SilhouetteEditor
                 return;
 
             level.Draw(gameTime);
+        }
+
+        public void SetMousePosition(int ScreenX, int ScreenY)
+        {
+            Vector2 maincameraposition = Camera.Position;
+            if (selectedLayer != null) Camera.Position *= selectedLayer.ScrollSpeed;
+            MouseWorldPosition = Vector2.Transform(new Vector2(ScreenX, ScreenY), Matrix.Invert(Camera.matrix));
+            Camera.Position = maincameraposition;
         }
 
         public void NewLevel(string name)

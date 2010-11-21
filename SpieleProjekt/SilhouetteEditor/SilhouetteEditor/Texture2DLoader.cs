@@ -14,6 +14,10 @@ namespace SilhouetteEditor
 {
     class Texture2DLoader
     {
+        /* Sascha:
+         * Diese Klasse ist zuständig das Laden und Speichern der Texturen. Sie stellt zum einen Funktionen zum Laden bereit und prüft gleichzeitig ob
+         * die Textur schonmal geladen wurde um mehrfaches Laden der gleichen Textur zu verhindern.
+        */
         private static Texture2DLoader instance;
         public static Texture2DLoader Instance
         {
