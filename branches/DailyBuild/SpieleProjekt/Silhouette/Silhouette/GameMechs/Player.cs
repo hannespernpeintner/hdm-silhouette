@@ -192,5 +192,8 @@ namespace Silhouette.GameMechs
             spriteBatch.DrawString(FontManager.Arial, "Jumping: " + isJumping.ToString(), new Vector2(300, 70), Color.Azure);
             spriteBatch.DrawString(FontManager.Arial, "Falling: " + isFalling.ToString(), new Vector2(300, 95), Color.Azure);
         }
+
+        public override string getPrefix() { return null; }
+        public override bool contains(Vector2 worldPosition) { return false; }
     }
 }

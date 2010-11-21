@@ -14,7 +14,7 @@ namespace Silhouette.GameMechs
     /* Deco containert eine Animation, ist jedoch dafür vorgesehen nur einmalig eine Position zu übergeben, die sich im Folgenden
     auch nicht mehr ändert. Daher wird sie auch beim Konstruktor übergeben und nicht mehr in der Updatemethode. */
 
-    class Deco: DrawableLevelObject
+    public partial class Deco: DrawableLevelObject
     {
         public Animation animation;
         public int amount;
@@ -33,8 +33,6 @@ namespace Silhouette.GameMechs
             fixture.OnCollision += this.OnCollision;
             fixture.OnSeparation += this.OnSeperation;
         }
-
-        public Deco() { }
 
         public override void Initialise() { }
 
