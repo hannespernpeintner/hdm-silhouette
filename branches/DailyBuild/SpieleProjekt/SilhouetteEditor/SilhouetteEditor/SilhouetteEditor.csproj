@@ -155,11 +155,12 @@
     <Compile Include="Forms\ToolBox.Designer.cs">
       <DependentUpon>ToolBox.cs</DependentUpon>
     </Compile>
+    <Compile Include="Primitives.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="EditorLoop.cs" />
     <Compile Include="Texture2DLoader.cs" />
-    <Compile Include="TextureWrapper.cs" />
+    <Compile Include="Wrapper.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Game.ico" />

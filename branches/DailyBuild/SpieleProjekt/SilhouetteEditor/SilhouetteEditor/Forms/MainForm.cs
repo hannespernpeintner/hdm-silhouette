@@ -19,6 +19,11 @@ namespace SilhouetteEditor.Forms
 {
     public partial class MainForm : Form
     {
+        /* Sascha:
+         * Hauptfenster der Anwendung. Enthält eine TreeView zur Anzeige und hierarchischen Ordnung von Ebenen und Objekten.
+         * Ein PropertyGrid zeigt Eigenschaften an und stellt Funktionen zur Anpassung bereit.
+         * In die MainForm integriert ist eine PictureView, in der die grafische Darstellung über XNA erfolgt.
+        */
         public static MainForm Default;
 
         public MainForm()
