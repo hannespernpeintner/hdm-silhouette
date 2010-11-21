@@ -9,14 +9,12 @@ using Silhouette.Engine.Manager;
 
 namespace Silhouette.GameMechs
 {
-    class InteractiveObject: DrawableLevelObject
+    public partial class InteractiveObject: DrawableLevelObject
     {
         public Texture2D texture;
         public String path;
         public List<Fixture> polygon;
         public float rotation;
-
-        public InteractiveObject() { }
 
         public InteractiveObject(Vector2 position, String path, float rotation)
         {

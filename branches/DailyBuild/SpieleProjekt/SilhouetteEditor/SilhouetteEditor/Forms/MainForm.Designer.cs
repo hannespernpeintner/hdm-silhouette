@@ -31,6 +31,8 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.StatusBar = new System.Windows.Forms.StatusStrip();
+            this.Selection = new System.Windows.Forms.ToolStripStatusLabel();
+            this.MouseWorldPosition = new System.Windows.Forms.ToolStripStatusLabel();
             this.MenuBar = new System.Windows.Forms.MenuStrip();
             this.dateiToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.newToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -63,14 +65,13 @@
             this.GameView = new System.Windows.Forms.PictureBox();
             this.LevelContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.addLayerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem4 = new System.Windows.Forms.ToolStripMenuItem();
             this.renameToolStripMenuItem = new System.Windows.Forms.ToolStripSeparator();
             this.renameToolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
             this.LayerContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.renameToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             this.copyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.StatusBar.SuspendLayout();
             this.MenuBar.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -89,11 +90,30 @@
             // StatusBar
             // 
             this.StatusBar.BackColor = System.Drawing.SystemColors.Window;
+            this.StatusBar.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.Selection,
+            this.MouseWorldPosition});
             this.StatusBar.Location = new System.Drawing.Point(0, 708);
             this.StatusBar.Name = "StatusBar";
             this.StatusBar.Size = new System.Drawing.Size(1264, 22);
             this.StatusBar.TabIndex = 0;
             this.StatusBar.Text = "StatusBar";
+            // 
+            // Selection
+            // 
+            this.Selection.AutoSize = false;
+            this.Selection.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.Selection.Name = "Selection";
+            this.Selection.Size = new System.Drawing.Size(242, 17);
+            this.Selection.Text = "Selection: ";
+            this.Selection.TextAlign = System.Drawing.ContentAlignment.TopLeft;
+            this.Selection.ToolTipText = "Displays the current selection.";
+            // 
+            // MouseWorldPosition
+            // 
+            this.MouseWorldPosition.Name = "MouseWorldPosition";
+            this.MouseWorldPosition.Size = new System.Drawing.Size(0, 17);
+            this.MouseWorldPosition.TextAlign = System.Drawing.ContentAlignment.TopLeft;
             // 
             // MenuBar
             // 
@@ -381,43 +401,27 @@
             // 
             this.LevelContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.addLayerToolStripMenuItem,
-            this.toolStripMenuItem3,
-            this.toolStripMenuItem4,
             this.renameToolStripMenuItem,
             this.renameToolStripMenuItem3});
             this.LevelContextMenu.Name = "contextMenuStrip1";
-            this.LevelContextMenu.Size = new System.Drawing.Size(177, 98);
+            this.LevelContextMenu.Size = new System.Drawing.Size(128, 54);
             // 
             // addLayerToolStripMenuItem
             // 
             this.addLayerToolStripMenuItem.Name = "addLayerToolStripMenuItem";
-            this.addLayerToolStripMenuItem.Size = new System.Drawing.Size(176, 22);
+            this.addLayerToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
             this.addLayerToolStripMenuItem.Text = "Add Layer";
             this.addLayerToolStripMenuItem.Click += new System.EventHandler(this.LevelToolStrip_AddLayer);
-            // 
-            // toolStripMenuItem3
-            // 
-            this.toolStripMenuItem3.Name = "toolStripMenuItem3";
-            this.toolStripMenuItem3.Size = new System.Drawing.Size(176, 22);
-            this.toolStripMenuItem3.Text = "Add Collision Layer";
-            this.toolStripMenuItem3.Click += new System.EventHandler(this.LevelToolStrip_AddCollisionLayer);
-            // 
-            // toolStripMenuItem4
-            // 
-            this.toolStripMenuItem4.Name = "toolStripMenuItem4";
-            this.toolStripMenuItem4.Size = new System.Drawing.Size(176, 22);
-            this.toolStripMenuItem4.Text = "Add Event Layer";
-            this.toolStripMenuItem4.Click += new System.EventHandler(this.LevelToolStrip_AddEventLayer);
             // 
             // renameToolStripMenuItem
             // 
             this.renameToolStripMenuItem.Name = "renameToolStripMenuItem";
-            this.renameToolStripMenuItem.Size = new System.Drawing.Size(173, 6);
+            this.renameToolStripMenuItem.Size = new System.Drawing.Size(124, 6);
             // 
             // renameToolStripMenuItem3
             // 
             this.renameToolStripMenuItem3.Name = "renameToolStripMenuItem3";
-            this.renameToolStripMenuItem3.Size = new System.Drawing.Size(176, 22);
+            this.renameToolStripMenuItem3.Size = new System.Drawing.Size(127, 22);
             this.renameToolStripMenuItem3.Text = "Rename";
             // 
             // LayerContextMenu
@@ -459,6 +463,8 @@
             this.MainMenuStrip = this.MenuBar;
             this.Name = "MainForm";
             this.Text = "SilhouetteEditor";
+            this.StatusBar.ResumeLayout(false);
+            this.StatusBar.PerformLayout();
             this.MenuBar.ResumeLayout(false);
             this.MenuBar.PerformLayout();
             this.splitContainer1.Panel1.ResumeLayout(false);
@@ -521,7 +527,7 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
         private System.Windows.Forms.ToolStripButton toolStripButton5;
         private System.Windows.Forms.ToolStripButton toolStripButton6;
-        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem3;
-        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem4;
+        public System.Windows.Forms.ToolStripStatusLabel MouseWorldPosition;
+        public System.Windows.Forms.ToolStripStatusLabel Selection;
     }
 }

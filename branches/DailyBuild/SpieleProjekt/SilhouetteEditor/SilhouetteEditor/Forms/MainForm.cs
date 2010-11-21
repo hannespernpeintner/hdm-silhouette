@@ -87,17 +87,6 @@ namespace SilhouetteEditor.Forms
             new AddLayer().ShowDialog();
         }
 
-        private void LevelToolStrip_AddCollisionLayer(object sender, EventArgs e)
-        {
-            Editor.Default.AddCollisionLayer();
-        }
-
-        private void LevelToolStrip_AddEventLayer(object sender, EventArgs e)
-        {
-            Editor.Default.AddEventLayer();
-        }
-
-
         //---> TreeView-Steuerung <---//
 
         public void UpdateTreeView()
@@ -119,32 +108,8 @@ namespace SilhouetteEditor.Forms
                     TreeNode loTreeNode = layerTreeNode.Nodes.Add(lo.name);
                     loTreeNode.Tag = lo;
                 }
-                foreach (DrawableLevelObject dlo in l.dloList)
-                {
-                    TreeNode dloTreeNode = layerTreeNode.Nodes.Add(dlo.name);
-                    dloTreeNode.Tag = dlo;
-                }
             }
-
-            if(Editor.Default.level.collisionLayer != null)
-            {
-                TreeNode collisionTreeNode = levelTreeNode.Nodes.Add("Collision Layer");
-                collisionTreeNode.Tag = Editor.Default.level.collisionLayer;
-
-                int fixtureCounter = 1;
-
-                foreach (Fixture f in Editor.Default.level.collisionLayer.fixtureList)
-                {
-                    TreeNode fixtureTreeNode = collisionTreeNode.Nodes.Add("Fixture " + fixtureCounter.ToString());
-                    fixtureCounter++;
-                }
-            }
-
-            if (Editor.Default.level.eventLayer != null)
-            {
-                TreeNode eventTreeNode = levelTreeNode.Nodes.Add("Event Layer");
-                eventTreeNode.Tag = Editor.Default.level.eventLayer;
-            }
+            levelTreeNode.ExpandAll();
         }
 
         private void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
@@ -157,14 +122,6 @@ namespace SilhouetteEditor.Forms
             {
                 Layer l = (Layer)e.Node.Tag;
                 Editor.Default.selectLayer(l);
-            }
-            if (e.Node.Tag is CollisionLayer)
-            {
-                Editor.Default.selectCollisionLayer();
-            }
-            if (e.Node.Tag is EventLayer)
-            {
-                Editor.Default.selectEventLayer();
             }
         }
     }

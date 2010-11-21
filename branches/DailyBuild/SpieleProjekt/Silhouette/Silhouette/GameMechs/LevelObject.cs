@@ -28,8 +28,13 @@ namespace Silhouette.GameMechs
 
         public Vector2 position;
 
+        public LevelObject() { }
+
         public abstract void Initialise();
         public abstract void LoadContent();
         public abstract void Update(GameTime gameTime);
+
+        public abstract string getPrefix();
+        public abstract bool contains(Vector2 worldPosition);
     }
 }
