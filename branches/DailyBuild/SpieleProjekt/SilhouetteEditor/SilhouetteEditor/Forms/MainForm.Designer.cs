@@ -93,8 +93,8 @@
             this.StatusBar.BackColor = System.Drawing.SystemColors.Window;
             this.StatusBar.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.Selection,
-            this.SelectedItem,
-            this.MouseWorldPosition});
+            this.MouseWorldPosition,
+            this.SelectedItem});
             this.StatusBar.Location = new System.Drawing.Point(0, 708);
             this.StatusBar.Name = "StatusBar";
             this.StatusBar.Size = new System.Drawing.Size(1264, 22);
@@ -106,14 +106,15 @@
             this.Selection.AutoSize = false;
             this.Selection.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.Selection.Name = "Selection";
-            this.Selection.Size = new System.Drawing.Size(150, 17);
+            this.Selection.Size = new System.Drawing.Size(242, 17);
             this.Selection.TextAlign = System.Drawing.ContentAlignment.TopLeft;
             this.Selection.ToolTipText = "Displays the current selection.";
             // 
             // MouseWorldPosition
             // 
+            this.MouseWorldPosition.AutoSize = false;
             this.MouseWorldPosition.Name = "MouseWorldPosition";
-            this.MouseWorldPosition.Size = new System.Drawing.Size(0, 17);
+            this.MouseWorldPosition.Size = new System.Drawing.Size(100, 17);
             this.MouseWorldPosition.TextAlign = System.Drawing.ContentAlignment.TopLeft;
             // 
             // MenuBar
@@ -458,7 +459,7 @@
             // 
             this.SelectedItem.AutoSize = false;
             this.SelectedItem.Name = "SelectedItem";
-            this.SelectedItem.Size = new System.Drawing.Size(92, 17);
+            this.SelectedItem.Size = new System.Drawing.Size(200, 17);
             // 
             // MainForm
             // 
