@@ -24,6 +24,7 @@ using FarseerPhysics.Collision;
 
 namespace Silhouette.Engine
 {
+    [Serializable]
     public partial class Level
     {
         /* Sascha:
@@ -31,17 +32,14 @@ namespace Silhouette.Engine
         */
 
         #region Definitions
-            [XmlAttribute()]
             public string name;
 
-            [XmlIgnore()]
+            [NonSerialized]
             public static World Physics;
 
             private const float _PixelPerMeter = 100.0f;
-            [XmlIgnore()]
             public static float PixelPerMeter { get { return _PixelPerMeter; } }
 
-            [XmlIgnore()]
             private Vector2 _Gravitation;
 
             [DisplayName("Gravition"), Category("General")]
@@ -62,10 +60,13 @@ namespace Silhouette.Engine
                 set { _startPosition = value; }
             }
 
+            [NonSerialized]
             private DebugViewXNA debugView;
+            [NonSerialized]
             private bool DebugViewEnabled = false;
+            [NonSerialized]
             private bool GraphicsEnabled = false;
-
+            [NonSerialized]
             SpriteBatch spriteBatch;
 
             private List<Layer> _layerList;
@@ -74,11 +75,14 @@ namespace Silhouette.Engine
             [Description("The Layers of the Level.")]
             public List<Layer> layerList { get { return _layerList; } }
 
+            [NonSerialized]
             private Matrix proj;
 
+            [NonSerialized]
             private KeyboardState keyboardState;
+            [NonSerialized]
             private KeyboardState oldKeyboardState;
-
+            [NonSerialized]
             private const string LevelFilePath = "/Level";
         #endregion
 

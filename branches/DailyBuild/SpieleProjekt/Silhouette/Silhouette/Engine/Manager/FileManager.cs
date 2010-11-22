@@ -33,7 +33,12 @@ namespace Silhouette.Engine.Manager
 
         public static FileStream SaveConfigFile(string relativePath)
         {
-            return File.Open(relativePath, FileMode.OpenOrCreate, FileAccess.Write);
+            return File.Open(relativePath, FileMode.OpenOrCreate, FileAccess.Write, FileShare.Write);
+        }
+
+        public static FileStream SaveLevelFile(string fullPath)
+        {
+            return File.Open(fullPath, FileMode.OpenOrCreate, FileAccess.Write, FileShare.ReadWrite);
         }
 
         public static FileStream LoadLevelFile(string relativeLevelPath, int levelNumber)
