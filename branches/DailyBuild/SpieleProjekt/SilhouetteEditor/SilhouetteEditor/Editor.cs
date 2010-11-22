@@ -130,6 +130,10 @@ namespace SilhouetteEditor
                     {
                         MainForm.Default.SelectedItem.Text = "Object: " + levelObject.name;
                     }
+                    else
+                    {
+                        MainForm.Default.SelectedItem.Text = "Object: -";
+                    }
                 }
                 if (editorState == EditorState.CREATE_FIXTURES)
                 {
@@ -259,6 +263,17 @@ namespace SilhouetteEditor
                         Primitives.Instance.drawCircleFilled(spriteBatch, c.position, c.radius, Constants.ColorFixtures);
                     }
                 }
+
+                if (l == selectedLayer && editorState == EditorState.CREATE_FIXTURES && fixtureStarted)
+                {
+                    switch (currentFixture)
+                    { 
+                        case FixtureType.Rectangle:
+                            Microsoft.Xna.Framework.Rectangle r = Constants.RectangleFromVectors(clickedPoints[0], MouseWorldPosition);
+                            Primitives.Instance.drawBoxFilled(spriteBatch, r, Constants.ColorFixtures);
+                            break;
+                    }
+                }
                 spriteBatch.End();
                 Camera.Position = oldCameraPosition;
             }
@@ -343,6 +358,14 @@ namespace SilhouetteEditor
         //---> Selection <---//
 
         //---> TreeViewSelection
+
+        public void selectLevelObject(LevelObject lo)
+        {
+            selectedLevelObjects.Clear();
+            selectedLevelObjects.Add(lo);
+            MainForm.Default.propertyGrid1.SelectedObject = lo;
+            MainForm.Default.SelectedItem.Text = "Object: " + lo.name;
+        }
 
         public void selectLayer(Layer l)
         {
