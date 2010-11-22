@@ -16,6 +16,9 @@ namespace SilhouetteEditor
 {
     public class EditorLoop : Microsoft.Xna.Framework.Game
     {
+        /* Sascha:
+         * Zentrale Klasse zur Kommunikation zwischen Windows Forms und dem XNA Framework.
+        */
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         static EditorLoop _editorLoopInstance;

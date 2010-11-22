@@ -123,6 +123,11 @@ namespace SilhouetteEditor.Forms
                 Layer l = (Layer)e.Node.Tag;
                 Editor.Default.selectLayer(l);
             }
+            if (e.Node.Tag is LevelObject)
+            {
+                LevelObject lo = (LevelObject)e.Node.Tag;
+                Editor.Default.selectLevelObject(lo);
+            }
         }
 
         private void GameView_MouseEnter(object sender, EventArgs e)

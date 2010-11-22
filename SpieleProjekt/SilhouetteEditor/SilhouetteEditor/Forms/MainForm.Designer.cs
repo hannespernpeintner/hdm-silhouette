@@ -33,6 +33,7 @@
             this.StatusBar = new System.Windows.Forms.StatusStrip();
             this.Selection = new System.Windows.Forms.ToolStripStatusLabel();
             this.MouseWorldPosition = new System.Windows.Forms.ToolStripStatusLabel();
+            this.SelectedItem = new System.Windows.Forms.ToolStripStatusLabel();
             this.MenuBar = new System.Windows.Forms.MenuStrip();
             this.dateiToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.newToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -71,7 +72,6 @@
             this.renameToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             this.copyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.SelectedItem = new System.Windows.Forms.ToolStripStatusLabel();
             this.StatusBar.SuspendLayout();
             this.MenuBar.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -116,6 +116,12 @@
             this.MouseWorldPosition.Name = "MouseWorldPosition";
             this.MouseWorldPosition.Size = new System.Drawing.Size(100, 17);
             this.MouseWorldPosition.TextAlign = System.Drawing.ContentAlignment.TopLeft;
+            // 
+            // SelectedItem
+            // 
+            this.SelectedItem.AutoSize = false;
+            this.SelectedItem.Name = "SelectedItem";
+            this.SelectedItem.Size = new System.Drawing.Size(200, 17);
             // 
             // MenuBar
             // 
@@ -454,12 +460,6 @@
             this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
             this.deleteToolStripMenuItem.Size = new System.Drawing.Size(117, 22);
             this.deleteToolStripMenuItem.Text = "Delete";
-            // 
-            // SelectedItem
-            // 
-            this.SelectedItem.AutoSize = false;
-            this.SelectedItem.Name = "SelectedItem";
-            this.SelectedItem.Size = new System.Drawing.Size(200, 17);
             // 
             // MainForm
             // 
