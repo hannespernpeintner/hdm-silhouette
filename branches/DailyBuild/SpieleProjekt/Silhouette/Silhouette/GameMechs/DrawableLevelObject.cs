@@ -13,9 +13,10 @@ using System.Xml.Serialization;
 
 namespace Silhouette.GameMechs
 {
+    [Serializable]
     public abstract class DrawableLevelObject : LevelObject
     {
-        string assetName;
+        public string assetName;
 
         public DrawableLevelObject() { }
         public abstract void Draw(SpriteBatch spriteBatch);

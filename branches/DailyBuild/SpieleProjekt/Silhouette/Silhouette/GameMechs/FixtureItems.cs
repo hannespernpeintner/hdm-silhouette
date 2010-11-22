@@ -23,10 +23,14 @@ using FarseerPhysics.Collision;
 
 namespace Silhouette.GameMechs
 {
+    [Serializable]
     public class RectangleFixtureItem : LevelObject
     {
         public Microsoft.Xna.Framework.Rectangle rectangle;
+
+        [NonSerialized]
         public Texture2D texture;
+        [NonSerialized]
         public Fixture fixture;
         public Vector2 position;
         public float width;
@@ -60,9 +64,11 @@ namespace Silhouette.GameMechs
         }
     }
 
+    [Serializable]
     public class CircleFixtureItem : LevelObject
     {
         public float radius;
+        [NonSerialized]
         public Fixture fixture;
 
         public CircleFixtureItem(Vector2 position, float radius)
