@@ -23,8 +23,12 @@ namespace SilhouetteEditor
     {
         private const int _CameraMovingSpeed = 10;
         public static int CameraMovingSpeed { get { return _CameraMovingSpeed; } }
-
+        private static Color _ColorSelectionBox = new Color(255, 255, 255, 109);
+        public static Color ColorSelectionBox { get { return _ColorSelectionBox; } }
+        private static Color _ColorFixtures = new Color(0, 0, 192, 145);
+        public static Color ColorFixtures { get { return _ColorFixtures; } }
         public static Vector2 Round(this Vector2 v)
+
         {
             return new Vector2((float)Math.Round(v.X), (float)Math.Round(v.Y));
         }
