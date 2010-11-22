@@ -27,5 +27,11 @@ namespace Silhouette.Engine
             }
             return null;
         }
+
+        public string getNextObjectNumber()
+        { 
+            int i = loList.Count() + 1;
+            return i.ToString("0000");
+        }
     }
 }

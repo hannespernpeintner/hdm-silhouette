@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Windows.Forms;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
@@ -18,7 +19,7 @@ namespace SilhouetteEditor
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         static EditorLoop _editorLoopInstance;
-
+        public Form winform;
         public static EditorLoop EditorLoopInstance { get { return _editorLoopInstance; } }
 
         private IntPtr drawSurface;
@@ -32,7 +33,12 @@ namespace SilhouetteEditor
             GameSettings.ApplyChanges(ref graphics); 
             this.drawSurface = drawSurface;
             graphics.PreparingDeviceSettings += new EventHandler<PreparingDeviceSettingsEventArgs>(graphics_PreparingDeviceSettings);
-            System.Windows.Forms.Control.FromHandle((this.Window.Handle)).VisibleChanged += new EventHandler(EditorLoop_VisibleChanged);
+            winform = (Form)Form.FromHandle(Window.Handle);
+            winform.VisibleChanged += new EventHandler(EditorLoop_VisibleChanged);
+            winform.Size = new System.Drawing.Size(10, 10);
+            Mouse.WindowHandle = drawSurface;
+            resizebackbuffer(MainForm.Default.GameView.Width, MainForm.Default.GameView.Height);
+            winform.Hide();
         }
 
         protected override void Initialize()
@@ -70,10 +76,15 @@ namespace SilhouetteEditor
         }
         private void EditorLoop_VisibleChanged(object sender, EventArgs e)
         {
-            if (System.Windows.Forms.Control.FromHandle((this.Window.Handle)).Visible == true)
-            {
-                System.Windows.Forms.Control.FromHandle((this.Window.Handle)).Visible = false;
-            }
+            winform.Hide();
+            winform.Size = new System.Drawing.Size(10, 10);
+            winform.Visible = false;
+        }
+        public void resizebackbuffer(int width, int height)
+        {
+            graphics.PreferredBackBufferWidth = width;
+            graphics.PreferredBackBufferHeight = height;
+            graphics.ApplyChanges();
         }
     }
 }
