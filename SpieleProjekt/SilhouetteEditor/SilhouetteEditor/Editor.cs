@@ -64,7 +64,8 @@ namespace SilhouetteEditor
         public List<LevelObject> selectedLevelObjects;
 
         public TextureWrapper currentTexture;
-        public FixtureType currentPrimitive;
+        public FixtureType currentFixture;
+        public bool fixtureStarted;
 
         List<Vector2> clickedPoints;
         Vector2 MouseWorldPosition, GrabbedPoint;
@@ -127,12 +128,38 @@ namespace SilhouetteEditor
 
                     if (levelObject != null)
                     {
-                        MainForm.Default.SelectedItem.Text = "Item: " + levelObject.name;
+                        MainForm.Default.SelectedItem.Text = "Object: " + levelObject.name;
                     }
                 }
                 if (editorState == EditorState.CREATE_FIXTURES)
                 {
+                    if (mstate.LeftButton == Microsoft.Xna.Framework.Input.ButtonState.Pressed && oldmstate.LeftButton == Microsoft.Xna.Framework.Input.ButtonState.Released)
+                    {
+                        clickedPoints.Add(MouseWorldPosition);
 
+                        if (!fixtureStarted)
+                            fixtureStarted = true;
+                        else
+                        {
+                            paintFixtureItem();
+                            clickedPoints.Clear();
+                            fixtureStarted = false;
+                        }
+                    }
+                    if (mstate.RightButton == Microsoft.Xna.Framework.Input.ButtonState.Pressed && oldmstate.RightButton == Microsoft.Xna.Framework.Input.ButtonState.Released)
+                    {
+                        if (fixtureStarted)
+                        {
+                            clickedPoints.Clear();
+                            fixtureStarted = false;
+                        }
+                        else
+                        {
+                            clickedPoints.Clear();
+                            fixtureStarted = false;
+                            editorState = EditorState.IDLE;
+                        }
+                    }
                 }
             #endregion
 
@@ -188,6 +215,11 @@ namespace SilhouetteEditor
             MainForm.Default.UpdateTreeView();
         }
 
+        public void AddLevelObject(LevelObject lo)
+        {
+            selectedLayer.loList.Add(lo);
+        }
+
         public void AddFixture(FixtureType fixtureType)
         {
             if (level.layerList.Count() == 0)
@@ -201,7 +233,8 @@ namespace SilhouetteEditor
                 return;
             }
 
-            currentPrimitive = fixtureType;
+            currentFixture = fixtureType;
+            fixtureStarted = false;
             editorState = EditorState.CREATE_FIXTURES;
         }
 
@@ -210,6 +243,8 @@ namespace SilhouetteEditor
         { 
             foreach (Layer l in level.layerList)
             {
+                Vector2 oldCameraPosition = Camera.Position;
+                Camera.Position *= l.ScrollSpeed;
                 spriteBatch.Begin(SpriteSortMode.Deferred, null, null, null, null, null, Camera.matrix);
                 foreach (LevelObject lo in l.loList)
                 {
@@ -225,6 +260,7 @@ namespace SilhouetteEditor
                     }
                 }
                 spriteBatch.End();
+                Camera.Position = oldCameraPosition;
             }
         }
 
@@ -284,6 +320,24 @@ namespace SilhouetteEditor
 
             MainForm.Default.UpdateTreeView();
             destroyTextureWrapper();
+        }
+
+        public void paintFixtureItem()
+        {
+            switch (currentFixture)
+            { 
+                case FixtureType.Rectangle:
+                    LevelObject l1 = new RectangleFixtureItem(Constants.RectangleFromVectors(clickedPoints[0], clickedPoints[1]));
+                    l1.name = l1.getPrefix() + selectedLayer.getNextObjectNumber();
+                    selectedLayer.loList.Add(l1);
+                    break;
+                case FixtureType.Circle:
+                    LevelObject l2 = new CircleFixtureItem(clickedPoints[0], (MouseWorldPosition - clickedPoints[0]).Length());
+                    l2.name = l2.getPrefix() + selectedLayer.getNextObjectNumber();
+                    selectedLayer.loList.Add(l2);
+                    break;
+            }
+            MainForm.Default.UpdateTreeView();
         }
 
         //---> Selection <---//

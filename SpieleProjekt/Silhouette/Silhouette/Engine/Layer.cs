@@ -35,7 +35,11 @@ namespace Silhouette.Engine
             set { scrollSpeed = value; }
         }
 
-        public List<LevelObject> loList;
+        private List<LevelObject> _loList;
+
+        [DisplayName("Level Objects"), Category("Objects")]
+        [Description("The objects of the Layer.")]
+        public List<LevelObject> loList { get { return _loList; } }
 
         public Texture2D[,] layerTexture;
         public string[,] assetName;
@@ -45,7 +49,7 @@ namespace Silhouette.Engine
         {
             scrollSpeed = Vector2.One;
             isVisible = true;
-            loList = new List<LevelObject>();
+            _loList = new List<LevelObject>();
         }
 
         public void initializeLayer()
