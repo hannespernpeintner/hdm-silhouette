@@ -251,12 +251,12 @@ namespace SilhouetteEditor
                     if (lo is RectangleFixtureItem)
                     { 
                         RectangleFixtureItem r = (RectangleFixtureItem)lo;
-                        Primitives.Instance.drawBoxFilled(spriteBatch, r.rectangle, Microsoft.Xna.Framework.Color.Cyan);
+                        Primitives.Instance.drawBoxFilled(spriteBatch, r.rectangle, Constants.ColorFixtures);
                     }
                     if (lo is CircleFixtureItem)
                     {
                         CircleFixtureItem c = (CircleFixtureItem)lo;
-                        Primitives.Instance.drawCircleFilled(spriteBatch, c.position, c.radius, Microsoft.Xna.Framework.Color.Cyan);
+                        Primitives.Instance.drawCircleFilled(spriteBatch, c.position, c.radius, Constants.ColorFixtures);
                     }
                 }
                 spriteBatch.End();
