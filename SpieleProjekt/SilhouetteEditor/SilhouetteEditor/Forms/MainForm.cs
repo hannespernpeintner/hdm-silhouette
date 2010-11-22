@@ -139,5 +139,14 @@ namespace SilhouetteEditor.Forms
         {
             MenuBar.Select();
         }
+
+        private void FileSaveAs(object sender, EventArgs e)
+        {
+            SaveFileDialog dialog = new SaveFileDialog();
+            if (dialog.ShowDialog() == DialogResult.OK)
+            {
+                Editor.Default.SaveLevel(dialog.FileName);
+            }
+        }
     }
 }

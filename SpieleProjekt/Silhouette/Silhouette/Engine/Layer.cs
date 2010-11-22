@@ -17,11 +17,10 @@ using Silhouette.GameMechs;
 
 namespace Silhouette.Engine
 {
+    [Serializable]
     public partial class Layer
     {
-        [XmlAttribute()]
         public string name;
-        [XmlAttribute()]
         public bool isVisible;
 
         private Vector2 scrollSpeed;
@@ -41,7 +40,9 @@ namespace Silhouette.Engine
         [Description("The objects of the Layer.")]
         public List<LevelObject> loList { get { return _loList; } }
 
+        [NonSerialized]
         public Texture2D[,] layerTexture;
+
         public string[,] assetName;
         public int width, height;
 

@@ -201,9 +201,9 @@ namespace SilhouetteEditor
 
         }
 
-        public void SaveLevel()
+        public void SaveLevel(string fullPath)
         {
-
+            level.SaveLevel(fullPath);
         }
 
         //---> Add-Stuff <---//

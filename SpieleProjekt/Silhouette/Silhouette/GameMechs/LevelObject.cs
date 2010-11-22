@@ -19,11 +19,10 @@ using FarseerPhysics.Collision;
 
 namespace Silhouette.GameMechs
 {
+    [Serializable]
     public abstract class LevelObject
     {
-        [XmlAttribute()]
         public string name;
-        [XmlAttribute()]
         public string type;
 
         public Vector2 position;

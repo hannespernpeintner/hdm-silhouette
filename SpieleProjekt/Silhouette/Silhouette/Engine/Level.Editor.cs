@@ -2,8 +2,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
-using System.Xml.Serialization;
 using System.Linq;
+using System.Xml.Serialization;
+using System.Runtime.Serialization.Formatters.Soap;
+using System.Runtime.Serialization.Formatters.Binary;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
@@ -43,6 +45,23 @@ namespace Silhouette.Engine
         public void UpdateInEditor(GameTime gameTime)
         {
             Physics.Step(Math.Min((float)gameTime.ElapsedGameTime.TotalMilliseconds * 0.001f, (1f / 30f)));
+        }
+
+        public void SaveLevel(string fullPath)
+        {
+            FileStream file = FileManager.SaveLevelFile(fullPath);
+
+            if (file != null)
+            {
+                BinaryFormatter serializer = new BinaryFormatter();
+                serializer.Serialize(file, this);
+                file.Close();
+            }
+        }
+
+        public void LoadLevelInEditor()
+        { 
+        
         }
     }
 }
