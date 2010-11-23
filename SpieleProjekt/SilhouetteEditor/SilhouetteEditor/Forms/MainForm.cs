@@ -148,5 +148,10 @@ namespace SilhouetteEditor.Forms
                 Editor.Default.SaveLevel(dialog.FileName);
             }
         }
+
+        private void ToolBoxButton_Click(object sender, EventArgs e)
+        {
+            new ToolBox().ShowDialog();
+        }
     }
 }
