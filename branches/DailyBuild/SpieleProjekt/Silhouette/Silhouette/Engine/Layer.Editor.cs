@@ -18,6 +18,12 @@ namespace Silhouette.Engine
 {
     public partial class Layer
     {
+        public void initializeLayerInEditor()
+        {
+            layerTexture = new Texture2D[width, height];
+            assetName = new string[width, height];
+        }
+
         public LevelObject getItemAtPosition(Vector2 worldPosition)
         {
             foreach (LevelObject lo in loList)

@@ -41,21 +41,12 @@ namespace Silhouette.Engine.Manager
             return File.Open(fullPath, FileMode.OpenOrCreate, FileAccess.Write, FileShare.ReadWrite);
         }
 
-        public static FileStream LoadLevelFile(string relativeLevelPath, int levelNumber)
+        public static FileStream LoadLevelFile(string levelPath)
         {
-            if (!Directory.Exists(relativeLevelPath))
-            {
-                Directory.CreateDirectory(relativeLevelPath);
-            }
-
-            string[] levelFiles = Directory.GetFiles(relativeLevelPath);
-            string fullPath = Path.Combine(relativeLevelPath, levelFiles[levelNumber]);
-
-            if (!File.Exists(fullPath))
-                return null;
+            if (File.Exists(levelPath))
+                return File.Open(levelPath, FileMode.Open, FileAccess.Read);
             else
-                return File.Open(fullPath, FileMode.Open, FileAccess.Read);
-
+                return null;
         }
     }
 }

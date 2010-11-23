@@ -65,6 +65,28 @@ namespace SilhouetteEditor.Forms
             new ToolBox().Show();
         }
 
+        private void FileSaveAs(object sender, EventArgs e)
+        {
+            SaveFileDialog dialog = new SaveFileDialog();
+            if (dialog.ShowDialog() == DialogResult.OK)
+            {
+                Editor.Default.levelFileName = dialog.FileName;
+                Editor.Default.SaveLevel(dialog.FileName);
+            }
+        }
+
+        private void FileSave(object sender, EventArgs e)
+        {
+            if (Editor.Default.levelFileName != null)
+            {
+                Editor.Default.SaveLevel(Editor.Default.levelFileName);
+            }
+            else
+            {
+                FileSaveAs(sender, e);
+            }
+        }
+
         //---> ToolBar-Steuerung <---//
 
         private void ToolStripButton_AddRectangleFixture(object sender, EventArgs e)
@@ -77,6 +99,10 @@ namespace SilhouetteEditor.Forms
             Editor.Default.AddFixture(FixtureType.Circle);
         }
 
+        private void ToolBoxButton_Click(object sender, EventArgs e)
+        {
+            new ToolBox().ShowDialog();
+        }
 
         //---> ContextMenu-Steuerungen <---//
 
@@ -130,6 +156,8 @@ namespace SilhouetteEditor.Forms
             }
         }
 
+        //---> GameView-Steuerung <---//
+
         private void GameView_MouseEnter(object sender, EventArgs e)
         {
             GameView.Select();
@@ -140,18 +168,13 @@ namespace SilhouetteEditor.Forms
             MenuBar.Select();
         }
 
-        private void FileSaveAs(object sender, EventArgs e)
+        private void FileOpen(object sender, EventArgs e)
         {
-            SaveFileDialog dialog = new SaveFileDialog();
-            if (dialog.ShowDialog() == DialogResult.OK)
+            OpenFileDialog dialog = new OpenFileDialog();
+            if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
-                Editor.Default.SaveLevel(dialog.FileName);
+                Editor.Default.LoadLevel(dialog.FileName);
             }
-        }
-
-        private void ToolBoxButton_Click(object sender, EventArgs e)
-        {
-            new ToolBox().ShowDialog();
         }
     }
 }

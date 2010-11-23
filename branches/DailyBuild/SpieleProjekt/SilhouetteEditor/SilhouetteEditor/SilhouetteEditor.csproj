@@ -176,7 +176,8 @@
       <Name>Silhouette</Name>
     </ProjectReference>
     <ProjectReference Include="..\SilhouetteEditorContent\SilhouetteEditorContent.contentproj">
-      <Name>SilhouetteEditorContent</Name>
+      <Project>{60B84928-9064-4F0A-B050-3BE061C6613F}</Project>
+      <Name>SilhouetteEditorContent %28Content%29</Name>
       <XnaReferenceType>Content</XnaReferenceType>
     </ProjectReference>
   </ItemGroup>
