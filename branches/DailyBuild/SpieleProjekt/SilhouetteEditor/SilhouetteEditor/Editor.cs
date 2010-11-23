@@ -58,6 +58,7 @@ namespace SilhouetteEditor
         SpriteBatch spriteBatch;
 
         EditorState editorState;
+        public string levelFileName;
 
         public Level level;
         public Layer selectedLayer;
@@ -196,9 +197,32 @@ namespace SilhouetteEditor
             MainForm.Default.UpdateTreeView();
         }
 
-        public void LoadLevel()
+        public void LoadLevel(string filename)
         {
+            Editor.Default.levelFileName = filename;
+            Editor.Default.level = Level.LoadLevelFile(filename);
+            level.InitializeInEditor(spriteBatch);
+            level.LoadContentInEditor();
+            LoadStuff();
+            MainForm.Default.UpdateTreeView();
+        }
 
+        public void LoadStuff()
+        {
+            foreach (Layer l in level.layerList)
+            {
+                for (int x = 0; x < l.width; x++)
+                    for (int y = 0; y < l.height; y++)
+                    {
+                        if (l.assetName[x, y] != null)
+                            l.layerTexture[x, y] = EditorLoop.EditorLoopInstance.Content.Load<Texture2D>("Sprites/Layer/" + l.assetName[x, y]);
+                    }
+
+                foreach (LevelObject lo in l.loList)
+                {
+                    lo.LoadContent();
+                }
+            }
         }
 
         public void SaveLevel(string fullPath)
@@ -214,7 +238,7 @@ namespace SilhouetteEditor
             l.name = name;
             l.width = width;
             l.height = height;
-            l.initializeLayer();
+            l.initializeLayerInEditor();
             level.layerList.Add(l);
             MainForm.Default.UpdateTreeView();
         }
@@ -331,7 +355,7 @@ namespace SilhouetteEditor
             }
 
             selectedLayer.layerTexture[currentTexture.width, currentTexture.height] = currentTexture.texture;
-            selectedLayer.assetName[currentTexture.width, currentTexture.height] = Path.GetFileNameWithoutExtension(currentTexture.fullPath);
+            selectedLayer.assetName[currentTexture.width, currentTexture.height] = currentTexture.fullPath;
 
             MainForm.Default.UpdateTreeView();
             destroyTextureWrapper();

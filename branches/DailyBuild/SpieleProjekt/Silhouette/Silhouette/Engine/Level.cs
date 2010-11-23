@@ -12,6 +12,8 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 
+using System.Runtime.Serialization.Formatters.Binary;
+
 using Silhouette.Engine.Manager;
 using Silhouette.Engine.Screens;
 using Silhouette.Engine;
@@ -82,8 +84,6 @@ namespace Silhouette.Engine
             private KeyboardState keyboardState;
             [NonSerialized]
             private KeyboardState oldKeyboardState;
-            [NonSerialized]
-            private const string LevelFilePath = "/Level";
         #endregion
 
         public Level()
@@ -126,6 +126,23 @@ namespace Silhouette.Engine
 
             #region DebugView
                 keyboardState = Keyboard.GetState();
+
+                if (keyboardState.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.A))
+                {
+                    Camera.PositionX -= 200;
+                }
+                if (keyboardState.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.D))
+                {
+                    Camera.PositionX += 200;
+                }
+                if (keyboardState.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.S))
+                {
+                    Camera.PositionY += 200;
+                }
+                if (keyboardState.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.W))
+                {
+                    Camera.PositionY -= 200;
+                }
 
                 if (keyboardState.IsKeyDown(Keys.F1) && oldKeyboardState.IsKeyUp(Keys.F1))
                     DebugViewEnabled = !DebugViewEnabled;
@@ -175,9 +192,13 @@ namespace Silhouette.Engine
             }
         }
 
-        public static void LoadLevelFile(int levelNumber)
+        public static Level LoadLevelFile(string levelPath)
         {
-
+            FileStream file = FileManager.LoadLevelFile(levelPath);
+            BinaryFormatter serializer = new BinaryFormatter();
+            Level level = (Level)serializer.Deserialize(file);
+            file.Close();
+            return level;
         }
 
         #region DebugViewMethods

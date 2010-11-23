@@ -32,6 +32,7 @@ namespace Silhouette.GameMechs
         public Texture2D texture;
         [NonSerialized]
         public Fixture fixture;
+
         public Vector2 position;
         public float width;
         public float height;
@@ -68,6 +69,7 @@ namespace Silhouette.GameMechs
     public class CircleFixtureItem : LevelObject
     {
         public float radius;
+
         [NonSerialized]
         public Fixture fixture;
 

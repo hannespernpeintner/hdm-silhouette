@@ -56,7 +56,6 @@ namespace Silhouette.Engine
         public void initializeLayer()
         {
             layerTexture = new Texture2D[width, height];
-            assetName = new string[width, height];
         }
 
         public void loadLayer()
@@ -64,7 +63,8 @@ namespace Silhouette.Engine
             for(int x = 0; x < width; x++)
                 for (int y = 0; y < height; y++)
                 {
-                    layerTexture[x,y] = GameLoop.gameInstance.Content.Load<Texture2D>(assetName[x,y]);
+                    if(assetName[x,y] != null) 
+                        layerTexture[x,y] = GameLoop.gameInstance.Content.Load<Texture2D>("Sprites/Layer/" + assetName[x,y]);
                 }
 
             foreach (LevelObject lo in loList)
