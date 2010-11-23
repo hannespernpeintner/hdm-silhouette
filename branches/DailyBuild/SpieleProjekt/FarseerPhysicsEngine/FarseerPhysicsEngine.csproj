@@ -111,12 +111,10 @@
     <Compile Include="Common\Decomposition\BayazitDecomposer.cs" />
     <Compile Include="Common\Decomposition\EarclipDecomposer.cs" />
     <Compile Include="Common\FixedArray.cs" />
-    <Compile Include="Common\GrowableStack.cs" />
     <Compile Include="Common\LineTools.cs" />
     <Compile Include="Common\Math.cs" />
     <Compile Include="Common\Path.cs" />
     <Compile Include="Common\PathManager.cs" />
-    <Compile Include="Common\PolygonManipulation\BooleanTools.cs" />
     <Compile Include="Common\PolygonManipulation\CuttingTools.cs" />
     <Compile Include="Common\PolygonManipulation\SimplifyTools.cs" />
     <Compile Include="Common\PolygonManipulation\YuPengClipper.cs" />
@@ -150,6 +148,7 @@
     <Compile Include="Dynamics\Joints\PrismaticJoint.cs" />
     <Compile Include="Dynamics\Joints\PullyJoint.cs" />
     <Compile Include="Dynamics\Joints\RevoluteJoint.cs" />
+    <Compile Include="Dynamics\Joints\RopeJoint.cs" />
     <Compile Include="Dynamics\Joints\SliderJoint.cs" />
     <Compile Include="Dynamics\Joints\WeldJoint.cs" />
     <Compile Include="Dynamics\TimeStep.cs" />
