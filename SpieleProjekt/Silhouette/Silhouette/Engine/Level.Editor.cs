@@ -35,6 +35,11 @@ namespace Silhouette.Engine
             Physics = new World(_Gravitation);
             debugView = new DebugViewXNA(Level.Physics);
             Camera.initialize(0, 0);
+
+            foreach (Layer l in layerList)
+            {
+                l.initializeLayer();
+            }
         }
 
         public void LoadContentInEditor()
@@ -57,11 +62,6 @@ namespace Silhouette.Engine
                 serializer.Serialize(file, this);
                 file.Close();
             }
-        }
-
-        public void LoadLevelInEditor()
-        { 
-        
         }
     }
 }

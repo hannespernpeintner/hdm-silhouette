@@ -26,5 +26,14 @@ namespace SilhouetteEditor.Forms
             Editor.Default.NewLevel(textBox1.Text);
             this.Hide();
         }
+
+        private void Textbox_KeyEnter(object sender, KeyEventArgs e)
+        {
+            if (e.KeyData == Keys.Enter)
+            {
+                Editor.Default.NewLevel(textBox1.Text);
+                this.Hide();
+            }
+        }
     }
 }

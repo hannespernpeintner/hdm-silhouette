@@ -169,12 +169,14 @@
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
             this.openToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.openToolStripMenuItem.Text = "Open";
+            this.openToolStripMenuItem.Click += new System.EventHandler(this.FileOpen);
             // 
             // saveToolStripMenuItem
             // 
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
             this.saveToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.saveToolStripMenuItem.Text = "Save";
+            this.saveToolStripMenuItem.Click += new System.EventHandler(this.FileSave);
             // 
             // saveAsToolStripMenuItem
             // 
@@ -212,7 +214,7 @@
             // toolBoxToolStripMenuItem
             // 
             this.toolBoxToolStripMenuItem.Name = "toolBoxToolStripMenuItem";
-            this.toolBoxToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.toolBoxToolStripMenuItem.Size = new System.Drawing.Size(117, 22);
             this.toolBoxToolStripMenuItem.Text = "ToolBox";
             this.toolBoxToolStripMenuItem.Click += new System.EventHandler(this.ToolsToolBox);
             // 
@@ -240,14 +242,14 @@
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
             this.aboutToolStripMenuItem.Text = "About";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.HelpAbout);
             // 
             // helpToolStripMenuItem1
             // 
             this.helpToolStripMenuItem1.Name = "helpToolStripMenuItem1";
-            this.helpToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
+            this.helpToolStripMenuItem1.Size = new System.Drawing.Size(107, 22);
             this.helpToolStripMenuItem1.Text = "Help";
             this.helpToolStripMenuItem1.Click += new System.EventHandler(this.HelpHelp);
             // 
