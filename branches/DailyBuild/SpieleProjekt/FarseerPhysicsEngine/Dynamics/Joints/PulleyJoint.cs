@@ -40,6 +40,21 @@ namespace FarseerPhysics.Dynamics.Joints
     /// </summary>
     public class PulleyJoint : Joint
     {
+        /// <summary>
+        /// Get the first ground anchor.
+        /// </summary>
+        /// <value></value>
+        public Vector2 GroundAnchorA;
+
+        /// <summary>
+        /// Get the second ground anchor.
+        /// </summary>
+        /// <value></value>
+        public Vector2 GroundAnchorB;
+
+        public Vector2 LocalAnchorA;
+        public Vector2 LocalAnchorB;
+
         public float MinPulleyLength = 2.0f;
         private float _ant;
         private float _impulse;
@@ -70,12 +85,12 @@ namespace FarseerPhysics.Dynamics.Joints
         /// <param name="bodyB">The second body.</param>
         /// <param name="groundAnchorA">The ground anchor for the first body.</param>
         /// <param name="groundAnchorB">The ground anchor for the second body.</param>
-        /// <param name="anchorA">The first body anchor.</param>
-        /// <param name="anchorB">The second body anchor.</param>
+        /// <param name="localAnchorA">The first body anchor.</param>
+        /// <param name="localAnchorB">The second body anchor.</param>
         /// <param name="ratio">The ratio.</param>
         public PulleyJoint(Body bodyA, Body bodyB,
                            Vector2 groundAnchorA, Vector2 groundAnchorB,
-                           Vector2 anchorA, Vector2 anchorB,
+                           Vector2 localAnchorA, Vector2 localAnchorB,
                            float ratio)
             : base(bodyA, bodyB)
         {
@@ -83,13 +98,13 @@ namespace FarseerPhysics.Dynamics.Joints
 
             GroundAnchorA = groundAnchorA;
             GroundAnchorB = groundAnchorB;
-            LocalAnchorA = anchorA;
-            LocalAnchorB = anchorB;
+            LocalAnchorA = localAnchorA;
+            LocalAnchorB = localAnchorB;
 
-            Vector2 d1 = BodyA.GetWorldPoint(anchorA) - groundAnchorA;
+            Vector2 d1 = BodyA.GetWorldPoint(localAnchorA) - groundAnchorA;
             _lengthA = d1.Length();
 
-            Vector2 d2 = BodyB.GetWorldPoint(anchorB) - groundAnchorB;
+            Vector2 d2 = BodyB.GetWorldPoint(localAnchorB) - groundAnchorB;
             _lengthB = d2.Length();
 
             Debug.Assert(ratio != 0.0f);
@@ -119,19 +134,8 @@ namespace FarseerPhysics.Dynamics.Joints
         public override Vector2 WorldAnchorB
         {
             get { return BodyB.GetWorldPoint(LocalAnchorB); }
+            set { Debug.Assert(false, "You can't set the world anchor on this joint type."); }
         }
-
-        /// <summary>
-        /// Get the first ground anchor.
-        /// </summary>
-        /// <value></value>
-        public Vector2 GroundAnchorA { get; set; }
-
-        /// <summary>
-        /// Get the second ground anchor.
-        /// </summary>
-        /// <value></value>
-        public Vector2 GroundAnchorB { get; set; }
 
         /// <summary>
         /// Get the current length of the segment attached to body1.
@@ -167,9 +171,6 @@ namespace FarseerPhysics.Dynamics.Joints
         /// <value></value>
         public float Ratio { get; set; }
 
-        public Vector2 LocalAnchorA { get; private set; }
-        public Vector2 LocalAnchorB { get; private set; }
-
         public override Vector2 GetReactionForce(float inv_dt)
         {
             Vector2 P = _impulse * _u2;
@@ -193,8 +194,8 @@ namespace FarseerPhysics.Dynamics.Joints
             Vector2 r1 = MathUtils.Multiply(ref xf1.R, LocalAnchorA - b1.LocalCenter);
             Vector2 r2 = MathUtils.Multiply(ref xf2.R, LocalAnchorB - b2.LocalCenter);
 
-            Vector2 p1 = b1.Sweep.c + r1;
-            Vector2 p2 = b2.Sweep.c + r2;
+            Vector2 p1 = b1.Sweep.C + r1;
+            Vector2 p2 = b2.Sweep.C + r2;
 
             Vector2 s1 = GroundAnchorA;
             Vector2 s2 = GroundAnchorB;
@@ -373,8 +374,8 @@ namespace FarseerPhysics.Dynamics.Joints
                 Vector2 r1 = MathUtils.Multiply(ref xf1.R, LocalAnchorA - b1.LocalCenter);
                 Vector2 r2 = MathUtils.Multiply(ref xf2.R, LocalAnchorB - b2.LocalCenter);
 
-                Vector2 p1 = b1.Sweep.c + r1;
-                Vector2 p2 = b2.Sweep.c + r2;
+                Vector2 p1 = b1.Sweep.C + r1;
+                Vector2 p2 = b2.Sweep.C + r2;
 
                 // Get the pulley axes.
                 _u1 = p1 - s1;
@@ -410,10 +411,10 @@ namespace FarseerPhysics.Dynamics.Joints
                 Vector2 P1 = -impulse * _u1;
                 Vector2 P2 = -Ratio * impulse * _u2;
 
-                b1.Sweep.c += b1.InvMass * P1;
-                b1.Sweep.a += b1.InvI * MathUtils.Cross(r1, P1);
-                b2.Sweep.c += b2.InvMass * P2;
-                b2.Sweep.a += b2.InvI * MathUtils.Cross(r2, P2);
+                b1.Sweep.C += b1.InvMass * P1;
+                b1.Sweep.A += b1.InvI * MathUtils.Cross(r1, P1);
+                b2.Sweep.C += b2.InvMass * P2;
+                b2.Sweep.A += b2.InvI * MathUtils.Cross(r2, P2);
 
                 b1.SynchronizeTransform();
                 b2.SynchronizeTransform();
@@ -425,7 +426,7 @@ namespace FarseerPhysics.Dynamics.Joints
                 b1.GetTransform(out xf1);
 
                 Vector2 r1 = MathUtils.Multiply(ref xf1.R, LocalAnchorA - b1.LocalCenter);
-                Vector2 p1 = b1.Sweep.c + r1;
+                Vector2 p1 = b1.Sweep.C + r1;
 
                 _u1 = p1 - s1;
                 float length1 = _u1.Length();
@@ -445,8 +446,8 @@ namespace FarseerPhysics.Dynamics.Joints
                 float impulse = -_limitMass1 * C;
 
                 Vector2 P1 = -impulse * _u1;
-                b1.Sweep.c += b1.InvMass * P1;
-                b1.Sweep.a += b1.InvI * MathUtils.Cross(r1, P1);
+                b1.Sweep.C += b1.InvMass * P1;
+                b1.Sweep.A += b1.InvI * MathUtils.Cross(r1, P1);
 
                 b1.SynchronizeTransform();
             }
@@ -457,7 +458,7 @@ namespace FarseerPhysics.Dynamics.Joints
                 b2.GetTransform(out xf2);
 
                 Vector2 r2 = MathUtils.Multiply(ref xf2.R, LocalAnchorB - b2.LocalCenter);
-                Vector2 p2 = b2.Sweep.c + r2;
+                Vector2 p2 = b2.Sweep.C + r2;
 
                 _u2 = p2 - s2;
                 float length2 = _u2.Length();
@@ -477,8 +478,8 @@ namespace FarseerPhysics.Dynamics.Joints
                 float impulse = -_limitMass2 * C;
 
                 Vector2 P2 = -impulse * _u2;
-                b2.Sweep.c += b2.InvMass * P2;
-                b2.Sweep.a += b2.InvI * MathUtils.Cross(r2, P2);
+                b2.Sweep.C += b2.InvMass * P2;
+                b2.Sweep.A += b2.InvI * MathUtils.Cross(r2, P2);
 
                 b2.SynchronizeTransform();
             }
