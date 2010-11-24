@@ -17,6 +17,7 @@ namespace Silhouette.GameMechs
     public abstract class DrawableLevelObject : LevelObject
     {
         public string assetName;
+        public string fullPath;
 
         public DrawableLevelObject() { }
         public abstract void Draw(SpriteBatch spriteBatch);

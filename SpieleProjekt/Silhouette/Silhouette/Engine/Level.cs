@@ -173,7 +173,7 @@ namespace Silhouette.Engine
             #endregion
         }
 
-        public void Draw(GameTime gameTime)
+        public void Draw()
         {
             if (!GraphicsEnabled)
             {

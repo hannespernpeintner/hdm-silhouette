@@ -30,6 +30,7 @@ namespace Silhouette.GameMechs
 
         public TextureObject(string path)
         {
+            this.fullPath = path;
             this.assetName = Path.GetFileNameWithoutExtension(path);
         }
 
