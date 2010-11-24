@@ -61,7 +61,13 @@
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.RectangleButton = new System.Windows.Forms.ToolStripButton();
             this.CircleButton = new System.Windows.Forms.ToolStripButton();
+            this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.tabPage1 = new System.Windows.Forms.TabPage();
             this.propertyGrid1 = new System.Windows.Forms.PropertyGrid();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.TextureView = new System.Windows.Forms.ListView();
+            this.ImageList32 = new System.Windows.Forms.ImageList(this.components);
+            this.BrowseButton = new System.Windows.Forms.Button();
             this.GameView = new System.Windows.Forms.PictureBox();
             this.LevelContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.addLayerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -86,6 +92,9 @@
             this.splitContainer2.Panel2.SuspendLayout();
             this.splitContainer2.SuspendLayout();
             this.ToolBar.SuspendLayout();
+            this.tabControl1.SuspendLayout();
+            this.tabPage1.SuspendLayout();
+            this.tabPage2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.GameView)).BeginInit();
             this.LevelContextMenu.SuspendLayout();
             this.LayerContextMenu.SuspendLayout();
@@ -269,7 +278,7 @@
             // 
             this.splitContainer1.Panel2.Controls.Add(this.GameView);
             this.splitContainer1.Size = new System.Drawing.Size(1264, 684);
-            this.splitContainer1.SplitterDistance = 238;
+            this.splitContainer1.SplitterDistance = 188;
             this.splitContainer1.TabIndex = 2;
             // 
             // splitContainer2
@@ -288,8 +297,8 @@
             // 
             // splitContainer2.Panel2
             // 
-            this.splitContainer2.Panel2.Controls.Add(this.propertyGrid1);
-            this.splitContainer2.Size = new System.Drawing.Size(238, 684);
+            this.splitContainer2.Panel2.Controls.Add(this.tabControl1);
+            this.splitContainer2.Size = new System.Drawing.Size(188, 684);
             this.splitContainer2.SplitterDistance = 284;
             this.splitContainer2.TabIndex = 0;
             // 
@@ -298,7 +307,7 @@
             this.treeView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.treeView1.Location = new System.Drawing.Point(0, 25);
             this.treeView1.Name = "treeView1";
-            this.treeView1.Size = new System.Drawing.Size(234, 255);
+            this.treeView1.Size = new System.Drawing.Size(184, 255);
             this.treeView1.TabIndex = 1;
             this.treeView1.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView1_AfterSelect);
             // 
@@ -316,7 +325,7 @@
             this.ToolBar.Location = new System.Drawing.Point(0, 0);
             this.ToolBar.Name = "ToolBar";
             this.ToolBar.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.ToolBar.Size = new System.Drawing.Size(234, 25);
+            this.ToolBar.Size = new System.Drawing.Size(184, 25);
             this.ToolBar.TabIndex = 0;
             this.ToolBar.Text = "ToolBar";
             // 
@@ -384,23 +393,90 @@
             this.CircleButton.ToolTipText = "Create Circle Fixture";
             this.CircleButton.Click += new System.EventHandler(this.ToolStripButton_AddCircleFixture);
             // 
+            // tabControl1
+            // 
+            this.tabControl1.Controls.Add(this.tabPage1);
+            this.tabControl1.Controls.Add(this.tabPage2);
+            this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tabControl1.Location = new System.Drawing.Point(0, 0);
+            this.tabControl1.Name = "tabControl1";
+            this.tabControl1.SelectedIndex = 0;
+            this.tabControl1.Size = new System.Drawing.Size(184, 392);
+            this.tabControl1.TabIndex = 0;
+            // 
+            // tabPage1
+            // 
+            this.tabPage1.Controls.Add(this.propertyGrid1);
+            this.tabPage1.Location = new System.Drawing.Point(4, 22);
+            this.tabPage1.Name = "tabPage1";
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage1.Size = new System.Drawing.Size(176, 366);
+            this.tabPage1.TabIndex = 0;
+            this.tabPage1.Text = "Attributes";
+            this.tabPage1.UseVisualStyleBackColor = true;
+            // 
             // propertyGrid1
             // 
+            this.propertyGrid1.AllowDrop = true;
             this.propertyGrid1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.propertyGrid1.Location = new System.Drawing.Point(0, 0);
+            this.propertyGrid1.Location = new System.Drawing.Point(3, 3);
             this.propertyGrid1.Name = "propertyGrid1";
-            this.propertyGrid1.Size = new System.Drawing.Size(234, 392);
+            this.propertyGrid1.Size = new System.Drawing.Size(170, 360);
             this.propertyGrid1.TabIndex = 0;
             this.propertyGrid1.TabStop = false;
             this.propertyGrid1.ToolbarVisible = false;
             // 
+            // tabPage2
+            // 
+            this.tabPage2.Controls.Add(this.TextureView);
+            this.tabPage2.Controls.Add(this.BrowseButton);
+            this.tabPage2.Location = new System.Drawing.Point(4, 22);
+            this.tabPage2.Name = "tabPage2";
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage2.Size = new System.Drawing.Size(176, 366);
+            this.tabPage2.TabIndex = 1;
+            this.tabPage2.Text = "Textures";
+            this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // TextureView
+            // 
+            this.TextureView.AllowDrop = true;
+            this.TextureView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.TextureView.LargeImageList = this.ImageList32;
+            this.TextureView.Location = new System.Drawing.Point(3, 26);
+            this.TextureView.Name = "TextureView";
+            this.TextureView.Size = new System.Drawing.Size(170, 337);
+            this.TextureView.TabIndex = 1;
+            this.TextureView.UseCompatibleStateImageBehavior = false;
+            this.TextureView.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(this.TextureView_ItemDrag);
+            this.TextureView.DragOver += new System.Windows.Forms.DragEventHandler(this.TextureView_DragOver);
+            this.TextureView.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.TextureView_MouseDoubleClick);
+            // 
+            // ImageList32
+            // 
+            this.ImageList32.ColorDepth = System.Windows.Forms.ColorDepth.Depth8Bit;
+            this.ImageList32.ImageSize = new System.Drawing.Size(32, 32);
+            this.ImageList32.TransparentColor = System.Drawing.Color.Transparent;
+            // 
+            // BrowseButton
+            // 
+            this.BrowseButton.Dock = System.Windows.Forms.DockStyle.Top;
+            this.BrowseButton.Location = new System.Drawing.Point(3, 3);
+            this.BrowseButton.Name = "BrowseButton";
+            this.BrowseButton.Size = new System.Drawing.Size(170, 23);
+            this.BrowseButton.TabIndex = 0;
+            this.BrowseButton.Text = "Browse...";
+            this.BrowseButton.UseVisualStyleBackColor = true;
+            this.BrowseButton.Click += new System.EventHandler(this.BrowseButton_Click);
+            // 
             // GameView
             // 
+            this.GameView.AllowDrop = true;
             this.GameView.BackColor = System.Drawing.SystemColors.Window;
             this.GameView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.GameView.Location = new System.Drawing.Point(0, 0);
             this.GameView.Name = "GameView";
-            this.GameView.Size = new System.Drawing.Size(1018, 680);
+            this.GameView.Size = new System.Drawing.Size(1068, 680);
             this.GameView.TabIndex = 0;
             this.GameView.TabStop = false;
             this.GameView.DragDrop += new System.Windows.Forms.DragEventHandler(this.GameView_DragDrop);
@@ -447,19 +523,19 @@
             // renameToolStripMenuItem2
             // 
             this.renameToolStripMenuItem2.Name = "renameToolStripMenuItem2";
-            this.renameToolStripMenuItem2.Size = new System.Drawing.Size(152, 22);
+            this.renameToolStripMenuItem2.Size = new System.Drawing.Size(117, 22);
             this.renameToolStripMenuItem2.Text = "Rename";
             // 
             // copyToolStripMenuItem
             // 
             this.copyToolStripMenuItem.Name = "copyToolStripMenuItem";
-            this.copyToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.copyToolStripMenuItem.Size = new System.Drawing.Size(117, 22);
             this.copyToolStripMenuItem.Text = "Copy";
             // 
             // deleteToolStripMenuItem
             // 
             this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
-            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(117, 22);
             this.deleteToolStripMenuItem.Text = "Delete";
             // 
             // ObjectContextMenu
@@ -518,6 +594,9 @@
             this.splitContainer2.ResumeLayout(false);
             this.ToolBar.ResumeLayout(false);
             this.ToolBar.PerformLayout();
+            this.tabControl1.ResumeLayout(false);
+            this.tabPage1.ResumeLayout(false);
+            this.tabPage2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.GameView)).EndInit();
             this.LevelContextMenu.ResumeLayout(false);
             this.LayerContextMenu.ResumeLayout(false);
@@ -574,5 +653,11 @@
         private System.Windows.Forms.ToolStripMenuItem renameToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem copyToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem deleteToolStripMenuItem1;
+        private System.Windows.Forms.TabControl tabControl1;
+        private System.Windows.Forms.TabPage tabPage1;
+        private System.Windows.Forms.TabPage tabPage2;
+        private System.Windows.Forms.Button BrowseButton;
+        private System.Windows.Forms.ListView TextureView;
+        private System.Windows.Forms.ImageList ImageList32;
     }
 }

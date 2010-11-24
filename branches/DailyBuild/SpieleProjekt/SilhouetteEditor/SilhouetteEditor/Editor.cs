@@ -36,7 +36,8 @@ namespace SilhouetteEditor
     { 
         IDLE,
         CAMERAMOVING,
-        CREATE_FIXTURES
+        CREATE_FIXTURES,
+        CREATE_TEXTURES
     }
 
     class Editor
@@ -167,18 +168,29 @@ namespace SilhouetteEditor
                         }
                     }
                 }
+                if (editorState == EditorState.CREATE_TEXTURES)
+                {
+                    if (mstate.LeftButton == Microsoft.Xna.Framework.Input.ButtonState.Pressed && oldmstate.LeftButton == Microsoft.Xna.Framework.Input.ButtonState.Released)
+                    {
+                        paintCurrentObject(true);
+                    }
+                    if (mstate.RightButton == Microsoft.Xna.Framework.Input.ButtonState.Pressed && oldmstate.LeftButton == Microsoft.Xna.Framework.Input.ButtonState.Released)
+                    {
+                        editorState = EditorState.IDLE;
+                    }
+                }
             #endregion
 
             oldkstate = kstate;
             oldmstate = mstate;
         }
 
-        public void Draw(GameTime gameTime)
+        public void Draw()
         {
             if (level == null)
                 return;
 
-            level.Draw(gameTime);
+            level.Draw();
             drawEditorRelated();
         }
 
@@ -299,6 +311,11 @@ namespace SilhouetteEditor
                             break;
                     }
                 }
+                if (l == selectedLayer && editorState == EditorState.CREATE_TEXTURES)
+                {
+                    TextureObject to = (TextureObject)currentObject;
+                    spriteBatch.Draw(to.texture, new Vector2(MouseWorldPosition.X, MouseWorldPosition.Y), null, new Microsoft.Xna.Framework.Color(1f, 1f, 1f, 7f), 0, new Vector2(to.texture.Width / 2, to.texture.Height / 2), 1, SpriteEffects.None, 0);
+                }
                 spriteBatch.End();
                 Camera.Position = oldCameraPosition;
             }
@@ -343,26 +360,40 @@ namespace SilhouetteEditor
 
         public void createTextureObject(string path)
         {
-            this.currentObject = new TextureObject(path);
-            TextureObject to = (TextureObject)currentObject;
+            editorState = EditorState.CREATE_TEXTURES;
+            TextureObject to = new TextureObject(path);
             to.texture = Texture2DLoader.Instance.LoadFromFile(path);
-            to.position = MouseWorldPosition;
-            paintCurrentObject();
+            currentObject = to;
         }
 
         public void destroyTextureWrapper()
         {
+            editorState = EditorState.IDLE;
             this.currentTexture = null;
         }
 
         public void destroyCurrentObject()
         {
+            editorState = EditorState.IDLE;
             this.currentObject = null;
         }
 
-        public void paintCurrentObject()
+        public void paintCurrentObject(bool continueAfterPaint)
         {
-            selectedLayer.loList.Add(currentObject);
+            if (currentObject is TextureObject)
+            {
+                TextureObject temp = (TextureObject)currentObject;
+                TextureObject to = new TextureObject(temp.fullPath);
+                to.texture = temp.texture;
+                to.position = MouseWorldPosition - new Vector2((to.texture.Width / 2), (to.texture.Height / 2));
+                to.name = to.getPrefix() + selectedLayer.getNextObjectNumber();
+                AddLevelObject(to);
+            }
+
+            MainForm.Default.UpdateTreeView();
+
+            if (!continueAfterPaint)
+                destroyCurrentObject();
         }
 
         public void paintTextureWrapper()

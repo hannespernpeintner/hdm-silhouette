@@ -69,7 +69,7 @@ namespace SilhouetteEditor
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.White);
-            Editor.Default.Draw(gameTime);
+            Editor.Default.Draw();
             base.Draw(gameTime);
         }
 
