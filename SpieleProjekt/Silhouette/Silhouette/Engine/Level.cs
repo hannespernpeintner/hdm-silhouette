@@ -14,6 +14,7 @@ using Microsoft.Xna.Framework.Media;
 
 using System.Runtime.Serialization.Formatters.Binary;
 
+using Silhouette;
 using Silhouette.Engine.Manager;
 using Silhouette.Engine.Screens;
 using Silhouette.Engine;
@@ -84,6 +85,9 @@ namespace Silhouette.Engine
             private KeyboardState keyboardState;
             [NonSerialized]
             private KeyboardState oldKeyboardState;
+
+            Texture2D textures;
+            List<Fixture> fixtures;
         #endregion
 
         public Level()
@@ -108,6 +112,10 @@ namespace Silhouette.Engine
         public void LoadContent()
         {
             proj = Matrix.CreateOrthographicOffCenter(0, GameSettings.Default.resolutionWidth / PixelPerMeter, GameSettings.Default.resolutionHeight / PixelPerMeter, 0, 0, 1);
+
+
+            textures = GameLoop.gameInstance.Content.Load<Texture2D>("Sprites/Player/2");
+            fixtures = FixtureManager.TextureToPolygon(textures, BodyType.Static, new Vector2(200, 200), 1);
 
             foreach (Layer l in layerList)
             {

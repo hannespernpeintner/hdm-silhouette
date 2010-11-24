@@ -29,34 +29,73 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+using System;
+using System.Collections;
 using System.Collections.Generic;
-using FarseerPhysics.Common.Decomposition.CDT.Delaunay;
 
-namespace FarseerPhysics.Common.Decomposition.CDT.Polygon
+namespace FarseerPhysics.Common.Decomposition.CDT.Util
 {
-    public class PolygonPoint
+    public struct FixedBitArray3 : IEnumerable<bool>
     {
-        // List of edges this point constitutes an upper ending point (CDT)
+        public bool _0, _1, _2;
 
-        public double X, Y;
-
-        public PolygonPoint(double x, double y)
+        public bool this[int index]
         {
-            X = x;
-            Y = y;
+            get
+            {
+                switch (index)
+                {
+                    case 0:
+                        return _0;
+                    case 1:
+                        return _1;
+                    case 2:
+                        return _2;
+                    default:
+                        throw new IndexOutOfRangeException();
+                }
+            }
+            set
+            {
+                switch (index)
+                {
+                    case 0:
+                        _0 = value;
+                        break;
+                    case 1:
+                        _1 = value;
+                        break;
+                    case 2:
+                        _2 = value;
+                        break;
+                    default:
+                        throw new IndexOutOfRangeException();
+                }
+            }
         }
 
-        public List<DTSweepConstraint> Edges { get; private set; }
+        #region IEnumerable<bool> Members
 
-        public bool HasEdges
+        public IEnumerator<bool> GetEnumerator()
         {
-            get { return Edges != null; }
+            return Enumerate().GetEnumerator();
         }
 
-        public void AddEdge(DTSweepConstraint e)
+        IEnumerator IEnumerable.GetEnumerator()
         {
-            if (Edges == null) Edges = new List<DTSweepConstraint>();
-            Edges.Add(e);
+            return GetEnumerator();
+        }
+
+        #endregion
+
+        public void Clear()
+        {
+            _0 = _1 = _2 = false;
+        }
+
+        private IEnumerable<bool> Enumerate()
+        {
+            for (int i = 0; i < 3; ++i) yield return this[i];
         }
     }
 }

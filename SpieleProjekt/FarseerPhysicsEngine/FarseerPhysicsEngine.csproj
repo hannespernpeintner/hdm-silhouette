@@ -124,8 +124,8 @@
     <Compile Include="Common\Decomposition\CDT\Polygon\Polygon.cs" />
     <Compile Include="Common\Decomposition\CDT\Polygon\PolygonPoint.cs" />
     <Compile Include="Common\Decomposition\CDT\TriangulationUtil.cs" />
-    <Compile Include="Common\Decomposition\CDT\Util\Polygon.cs" />
-    <Compile Include="Common\Decomposition\CDT\Util\PolygonPoint.cs" />
+    <Compile Include="Common\Decomposition\CDT\Util\FixedArray3.cs" />
+    <Compile Include="Common\Decomposition\CDT\Util\FixedBitArray3.cs" />
     <Compile Include="Common\Decomposition\EarclipDecomposer.cs" />
     <Compile Include="Common\Decomposition\FlipcodeDecomposer.cs" />
     <Compile Include="Common\Decomposition\SeidelDecomposer.cs" />
