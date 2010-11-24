@@ -14,6 +14,7 @@ using FarseerPhysics;
 using FarseerPhysics.Dynamics;
 using FarseerPhysics.Factories;
 using FarseerPhysics.Collision;
+using FarseerPhysics.Common.ConvexHull;
 using FarseerPhysics.Common;
 using FarseerPhysics.Common.Decomposition;
 using Silhouette.GameMechs;
@@ -30,23 +31,26 @@ namespace Silhouette.Engine.Manager
             Vector2 scale = new Vector2(0.01f, 0.01f);
             vertices.Scale(ref scale);
 
-            List<Vertices> tempList = EarclipDecomposer.ConvexPartition(vertices);
-            List<Fixture> combine = FixtureFactory.CreateCompoundPolygon(Level.Physics, tempList, density);
+            List<Vertices> tempList = BayazitDecomposer.ConvexPartition(vertices);
+            List<Fixture> combine = FixtureFactory.CreateCompoundPolygon(Level.Physics, tempList, 1); 
             combine[0].Body.BodyType = bodyType;
             combine[0].Body.Position = ToMeter(position);
             return combine;
         }
 
+        
         public static List<List<Fixture>> AnimationToPolygons(Animation animation)
         {
             List<List<Fixture>> polygons = new List<List<Fixture>>();
+
             foreach (Texture2D picture in animation.pictures)
             {
                 polygons.Add(FixtureManager.TextureToPolygon(picture, BodyType.Static, Vector2.Zero, 1.0f));
             }
+
             return polygons;
         }
-
+        
         public static Fixture CreateRectangle(float width, float height, Vector2 position, BodyType bodyType,float  density)
         {
             Vector2 size = ToMeter(new Vector2(width, height));
