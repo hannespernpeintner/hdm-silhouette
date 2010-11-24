@@ -79,7 +79,7 @@ namespace Silhouette
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.White);
-            level.Draw(gameTime);       //Provisorisch
+            level.Draw();       //Provisorisch
             base.Draw(gameTime);
         }
     }

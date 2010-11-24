@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using Silhouette.Engine;
 using Silhouette.GameMechs;
+using System.IO;
 
 //Physik-Engine Klassen
 using FarseerPhysics;
@@ -193,7 +194,96 @@ namespace SilhouetteEditor.Forms
 
         private void GameView_DragDrop(object sender, DragEventArgs e)
         {
-            Editor.Default.paintCurrentObject();
+            Editor.Default.paintCurrentObject(false);
+        }
+
+        //---> TextureView-Steuerung <---//
+
+        public void loadFolder(string path)
+        {
+            ImageList32.Images.Clear();
+            TextureView.Clear();
+
+            DirectoryInfo di = new DirectoryInfo(path);
+            DirectoryInfo[] folders = di.GetDirectories();
+            foreach (DirectoryInfo folder in folders)
+            {
+                ListViewItem lvi = new ListViewItem();
+                lvi.Text = folder.Name;
+                lvi.ToolTipText = folder.Name;
+                lvi.ImageIndex = 0;
+                lvi.Tag = "folder";
+                lvi.Name = folder.FullName;
+                TextureView.Items.Add(lvi);
+            }
+
+            string filters = "*.jpg;*.png;*.bmp;";
+            List<FileInfo> fileList = new List<FileInfo>();
+            string[] extensions = filters.Split(';');
+            foreach (string filter in extensions) fileList.AddRange(di.GetFiles(filter));
+            FileInfo[] files = fileList.ToArray();
+
+            foreach (FileInfo file in files)
+            {
+                Bitmap bmp = new Bitmap(file.FullName);
+                ImageList32.Images.Add(file.FullName, Editor.Default.getThumbNail(bmp, 32, 32));
+
+
+                ListViewItem lvi = new ListViewItem();
+                lvi.Name = file.FullName;
+                lvi.Text = file.Name;
+                lvi.ImageKey = file.FullName;
+                lvi.Tag = "file";
+                lvi.ToolTipText = file.Name + " (" + bmp.Width.ToString() + " x " + bmp.Height.ToString() + ")";
+
+                TextureView.Items.Add(lvi);
+            }
+        }
+
+        private void AddTexture()
+        {
+            string itemtype = TextureView.FocusedItem.Tag.ToString();
+            if (itemtype == "folder")
+            {
+                loadFolder(TextureView.FocusedItem.Name);
+            }
+            if (itemtype == "file")
+            {
+                Editor.Default.createTextureObject(TextureView.FocusedItem.Name);
+            }
+        }
+
+        private void TextureView_ItemDrag(object sender, ItemDragEventArgs e)
+        {
+            ListViewItem lvi = (ListViewItem)e.Item;
+            if (lvi.Tag.ToString() == "folder") return;
+            TextureView.DoDragDrop(e.Item, DragDropEffects.Move);
+        }
+
+        private void TextureView_DragOver(object sender, DragEventArgs e)
+        {
+            e.Effect = DragDropEffects.Move;
+            Point p = GameView.PointToClient(new Point(e.X, e.Y));
+            Editor.Default.SetMousePosition(p.X, p.Y);
+        }
+
+        private void BrowseButton_Click(object sender, EventArgs e)
+        {
+            FolderBrowserDialog d = new FolderBrowserDialog();
+            if (d.ShowDialog() == DialogResult.OK) loadFolder(d.SelectedPath);
+        }
+
+        private void TextureView_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            string itemtype = TextureView.FocusedItem.Tag.ToString();
+            if (itemtype == "folder")
+            {
+                loadFolder(TextureView.FocusedItem.Name);
+            }
+            if (itemtype == "file")
+            {
+                Editor.Default.createTextureObject(TextureView.FocusedItem.Name);
+            }
         }
     }
 }
