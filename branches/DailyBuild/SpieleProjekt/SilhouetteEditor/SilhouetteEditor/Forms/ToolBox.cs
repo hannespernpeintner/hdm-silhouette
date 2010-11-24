@@ -66,8 +66,8 @@ namespace SilhouetteEditor.Forms
             }
         }
 
-        private void listView1_MouseDoubleClick(object sender, MouseEventArgs e)
-        {
+        private void AddTexture()
+        { 
             string itemtype = listView1.FocusedItem.Tag.ToString();
             if (itemtype == "folder")
             {
@@ -77,11 +77,50 @@ namespace SilhouetteEditor.Forms
             {
                 if (textBox2.Text == "" || textBox3.Text == "")
                 {
-                    MessageBox.Show("Width and Height must be declared!", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
+                    Editor.Default.createTextureObject(listView1.FocusedItem.Name);
                 }
-                Editor.Default.createTextureWrapper(listView1.FocusedItem.Name, Convert.ToInt32(textBox2.Text), Convert.ToInt32(textBox3.Text));
+                else
+                {
+                    Editor.Default.createTextureWrapper(listView1.FocusedItem.Name, Convert.ToInt32(textBox2.Text), Convert.ToInt32(textBox3.Text));
+                }
             }
+        }
+
+        private void listView1_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            AddTexture();
+        }
+
+        private void listView1_ItemDrag(object sender, ItemDragEventArgs e)
+        {
+            ListViewItem lvi = (ListViewItem)e.Item;
+            if (lvi.Tag.ToString() == "folder") return;
+            Bitmap bmp = new Bitmap(listView1.LargeImageList.Images[lvi.ImageKey]);
+            listView1.DoDragDrop(e.Item, DragDropEffects.Move);
+        }
+
+        private void listView1_DragOver(object sender, DragEventArgs e)
+        {
+            e.Effect = DragDropEffects.Move;
+            Point p = MainForm.Default.GameView.PointToClient(new Point(e.X, e.Y));
+            Editor.Default.SetMousePosition(p.X, p.Y);
+            EditorLoop.EditorLoopInstance.GraphicsDevice.Present();
+        }
+
+        private void listView1_DragDrop(object sender, DragEventArgs e)
+        {
+            listView1.Cursor = Cursors.Default;
+            MainForm.Default.GameView.Cursor = Cursors.Default;
+        }
+
+        private void AddButton_Click(object sender, EventArgs e)
+        {
+            AddTexture();
+        }
+
+        private void CancelButton_Click(object sender, EventArgs e)
+        {
+            this.Hide();
         }
     }
 }
