@@ -141,6 +141,7 @@
     <Compile Include="GameMechs\InteractiveObject.Editor.cs" />
     <Compile Include="GameMechs\LevelObject.cs" />
     <Compile Include="GameMechs\Player.cs" />
+    <Compile Include="GameMechs\TextureObject.cs" />
     <Compile Include="GameSettings.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Program.cs" />

@@ -37,6 +37,12 @@ namespace SilhouetteEditor.Forms
             return GameView.Handle;
         }
 
+        //---> Form-Steuerung <---//
+
+        private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            EditorLoop.EditorLoopInstance.Exit();
+        }
 
         //---> MenuBar-Steuerung <---//
 
@@ -87,6 +93,15 @@ namespace SilhouetteEditor.Forms
             }
         }
 
+        private void FileOpen(object sender, EventArgs e)
+        {
+            OpenFileDialog dialog = new OpenFileDialog();
+            if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                Editor.Default.LoadLevel(dialog.FileName);
+            }
+        }
+
         //---> ToolBar-Steuerung <---//
 
         private void ToolStripButton_AddRectangleFixture(object sender, EventArgs e)
@@ -133,6 +148,7 @@ namespace SilhouetteEditor.Forms
                 {
                     TreeNode loTreeNode = layerTreeNode.Nodes.Add(lo.name);
                     loTreeNode.Tag = lo;
+                    loTreeNode.ContextMenuStrip = ObjectContextMenu;
                 }
             }
             levelTreeNode.ExpandAll();
@@ -168,13 +184,16 @@ namespace SilhouetteEditor.Forms
             MenuBar.Select();
         }
 
-        private void FileOpen(object sender, EventArgs e)
+        private void GameView_DragEnter(object sender, DragEventArgs e)
         {
-            OpenFileDialog dialog = new OpenFileDialog();
-            if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-            {
-                Editor.Default.LoadLevel(dialog.FileName);
-            }
+            e.Effect = DragDropEffects.Move;
+            ListViewItem lvi = (ListViewItem)e.Data.GetData(typeof(ListViewItem));
+            Editor.Default.createTextureObject(lvi.Name);
+        }
+
+        private void GameView_DragDrop(object sender, DragEventArgs e)
+        {
+            Editor.Default.paintCurrentObject();
         }
     }
 }
