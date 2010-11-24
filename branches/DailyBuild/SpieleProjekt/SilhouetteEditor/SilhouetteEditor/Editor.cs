@@ -64,6 +64,7 @@ namespace SilhouetteEditor
         public Layer selectedLayer;
         public List<LevelObject> selectedLevelObjects;
 
+        public LevelObject currentObject;
         public TextureWrapper currentTexture;
         public FixtureType currentFixture;
         public bool fixtureStarted;
@@ -340,9 +341,28 @@ namespace SilhouetteEditor
             paintTextureWrapper();
         }
 
+        public void createTextureObject(string path)
+        {
+            this.currentObject = new TextureObject(path);
+            TextureObject to = (TextureObject)currentObject;
+            to.texture = Texture2DLoader.Instance.LoadFromFile(path);
+            to.position = MouseWorldPosition;
+            paintCurrentObject();
+        }
+
         public void destroyTextureWrapper()
         {
             this.currentTexture = null;
+        }
+
+        public void destroyCurrentObject()
+        {
+            this.currentObject = null;
+        }
+
+        public void paintCurrentObject()
+        {
+            selectedLayer.loList.Add(currentObject);
         }
 
         public void paintTextureWrapper()

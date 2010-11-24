@@ -36,5 +36,13 @@ namespace SilhouetteEditor.Forms
                 Editor.Default.AddLayer(textBox1.Text, Convert.ToInt32(textBox2.Text), Convert.ToInt32(textBox3.Text));
             this.Hide();
         }
+
+        private void Textbox_KeyEnter(object sender, KeyEventArgs e)
+        {
+            if (e.KeyData == Keys.Enter)
+            {
+                ButtonNew(sender, e);
+            }
+        }
     }
 }
