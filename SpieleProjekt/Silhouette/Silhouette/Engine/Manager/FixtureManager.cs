@@ -31,7 +31,11 @@ namespace Silhouette.Engine.Manager
             Vector2 scale = new Vector2(0.01f, 0.01f);
             vertices.Scale(ref scale);
 
-            List<Vertices> tempList = BayazitDecomposer.ConvexPartition(vertices);
+            List<Vertices> tempList = EarclipDecomposer.ConvexPartition(vertices);
+            List<Vertices> toRemove = new List<Vertices>();
+            foreach (Vertices item in tempList) { if (item.Count == 0) { toRemove.Add(item); } }
+            foreach (Vertices item in toRemove) { tempList.Remove(item); }     
+
             List<Fixture> combine = FixtureFactory.CreateCompoundPolygon(Level.Physics, tempList, 1); 
             combine[0].Body.BodyType = bodyType;
             combine[0].Body.Position = ToMeter(position);

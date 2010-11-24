@@ -114,7 +114,7 @@ namespace Silhouette.Engine
             proj = Matrix.CreateOrthographicOffCenter(0, GameSettings.Default.resolutionWidth / PixelPerMeter, GameSettings.Default.resolutionHeight / PixelPerMeter, 0, 0, 1);
 
 
-            textures = GameLoop.gameInstance.Content.Load<Texture2D>("Sprites/Player/2");
+            textures = GameLoop.gameInstance.Content.Load<Texture2D>("Sprites/Player/4");
             fixtures = FixtureManager.TextureToPolygon(textures, BodyType.Static, new Vector2(200, 200), 1);
 
             foreach (Layer l in layerList)
