@@ -91,6 +91,7 @@
             this.copyToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.deleteToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.ImageListInteractive32 = new System.Windows.Forms.ImageList(this.components);
+            this.PathButton = new System.Windows.Forms.ToolStripButton();
             this.StatusBar.SuspendLayout();
             this.MenuBar.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -356,7 +357,8 @@
             this.ToolBoxButton,
             this.toolStripSeparator3,
             this.RectangleButton,
-            this.CircleButton});
+            this.CircleButton,
+            this.PathButton});
             this.ToolBar.Location = new System.Drawing.Point(0, 0);
             this.ToolBar.Name = "ToolBar";
             this.ToolBar.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
@@ -676,6 +678,16 @@
             this.ImageListInteractive32.ImageSize = new System.Drawing.Size(32, 32);
             this.ImageListInteractive32.TransparentColor = System.Drawing.Color.Transparent;
             // 
+            // PathButton
+            // 
+            this.PathButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.PathButton.Image = ((System.Drawing.Image)(resources.GetObject("PathButton.Image")));
+            this.PathButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.PathButton.Name = "PathButton";
+            this.PathButton.Size = new System.Drawing.Size(23, 22);
+            this.PathButton.Text = "Create Path Button";
+            this.PathButton.ToolTipText = "Create Fixture Path";
+            // 
             // MainForm
             // 
             this.AllowDrop = true;
@@ -782,5 +794,6 @@
         private System.Windows.Forms.Button BrowseButton3;
         private System.Windows.Forms.ListView AnimationView;
         private System.Windows.Forms.ImageList ImageListInteractive32;
+        private System.Windows.Forms.ToolStripButton PathButton;
     }
 }
