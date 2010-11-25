@@ -23,6 +23,7 @@ namespace Silhouette.Engine
         public string name;
         public bool isVisible;
 
+        [NonSerialized]
         private Vector2 scrollSpeed;
 
         [DisplayName("ScrollSpeed"), Category("General")]
