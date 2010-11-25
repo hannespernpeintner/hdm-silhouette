@@ -34,6 +34,7 @@
             this.Selection = new System.Windows.Forms.ToolStripStatusLabel();
             this.MouseWorldPosition = new System.Windows.Forms.ToolStripStatusLabel();
             this.SelectedItem = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.MenuBar = new System.Windows.Forms.MenuStrip();
             this.dateiToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.newToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -81,6 +82,8 @@
             this.renameToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.copyToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.deleteToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.EditorStatus = new System.Windows.Forms.ToolStripStatusLabel();
+            this.FPS = new System.Windows.Forms.ToolStripStatusLabel();
             this.StatusBar.SuspendLayout();
             this.MenuBar.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -105,9 +108,12 @@
             // 
             this.StatusBar.BackColor = System.Drawing.SystemColors.Window;
             this.StatusBar.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripStatusLabel1,
             this.Selection,
             this.MouseWorldPosition,
-            this.SelectedItem});
+            this.SelectedItem,
+            this.EditorStatus,
+            this.FPS});
             this.StatusBar.Location = new System.Drawing.Point(0, 708);
             this.StatusBar.Name = "StatusBar";
             this.StatusBar.Size = new System.Drawing.Size(1264, 22);
@@ -119,7 +125,7 @@
             this.Selection.AutoSize = false;
             this.Selection.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.Selection.Name = "Selection";
-            this.Selection.Size = new System.Drawing.Size(242, 17);
+            this.Selection.Size = new System.Drawing.Size(200, 17);
             this.Selection.TextAlign = System.Drawing.ContentAlignment.TopLeft;
             this.Selection.ToolTipText = "Displays the current selection.";
             // 
@@ -127,15 +133,23 @@
             // 
             this.MouseWorldPosition.AutoSize = false;
             this.MouseWorldPosition.Name = "MouseWorldPosition";
-            this.MouseWorldPosition.Size = new System.Drawing.Size(100, 17);
+            this.MouseWorldPosition.Size = new System.Drawing.Size(200, 17);
             this.MouseWorldPosition.TextAlign = System.Drawing.ContentAlignment.TopLeft;
+            this.MouseWorldPosition.ToolTipText = "The current mouse position.";
             // 
             // SelectedItem
             // 
             this.SelectedItem.AutoSize = false;
             this.SelectedItem.Name = "SelectedItem";
-            this.SelectedItem.Size = new System.Drawing.Size(200, 17);
+            this.SelectedItem.Size = new System.Drawing.Size(250, 17);
             this.SelectedItem.TextAlign = System.Drawing.ContentAlignment.TopLeft;
+            this.SelectedItem.ToolTipText = "Displays the name of the selected object.";
+            // 
+            // toolStripStatusLabel1
+            // 
+            this.toolStripStatusLabel1.AutoSize = false;
+            this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
+            this.toolStripStatusLabel1.Size = new System.Drawing.Size(253, 17);
             // 
             // MenuBar
             // 
@@ -278,7 +292,7 @@
             // 
             this.splitContainer1.Panel2.Controls.Add(this.GameView);
             this.splitContainer1.Size = new System.Drawing.Size(1264, 684);
-            this.splitContainer1.SplitterDistance = 188;
+            this.splitContainer1.SplitterDistance = 251;
             this.splitContainer1.TabIndex = 2;
             // 
             // splitContainer2
@@ -298,7 +312,7 @@
             // splitContainer2.Panel2
             // 
             this.splitContainer2.Panel2.Controls.Add(this.tabControl1);
-            this.splitContainer2.Size = new System.Drawing.Size(188, 684);
+            this.splitContainer2.Size = new System.Drawing.Size(251, 684);
             this.splitContainer2.SplitterDistance = 284;
             this.splitContainer2.TabIndex = 0;
             // 
@@ -307,7 +321,7 @@
             this.treeView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.treeView1.Location = new System.Drawing.Point(0, 25);
             this.treeView1.Name = "treeView1";
-            this.treeView1.Size = new System.Drawing.Size(184, 255);
+            this.treeView1.Size = new System.Drawing.Size(247, 255);
             this.treeView1.TabIndex = 1;
             this.treeView1.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView1_AfterSelect);
             // 
@@ -325,7 +339,7 @@
             this.ToolBar.Location = new System.Drawing.Point(0, 0);
             this.ToolBar.Name = "ToolBar";
             this.ToolBar.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.ToolBar.Size = new System.Drawing.Size(184, 25);
+            this.ToolBar.Size = new System.Drawing.Size(247, 25);
             this.ToolBar.TabIndex = 0;
             this.ToolBar.Text = "ToolBar";
             // 
@@ -401,7 +415,7 @@
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(184, 392);
+            this.tabControl1.Size = new System.Drawing.Size(247, 392);
             this.tabControl1.TabIndex = 0;
             // 
             // tabPage1
@@ -410,7 +424,7 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(176, 366);
+            this.tabPage1.Size = new System.Drawing.Size(239, 366);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Attributes";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -421,7 +435,7 @@
             this.propertyGrid1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.propertyGrid1.Location = new System.Drawing.Point(3, 3);
             this.propertyGrid1.Name = "propertyGrid1";
-            this.propertyGrid1.Size = new System.Drawing.Size(170, 360);
+            this.propertyGrid1.Size = new System.Drawing.Size(233, 360);
             this.propertyGrid1.TabIndex = 0;
             this.propertyGrid1.TabStop = false;
             this.propertyGrid1.ToolbarVisible = false;
@@ -433,7 +447,7 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(176, 366);
+            this.tabPage2.Size = new System.Drawing.Size(239, 366);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Textures";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -443,9 +457,9 @@
             this.TextureView.AllowDrop = true;
             this.TextureView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.TextureView.LargeImageList = this.ImageList32;
-            this.TextureView.Location = new System.Drawing.Point(3, 26);
+            this.TextureView.Location = new System.Drawing.Point(3, 3);
             this.TextureView.Name = "TextureView";
-            this.TextureView.Size = new System.Drawing.Size(170, 337);
+            this.TextureView.Size = new System.Drawing.Size(233, 337);
             this.TextureView.TabIndex = 1;
             this.TextureView.UseCompatibleStateImageBehavior = false;
             this.TextureView.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(this.TextureView_ItemDrag);
@@ -460,10 +474,10 @@
             // 
             // BrowseButton
             // 
-            this.BrowseButton.Dock = System.Windows.Forms.DockStyle.Top;
-            this.BrowseButton.Location = new System.Drawing.Point(3, 3);
+            this.BrowseButton.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.BrowseButton.Location = new System.Drawing.Point(3, 340);
             this.BrowseButton.Name = "BrowseButton";
-            this.BrowseButton.Size = new System.Drawing.Size(170, 23);
+            this.BrowseButton.Size = new System.Drawing.Size(233, 23);
             this.BrowseButton.TabIndex = 0;
             this.BrowseButton.Text = "Browse...";
             this.BrowseButton.UseVisualStyleBackColor = true;
@@ -476,7 +490,7 @@
             this.GameView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.GameView.Location = new System.Drawing.Point(0, 0);
             this.GameView.Name = "GameView";
-            this.GameView.Size = new System.Drawing.Size(1068, 680);
+            this.GameView.Size = new System.Drawing.Size(1005, 680);
             this.GameView.TabIndex = 0;
             this.GameView.TabStop = false;
             this.GameView.DragDrop += new System.Windows.Forms.DragEventHandler(this.GameView_DragDrop);
@@ -564,6 +578,18 @@
             this.deleteToolStripMenuItem1.Name = "deleteToolStripMenuItem1";
             this.deleteToolStripMenuItem1.Size = new System.Drawing.Size(117, 22);
             this.deleteToolStripMenuItem1.Text = "Delete";
+            // 
+            // EditorStatus
+            // 
+            this.EditorStatus.AutoSize = false;
+            this.EditorStatus.Name = "EditorStatus";
+            this.EditorStatus.Size = new System.Drawing.Size(200, 17);
+            this.EditorStatus.ToolTipText = "The status of the editor.";
+            // 
+            // FPS
+            // 
+            this.FPS.Name = "FPS";
+            this.FPS.Size = new System.Drawing.Size(0, 17);
             // 
             // MainForm
             // 
@@ -659,5 +685,8 @@
         private System.Windows.Forms.Button BrowseButton;
         private System.Windows.Forms.ListView TextureView;
         private System.Windows.Forms.ImageList ImageList32;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
+        private System.Windows.Forms.ToolStripStatusLabel EditorStatus;
+        public System.Windows.Forms.ToolStripStatusLabel FPS;
     }
 }
