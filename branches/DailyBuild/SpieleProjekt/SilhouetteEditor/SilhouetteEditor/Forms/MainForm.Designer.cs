@@ -31,10 +31,12 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.StatusBar = new System.Windows.Forms.StatusStrip();
+            this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.Selection = new System.Windows.Forms.ToolStripStatusLabel();
             this.MouseWorldPosition = new System.Windows.Forms.ToolStripStatusLabel();
             this.SelectedItem = new System.Windows.Forms.ToolStripStatusLabel();
-            this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.EditorStatus = new System.Windows.Forms.ToolStripStatusLabel();
+            this.FPS = new System.Windows.Forms.ToolStripStatusLabel();
             this.MenuBar = new System.Windows.Forms.MenuStrip();
             this.dateiToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.newToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -82,8 +84,6 @@
             this.renameToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.copyToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.deleteToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.EditorStatus = new System.Windows.Forms.ToolStripStatusLabel();
-            this.FPS = new System.Windows.Forms.ToolStripStatusLabel();
             this.StatusBar.SuspendLayout();
             this.MenuBar.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -120,6 +120,12 @@
             this.StatusBar.TabIndex = 0;
             this.StatusBar.Text = "StatusBar";
             // 
+            // toolStripStatusLabel1
+            // 
+            this.toolStripStatusLabel1.AutoSize = false;
+            this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
+            this.toolStripStatusLabel1.Size = new System.Drawing.Size(253, 17);
+            // 
             // Selection
             // 
             this.Selection.AutoSize = false;
@@ -145,11 +151,17 @@
             this.SelectedItem.TextAlign = System.Drawing.ContentAlignment.TopLeft;
             this.SelectedItem.ToolTipText = "Displays the name of the selected object.";
             // 
-            // toolStripStatusLabel1
+            // EditorStatus
             // 
-            this.toolStripStatusLabel1.AutoSize = false;
-            this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            this.toolStripStatusLabel1.Size = new System.Drawing.Size(253, 17);
+            this.EditorStatus.AutoSize = false;
+            this.EditorStatus.Name = "EditorStatus";
+            this.EditorStatus.Size = new System.Drawing.Size(200, 17);
+            this.EditorStatus.ToolTipText = "The status of the editor.";
+            // 
+            // FPS
+            // 
+            this.FPS.Name = "FPS";
+            this.FPS.Size = new System.Drawing.Size(0, 17);
             // 
             // MenuBar
             // 
@@ -345,12 +357,10 @@
             // 
             // NewLayerButton
             // 
-            this.NewLayerButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.NewLayerButton.Image = ((System.Drawing.Image)(resources.GetObject("NewLayerButton.Image")));
             this.NewLayerButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.NewLayerButton.Name = "NewLayerButton";
             this.NewLayerButton.Size = new System.Drawing.Size(23, 22);
-            this.NewLayerButton.Text = "New Layer";
             this.NewLayerButton.ToolTipText = "New Layer";
             this.NewLayerButton.Click += new System.EventHandler(this.LevelToolStrip_AddLayer);
             // 
@@ -497,6 +507,7 @@
             this.GameView.DragEnter += new System.Windows.Forms.DragEventHandler(this.GameView_DragEnter);
             this.GameView.MouseEnter += new System.EventHandler(this.GameView_MouseEnter);
             this.GameView.MouseLeave += new System.EventHandler(this.GameView_MouseLeave);
+            this.GameView.Resize += new System.EventHandler(GameView_Resize);
             // 
             // LevelContextMenu
             // 
@@ -578,18 +589,6 @@
             this.deleteToolStripMenuItem1.Name = "deleteToolStripMenuItem1";
             this.deleteToolStripMenuItem1.Size = new System.Drawing.Size(117, 22);
             this.deleteToolStripMenuItem1.Text = "Delete";
-            // 
-            // EditorStatus
-            // 
-            this.EditorStatus.AutoSize = false;
-            this.EditorStatus.Name = "EditorStatus";
-            this.EditorStatus.Size = new System.Drawing.Size(200, 17);
-            this.EditorStatus.ToolTipText = "The status of the editor.";
-            // 
-            // FPS
-            // 
-            this.FPS.Name = "FPS";
-            this.FPS.Size = new System.Drawing.Size(0, 17);
             // 
             // MainForm
             // 

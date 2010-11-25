@@ -23,9 +23,18 @@ namespace Silhouette.GameMechs
     public abstract class LevelObject
     {
         public string name;
-        public string type;
 
-        public Vector2 position;
+        [NonSerialized]
+        private Vector2 _position;
+        public Vector2 position { get { return _position; } set { _position = value; } }
+
+        [NonSerialized]
+        private float _scale;
+        public float Scale { get { return _scale; } set { _scale = value; } }
+
+        [NonSerialized]
+        private float _rotation;
+        public float Rotation { get { return _rotation; } set { _rotation = value; } }
 
         public LevelObject() { }
 
@@ -35,5 +44,6 @@ namespace Silhouette.GameMechs
 
         public abstract string getPrefix();
         public abstract bool contains(Vector2 worldPosition);
+        public abstract void drawSelectionFrame();
     }
 }

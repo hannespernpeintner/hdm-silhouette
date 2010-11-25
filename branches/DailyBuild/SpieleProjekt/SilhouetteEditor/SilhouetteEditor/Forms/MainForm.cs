@@ -197,6 +197,12 @@ namespace SilhouetteEditor.Forms
             Editor.Default.paintCurrentObject(false);
         }
 
+        private void GameView_Resize(object sender, EventArgs e)
+        {
+            if(EditorLoop.EditorLoopInstance != null) 
+                EditorLoop.EditorLoopInstance.resizebackbuffer(GameView.Width, GameView.Height);
+        }
+
         //---> TextureView-Steuerung <---//
 
         public void loadFolder(string path)

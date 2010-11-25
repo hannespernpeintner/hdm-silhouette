@@ -12,9 +12,10 @@ using Microsoft.Xna.Framework.Media;
 using Microsoft.Xna.Framework.Net;
 using Microsoft.Xna.Framework.Storage;
 
-namespace SilhouetteEditor
+
+namespace Silhouette.Engine
 {
-    class Primitives
+    public class Primitives
     {
         private static Primitives instance;
         public static Primitives Instance
@@ -31,11 +32,13 @@ namespace SilhouetteEditor
         const int circleTextureRadius = 512;
 
 
-        public Primitives()
+        public Primitives() {}
+
+        public void Initialize(GraphicsDevice graphics)
         {
-            pixel = new Texture2D(EditorLoop.EditorLoopInstance.GraphicsDevice, 1, 1);
+            pixel = new Texture2D(graphics, 1, 1);
             pixel.SetData(new[] { Color.White });
-            circle = CreateCircleTexture(EditorLoop.EditorLoopInstance.GraphicsDevice, circleTextureRadius, 0, 1, 1, Color.White, Color.White);
+            circle = CreateCircleTexture(graphics, circleTextureRadius, 0, 1, 1, Color.White, Color.White);
         }
 
         public Texture2D CreateCircleTexture(GraphicsDevice graphicsDevice, int radius, int borderWidth,
@@ -119,7 +122,7 @@ namespace SilhouetteEditor
 
         public void drawBoxFilled(SpriteBatch sb, Vector2 upperLeft, Vector2 lowerRight, Color c)
         {
-            Rectangle r = Constants.RectangleFromVectors(upperLeft, lowerRight);
+            Rectangle r = Extensions.RectangleFromVectors(upperLeft, lowerRight);
             sb.Draw(pixel, r, c);
         }
 

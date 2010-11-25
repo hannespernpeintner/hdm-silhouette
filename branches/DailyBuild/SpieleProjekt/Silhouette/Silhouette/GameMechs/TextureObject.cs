@@ -64,5 +64,10 @@ namespace Silhouette.GameMechs
             Rectangle r = new Rectangle((int)position.X, (int)position.Y, texture.Width, texture.Height);
             return r.Contains((int)worldPosition.X, (int)worldPosition.Y);
         }
+
+        public override void drawSelectionFrame()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

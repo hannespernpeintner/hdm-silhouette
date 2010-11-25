@@ -16,5 +16,10 @@ namespace Silhouette.GameMechs
         {
             throw new NotImplementedException();
         }
+
+        public override void drawSelectionFrame()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
