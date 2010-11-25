@@ -37,7 +37,8 @@ namespace SilhouetteEditor
         IDLE,
         CAMERAMOVING,
         CREATE_FIXTURES,
-        CREATE_TEXTURES
+        CREATE_TEXTURES,
+        CREATE_INTERACTIVE
     }
 
     class Editor
@@ -168,7 +169,7 @@ namespace SilhouetteEditor
                         }
                     }
                 }
-                if (editorState == EditorState.CREATE_TEXTURES)
+                if (editorState == EditorState.CREATE_TEXTURES || editorState == EditorState.CREATE_INTERACTIVE)
                 {
                     if (mstate.LeftButton == Microsoft.Xna.Framework.Input.ButtonState.Pressed && oldmstate.LeftButton == Microsoft.Xna.Framework.Input.ButtonState.Released)
                     {
@@ -284,6 +285,8 @@ namespace SilhouetteEditor
         { 
             foreach (Layer l in level.layerList)
             {
+                if (!l.isVisible)
+                    return;
                 Vector2 oldCameraPosition = Camera.Position;
                 Camera.Position *= l.ScrollSpeed;
                 spriteBatch.Begin(SpriteSortMode.Deferred, null, null, null, null, null, Camera.matrix);
@@ -315,6 +318,11 @@ namespace SilhouetteEditor
                 {
                     TextureObject to = (TextureObject)currentObject;
                     spriteBatch.Draw(to.texture, new Vector2(MouseWorldPosition.X, MouseWorldPosition.Y), null, new Microsoft.Xna.Framework.Color(1f, 1f, 1f, 7f), 0, new Vector2(to.texture.Width / 2, to.texture.Height / 2), 1, SpriteEffects.None, 0);
+                }
+                if (l == selectedLayer && editorState == EditorState.CREATE_INTERACTIVE)
+                {
+                    InteractiveObject io = (InteractiveObject)currentObject;
+                    spriteBatch.Draw(io.texture, new Vector2(MouseWorldPosition.X, MouseWorldPosition.Y), null, new Microsoft.Xna.Framework.Color(1f, 1f, 1f, 7f), 0, new Vector2(io.texture.Width / 2, io.texture.Height / 2), 1, SpriteEffects.None, 0);
                 }
                 spriteBatch.End();
                 Camera.Position = oldCameraPosition;
@@ -366,6 +374,14 @@ namespace SilhouetteEditor
             currentObject = to;
         }
 
+        public void createInteractiveObject(string path)
+        {
+            editorState = EditorState.CREATE_INTERACTIVE;
+            InteractiveObject io = new InteractiveObject(path);
+            io.texture = Texture2DLoader.Instance.LoadFromFile(path);
+            currentObject = io;
+        }
+
         public void destroyTextureWrapper()
         {
             editorState = EditorState.IDLE;
@@ -389,7 +405,15 @@ namespace SilhouetteEditor
                 to.name = to.getPrefix() + selectedLayer.getNextObjectNumber();
                 AddLevelObject(to);
             }
-
+            if (currentObject is InteractiveObject)
+            {
+                InteractiveObject temp = (InteractiveObject)currentObject;
+                InteractiveObject io = new InteractiveObject(temp.fullPath);
+                io.texture = temp.texture;
+                io.position = MouseWorldPosition - new Vector2((io.texture.Width / 2), (io.texture.Height / 2));
+                io.name = io.getPrefix() + selectedLayer.getNextObjectNumber();
+                AddLevelObject(io);
+            }
             MainForm.Default.UpdateTreeView();
 
             if (!continueAfterPaint)

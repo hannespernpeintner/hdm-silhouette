@@ -33,7 +33,6 @@ namespace Silhouette.GameMechs
         [NonSerialized]
         public Fixture fixture;
 
-        public Vector2 position;
         public float width;
         public float height;
 

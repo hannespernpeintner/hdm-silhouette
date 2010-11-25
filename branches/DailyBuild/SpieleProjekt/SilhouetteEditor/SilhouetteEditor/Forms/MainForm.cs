@@ -171,6 +171,7 @@ namespace SilhouetteEditor.Forms
                 LevelObject lo = (LevelObject)e.Node.Tag;
                 Editor.Default.selectLevelObject(lo);
             }
+            UpdateTreeView();
         }
 
         //---> GameView-Steuerung <---//
@@ -246,19 +247,6 @@ namespace SilhouetteEditor.Forms
             }
         }
 
-        private void AddTexture()
-        {
-            string itemtype = TextureView.FocusedItem.Tag.ToString();
-            if (itemtype == "folder")
-            {
-                loadFolder(TextureView.FocusedItem.Name);
-            }
-            if (itemtype == "file")
-            {
-                Editor.Default.createTextureObject(TextureView.FocusedItem.Name);
-            }
-        }
-
         private void TextureView_ItemDrag(object sender, ItemDragEventArgs e)
         {
             ListViewItem lvi = (ListViewItem)e.Item;
@@ -290,6 +278,68 @@ namespace SilhouetteEditor.Forms
             {
                 Editor.Default.createTextureObject(TextureView.FocusedItem.Name);
             }
+        }
+
+        //---> InteractiveView-Steuerung <---//
+
+        public void loadFolderInteractive(string path)
+        {
+            ImageListInteractive32.Images.Clear();
+            InteractiveView.Clear();
+
+            DirectoryInfo di = new DirectoryInfo(path);
+            DirectoryInfo[] folders = di.GetDirectories();
+            foreach (DirectoryInfo folder in folders)
+            {
+                ListViewItem lvi = new ListViewItem();
+                lvi.Text = folder.Name;
+                lvi.ToolTipText = folder.Name;
+                lvi.ImageIndex = 0;
+                lvi.Tag = "folder";
+                lvi.Name = folder.FullName;
+                InteractiveView.Items.Add(lvi);
+            }
+
+            string filters = "*.jpg;*.png;*.bmp;";
+            List<FileInfo> fileList = new List<FileInfo>();
+            string[] extensions = filters.Split(';');
+            foreach (string filter in extensions) fileList.AddRange(di.GetFiles(filter));
+            FileInfo[] files = fileList.ToArray();
+
+            foreach (FileInfo file in files)
+            {
+                Bitmap bmp = new Bitmap(file.FullName);
+                ImageListInteractive32.Images.Add(file.FullName, Editor.Default.getThumbNail(bmp, 32, 32));
+
+
+                ListViewItem lvi = new ListViewItem();
+                lvi.Name = file.FullName;
+                lvi.Text = file.Name;
+                lvi.ImageKey = file.FullName;
+                lvi.Tag = "file";
+                lvi.ToolTipText = file.Name + " (" + bmp.Width.ToString() + " x " + bmp.Height.ToString() + ")";
+
+                InteractiveView.Items.Add(lvi);
+            }
+        }
+
+        private void InteractiveView_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            string itemtype = InteractiveView.FocusedItem.Tag.ToString();
+            if (itemtype == "folder")
+            {
+                loadFolder(InteractiveView.FocusedItem.Name);
+            }
+            if (itemtype == "file")
+            {
+                Editor.Default.createInteractiveObject(InteractiveView.FocusedItem.Name);
+            }
+        }
+
+        private void BrowseButton2_Click(object sender, EventArgs e)
+        {
+            FolderBrowserDialog d = new FolderBrowserDialog();
+            if (d.ShowDialog() == DialogResult.OK) loadFolderInteractive(d.SelectedPath);
         }
     }
 }
