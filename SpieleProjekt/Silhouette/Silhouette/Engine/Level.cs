@@ -35,7 +35,10 @@ namespace Silhouette.Engine
         */
 
         #region Definitions
-            public string name;
+            private string _name;
+            [DisplayName("Name"), Category("General")]
+            [Description("The name of the level.")]
+            public string name { get { return _name; } set { _name = value; } }
 
             [NonSerialized]
             public static World Physics;
@@ -44,24 +47,14 @@ namespace Silhouette.Engine
             public static float PixelPerMeter { get { return _PixelPerMeter; } }
 
             private Vector2 _Gravitation;
-
             [DisplayName("Gravition"), Category("General")]
             [Description("The Gravitation controls the force vectors applied to every dynamic fixture.")]
-            public Vector2 Gravitation
-            {
-                get { return _Gravitation; }
-                set { _Gravitation = value; }
-            }
+            public Vector2 Gravitation { get { return _Gravitation; } set { _Gravitation = value; } }
 
             private Vector2 _startPosition;
-
             [DisplayName("Start Position"), Category("General")]
             [Description("Defines the characters starting position.")]
-            public Vector2 startPosition
-            {
-                get { return _startPosition; }
-                set { _startPosition = value; }
-            }
+            public Vector2 startPosition { get { return _startPosition; } set { _startPosition = value; } }
 
             [NonSerialized]
             private DebugViewXNA debugView;
@@ -130,19 +123,19 @@ namespace Silhouette.Engine
 
                 if (keyboardState.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.A))
                 {
-                    Camera.PositionX -= 200;
+                    Camera.PositionX -= 100;
                 }
                 if (keyboardState.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.D))
                 {
-                    Camera.PositionX += 200;
+                    Camera.PositionX += 100;
                 }
                 if (keyboardState.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.S))
                 {
-                    Camera.PositionY += 200;
+                    Camera.PositionY += 100;
                 }
                 if (keyboardState.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.W))
                 {
-                    Camera.PositionY -= 200;
+                    Camera.PositionY -= 100;
                 }
 
                 if (keyboardState.IsKeyDown(Keys.F1) && oldKeyboardState.IsKeyUp(Keys.F1))

@@ -20,23 +20,23 @@ namespace Silhouette.Engine
     [Serializable]
     public partial class Layer
     {
-        public string name;
-        public bool isVisible;
+        private string _name;
+        [DisplayName("Name"), Category("General")]
+        [Description("The name of the layer.")]
+        public string name { get { return _name; } set { _name = value; } }
 
-        [NonSerialized]
+        private bool _isVisible;
+        [DisplayName("Visible"), Category("General")]
+        [Description("Defines wether or not the layer is visible.")]
+        public bool isVisible { get { return _isVisible; } set { _isVisible = value; } }
+
         private Vector2 scrollSpeed;
-
         [DisplayName("ScrollSpeed"), Category("General")]
         [Description("The Scroll Speed relative to the main camera. The X and Y components are interpreted as factors, " +
         "so Vector2.One means same scrolling speed as the main camera. To be used for parallax scrolling.")]
-        public Vector2 ScrollSpeed
-        {
-            get { return scrollSpeed; }
-            set { scrollSpeed = value; }
-        }
+        public Vector2 ScrollSpeed { get { return scrollSpeed; } set { scrollSpeed = value; } }
 
         private List<LevelObject> _loList;
-
         [DisplayName("Level Objects"), Category("Objects")]
         [Description("The objects of the Layer.")]
         public List<LevelObject> loList { get { return _loList; } }

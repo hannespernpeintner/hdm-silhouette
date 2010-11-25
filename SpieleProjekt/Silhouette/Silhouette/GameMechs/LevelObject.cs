@@ -23,29 +23,25 @@ namespace Silhouette.GameMechs
     [Serializable]
     public abstract class LevelObject
     {
-        [NonSerialized]
         private string _name;
         [DisplayName("Name"), Category("General")]
         [Description("The name of the object.")]
         public string name { get { return _name; } set { _name = value; } }
 
-        [NonSerialized]
         private Vector2 _position;
         [DisplayName("Position"), Category("General")]
         [Description("The object's position in the world.")]
         public Vector2 position { get { return _position; } set { _position = value; } }
 
-        [NonSerialized]
         private float _scale;
         [DisplayName("Scale"), Category("General")]
         [Description("The scale factor of the object.")]
-        public float Scale { get { return _scale; } set { _scale = value; } }
+        public float scale { get { return _scale; } set { _scale = value; } }
 
-        [NonSerialized]
         private float _rotation;
         [DisplayName("Rotation"), Category("General")]
         [Description("The rotation factor of the object.")]
-        public float Rotation { get { return _rotation; } set { _rotation = value; } }
+        public float rotation { get { return _rotation; } set { _rotation = value; } }
 
         public LevelObject() { }
 
