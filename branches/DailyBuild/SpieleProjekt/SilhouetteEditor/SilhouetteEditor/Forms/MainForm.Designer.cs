@@ -71,6 +71,12 @@
             this.TextureView = new System.Windows.Forms.ListView();
             this.ImageList32 = new System.Windows.Forms.ImageList(this.components);
             this.BrowseButton = new System.Windows.Forms.Button();
+            this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.BrowseButton2 = new System.Windows.Forms.Button();
+            this.InteractiveView = new System.Windows.Forms.ListView();
+            this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.BrowseButton3 = new System.Windows.Forms.Button();
+            this.AnimationView = new System.Windows.Forms.ListView();
             this.GameView = new System.Windows.Forms.PictureBox();
             this.LevelContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.addLayerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -84,6 +90,7 @@
             this.renameToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.copyToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.deleteToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.ImageListInteractive32 = new System.Windows.Forms.ImageList(this.components);
             this.StatusBar.SuspendLayout();
             this.MenuBar.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -98,6 +105,8 @@
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
+            this.tabPage3.SuspendLayout();
+            this.tabPage4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.GameView)).BeginInit();
             this.LevelContextMenu.SuspendLayout();
             this.LayerContextMenu.SuspendLayout();
@@ -419,8 +428,11 @@
             // 
             // tabControl1
             // 
+            this.tabControl1.AllowDrop = true;
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.tabPage2);
+            this.tabControl1.Controls.Add(this.tabPage3);
+            this.tabControl1.Controls.Add(this.tabPage4);
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
@@ -445,6 +457,7 @@
             this.propertyGrid1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.propertyGrid1.Location = new System.Drawing.Point(3, 3);
             this.propertyGrid1.Name = "propertyGrid1";
+            this.propertyGrid1.PropertySort = System.Windows.Forms.PropertySort.Categorized;
             this.propertyGrid1.Size = new System.Drawing.Size(233, 360);
             this.propertyGrid1.TabIndex = 0;
             this.propertyGrid1.TabStop = false;
@@ -493,6 +506,73 @@
             this.BrowseButton.UseVisualStyleBackColor = true;
             this.BrowseButton.Click += new System.EventHandler(this.BrowseButton_Click);
             // 
+            // tabPage3
+            // 
+            this.tabPage3.Controls.Add(this.BrowseButton2);
+            this.tabPage3.Controls.Add(this.InteractiveView);
+            this.tabPage3.Location = new System.Drawing.Point(4, 22);
+            this.tabPage3.Name = "tabPage3";
+            this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage3.Size = new System.Drawing.Size(239, 366);
+            this.tabPage3.TabIndex = 2;
+            this.tabPage3.Text = "Interactive";
+            this.tabPage3.UseVisualStyleBackColor = true;
+            // 
+            // BrowseButton2
+            // 
+            this.BrowseButton2.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.BrowseButton2.Location = new System.Drawing.Point(3, 340);
+            this.BrowseButton2.Name = "BrowseButton2";
+            this.BrowseButton2.Size = new System.Drawing.Size(233, 23);
+            this.BrowseButton2.TabIndex = 1;
+            this.BrowseButton2.Text = "Browse...";
+            this.BrowseButton2.UseVisualStyleBackColor = true;
+            this.BrowseButton2.Click += new System.EventHandler(this.BrowseButton2_Click);
+            // 
+            // InteractiveView
+            // 
+            this.InteractiveView.AllowDrop = true;
+            this.InteractiveView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.InteractiveView.LargeImageList = this.ImageListInteractive32;
+            this.InteractiveView.Location = new System.Drawing.Point(3, 3);
+            this.InteractiveView.Name = "InteractiveView";
+            this.InteractiveView.Size = new System.Drawing.Size(233, 360);
+            this.InteractiveView.TabIndex = 0;
+            this.InteractiveView.UseCompatibleStateImageBehavior = false;
+            this.InteractiveView.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.InteractiveView_MouseDoubleClick);
+            // 
+            // tabPage4
+            // 
+            this.tabPage4.Controls.Add(this.BrowseButton3);
+            this.tabPage4.Controls.Add(this.AnimationView);
+            this.tabPage4.Location = new System.Drawing.Point(4, 22);
+            this.tabPage4.Name = "tabPage4";
+            this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage4.Size = new System.Drawing.Size(239, 366);
+            this.tabPage4.TabIndex = 3;
+            this.tabPage4.Text = "Animation";
+            this.tabPage4.UseVisualStyleBackColor = true;
+            // 
+            // BrowseButton3
+            // 
+            this.BrowseButton3.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.BrowseButton3.Location = new System.Drawing.Point(3, 340);
+            this.BrowseButton3.Name = "BrowseButton3";
+            this.BrowseButton3.Size = new System.Drawing.Size(233, 23);
+            this.BrowseButton3.TabIndex = 1;
+            this.BrowseButton3.Text = "Browse...";
+            this.BrowseButton3.UseVisualStyleBackColor = true;
+            // 
+            // AnimationView
+            // 
+            this.AnimationView.AllowDrop = true;
+            this.AnimationView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.AnimationView.Location = new System.Drawing.Point(3, 3);
+            this.AnimationView.Name = "AnimationView";
+            this.AnimationView.Size = new System.Drawing.Size(233, 360);
+            this.AnimationView.TabIndex = 0;
+            this.AnimationView.UseCompatibleStateImageBehavior = false;
+            // 
             // GameView
             // 
             this.GameView.AllowDrop = true;
@@ -507,7 +587,7 @@
             this.GameView.DragEnter += new System.Windows.Forms.DragEventHandler(this.GameView_DragEnter);
             this.GameView.MouseEnter += new System.EventHandler(this.GameView_MouseEnter);
             this.GameView.MouseLeave += new System.EventHandler(this.GameView_MouseLeave);
-            this.GameView.Resize += new System.EventHandler(GameView_Resize);
+            this.GameView.Resize += new System.EventHandler(this.GameView_Resize);
             // 
             // LevelContextMenu
             // 
@@ -590,6 +670,12 @@
             this.deleteToolStripMenuItem1.Size = new System.Drawing.Size(117, 22);
             this.deleteToolStripMenuItem1.Text = "Delete";
             // 
+            // ImageListInteractive32
+            // 
+            this.ImageListInteractive32.ColorDepth = System.Windows.Forms.ColorDepth.Depth8Bit;
+            this.ImageListInteractive32.ImageSize = new System.Drawing.Size(32, 32);
+            this.ImageListInteractive32.TransparentColor = System.Drawing.Color.Transparent;
+            // 
             // MainForm
             // 
             this.AllowDrop = true;
@@ -622,6 +708,8 @@
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage2.ResumeLayout(false);
+            this.tabPage3.ResumeLayout(false);
+            this.tabPage4.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.GameView)).EndInit();
             this.LevelContextMenu.ResumeLayout(false);
             this.LayerContextMenu.ResumeLayout(false);
@@ -687,5 +775,12 @@
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
         private System.Windows.Forms.ToolStripStatusLabel EditorStatus;
         public System.Windows.Forms.ToolStripStatusLabel FPS;
+        private System.Windows.Forms.TabPage tabPage3;
+        private System.Windows.Forms.TabPage tabPage4;
+        private System.Windows.Forms.Button BrowseButton2;
+        private System.Windows.Forms.ListView InteractiveView;
+        private System.Windows.Forms.Button BrowseButton3;
+        private System.Windows.Forms.ListView AnimationView;
+        private System.Windows.Forms.ImageList ImageListInteractive32;
     }
 }

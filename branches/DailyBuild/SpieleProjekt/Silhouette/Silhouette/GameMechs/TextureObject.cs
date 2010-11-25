@@ -23,6 +23,7 @@ using FarseerPhysics.Collision;
 
 namespace Silhouette.GameMechs
 {
+    [Serializable]
     public class TextureObject : DrawableLevelObject
     {
         [NonSerialized]
@@ -32,26 +33,23 @@ namespace Silhouette.GameMechs
         {
             this.fullPath = path;
             this.assetName = Path.GetFileNameWithoutExtension(path);
+            this.scale = 1f;
+            this.rotation = 0f;
+            this.origin = Vector2.Zero;
         }
 
-        public override void Initialise()
-        {
-            
-        }
+        public override void Initialise() {}
 
         public override void LoadContent()
         {
-            texture = GameLoop.gameInstance.Content.Load<Texture2D>(assetName);
+            texture = GameLoop.gameInstance.Content.Load<Texture2D>("Sprites/" + assetName);
         }
 
-        public override void Update(GameTime gameTime)
-        {
-            
-        }
+        public override void Update(GameTime gameTime) {}
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(texture, position, Color.White);
+            spriteBatch.Draw(texture, position, null, Color.White, rotation, origin, scale, SpriteEffects.None, 1);
         }
 
         public override string getPrefix()
@@ -67,7 +65,7 @@ namespace Silhouette.GameMechs
 
         public override void drawSelectionFrame()
         {
-            throw new NotImplementedException();
+            
         }
     }
 }
