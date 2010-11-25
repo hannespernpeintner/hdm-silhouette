@@ -127,6 +127,7 @@
     <Compile Include="Engine\Manager\FileManager.cs" />
     <Compile Include="Engine\Manager\FixtureManager.cs" />
     <Compile Include="Engine\Layer.cs" />
+    <Compile Include="Engine\Primitives.cs" />
     <Compile Include="Engine\Screens\MainMenuScreen.cs" />
     <Compile Include="Engine\Manager\FontManager.cs" />
     <Compile Include="Engine\Manager\ParticleManager.cs" />

@@ -10,6 +10,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 using Silhouette;
+using Silhouette.Engine;
 using SilhouetteEditor.Forms;
 
 namespace SilhouetteEditor
@@ -46,6 +47,7 @@ namespace SilhouetteEditor
 
         protected override void Initialize()
         {
+            Primitives.Instance.Initialize(this.GraphicsDevice);
             Editor.Default.Initialize();
             base.Initialize();
         }

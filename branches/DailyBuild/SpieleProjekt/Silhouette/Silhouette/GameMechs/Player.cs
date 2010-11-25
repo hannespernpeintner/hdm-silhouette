@@ -193,7 +193,10 @@ namespace Silhouette.GameMechs
             spriteBatch.DrawString(FontManager.Arial, "Falling: " + isFalling.ToString(), new Vector2(300, 95), Color.Azure);
         }
 
+        //Implementation der LevelObject-Methoden. Unwichtig für Player!
+
         public override string getPrefix() { return null; }
         public override bool contains(Vector2 worldPosition) { return false; }
+        public override void drawSelectionFrame() { return; }
     }
 }

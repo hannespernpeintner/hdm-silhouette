@@ -306,7 +306,7 @@ namespace SilhouetteEditor
                     switch (currentFixture)
                     { 
                         case FixtureType.Rectangle:
-                            Microsoft.Xna.Framework.Rectangle r = Constants.RectangleFromVectors(clickedPoints[0], MouseWorldPosition);
+                            Microsoft.Xna.Framework.Rectangle r = Extensions.RectangleFromVectors(clickedPoints[0], MouseWorldPosition);
                             Primitives.Instance.drawBoxFilled(spriteBatch, r, Constants.ColorFixtures);
                             break;
                     }
@@ -417,7 +417,7 @@ namespace SilhouetteEditor
             switch (currentFixture)
             { 
                 case FixtureType.Rectangle:
-                    LevelObject l1 = new RectangleFixtureItem(Constants.RectangleFromVectors(clickedPoints[0], clickedPoints[1]));
+                    LevelObject l1 = new RectangleFixtureItem(Extensions.RectangleFromVectors(clickedPoints[0], clickedPoints[1]));
                     l1.name = l1.getPrefix() + selectedLayer.getNextObjectNumber();
                     selectedLayer.loList.Add(l1);
                     break;

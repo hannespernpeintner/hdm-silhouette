@@ -59,6 +59,11 @@ namespace Silhouette.GameMechs
             return rectangle.Contains(new Microsoft.Xna.Framework.Point((int)worldPosition.X, (int)worldPosition.Y));
         }
 
+        public override void drawSelectionFrame()
+        {
+            throw new NotImplementedException();
+        }
+
         public void ToFixture()
         {
             fixture = FixtureManager.CreateRectangle(width, height, position, BodyType.Static, 1);
@@ -91,6 +96,11 @@ namespace Silhouette.GameMechs
         public override bool contains(Vector2 worldPosition)
         {
             return (worldPosition - position).Length() <= radius;
+        }
+
+        public override void drawSelectionFrame()
+        {
+            throw new NotImplementedException();
         }
 
         public void ToFixture()
