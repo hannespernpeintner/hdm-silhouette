@@ -39,6 +39,7 @@ namespace Silhouette.GameMechs
         public override void LoadContent()
         {
             texture = GameLoop.gameInstance.Content.Load<Texture2D>("Sprites/" + assetName);
+            origin = new Vector2((float)(texture.Width / 2), (float)(texture.Height / 2));
             this.ToFixture();
         }
 
