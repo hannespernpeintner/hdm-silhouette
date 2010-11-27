@@ -64,6 +64,7 @@
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.RectangleButton = new System.Windows.Forms.ToolStripButton();
             this.CircleButton = new System.Windows.Forms.ToolStripButton();
+            this.PathButton = new System.Windows.Forms.ToolStripButton();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.propertyGrid1 = new System.Windows.Forms.PropertyGrid();
@@ -74,6 +75,7 @@
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.BrowseButton2 = new System.Windows.Forms.Button();
             this.InteractiveView = new System.Windows.Forms.ListView();
+            this.ImageListInteractive32 = new System.Windows.Forms.ImageList(this.components);
             this.tabPage4 = new System.Windows.Forms.TabPage();
             this.BrowseButton3 = new System.Windows.Forms.Button();
             this.AnimationView = new System.Windows.Forms.ListView();
@@ -90,8 +92,6 @@
             this.renameToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.copyToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.deleteToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.ImageListInteractive32 = new System.Windows.Forms.ImageList(this.components);
-            this.PathButton = new System.Windows.Forms.ToolStripButton();
             this.StatusBar.SuspendLayout();
             this.MenuBar.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -428,6 +428,17 @@
             this.CircleButton.ToolTipText = "Create Circle Fixture";
             this.CircleButton.Click += new System.EventHandler(this.ToolStripButton_AddCircleFixture);
             // 
+            // PathButton
+            // 
+            this.PathButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.PathButton.Image = ((System.Drawing.Image)(resources.GetObject("PathButton.Image")));
+            this.PathButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.PathButton.Name = "PathButton";
+            this.PathButton.Size = new System.Drawing.Size(23, 22);
+            this.PathButton.Text = "Create Path Button";
+            this.PathButton.ToolTipText = "Create Fixture Path";
+            this.PathButton.Click += new System.EventHandler(this.PathButton_Click);
+            // 
             // tabControl1
             // 
             this.tabControl1.AllowDrop = true;
@@ -543,6 +554,12 @@
             this.InteractiveView.UseCompatibleStateImageBehavior = false;
             this.InteractiveView.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.InteractiveView_MouseDoubleClick);
             // 
+            // ImageListInteractive32
+            // 
+            this.ImageListInteractive32.ColorDepth = System.Windows.Forms.ColorDepth.Depth8Bit;
+            this.ImageListInteractive32.ImageSize = new System.Drawing.Size(32, 32);
+            this.ImageListInteractive32.TransparentColor = System.Drawing.Color.Transparent;
+            // 
             // tabPage4
             // 
             this.tabPage4.Controls.Add(this.BrowseButton3);
@@ -644,6 +661,7 @@
             this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
             this.deleteToolStripMenuItem.Size = new System.Drawing.Size(117, 22);
             this.deleteToolStripMenuItem.Text = "Delete";
+            this.deleteToolStripMenuItem.Click += new System.EventHandler(this.deleteToolStripMenuItem_Click);
             // 
             // ObjectContextMenu
             // 
@@ -671,22 +689,7 @@
             this.deleteToolStripMenuItem1.Name = "deleteToolStripMenuItem1";
             this.deleteToolStripMenuItem1.Size = new System.Drawing.Size(117, 22);
             this.deleteToolStripMenuItem1.Text = "Delete";
-            // 
-            // ImageListInteractive32
-            // 
-            this.ImageListInteractive32.ColorDepth = System.Windows.Forms.ColorDepth.Depth8Bit;
-            this.ImageListInteractive32.ImageSize = new System.Drawing.Size(32, 32);
-            this.ImageListInteractive32.TransparentColor = System.Drawing.Color.Transparent;
-            // 
-            // PathButton
-            // 
-            this.PathButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.PathButton.Image = ((System.Drawing.Image)(resources.GetObject("PathButton.Image")));
-            this.PathButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.PathButton.Name = "PathButton";
-            this.PathButton.Size = new System.Drawing.Size(23, 22);
-            this.PathButton.Text = "Create Path Button";
-            this.PathButton.ToolTipText = "Create Fixture Path";
+            this.deleteToolStripMenuItem1.Click += new System.EventHandler(this.deleteToolStripMenuItem1_Click);
             // 
             // MainForm
             // 

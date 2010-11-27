@@ -14,9 +14,11 @@ using Silhouette.Engine;
 using Silhouette.Engine.Manager;
 using Silhouette.GameMechs;
 using System.IO;
+using System.ComponentModel;
 
 //Physik-Engine Klassen
 using FarseerPhysics;
+using FarseerPhysics.Common;
 using FarseerPhysics.Dynamics;
 using FarseerPhysics.Factories;
 using FarseerPhysics.Collision;
@@ -105,6 +107,63 @@ namespace Silhouette.GameMechs
         public void ToFixture()
         {
             fixture = FixtureManager.CreateCircle(radius, position, BodyType.Static, 1);
+        }
+    }
+
+    [Serializable]
+    public class PathFixtureItem : LevelObject
+    {
+        private bool _isPolygon;
+        [DisplayName("Polygon"), Category("Path Data")]
+        [Description("Defines wether or not the path should be treated like a polygon. If the value is true the start and end of the path will be connected.")]
+        public bool isPolygon { get { return _isPolygon; } set { _isPolygon = value; } }
+
+        private int _lineWidth;
+        [DisplayName("Line Width"), Category("Path Data")]
+        [Description("The line width of this path. Can be used for rendering.")]
+        public int lineWidth { get { return _lineWidth; } set { _lineWidth = value; } }
+
+        public Vector2[] LocalPoints;
+        public Vector2[] WorldPoints;
+
+
+        public override void Initialise() { }
+        public override void LoadContent() { ToFixture(); }
+        public override void Update(GameTime gameTime) { }
+
+        public PathFixtureItem(Vector2[] Points)
+        {
+            position = Points[0];
+            WorldPoints = Points;
+            LocalPoints = (Vector2[])Points.Clone();
+            for (int i = 0; i < LocalPoints.Length; i++) LocalPoints[i] -= position;
+            lineWidth = 4;
+        }
+
+        public override bool contains(Vector2 worldPosition)
+        {
+            for (int i = 1; i < WorldPoints.Length; i++)
+            {
+                if (worldPosition.DistanceToLineSegment(WorldPoints[i], WorldPoints[i - 1]) <= lineWidth) return true;
+            }
+            if (isPolygon)
+                if (worldPosition.DistanceToLineSegment(WorldPoints[0], WorldPoints[WorldPoints.Length - 1]) <= lineWidth) return true;
+            return false;
+        }
+
+        public override string getPrefix()
+        {
+            return "PathFixture_";
+        }
+
+        public override void drawSelectionFrame()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void ToFixture()
+        {
+
         }
     }
 }

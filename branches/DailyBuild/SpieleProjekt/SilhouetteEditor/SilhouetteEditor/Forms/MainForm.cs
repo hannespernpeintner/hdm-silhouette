@@ -115,6 +115,11 @@ namespace SilhouetteEditor.Forms
             Editor.Default.AddFixture(FixtureType.Circle);
         }
 
+        private void PathButton_Click(object sender, EventArgs e)
+        {
+            Editor.Default.AddFixture(FixtureType.Path);
+        }
+
         private void ToolBoxButton_Click(object sender, EventArgs e)
         {
             new ToolBox().ShowDialog();
@@ -171,7 +176,6 @@ namespace SilhouetteEditor.Forms
                 LevelObject lo = (LevelObject)e.Node.Tag;
                 Editor.Default.selectLevelObject(lo);
             }
-            UpdateTreeView();
         }
 
         //---> GameView-Steuerung <---//
@@ -340,6 +344,16 @@ namespace SilhouetteEditor.Forms
         {
             FolderBrowserDialog d = new FolderBrowserDialog();
             if (d.ShowDialog() == DialogResult.OK) loadFolderInteractive(d.SelectedPath);
+        }
+
+        private void deleteToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Editor.Default.deleteLayer(Editor.Default.selectedLayer);
+        }
+
+        private void deleteToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            //Wird noch implementiert.
         }
     }
 }
