@@ -29,7 +29,8 @@ namespace SilhouetteEditor
     public enum FixtureType
     { 
         Rectangle,
-        Circle
+        Circle,
+        Path
     }
 
     public enum EditorState
@@ -100,19 +101,31 @@ namespace SilhouetteEditor
             #region CameraControl
                 if(kstate.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.A))
                 {
-                    Camera.PositionX -= Constants.CameraMovingSpeed;
+                    Camera.PositionX -= Constants.CameraMovingSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
                 }
                 if (kstate.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.D))
                 {
-                    Camera.PositionX += Constants.CameraMovingSpeed;
+                    Camera.PositionX += Constants.CameraMovingSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
                 }
                 if (kstate.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.S))
                 {
-                    Camera.PositionY += Constants.CameraMovingSpeed;
+                    Camera.PositionY += Constants.CameraMovingSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
                 }
                 if (kstate.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.W))
                 {
-                    Camera.PositionY -= Constants.CameraMovingSpeed;
+                    Camera.PositionY -= Constants.CameraMovingSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                }
+                int mwheeldelta = mstate.ScrollWheelValue - oldmstate.ScrollWheelValue;
+                if (mwheeldelta > 0)
+                {
+                    float zoom = (float)Math.Round(Camera.Scale * 10) * 10.0f + 10.0f;
+                    Camera.Scale = zoom / 100.0f;
+                }
+                if (mwheeldelta < 0)
+                {
+                    float zoom = (float)Math.Round(Camera.Scale * 10) * 10.0f - 10.0f;
+                    if (zoom <= 0.0f) return;
+                    Camera.Scale = zoom / 100.0f;
                 }
             #endregion
 
@@ -148,6 +161,26 @@ namespace SilhouetteEditor
                         if (!fixtureStarted)
                             fixtureStarted = true;
                         else
+                        {
+                            if (currentFixture != FixtureType.Path)
+                            {
+                                paintFixtureItem();
+                                clickedPoints.Clear();
+                                fixtureStarted = false;
+                            }
+                        }
+                    }
+                    if (kstate.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.Back) && oldkstate.IsKeyUp(Microsoft.Xna.Framework.Input.Keys.Back))
+                    {
+                        if (currentFixture == FixtureType.Path && clickedPoints.Count > 1)
+                        {
+                            clickedPoints.RemoveAt(clickedPoints.Count - 1);
+                        }
+                    }
+
+                    if (mstate.MiddleButton == Microsoft.Xna.Framework.Input.ButtonState.Pressed && oldmstate.MiddleButton == Microsoft.Xna.Framework.Input.ButtonState.Released)
+                    {
+                        if (currentFixture == FixtureType.Path && fixtureStarted)
                         {
                             paintFixtureItem();
                             clickedPoints.Clear();
@@ -280,9 +313,156 @@ namespace SilhouetteEditor
             editorState = EditorState.CREATE_FIXTURES;
         }
 
+        //---> Create Objects <---//
+
+        public void createTextureWrapper(string path, int width, int height)
+        {
+            this.currentTexture = new TextureWrapper(path, width, height);
+            paintTextureWrapper();
+        }
+
+        public void createTextureObject(string path)
+        {
+            editorState = EditorState.CREATE_TEXTURES;
+            TextureObject to = new TextureObject(path);
+            to.texture = Texture2DLoader.Instance.LoadFromFile(path);
+            currentObject = to;
+        }
+
+        public void createInteractiveObject(string path)
+        {
+            editorState = EditorState.CREATE_INTERACTIVE;
+            InteractiveObject io = new InteractiveObject(path);
+            io.texture = Texture2DLoader.Instance.LoadFromFile(path);
+            currentObject = io;
+        }
+
+        //---> Destroy Objects <---//
+
+        public void destroyTextureWrapper()
+        {
+            editorState = EditorState.IDLE;
+            this.currentTexture = null;
+        }
+
+        public void destroyCurrentObject()
+        {
+            editorState = EditorState.IDLE;
+            this.currentObject = null;
+        }
+
+        //---> Paint Objects <---//
+
+        public void paintCurrentObject(bool continueAfterPaint)
+        {
+            if (currentObject is TextureObject)
+            {
+                TextureObject temp = (TextureObject)currentObject;
+                TextureObject to = new TextureObject(temp.fullPath);
+                to.texture = temp.texture;
+                to.position = MouseWorldPosition - new Vector2((to.texture.Width / 2), (to.texture.Height / 2));
+                to.name = to.getPrefix() + selectedLayer.getNextObjectNumber();
+                AddLevelObject(to);
+            }
+            if (currentObject is InteractiveObject)
+            {
+                InteractiveObject temp = (InteractiveObject)currentObject;
+                InteractiveObject io = new InteractiveObject(temp.fullPath);
+                io.texture = temp.texture;
+                io.position = MouseWorldPosition - new Vector2((io.texture.Width / 2), (io.texture.Height / 2));
+                io.name = io.getPrefix() + selectedLayer.getNextObjectNumber();
+                AddLevelObject(io);
+            }
+            MainForm.Default.UpdateTreeView();
+
+            if (!continueAfterPaint)
+                destroyCurrentObject();
+        }
+
+        public void paintTextureWrapper()
+        {
+            if (selectedLayer == null)
+            {
+                System.Windows.Forms.MessageBox.Show("You have to choose a Layer in order to be able to add textures to it!", "Warning", MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Warning);
+                destroyTextureWrapper();
+                return;
+            }
+
+            selectedLayer.layerTexture[currentTexture.width, currentTexture.height] = currentTexture.texture;
+            selectedLayer.assetName[currentTexture.width, currentTexture.height] = Path.GetFileNameWithoutExtension(currentTexture.fullPath);
+
+            MainForm.Default.UpdateTreeView();
+            destroyTextureWrapper();
+        }
+
+        public void paintFixtureItem()
+        {
+            switch (currentFixture)
+            {
+                case FixtureType.Rectangle:
+                    LevelObject l1 = new RectangleFixtureItem(Extensions.RectangleFromVectors(clickedPoints[0], clickedPoints[1]));
+                    l1.name = l1.getPrefix() + selectedLayer.getNextObjectNumber();
+                    selectedLayer.loList.Add(l1);
+                    break;
+                case FixtureType.Circle:
+                    LevelObject l2 = new CircleFixtureItem(clickedPoints[0], (MouseWorldPosition - clickedPoints[0]).Length());
+                    l2.name = l2.getPrefix() + selectedLayer.getNextObjectNumber();
+                    selectedLayer.loList.Add(l2);
+                    break;
+                case FixtureType.Path:
+                    LevelObject l3 = new PathFixtureItem(clickedPoints.ToArray());
+                    l3.name = l3.getPrefix() + selectedLayer.getNextObjectNumber();
+                    selectedLayer.loList.Add(l3);
+                    break;
+            }
+            MainForm.Default.UpdateTreeView();
+        }
+
+        //---> Selection <---//
+
+        //---> TreeViewSelection
+
+        public void selectLevelObject(LevelObject lo)
+        {
+            selectedLevelObjects.Clear();
+            selectedLevelObjects.Add(lo);
+            MainForm.Default.propertyGrid1.SelectedObject = lo;
+            MainForm.Default.SelectedItem.Text = "Object: " + lo.name;
+        }
+
+        public void selectLayer(Layer l)
+        {
+            selectedLayer = l;
+            MainForm.Default.propertyGrid1.SelectedObject = l;
+            MainForm.Default.Selection.Text = "Selected Layer: " + l.name;
+        }
+
+        public void selectLevel()
+        {
+            MainForm.Default.propertyGrid1.SelectedObject = this.level;
+        }
+
+        //---> TreeViewDelete
+
+        public void deleteLayer(Layer l)
+        {
+            level.layerList.Remove(l);
+            MainForm.Default.UpdateTreeView();
+        }
+
+        public void deleteLevelObject(LevelObject lo)
+        {
+            foreach (Layer l in level.layerList)
+            {
+                l.loList.Remove(lo);
+            }
+            MainForm.Default.UpdateTreeView();
+        }
+
+        //---> Zusätzliche Editorfunktionalität <---//
 
         public void drawEditorRelated()
-        { 
+        {
             foreach (Layer l in level.layerList)
             {
                 if (!l.isVisible)
@@ -293,7 +473,7 @@ namespace SilhouetteEditor
                 foreach (LevelObject lo in l.loList)
                 {
                     if (lo is RectangleFixtureItem)
-                    { 
+                    {
                         RectangleFixtureItem r = (RectangleFixtureItem)lo;
                         Primitives.Instance.drawBoxFilled(spriteBatch, r.rectangle, Constants.ColorFixtures);
                     }
@@ -302,15 +482,30 @@ namespace SilhouetteEditor
                         CircleFixtureItem c = (CircleFixtureItem)lo;
                         Primitives.Instance.drawCircleFilled(spriteBatch, c.position, c.radius, Constants.ColorFixtures);
                     }
+                    if (lo is PathFixtureItem)
+                    {
+                        PathFixtureItem p = (PathFixtureItem)lo;
+                        if (p.isPolygon)
+                            Primitives.Instance.drawPolygon(spriteBatch, p.WorldPoints, Constants.ColorFixtures, p.lineWidth);
+                        else
+                            Primitives.Instance.drawPath(spriteBatch, p.WorldPoints, Constants.ColorFixtures, p.lineWidth);
+                    }
                 }
 
                 if (l == selectedLayer && editorState == EditorState.CREATE_FIXTURES && fixtureStarted)
                 {
                     switch (currentFixture)
-                    { 
+                    {
                         case FixtureType.Rectangle:
                             Microsoft.Xna.Framework.Rectangle r = Extensions.RectangleFromVectors(clickedPoints[0], MouseWorldPosition);
                             Primitives.Instance.drawBoxFilled(spriteBatch, r, Constants.ColorFixtures);
+                            break;
+                        case FixtureType.Circle:
+                            Primitives.Instance.drawCircleFilled(spriteBatch, clickedPoints[0], (MouseWorldPosition - clickedPoints[0]).Length(), Constants.ColorFixtures);
+                            break;
+                        case FixtureType.Path:
+                            Primitives.Instance.drawPath(spriteBatch, clickedPoints.ToArray(), Constants.ColorFixtures, Constants.DefaultPathItemLineWidth);
+                            Primitives.Instance.drawLine(spriteBatch, clickedPoints.Last(), MouseWorldPosition, Constants.ColorFixtures, Constants.DefaultPathItemLineWidth);
                             break;
                     }
                 }
@@ -358,124 +553,6 @@ namespace SilhouetteEditor
             grp.DrawImage(bmp, iLeft, iTop, tnWidth, tnHeight);
             retBmp.Tag = bmp;
             return retBmp;
-        }
-
-        public void createTextureWrapper(string path, int width, int height)
-        {
-            this.currentTexture = new TextureWrapper(path, width, height);
-            paintTextureWrapper();
-        }
-
-        public void createTextureObject(string path)
-        {
-            editorState = EditorState.CREATE_TEXTURES;
-            TextureObject to = new TextureObject(path);
-            to.texture = Texture2DLoader.Instance.LoadFromFile(path);
-            currentObject = to;
-        }
-
-        public void createInteractiveObject(string path)
-        {
-            editorState = EditorState.CREATE_INTERACTIVE;
-            InteractiveObject io = new InteractiveObject(path);
-            io.texture = Texture2DLoader.Instance.LoadFromFile(path);
-            currentObject = io;
-        }
-
-        public void destroyTextureWrapper()
-        {
-            editorState = EditorState.IDLE;
-            this.currentTexture = null;
-        }
-
-        public void destroyCurrentObject()
-        {
-            editorState = EditorState.IDLE;
-            this.currentObject = null;
-        }
-
-        public void paintCurrentObject(bool continueAfterPaint)
-        {
-            if (currentObject is TextureObject)
-            {
-                TextureObject temp = (TextureObject)currentObject;
-                TextureObject to = new TextureObject(temp.fullPath);
-                to.texture = temp.texture;
-                to.position = MouseWorldPosition - new Vector2((to.texture.Width / 2), (to.texture.Height / 2));
-                to.name = to.getPrefix() + selectedLayer.getNextObjectNumber();
-                AddLevelObject(to);
-            }
-            if (currentObject is InteractiveObject)
-            {
-                InteractiveObject temp = (InteractiveObject)currentObject;
-                InteractiveObject io = new InteractiveObject(temp.fullPath);
-                io.texture = temp.texture;
-                io.position = MouseWorldPosition - new Vector2((io.texture.Width / 2), (io.texture.Height / 2));
-                io.name = io.getPrefix() + selectedLayer.getNextObjectNumber();
-                AddLevelObject(io);
-            }
-            MainForm.Default.UpdateTreeView();
-
-            if (!continueAfterPaint)
-                destroyCurrentObject();
-        }
-
-        public void paintTextureWrapper()
-        {
-            if (selectedLayer == null)
-            {
-                System.Windows.Forms.MessageBox.Show("You have to choose a Layer in order to be able to add textures to it!", "Warning", MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Warning);
-                destroyTextureWrapper();
-                return;
-            }
-
-            selectedLayer.layerTexture[currentTexture.width, currentTexture.height] = currentTexture.texture;
-            selectedLayer.assetName[currentTexture.width, currentTexture.height] = currentTexture.fullPath;
-
-            MainForm.Default.UpdateTreeView();
-            destroyTextureWrapper();
-        }
-
-        public void paintFixtureItem()
-        {
-            switch (currentFixture)
-            { 
-                case FixtureType.Rectangle:
-                    LevelObject l1 = new RectangleFixtureItem(Extensions.RectangleFromVectors(clickedPoints[0], clickedPoints[1]));
-                    l1.name = l1.getPrefix() + selectedLayer.getNextObjectNumber();
-                    selectedLayer.loList.Add(l1);
-                    break;
-                case FixtureType.Circle:
-                    LevelObject l2 = new CircleFixtureItem(clickedPoints[0], (MouseWorldPosition - clickedPoints[0]).Length());
-                    l2.name = l2.getPrefix() + selectedLayer.getNextObjectNumber();
-                    selectedLayer.loList.Add(l2);
-                    break;
-            }
-            MainForm.Default.UpdateTreeView();
-        }
-
-        //---> Selection <---//
-
-        //---> TreeViewSelection
-
-        public void selectLevelObject(LevelObject lo)
-        {
-            selectedLevelObjects.Clear();
-            selectedLevelObjects.Add(lo);
-            MainForm.Default.propertyGrid1.SelectedObject = lo;
-            MainForm.Default.SelectedItem.Text = "Object: " + lo.name;
-        }
-
-        public void selectLayer(Layer l)
-        {
-            selectedLayer = l;
-            MainForm.Default.propertyGrid1.SelectedObject = l;
-            MainForm.Default.Selection.Text = "Selected Layer: " + l.name;
-        }
-
-        public void selectLevel()
-        {
-            MainForm.Default.propertyGrid1.SelectedObject = this.level;
         }
     }
 }
