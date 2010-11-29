@@ -11,6 +11,7 @@ using Microsoft.Xna.Framework.Media;
 using System.IO;
 using System.Xml.Serialization;
 using System.ComponentModel;
+using Silhouette.Engine;
 
 //Physik-Engine Klassen
 using FarseerPhysics;
@@ -43,11 +44,18 @@ namespace Silhouette.GameMechs
         [Description("The rotation factor of the object.")]
         public float rotation { get { return _rotation; } set { _rotation = value; } }
 
+        public Layer layer;
+
+        [NonSerialized]
+        public bool mouseOn;
+
         public LevelObject() { }
 
         public abstract void Initialise();
         public abstract void LoadContent();
         public abstract void Update(GameTime gameTime);
+
+        //Editor-Methoden
 
         public abstract string getPrefix();
         public abstract bool contains(Vector2 worldPosition);

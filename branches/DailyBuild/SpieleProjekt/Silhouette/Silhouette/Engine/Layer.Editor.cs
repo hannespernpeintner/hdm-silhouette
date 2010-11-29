@@ -13,15 +13,38 @@ using Microsoft.Xna.Framework.Input;
 using System.ComponentModel;
 using Microsoft.Xna.Framework.Media;
 using Silhouette.GameMechs;
+using Silhouette.Engine.Manager;
 
 namespace Silhouette.Engine
 {
     public partial class Layer
     {
-        public void initializeLayerInEditor()
+        public void initializeInEditor()
         {
             layerTexture = new Texture2D[width, height];
             assetName = new string[width, height];
+        }
+
+        public void loadContentInEditor(GraphicsDevice graphics)
+        {
+            for (int x = 0; x < width; x++)
+                for (int y = 0; y < height; y++)
+                {
+                    if (assetName[x, y] != null)
+                    {
+                        FileStream file = FileManager.LoadConfigFile(assetFullPath[x,y]);
+                        layerTexture[x, y] = Texture2D.FromStream(graphics, file);
+                    }
+                }
+
+            foreach (LevelObject lo in loList)
+            {
+                if (lo is DrawableLevelObject)
+                {
+                    DrawableLevelObject dlo = (DrawableLevelObject)lo;
+                    dlo.loadContentInEditor(graphics);
+                }
+            }
         }
 
         public LevelObject getItemAtPosition(Vector2 worldPosition)

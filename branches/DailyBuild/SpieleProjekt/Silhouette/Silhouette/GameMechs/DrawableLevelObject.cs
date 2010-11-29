@@ -34,5 +34,9 @@ namespace Silhouette.GameMechs
 
         public DrawableLevelObject() { }
         public abstract void Draw(SpriteBatch spriteBatch);
+
+        //Editor-Methoden
+
+        public abstract void loadContentInEditor(GraphicsDevice graphics);
     }
 }

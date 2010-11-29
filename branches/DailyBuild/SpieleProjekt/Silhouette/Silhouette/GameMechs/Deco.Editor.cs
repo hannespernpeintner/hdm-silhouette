@@ -12,6 +12,8 @@ namespace Silhouette.GameMechs
             return "Deco_";
         }
 
+        public override void loadContentInEditor(Microsoft.Xna.Framework.Graphics.GraphicsDevice graphics) { }
+
         public override bool contains(Microsoft.Xna.Framework.Vector2 worldPosition)
         {
             throw new NotImplementedException();
