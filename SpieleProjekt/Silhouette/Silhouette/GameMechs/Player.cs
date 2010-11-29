@@ -198,5 +198,6 @@ namespace Silhouette.GameMechs
         public override string getPrefix() { return null; }
         public override bool contains(Vector2 worldPosition) { return false; }
         public override void drawSelectionFrame() { return; }
+        public override void loadContentInEditor(GraphicsDevice graphics) { }
     }
 }

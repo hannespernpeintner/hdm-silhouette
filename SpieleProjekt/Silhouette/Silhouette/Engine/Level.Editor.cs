@@ -42,9 +42,14 @@ namespace Silhouette.Engine
             }
         }
 
-        public void LoadContentInEditor()
+        public void LoadContentInEditor(GraphicsDevice graphics)
         {
             proj = Matrix.CreateOrthographicOffCenter(0, GameSettings.Default.resolutionWidth / PixelPerMeter, GameSettings.Default.resolutionHeight / PixelPerMeter, 0, 0, 1);
+
+            foreach (Layer l in layerList)
+            {
+                l.loadContentInEditor(graphics);
+            }
         }
 
         public void UpdateInEditor(GameTime gameTime)
