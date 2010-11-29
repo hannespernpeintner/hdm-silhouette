@@ -49,7 +49,16 @@ namespace Silhouette.GameMechs
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(texture, position, null, Color.White, rotation, origin, scale, SpriteEffects.None, 1);
+            Color color = Color.White;
+            if (mouseOn) color = new Color(255, 0, 0, 150);
+            spriteBatch.Draw(texture, position, null, color, rotation, origin, scale, SpriteEffects.None, 1);
+        }
+
+
+        public override void loadContentInEditor(GraphicsDevice graphics)
+        {
+            FileStream file = FileManager.LoadConfigFile(fullPath);
+            texture = Texture2D.FromStream(graphics, file);
         }
 
         public override string getPrefix()

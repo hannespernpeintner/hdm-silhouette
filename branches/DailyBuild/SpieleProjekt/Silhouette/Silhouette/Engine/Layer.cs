@@ -45,6 +45,7 @@ namespace Silhouette.Engine
         public Texture2D[,] layerTexture;
 
         public string[,] assetName;
+        public string[,] assetFullPath;
         public int width, height;
 
         public Layer()

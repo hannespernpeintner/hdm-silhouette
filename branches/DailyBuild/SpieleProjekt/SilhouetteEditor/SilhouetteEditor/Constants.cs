@@ -21,13 +21,15 @@ namespace SilhouetteEditor
 {
     public static class Constants
     {
-        private const int _CameraMovingSpeed = 400;
+        private const int _CameraMovingSpeed = 800;
         public static int CameraMovingSpeed { get { return _CameraMovingSpeed; } }
         private const int _DefaultPathItemLineWidth = 4;
         public static int DefaultPathItemLineWidth { get { return _DefaultPathItemLineWidth; } }
-        private static Color _ColorSelectionBox = new Color(255, 255, 255, 109);
+        private static Color _ColorSelectionBox = new Color(0, 255, 0, 50);
         public static Color ColorSelectionBox { get { return _ColorSelectionBox; } }
         private static Color _ColorFixtures = new Color(0, 0, 192, 145);
         public static Color ColorFixtures { get { return _ColorFixtures; } }
+        private static Color _ColorMouseOn = new Color(255, 0, 0, 228);
+        public static Color ColorMouseOn { get { return _ColorMouseOn; } }
     }
 }

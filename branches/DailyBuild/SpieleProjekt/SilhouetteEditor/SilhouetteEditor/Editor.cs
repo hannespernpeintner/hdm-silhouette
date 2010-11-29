@@ -39,7 +39,13 @@ namespace SilhouetteEditor
         CAMERAMOVING,
         CREATE_FIXTURES,
         CREATE_TEXTURES,
-        CREATE_INTERACTIVE
+        CREATE_INTERACTIVE,
+        CREATE_ANIMATION,
+        CREATE_EVENTS,
+        ROTATING,
+        SCALING,
+        POSITIONING,
+        SELECTING
     }
 
     class Editor
@@ -68,12 +74,14 @@ namespace SilhouetteEditor
         public List<LevelObject> selectedLevelObjects;
 
         public LevelObject currentObject;
+        public LevelObject lastObject;
         public TextureWrapper currentTexture;
         public FixtureType currentFixture;
         public bool fixtureStarted;
 
-        List<Vector2> clickedPoints;
+        List<Vector2> clickedPoints, initialPosition;
         Vector2 MouseWorldPosition, GrabbedPoint;
+        Microsoft.Xna.Framework.Rectangle selectionRectangle;
 
         KeyboardState kstate, oldkstate;
         MouseState mstate, oldmstate;
@@ -85,6 +93,7 @@ namespace SilhouetteEditor
             spriteBatch = new SpriteBatch(EditorLoop.EditorLoopInstance.GraphicsDevice);
             selectedLevelObjects = new List<LevelObject>();
             clickedPoints = new List<Vector2>();
+            initialPosition = new List<Vector2>();
             editorState = EditorState.IDLE;
         }
 
@@ -146,10 +155,39 @@ namespace SilhouetteEditor
                     if (levelObject != null)
                     {
                         MainForm.Default.SelectedItem.Text = "Object: " + levelObject.name;
+                        levelObject.mouseOn = true;
                     }
                     else
                     {
                         MainForm.Default.SelectedItem.Text = "Object: -";
+                    }
+                    if (levelObject != lastObject && lastObject != null) lastObject.mouseOn = false;
+
+                    lastObject = levelObject;
+
+                    if (mstate.LeftButton == Microsoft.Xna.Framework.Input.ButtonState.Pressed && oldmstate.LeftButton == Microsoft.Xna.Framework.Input.ButtonState.Released)
+                    {
+                        if(selectedLevelObjects.Contains(levelObject))
+                            startPositioning();
+                        else if(!selectedLevelObjects.Contains(levelObject))
+                        { 
+                            selectLevelObject(levelObject);
+                            if (levelObject != null)
+                                startPositioning();
+                            else
+                            {
+                                GrabbedPoint = MouseWorldPosition;
+                                selectionRectangle = Microsoft.Xna.Framework.Rectangle.Empty;
+                                editorState = EditorState.SELECTING;
+                            }
+                        }
+                        else if(kstate.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.LeftControl) && levelObject != null)
+                        {
+                            if (selectedLevelObjects.Contains(levelObject))
+                                selectedLevelObjects.Remove(levelObject);
+                            else
+                                selectedLevelObjects.Add(levelObject);
+                        }                  
                     }
                 }
                 if (editorState == EditorState.CREATE_FIXTURES)
@@ -202,6 +240,7 @@ namespace SilhouetteEditor
                         }
                     }
                 }
+
                 if (editorState == EditorState.CREATE_TEXTURES || editorState == EditorState.CREATE_INTERACTIVE)
                 {
                     if (mstate.LeftButton == Microsoft.Xna.Framework.Input.ButtonState.Pressed && oldmstate.LeftButton == Microsoft.Xna.Framework.Input.ButtonState.Released)
@@ -210,6 +249,43 @@ namespace SilhouetteEditor
                     }
                     if (mstate.RightButton == Microsoft.Xna.Framework.Input.ButtonState.Pressed && oldmstate.LeftButton == Microsoft.Xna.Framework.Input.ButtonState.Released)
                     {
+                        editorState = EditorState.IDLE;
+                    }
+                }
+
+                if (editorState == EditorState.POSITIONING)
+                {
+                    int i = 0;
+                    foreach (LevelObject lo in selectedLevelObjects)
+                    {
+                        Vector2 newPosition = initialPosition[i] + MouseWorldPosition - GrabbedPoint;
+                        lo.position = newPosition;
+                        i++;
+                    }
+                    MainForm.Default.propertyGrid1.Refresh();
+                    if (mstate.LeftButton == Microsoft.Xna.Framework.Input.ButtonState.Released && oldmstate.LeftButton == Microsoft.Xna.Framework.Input.ButtonState.Pressed)
+                    {
+                        editorState = EditorState.IDLE;
+                    }
+                }
+
+                if (editorState == EditorState.SELECTING)
+                {
+                    if (selectedLayer == null) return;
+                    Vector2 distance = MouseWorldPosition - GrabbedPoint;
+                    if (distance.Length() > 0)
+                    {
+                        selectedLevelObjects.Clear();
+                        selectionRectangle = Extensions.RectangleFromVectors(GrabbedPoint, MouseWorldPosition);
+                        foreach (LevelObject lo in selectedLayer.loList)
+                        {
+                            if (selectionRectangle.Contains((int)lo.position.X, (int)lo.position.Y)) selectedLevelObjects.Add(lo);
+                        }
+                    }
+                    if (mstate.LeftButton == Microsoft.Xna.Framework.Input.ButtonState.Released)
+                    {
+                        if(selectedLevelObjects.Count > 0)
+                            MainForm.Default.propertyGrid1.SelectedObject = selectedLevelObjects[0];
                         editorState = EditorState.IDLE;
                     }
                 }
@@ -240,7 +316,7 @@ namespace SilhouetteEditor
                 level.name = name;
 
             level.InitializeInEditor(spriteBatch);
-            level.LoadContentInEditor();
+            level.LoadContentInEditor(EditorLoop.EditorLoopInstance.GraphicsDevice);
             MainForm.Default.UpdateTreeView();
         }
 
@@ -249,27 +325,8 @@ namespace SilhouetteEditor
             Editor.Default.levelFileName = filename;
             Editor.Default.level = Level.LoadLevelFile(filename);
             level.InitializeInEditor(spriteBatch);
-            level.LoadContentInEditor();
-            LoadStuff();
+            level.LoadContentInEditor(EditorLoop.EditorLoopInstance.GraphicsDevice);
             MainForm.Default.UpdateTreeView();
-        }
-
-        public void LoadStuff()
-        {
-            foreach (Layer l in level.layerList)
-            {
-                for (int x = 0; x < l.width; x++)
-                    for (int y = 0; y < l.height; y++)
-                    {
-                        if (l.assetName[x, y] != null)
-                            l.layerTexture[x, y] = EditorLoop.EditorLoopInstance.Content.Load<Texture2D>("Sprites/Layer/" + l.assetName[x, y]);
-                    }
-
-                foreach (LevelObject lo in l.loList)
-                {
-                    lo.LoadContent();
-                }
-            }
         }
 
         public void SaveLevel(string fullPath)
@@ -285,7 +342,7 @@ namespace SilhouetteEditor
             l.name = name;
             l.width = width;
             l.height = height;
-            l.initializeLayerInEditor();
+            l.initializeInEditor();
             level.layerList.Add(l);
             MainForm.Default.UpdateTreeView();
         }
@@ -362,6 +419,7 @@ namespace SilhouetteEditor
                 to.texture = temp.texture;
                 to.position = MouseWorldPosition - new Vector2((to.texture.Width / 2), (to.texture.Height / 2));
                 to.name = to.getPrefix() + selectedLayer.getNextObjectNumber();
+                to.layer = selectedLayer;
                 AddLevelObject(to);
             }
             if (currentObject is InteractiveObject)
@@ -371,6 +429,7 @@ namespace SilhouetteEditor
                 io.texture = temp.texture;
                 io.position = MouseWorldPosition - new Vector2((io.texture.Width / 2), (io.texture.Height / 2));
                 io.name = io.getPrefix() + selectedLayer.getNextObjectNumber();
+                io.layer = selectedLayer;
                 AddLevelObject(io);
             }
             MainForm.Default.UpdateTreeView();
@@ -389,6 +448,7 @@ namespace SilhouetteEditor
             }
 
             selectedLayer.layerTexture[currentTexture.width, currentTexture.height] = currentTexture.texture;
+            selectedLayer.assetFullPath[currentTexture.width, currentTexture.height] = currentTexture.fullPath;
             selectedLayer.assetName[currentTexture.width, currentTexture.height] = Path.GetFileNameWithoutExtension(currentTexture.fullPath);
 
             MainForm.Default.UpdateTreeView();
@@ -402,16 +462,19 @@ namespace SilhouetteEditor
                 case FixtureType.Rectangle:
                     LevelObject l1 = new RectangleFixtureItem(Extensions.RectangleFromVectors(clickedPoints[0], clickedPoints[1]));
                     l1.name = l1.getPrefix() + selectedLayer.getNextObjectNumber();
+                    l1.layer = selectedLayer;
                     selectedLayer.loList.Add(l1);
                     break;
                 case FixtureType.Circle:
                     LevelObject l2 = new CircleFixtureItem(clickedPoints[0], (MouseWorldPosition - clickedPoints[0]).Length());
                     l2.name = l2.getPrefix() + selectedLayer.getNextObjectNumber();
+                    l2.layer = selectedLayer;
                     selectedLayer.loList.Add(l2);
                     break;
                 case FixtureType.Path:
                     LevelObject l3 = new PathFixtureItem(clickedPoints.ToArray());
                     l3.name = l3.getPrefix() + selectedLayer.getNextObjectNumber();
+                    l3.layer = selectedLayer;
                     selectedLayer.loList.Add(l3);
                     break;
             }
@@ -425,13 +488,23 @@ namespace SilhouetteEditor
         public void selectLevelObject(LevelObject lo)
         {
             selectedLevelObjects.Clear();
-            selectedLevelObjects.Add(lo);
-            MainForm.Default.propertyGrid1.SelectedObject = lo;
-            MainForm.Default.SelectedItem.Text = "Object: " + lo.name;
+
+            if (lo != null)
+            {
+                selectedLevelObjects.Add(lo);
+                selectedLayer = lo.layer;
+                MainForm.Default.propertyGrid1.SelectedObject = lo;
+                MainForm.Default.SelectedItem.Text = "Object: " + lo.name;
+            }
+            else
+                selectLayer(selectedLayer);
         }
 
         public void selectLayer(Layer l)
         {
+            if (l == null)
+                return;
+
             selectedLayer = l;
             MainForm.Default.propertyGrid1.SelectedObject = l;
             MainForm.Default.Selection.Text = "Selected Layer: " + l.name;
@@ -461,6 +534,19 @@ namespace SilhouetteEditor
 
         //---> Zusätzliche Editorfunktionalität <---//
 
+        public void startPositioning()
+        {
+            GrabbedPoint = MouseWorldPosition;
+            initialPosition.Clear();
+
+            foreach (LevelObject lo in selectedLevelObjects)
+            {
+                initialPosition.Add(lo.position);
+            }
+
+            editorState = EditorState.POSITIONING;
+        }
+
         public void drawEditorRelated()
         {
             foreach (Layer l in level.layerList)
@@ -475,20 +561,34 @@ namespace SilhouetteEditor
                     if (lo is RectangleFixtureItem)
                     {
                         RectangleFixtureItem r = (RectangleFixtureItem)lo;
-                        Primitives.Instance.drawBoxFilled(spriteBatch, r.rectangle, Constants.ColorFixtures);
+                        Microsoft.Xna.Framework.Color color = Constants.ColorFixtures;
+                        if (r.mouseOn) color = Constants.ColorMouseOn;
+                        Primitives.Instance.drawBoxFilled(spriteBatch, r.rectangle, color);
                     }
                     if (lo is CircleFixtureItem)
                     {
                         CircleFixtureItem c = (CircleFixtureItem)lo;
-                        Primitives.Instance.drawCircleFilled(spriteBatch, c.position, c.radius, Constants.ColorFixtures);
+                        Microsoft.Xna.Framework.Color color = Constants.ColorFixtures;
+                        if (c.mouseOn) color = Constants.ColorMouseOn;
+                        Primitives.Instance.drawCircleFilled(spriteBatch, c.position, c.radius, color);
                     }
                     if (lo is PathFixtureItem)
                     {
                         PathFixtureItem p = (PathFixtureItem)lo;
+                        Microsoft.Xna.Framework.Color color = Constants.ColorFixtures;
+                        if (p.mouseOn) color = Constants.ColorMouseOn;
                         if (p.isPolygon)
-                            Primitives.Instance.drawPolygon(spriteBatch, p.WorldPoints, Constants.ColorFixtures, p.lineWidth);
+                            Primitives.Instance.drawPolygon(spriteBatch, p.WorldPoints, color, p.lineWidth);
                         else
-                            Primitives.Instance.drawPath(spriteBatch, p.WorldPoints, Constants.ColorFixtures, p.lineWidth);
+                            Primitives.Instance.drawPath(spriteBatch, p.WorldPoints, color, p.lineWidth);
+                    }
+                }
+
+                if (selectedLevelObjects.Count > 0)
+                {
+                    foreach (LevelObject lo2 in selectedLevelObjects)
+                    {
+                        lo2.drawSelectionFrame();
                     }
                 }
 
@@ -518,6 +618,10 @@ namespace SilhouetteEditor
                 {
                     InteractiveObject io = (InteractiveObject)currentObject;
                     spriteBatch.Draw(io.texture, new Vector2(MouseWorldPosition.X, MouseWorldPosition.Y), null, new Microsoft.Xna.Framework.Color(1f, 1f, 1f, 7f), 0, new Vector2(io.texture.Width / 2, io.texture.Height / 2), 1, SpriteEffects.None, 0);
+                }
+                if (l == selectedLayer && editorState == EditorState.SELECTING)
+                {
+                    Primitives.Instance.drawBoxFilled(spriteBatch, selectionRectangle, Constants.ColorSelectionBox);
                 }
                 spriteBatch.End();
                 Camera.Position = oldCameraPosition;
