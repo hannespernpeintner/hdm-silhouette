@@ -1,7 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
+using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.GamerServices;
+using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Media;
 
 namespace Silhouette.GameMechs
 {
@@ -12,6 +18,16 @@ namespace Silhouette.GameMechs
             return "Deco_";
         }
 
+        public override LevelObject clone()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void transformed()
+        {
+            throw new NotImplementedException();
+        }
+
         public override void loadContentInEditor(Microsoft.Xna.Framework.Graphics.GraphicsDevice graphics) { }
 
         public override bool contains(Microsoft.Xna.Framework.Vector2 worldPosition)
@@ -19,7 +35,7 @@ namespace Silhouette.GameMechs
             throw new NotImplementedException();
         }
 
-        public override void drawSelectionFrame()
+        public override void drawSelectionFrame(SpriteBatch spriteBatch, Matrix matrix)
         {
             throw new NotImplementedException();
         }
