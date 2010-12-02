@@ -22,6 +22,7 @@ using FarseerPhysics.Common;
 using FarseerPhysics.Dynamics;
 using FarseerPhysics.Factories;
 using FarseerPhysics.Collision;
+using FarseerPhysics.Collision.Shapes;
 
 namespace Silhouette.GameMechs
 {
@@ -35,8 +36,10 @@ namespace Silhouette.GameMechs
         [NonSerialized]
         public Fixture fixture;
 
-        public float width;
-        public float height;
+        private float _width;
+        public float width { get { return _width; } set { _width = value; transformed(); } }
+        private float _height;
+        public float height { get { return _height; } set { _height = value; transformed(); } }
 
         public RectangleFixtureItem(Microsoft.Xna.Framework.Rectangle rectangle)
         {
@@ -55,14 +58,35 @@ namespace Silhouette.GameMechs
             return "RectangleFixture_";
         }
 
+        public override LevelObject clone()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void transformed()
+        {
+            rectangle.Location = position.ToPoint();
+            rectangle.Width = (int)width;
+            rectangle.Height = (int)height;
+        }
+
         public override bool contains(Vector2 worldPosition)
         {
             return rectangle.Contains(new Microsoft.Xna.Framework.Point((int)worldPosition.X, (int)worldPosition.Y));
         }
 
-        public override void drawSelectionFrame()
+        public override void drawSelectionFrame(SpriteBatch spriteBatch, Matrix matrix)
         {
-            throw new NotImplementedException();
+            Primitives.Instance.drawBox(spriteBatch, this.rectangle, Color.Yellow, 2);
+
+            Vector2[] poly = rectangle.ToPolygon();
+
+            foreach (Vector2 p in poly)
+            {
+                Primitives.Instance.drawCircleFilled(spriteBatch, p, 4, Color.Yellow);
+            }
+
+            Primitives.Instance.drawBoxFilled(spriteBatch, poly[0].X + rectangle.Width / 2 - 5, poly[0].Y + rectangle.Height / 2 - 5, 10, 10, Color.Yellow);
         }
 
         public void ToFixture()
@@ -94,14 +118,35 @@ namespace Silhouette.GameMechs
             return "CircleFixture_";
         }
 
+        public override LevelObject clone()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void transformed() { }
+
         public override bool contains(Vector2 worldPosition)
         {
             return (worldPosition - position).Length() <= radius;
         }
 
-        public override void drawSelectionFrame()
+        public override void drawSelectionFrame(SpriteBatch spriteBatch, Matrix matrix)
         {
-            throw new NotImplementedException();
+            Vector2 transformedRadius = Vector2.UnitX * radius;
+            Primitives.Instance.drawCircle(spriteBatch, position, transformedRadius.Length(), Color.Yellow, 2);
+
+            Vector2[] extents = new Vector2[4];
+            extents[0] = position + Vector2.UnitX * transformedRadius.Length();
+            extents[1] = position + Vector2.UnitY * transformedRadius.Length();
+            extents[2] = position - Vector2.UnitX * transformedRadius.Length();
+            extents[3] = position - Vector2.UnitY * transformedRadius.Length();
+
+            foreach (Vector2 p in extents)
+            {
+                Primitives.Instance.drawCircleFilled(spriteBatch, p, 4, Color.Yellow);
+            }
+
+            Primitives.Instance.drawBoxFilled(spriteBatch, position.X - 5, position.Y - 5, 10, 10, Color.Yellow);
         }
 
         public void ToFixture()
@@ -113,6 +158,9 @@ namespace Silhouette.GameMechs
     [Serializable]
     public class PathFixtureItem : LevelObject
     {
+        [NonSerialized]
+        Fixture[] fixtures;
+
         private bool _isPolygon;
         [DisplayName("Polygon"), Category("Path Data")]
         [Description("Defines wether or not the path should be treated like a polygon. If the value is true the start and end of the path will be connected.")]
@@ -133,11 +181,12 @@ namespace Silhouette.GameMechs
 
         public PathFixtureItem(Vector2[] Points)
         {
-            position = Points[0];
             WorldPoints = Points;
             LocalPoints = (Vector2[])Points.Clone();
+            position = Points[0];
             for (int i = 0; i < LocalPoints.Length; i++) LocalPoints[i] -= position;
             lineWidth = 4;
+            transformed();
         }
 
         public override bool contains(Vector2 worldPosition)
@@ -156,14 +205,55 @@ namespace Silhouette.GameMechs
             return "PathFixture_";
         }
 
-        public override void drawSelectionFrame()
+        public override LevelObject clone()
         {
             throw new NotImplementedException();
         }
 
+        public override void transformed()
+        {
+            for (int i = 0; i < WorldPoints.Length; i++) WorldPoints[i] = LocalPoints[i] + position;
+        }
+
+        public override void drawSelectionFrame(SpriteBatch spriteBatch, Matrix matrix)
+        {
+            if (isPolygon)
+                Primitives.Instance.drawPolygon(spriteBatch, WorldPoints, Color.Yellow, 2);
+            else
+                Primitives.Instance.drawPath(spriteBatch, WorldPoints, Color.Yellow, 2);
+
+            foreach (Vector2 p in WorldPoints)
+            {
+                Primitives.Instance.drawCircleFilled(spriteBatch, p, 4, Color.Yellow);
+            }
+
+            Primitives.Instance.drawBoxFilled(spriteBatch, WorldPoints[0].X - 5, WorldPoints[0].Y - 5, 10, 10, Color.Yellow);
+        }
+
         public void ToFixture()
         {
+            if (isPolygon)
+            {
+                FarseerPhysics.Common.Path path = new FarseerPhysics.Common.Path();
+                foreach (Vector2 v in WorldPoints)
+                {
+                    path.Add(FixtureManager.ToMeter(v));
+                }
+                path.Closed = true;
 
+                PathManager.ConvertPathToPolygon(path, new Body(Level.Physics), 1, WorldPoints.Length);
+            }
+            else
+            {
+                FarseerPhysics.Common.Path path = new FarseerPhysics.Common.Path();
+                foreach (Vector2 v in WorldPoints)
+                {
+                    path.Add(FixtureManager.ToMeter(v));
+                }
+                path.Closed = false;
+
+                PathManager.ConvertPathToEdges(path, new Body(Level.Physics), WorldPoints.Length * 3);
+            }
         }
     }
 }

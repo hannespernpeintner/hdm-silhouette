@@ -73,6 +73,20 @@ namespace Silhouette.Engine.Manager
             return fixture;
         }
 
+        public static Fixture CreatePolygon(Vector2[] vertices, Vector2 position, BodyType bodyType, float density)
+        {
+            Vector2[] temp = new Vector2[vertices.Length];
+            for(int i = 0; i < vertices.Length; i++)
+            {
+                temp[i] = ToMeter(vertices[i]);
+            }
+            Vertices vert = new Vertices(temp);
+            Fixture fixture = FixtureFactory.CreatePolygon(Level.Physics, vert, density);
+            fixture.Body.BodyType = bodyType;
+            fixture.Body.Position = ToMeter(position);
+            return fixture;
+        }
+
         public static Vector2 ToMeter(Vector2 position)
         {
             return new Vector2((float)(position.X / Level.PixelPerMeter), (float)(position.Y / Level.PixelPerMeter));

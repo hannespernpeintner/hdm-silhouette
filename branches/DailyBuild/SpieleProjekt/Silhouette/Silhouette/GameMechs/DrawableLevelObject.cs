@@ -30,7 +30,7 @@ namespace Silhouette.GameMechs
         private Vector2 _origin;
         [DisplayName("Origin"), Category("Texture Data")]
         [Description("The sprite origin. Default is (0,0), which is the upper left corner.")]
-        public Vector2 origin{ get { return _origin; } set{ _origin = value;} } 
+        public Vector2 origin { get { return _origin; } set { _origin = value; transformed(); } } 
 
         public DrawableLevelObject() { }
         public abstract void Draw(SpriteBatch spriteBatch);

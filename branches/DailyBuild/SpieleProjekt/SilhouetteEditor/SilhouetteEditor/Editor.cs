@@ -180,14 +180,7 @@ namespace SilhouetteEditor
                                 selectionRectangle = Microsoft.Xna.Framework.Rectangle.Empty;
                                 editorState = EditorState.SELECTING;
                             }
-                        }
-                        else if(kstate.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.LeftControl) && levelObject != null)
-                        {
-                            if (selectedLevelObjects.Contains(levelObject))
-                                selectedLevelObjects.Remove(levelObject);
-                            else
-                                selectedLevelObjects.Add(levelObject);
-                        }                  
+                        }            
                     }
                 }
                 if (editorState == EditorState.CREATE_FIXTURES)
@@ -420,6 +413,7 @@ namespace SilhouetteEditor
                 to.position = MouseWorldPosition - new Vector2((to.texture.Width / 2), (to.texture.Height / 2));
                 to.name = to.getPrefix() + selectedLayer.getNextObjectNumber();
                 to.layer = selectedLayer;
+                to.loadContentInEditor(EditorLoop.EditorLoopInstance.GraphicsDevice);
                 AddLevelObject(to);
             }
             if (currentObject is InteractiveObject)
@@ -430,6 +424,7 @@ namespace SilhouetteEditor
                 io.position = MouseWorldPosition - new Vector2((io.texture.Width / 2), (io.texture.Height / 2));
                 io.name = io.getPrefix() + selectedLayer.getNextObjectNumber();
                 io.layer = selectedLayer;
+                io.loadContentInEditor(EditorLoop.EditorLoopInstance.GraphicsDevice);
                 AddLevelObject(io);
             }
             MainForm.Default.UpdateTreeView();
@@ -588,7 +583,8 @@ namespace SilhouetteEditor
                 {
                     foreach (LevelObject lo2 in selectedLevelObjects)
                     {
-                        lo2.drawSelectionFrame();
+                        if(l == selectedLayer)
+                            lo2.drawSelectionFrame(spriteBatch, Camera.matrix);
                     }
                 }
 

@@ -8,6 +8,7 @@ using FarseerPhysics.Dynamics;
 using Microsoft.Xna.Framework;
 using Silhouette.Engine.Manager;
 using System.ComponentModel;
+using Silhouette.Engine;
 
 namespace Silhouette.GameMechs
 {
@@ -24,13 +25,18 @@ namespace Silhouette.GameMechs
         [Description("The mass of the object to calculate physical interaction.")]
         public float density { get { return _density; } set { _density = value; } }
 
+        Matrix transform;
+        Rectangle boundingBox;
+        Vector2[] polygon;
+
         public InteractiveObject(String path)
         {
             this.fullPath = path;
             this.assetName = Path.GetFileNameWithoutExtension(path);
-            this.scale = 1f;
+            this.scale = Vector2.One;
             this.rotation = 0f;
             this.origin = Vector2.Zero;
+            this.polygon = new Vector2[4];
             density = 1;
         }
 
@@ -63,8 +69,13 @@ namespace Silhouette.GameMechs
 
         public override void loadContentInEditor(GraphicsDevice graphics)
         {
-            FileStream file = FileManager.LoadConfigFile(fullPath);
-            texture = Texture2D.FromStream(graphics, file);
+            if (texture == null)
+            {
+                FileStream file = FileManager.LoadConfigFile(fullPath);
+                texture = Texture2D.FromStream(graphics, file);
+            }
+
+            transformed();
         }
 
         public override string getPrefix()
@@ -72,15 +83,60 @@ namespace Silhouette.GameMechs
             return "InteractiveObject_";
         }
 
-        public override bool contains(Vector2 worldPosition)
+        public override LevelObject clone()
         {
-            Rectangle r = new Rectangle((int)position.X, (int)position.Y, texture.Width, texture.Height);
-            return r.Contains((int)worldPosition.X, (int)worldPosition.Y);
+            throw new NotImplementedException();
         }
 
-        public override void drawSelectionFrame()
+        public override void transformed()
         {
+            if (texture == null)
+                return;
 
+            transform =
+                Matrix.CreateTranslation(new Vector3(origin.X, origin.Y, 0.0f)) *
+                Matrix.CreateScale(scale.X, scale.Y, 1) *
+                Matrix.CreateRotationZ(rotation) *
+                Matrix.CreateTranslation(new Vector3(position, 0.0f));
+
+            Vector2 leftTop = new Vector2(0, 0);
+            Vector2 rightTop = new Vector2(texture.Width, 0);
+            Vector2 leftBottom = new Vector2(0, texture.Height);
+            Vector2 rightBottom = new Vector2(texture.Width, texture.Height);
+
+            Vector2.Transform(ref leftTop, ref transform, out leftTop);
+            Vector2.Transform(ref rightTop, ref transform, out rightTop);
+            Vector2.Transform(ref leftBottom, ref transform, out leftBottom);
+            Vector2.Transform(ref rightBottom, ref transform, out rightBottom);
+
+            polygon[0] = leftTop;
+            polygon[1] = rightTop;
+            polygon[3] = leftBottom;
+            polygon[2] = rightBottom;
+
+            Vector2 min = Vector2.Min(Vector2.Min(leftTop, rightTop),
+                                      Vector2.Min(leftBottom, rightBottom));
+            Vector2 max = Vector2.Max(Vector2.Max(leftTop, rightTop),
+                                      Vector2.Max(leftBottom, rightBottom));
+
+            boundingBox = new Rectangle((int)min.X, (int)min.Y,
+                                 (int)(max.X - min.X), (int)(max.Y - min.Y));
+        }
+
+        public override bool contains(Vector2 worldPosition)
+        {
+            return boundingBox.Contains((int)worldPosition.X, (int)worldPosition.Y);
+        }
+
+        public override void drawSelectionFrame(SpriteBatch spriteBatch, Matrix matrix)
+        {
+            Primitives.Instance.drawPolygon(spriteBatch, polygon, Color.Yellow, 2);
+            foreach (Vector2 p in polygon)
+            {
+                Primitives.Instance.drawCircleFilled(spriteBatch, p, 4, Color.Yellow);
+            }
+            Vector2 origin = new Vector2(position.X + texture.Width / 2, position.Y + texture.Height / 2);
+            Primitives.Instance.drawBoxFilled(spriteBatch, origin.X - 5, origin.Y - 5, 10, 10, Color.Yellow);
         }
     }
 }
