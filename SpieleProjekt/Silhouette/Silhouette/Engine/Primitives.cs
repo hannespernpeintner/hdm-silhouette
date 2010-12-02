@@ -66,7 +66,7 @@ namespace Silhouette.Engine
 
                 if (length > radius)
                 {
-                    colors[i] = Color.DarkRed;
+                    colors[i] = Color.Transparent;
                 }
                 else if (length >= radius - borderOuterTransitionWidth)
                 {

@@ -32,17 +32,17 @@ namespace Silhouette.GameMechs
         private Vector2 _position;
         [DisplayName("Position"), Category("General")]
         [Description("The object's position in the world.")]
-        public Vector2 position { get { return _position; } set { _position = value; } }
+        public Vector2 position { get { return _position; } set { _position = value; transformed(); } }
 
-        private float _scale;
+        private Vector2 _scale;
         [DisplayName("Scale"), Category("General")]
         [Description("The scale factor of the object.")]
-        public float scale { get { return _scale; } set { _scale = value; } }
+        public Vector2 scale { get { return _scale; } set { _scale = value; transformed(); } }
 
         private float _rotation;
         [DisplayName("Rotation"), Category("General")]
         [Description("The rotation factor of the object.")]
-        public float rotation { get { return _rotation; } set { _rotation = value; } }
+        public float rotation { get { return _rotation; } set { _rotation = value; transformed(); } }
 
         public Layer layer;
 
@@ -59,6 +59,8 @@ namespace Silhouette.GameMechs
 
         public abstract string getPrefix();
         public abstract bool contains(Vector2 worldPosition);
-        public abstract void drawSelectionFrame();
+        public abstract void transformed();
+        public abstract LevelObject clone();
+        public abstract void drawSelectionFrame(SpriteBatch spriteBatch, Matrix matrix);
     }
 }

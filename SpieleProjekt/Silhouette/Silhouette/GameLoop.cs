@@ -55,7 +55,7 @@ namespace Silhouette
 
         protected override void Initialize()
         {
-            level = new Level();        //Provisorisch
+            level = Level.LoadLevelFile("12345");        //Provisorisch
             level.Initialize();
             base.Initialize();
         }

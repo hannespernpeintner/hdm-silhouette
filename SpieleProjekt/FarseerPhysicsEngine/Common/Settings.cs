@@ -94,7 +94,7 @@ namespace FarseerPhysics.Common
         /// <summary>
         /// The maximum number of vertices on a convex polygon.
         /// </summary>
-        public static int MaxPolygonVertices = 8;
+        public static int MaxPolygonVertices = 50;
 
         /// <summary>
         /// This is used to fatten AABBs in the dynamic tree. This allows proxies

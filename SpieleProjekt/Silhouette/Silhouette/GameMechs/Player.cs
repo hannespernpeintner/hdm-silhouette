@@ -196,8 +196,10 @@ namespace Silhouette.GameMechs
         //Implementation der LevelObject-Methoden. Unwichtig für Player!
 
         public override string getPrefix() { return null; }
+        public override LevelObject clone() { return null; }
+        public override void transformed() { }
         public override bool contains(Vector2 worldPosition) { return false; }
-        public override void drawSelectionFrame() { return; }
+        public override void drawSelectionFrame(SpriteBatch spriteBatch, Matrix matrix) { return; }
         public override void loadContentInEditor(GraphicsDevice graphics) { }
     }
 }
