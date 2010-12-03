@@ -119,6 +119,7 @@
     <Compile Include="DebugViewXNA.cs" />
     <Compile Include="Engine\AnimationWithFixture.cs" />
     <Compile Include="Engine\Camera.cs" />
+    <Compile Include="Engine\Constants.cs" />
     <Compile Include="Engine\Extensions.cs" />
     <Compile Include="Engine\Layer.Editor.cs" />
     <Compile Include="Engine\Level.cs" />
@@ -141,6 +142,7 @@
     <Compile Include="GameMechs\InteractiveObject.cs" />
     <Compile Include="GameMechs\LevelObject.cs" />
     <Compile Include="GameMechs\Player.cs" />
+    <Compile Include="GameMechs\PrimitiveObjects.cs" />
     <Compile Include="GameMechs\TextureObject.cs" />
     <Compile Include="GameSettings.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

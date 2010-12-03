@@ -69,7 +69,7 @@ namespace Silhouette.Engine.Manager
             radius /= Level.PixelPerMeter;
             Fixture fixture = FixtureFactory.CreateCircle(Level.Physics, radius, density);
             fixture.Body.BodyType = bodyType;
-            fixture.Body.Position = ToWorld(radius * 2, radius * 2, ToMeter(position));
+            fixture.Body.Position = ToMeter(position);
             return fixture;
         }
 

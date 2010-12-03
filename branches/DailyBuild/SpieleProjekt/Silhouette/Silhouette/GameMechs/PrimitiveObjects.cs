@@ -27,39 +27,54 @@ using FarseerPhysics.Collision.Shapes;
 namespace Silhouette.GameMechs
 {
     [Serializable]
-    public class RectangleFixtureItem : LevelObject
+    public class RectanglePrimitiveObject : DrawableLevelObject
     {
-        public Microsoft.Xna.Framework.Rectangle rectangle;
-
-        [NonSerialized]
-        public Texture2D texture;
-        [NonSerialized]
-        public Fixture fixture;
-
         private float _width;
-        [DisplayName("Width"), Category("Fixture Data")]
+        [DisplayName("Width"), Category("Primitive Data")]
         [Description("The width of the rectangle.")]
         public float width { get { return _width; } set { _width = value; transformed(); } }
         private float _height;
-        [DisplayName("Height"), Category("Fixture Data")]
+        [DisplayName("Height"), Category("Primitive Data")]
         [Description("The height of the rectangle.")]
         public float height { get { return _height; } set { _height = value; transformed(); } }
+        private Color _color;
+        [DisplayName("Color"), Category("Primitive Data")]
+        [Description("The color of the primitive.")]
+        public Color color { get { return _color; } set { _color = value; } }
 
-        public RectangleFixtureItem(Microsoft.Xna.Framework.Rectangle rectangle)
+        public Rectangle rectangle;
+
+        public RectanglePrimitiveObject(Rectangle rectangle)
         {
             this.rectangle = rectangle;
             position = rectangle.Location.ToVector2();
             width = rectangle.Width;
             height = rectangle.Height;
+            color = Constants.ColorPrimitives;
         }
 
         public override void Initialise() { }
-        public override void LoadContent() { ToFixture(); }
+        public override void LoadContent() { }
+        public override void loadContentInEditor(GraphicsDevice graphics) { }
         public override void Update(GameTime gameTime) { }
+
+        public override void Draw(SpriteBatch spriteBatch)
+        {
+            Primitives.Instance.drawBoxFilled(spriteBatch, rectangle, color);
+        }
+
+        //---> Editor-Funktionalität <---//
+
+        public override void drawInEditor(SpriteBatch spriteBatch)
+        {
+            Color onHover = color;
+            if (this.mouseOn) onHover = Constants.onHover;
+            Primitives.Instance.drawBoxFilled(spriteBatch, rectangle, onHover);
+        }
 
         public override string getPrefix()
         {
-            return "RectangleFixture_";
+            return "RectanglePrimitive_";
         }
 
         public override LevelObject clone()
@@ -67,16 +82,16 @@ namespace Silhouette.GameMechs
             throw new NotImplementedException();
         }
 
+        public override bool contains(Vector2 worldPosition)
+        {
+            return rectangle.Contains(new Microsoft.Xna.Framework.Point((int)worldPosition.X, (int)worldPosition.Y));
+        }
+
         public override void transformed()
         {
             rectangle.Location = position.ToPoint();
             rectangle.Width = (int)width;
             rectangle.Height = (int)height;
-        }
-
-        public override bool contains(Vector2 worldPosition)
-        {
-            return rectangle.Contains(new Microsoft.Xna.Framework.Point((int)worldPosition.X, (int)worldPosition.Y));
         }
 
         public override void drawSelectionFrame(SpriteBatch spriteBatch, Matrix matrix)
@@ -90,37 +105,47 @@ namespace Silhouette.GameMechs
                 Primitives.Instance.drawCircleFilled(spriteBatch, p, 4, Color.Yellow);
             }
         }
-
-        public void ToFixture()
-        {
-            fixture = FixtureManager.CreateRectangle(width, height, position, BodyType.Static, 1);
-        }
     }
 
     [Serializable]
-    public class CircleFixtureItem : LevelObject
+    public class CirclePrimitiveObject : DrawableLevelObject
     {
-        private float _radius;
-        [DisplayName("Radius"), Category("Fixture Data")]
-        [Description("The radius of the circle fixture.")]
-        public float radius { get { return _radius; } set { _radius = value; } }
+        private Color _color;
+        [DisplayName("Color"), Category("Primitive Data")]
+        [Description("The color of the primitive.")]
+        public Color color { get { return _color; } set { _color = value; } }
 
-        [NonSerialized]
-        public Fixture fixture;
+        public float radius;
 
-        public CircleFixtureItem(Vector2 position, float radius)
+        public CirclePrimitiveObject(Vector2 position, float radius)
         {
             this.position = position;
             this.radius = radius;
+            color = Constants.ColorPrimitives;
         }
 
         public override void Initialise() { }
-        public override void LoadContent() { ToFixture(); }
+        public override void LoadContent() { }
+        public override void loadContentInEditor(GraphicsDevice graphics) { }
         public override void Update(GameTime gameTime) { }
+
+        public override void Draw(SpriteBatch spriteBatch)
+        {
+            Primitives.Instance.drawCircleFilled(spriteBatch, position, radius, color);
+        }
+
+        //---> Editor-Funktionalität <---//
+
+        public override void drawInEditor(SpriteBatch spriteBatch)
+        {
+            Color onHover = color;
+            if (this.mouseOn) onHover = Constants.onHover;
+            Primitives.Instance.drawCircleFilled(spriteBatch, position, radius, onHover);
+        }
 
         public override string getPrefix()
         {
-            return "CircleFixture_";
+            return "CirclePrimitive_";
         }
 
         public override LevelObject clone()
@@ -128,12 +153,12 @@ namespace Silhouette.GameMechs
             throw new NotImplementedException();
         }
 
-        public override void transformed() { }
-
         public override bool contains(Vector2 worldPosition)
         {
             return (worldPosition - position).Length() <= radius;
         }
+
+        public override void transformed() { }
 
         public override void drawSelectionFrame(SpriteBatch spriteBatch, Matrix matrix)
         {
@@ -151,45 +176,71 @@ namespace Silhouette.GameMechs
                 Primitives.Instance.drawCircleFilled(spriteBatch, p, 4, Color.Yellow);
             }
         }
-
-        public void ToFixture()
-        {
-            fixture = FixtureManager.CreateCircle(radius, position, BodyType.Static, 1);
-        }
     }
 
     [Serializable]
-    public class PathFixtureItem : LevelObject
+    public class PathPrimitiveObject : DrawableLevelObject
     {
-        [NonSerialized]
-        Fixture[] fixtures;
-
         private bool _isPolygon;
-        [DisplayName("Polygon"), Category("Fixture Data")]
+        [DisplayName("Polygon"), Category("Primitive Data")]
         [Description("Defines wether or not the path should be treated like a polygon. If the value is true the start and end of the path will be connected.")]
         public bool isPolygon { get { return _isPolygon; } set { _isPolygon = value; } }
-
         private int _lineWidth;
-        [DisplayName("Line Width"), Category("Fixture Data")]
+        [DisplayName("Line Width"), Category("Primitive Data")]
         [Description("The line width of this path. Can be used for rendering.")]
         public int lineWidth { get { return _lineWidth; } set { _lineWidth = value; } }
+        private Color _color;
+        [DisplayName("Color"), Category("Primitive Data")]
+        [Description("The color of the primitive.")]
+        public Color color { get { return _color; } set { _color = value; } }
 
         public Vector2[] LocalPoints;
         public Vector2[] WorldPoints;
 
-
-        public override void Initialise() { }
-        public override void LoadContent() { ToFixture(); }
-        public override void Update(GameTime gameTime) { }
-
-        public PathFixtureItem(Vector2[] Points)
+        public PathPrimitiveObject(Vector2[] Points)
         {
             WorldPoints = Points;
             LocalPoints = (Vector2[])Points.Clone();
             position = Points[0];
             for (int i = 0; i < LocalPoints.Length; i++) LocalPoints[i] -= position;
             lineWidth = 4;
+            color = Constants.ColorPrimitives;
             transformed();
+        }
+
+        public override void Initialise() { }
+        public override void LoadContent() { }
+        public override void loadContentInEditor(GraphicsDevice graphics) { }
+        public override void Update(GameTime gameTime) { }
+
+        public override void Draw(SpriteBatch spriteBatch)
+        {
+            if (this.isPolygon)
+                Primitives.Instance.drawPolygon(spriteBatch, WorldPoints, color, lineWidth);
+            else
+                Primitives.Instance.drawPath(spriteBatch, WorldPoints, color, lineWidth);
+        }
+
+        //---> Editor-Funktionalität <---//
+
+        public override void drawInEditor(SpriteBatch spriteBatch)
+        {
+            Color onHover = color;
+            if (this.mouseOn) onHover = Constants.onHover;
+            if (this.isPolygon)
+                Primitives.Instance.drawPolygon(spriteBatch, WorldPoints, onHover, lineWidth);
+            else
+                Primitives.Instance.drawPath(spriteBatch, WorldPoints, onHover, lineWidth);
+        }
+
+        public override string getPrefix()
+        {
+            return "PathPrimitive_";
+        }
+
+        public override LevelObject clone()
+        {
+            throw new NotImplementedException();
         }
 
         public override bool contains(Vector2 worldPosition)
@@ -201,16 +252,6 @@ namespace Silhouette.GameMechs
             if (isPolygon)
                 if (worldPosition.DistanceToLineSegment(WorldPoints[0], WorldPoints[WorldPoints.Length - 1]) <= lineWidth) return true;
             return false;
-        }
-
-        public override string getPrefix()
-        {
-            return "PathFixture_";
-        }
-
-        public override LevelObject clone()
-        {
-            throw new NotImplementedException();
         }
 
         public override void transformed()
@@ -228,32 +269,6 @@ namespace Silhouette.GameMechs
             foreach (Vector2 p in WorldPoints)
             {
                 Primitives.Instance.drawCircleFilled(spriteBatch, p, 4, Color.Yellow);
-            }
-        }
-
-        public void ToFixture()
-        {
-            if (isPolygon)
-            {
-                FarseerPhysics.Common.Path path = new FarseerPhysics.Common.Path();
-                foreach (Vector2 v in WorldPoints)
-                {
-                    path.Add(FixtureManager.ToMeter(v));
-                }
-                path.Closed = true;
-
-                PathManager.ConvertPathToPolygon(path, new Body(Level.Physics), 1, WorldPoints.Length);
-            }
-            else
-            {
-                FarseerPhysics.Common.Path path = new FarseerPhysics.Common.Path();
-                foreach (Vector2 v in WorldPoints)
-                {
-                    path.Add(FixtureManager.ToMeter(v));
-                }
-                path.Closed = false;
-
-                PathManager.ConvertPathToEdges(path, new Body(Level.Physics), WorldPoints.Length * 3);
             }
         }
     }
