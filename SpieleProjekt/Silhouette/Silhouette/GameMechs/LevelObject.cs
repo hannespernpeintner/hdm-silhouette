@@ -34,16 +34,6 @@ namespace Silhouette.GameMechs
         [Description("The object's position in the world.")]
         public Vector2 position { get { return _position; } set { _position = value; transformed(); } }
 
-        private Vector2 _scale;
-        [DisplayName("Scale"), Category("General")]
-        [Description("The scale factor of the object.")]
-        public Vector2 scale { get { return _scale; } set { _scale = value; transformed(); } }
-
-        private float _rotation;
-        [DisplayName("Rotation"), Category("General")]
-        [Description("The rotation factor of the object.")]
-        public float rotation { get { return _rotation; } set { _rotation = value; transformed(); } }
-
         public Layer layer;
 
         [NonSerialized]

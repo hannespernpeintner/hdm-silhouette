@@ -47,6 +47,27 @@ namespace Silhouette.Engine
             }
         }
 
+        public void drawInEditor(SpriteBatch spriteBatch)
+        {
+            if (!isVisible)
+                return;
+
+            for (int x = 0; x < width; x++)
+                for (int y = 0; y < height; y++)
+                {
+                    if (layerTexture[x, y] != null)
+                        spriteBatch.Draw(layerTexture[x, y], new Vector2(x * GameSettings.Default.resolutionWidth, y * GameSettings.Default.resolutionHeight), Color.White);
+                }
+            foreach (LevelObject lo in loList)
+            {
+                if (lo is DrawableLevelObject)
+                {
+                    DrawableLevelObject dlo = (DrawableLevelObject)lo;
+                    dlo.drawInEditor(spriteBatch);
+                }
+            }
+        }
+
         public LevelObject getItemAtPosition(Vector2 worldPosition)
         {
             foreach (LevelObject lo in loList)

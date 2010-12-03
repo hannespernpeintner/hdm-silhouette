@@ -29,6 +29,8 @@ namespace SilhouetteEditor
         public static Color ColorSelectionBox { get { return _ColorSelectionBox; } }
         private static Color _ColorFixtures = new Color(0, 0, 192, 145);
         public static Color ColorFixtures { get { return _ColorFixtures; } }
+        private static Color _ColorPrimitives = new Color(0, 0, 0, 255);
+        public static Color ColorPrimitives { get { return _ColorPrimitives; } }
         private static Color _ColorMouseOn = new Color(255, 0, 0, 228);
         public static Color ColorMouseOn { get { return _ColorMouseOn; } }
     }

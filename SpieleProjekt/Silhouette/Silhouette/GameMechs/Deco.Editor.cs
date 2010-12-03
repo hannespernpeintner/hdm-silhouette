@@ -35,6 +35,11 @@ namespace Silhouette.GameMechs
             throw new NotImplementedException();
         }
 
+        public override void drawInEditor(SpriteBatch spriteBatch)
+        {
+            throw new NotImplementedException();
+        }
+
         public override void drawSelectionFrame(SpriteBatch spriteBatch, Matrix matrix)
         {
             throw new NotImplementedException();
