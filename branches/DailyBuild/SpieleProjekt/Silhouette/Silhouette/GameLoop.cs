@@ -55,6 +55,7 @@ namespace Silhouette
 
         protected override void Initialize()
         {
+            Primitives.Instance.Initialize(this.GraphicsDevice);
             level = Level.LoadLevelFile("12345");        //Provisorisch
             level.Initialize();
             base.Initialize();

@@ -1,4 +1,8 @@
-﻿namespace SilhouetteEditor.Forms
+﻿using System.Drawing;
+using System.IO;
+using SilhouetteEditor.Properties;
+
+namespace SilhouetteEditor.Forms
 {
     partial class MainForm
     {
@@ -29,7 +33,6 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.StatusBar = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.Selection = new System.Windows.Forms.ToolStripStatusLabel();
@@ -62,9 +65,16 @@
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.ToolBoxButton = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
-            this.RectangleButton = new System.Windows.Forms.ToolStripButton();
-            this.CircleButton = new System.Windows.Forms.ToolStripButton();
-            this.PathButton = new System.Windows.Forms.ToolStripButton();
+            this.PrimitiveButton = new System.Windows.Forms.ToolStripDropDownButton();
+            this.rectangleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.circleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.pathToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.FixtureButton = new System.Windows.Forms.ToolStripDropDownButton();
+            this.rectangleCollisionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.circleCollisionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.pathCollisionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.PhysicsButton = new System.Windows.Forms.ToolStripDropDownButton();
+            this.EventButton = new System.Windows.Forms.ToolStripDropDownButton();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.propertyGrid1 = new System.Windows.Forms.PropertyGrid();
@@ -356,9 +366,10 @@
             this.toolStripSeparator2,
             this.ToolBoxButton,
             this.toolStripSeparator3,
-            this.RectangleButton,
-            this.CircleButton,
-            this.PathButton});
+            this.PrimitiveButton,
+            this.FixtureButton,
+            this.PhysicsButton,
+            this.EventButton});
             this.ToolBar.Location = new System.Drawing.Point(0, 0);
             this.ToolBar.Name = "ToolBar";
             this.ToolBar.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
@@ -368,7 +379,8 @@
             // 
             // NewLayerButton
             // 
-            this.NewLayerButton.Image = ((System.Drawing.Image)(resources.GetObject("NewLayerButton.Image")));
+            this.NewLayerButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.NewLayerButton.Image = global::SilhouetteEditor.Properties.Resource.NewLayer;
             this.NewLayerButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.NewLayerButton.Name = "NewLayerButton";
             this.NewLayerButton.Size = new System.Drawing.Size(23, 22);
@@ -378,7 +390,7 @@
             // DeleteLayerButton
             // 
             this.DeleteLayerButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.DeleteLayerButton.Image = ((System.Drawing.Image)(resources.GetObject("DeleteLayerButton.Image")));
+            this.DeleteLayerButton.Image = global::SilhouetteEditor.Properties.Resource.DeleteLayer;
             this.DeleteLayerButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.DeleteLayerButton.Name = "DeleteLayerButton";
             this.DeleteLayerButton.Size = new System.Drawing.Size(23, 22);
@@ -393,7 +405,7 @@
             // ToolBoxButton
             // 
             this.ToolBoxButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.ToolBoxButton.Image = ((System.Drawing.Image)(resources.GetObject("ToolBoxButton.Image")));
+            this.ToolBoxButton.Image = global::SilhouetteEditor.Properties.Resource.ToolBox;
             this.ToolBoxButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.ToolBoxButton.Name = "ToolBoxButton";
             this.ToolBoxButton.Size = new System.Drawing.Size(23, 22);
@@ -406,38 +418,95 @@
             this.toolStripSeparator3.Name = "toolStripSeparator3";
             this.toolStripSeparator3.Size = new System.Drawing.Size(6, 25);
             // 
-            // RectangleButton
+            // PrimitiveButton
             // 
-            this.RectangleButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.RectangleButton.Image = ((System.Drawing.Image)(resources.GetObject("RectangleButton.Image")));
-            this.RectangleButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.RectangleButton.Name = "RectangleButton";
-            this.RectangleButton.Size = new System.Drawing.Size(23, 22);
-            this.RectangleButton.Text = "Create Rectangle Fixture";
-            this.RectangleButton.ToolTipText = "Create Rectangle Fixture";
-            this.RectangleButton.Click += new System.EventHandler(this.ToolStripButton_AddRectangleFixture);
+            this.PrimitiveButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.PrimitiveButton.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.rectangleToolStripMenuItem,
+            this.circleToolStripMenuItem,
+            this.pathToolStripMenuItem});
+            this.PrimitiveButton.Image = global::SilhouetteEditor.Properties.Resource.AddPrimitive;
+            this.PrimitiveButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.PrimitiveButton.Name = "PrimitiveButton";
+            this.PrimitiveButton.Size = new System.Drawing.Size(29, 22);
+            this.PrimitiveButton.Text = "toolStripDropDownButton1";
+            this.PrimitiveButton.ToolTipText = "Paint Primitives";
             // 
-            // CircleButton
+            // rectangleToolStripMenuItem
             // 
-            this.CircleButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.CircleButton.Image = ((System.Drawing.Image)(resources.GetObject("CircleButton.Image")));
-            this.CircleButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.CircleButton.Name = "CircleButton";
-            this.CircleButton.Size = new System.Drawing.Size(23, 22);
-            this.CircleButton.Text = "Create Circle Fixture";
-            this.CircleButton.ToolTipText = "Create Circle Fixture";
-            this.CircleButton.Click += new System.EventHandler(this.ToolStripButton_AddCircleFixture);
+            this.rectangleToolStripMenuItem.Name = "rectangleToolStripMenuItem";
+            this.rectangleToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.rectangleToolStripMenuItem.Text = "Rectangle";
+            this.rectangleToolStripMenuItem.Click += new System.EventHandler(this.rectangleToolStripMenuItem_Click);
             // 
-            // PathButton
+            // circleToolStripMenuItem
             // 
-            this.PathButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.PathButton.Image = ((System.Drawing.Image)(resources.GetObject("PathButton.Image")));
-            this.PathButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.PathButton.Name = "PathButton";
-            this.PathButton.Size = new System.Drawing.Size(23, 22);
-            this.PathButton.Text = "Create Path Button";
-            this.PathButton.ToolTipText = "Create Fixture Path";
-            this.PathButton.Click += new System.EventHandler(this.PathButton_Click);
+            this.circleToolStripMenuItem.Name = "circleToolStripMenuItem";
+            this.circleToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.circleToolStripMenuItem.Text = "Circle";
+            this.circleToolStripMenuItem.Click += new System.EventHandler(this.circleToolStripMenuItem_Click);
+            // 
+            // pathToolStripMenuItem
+            // 
+            this.pathToolStripMenuItem.Name = "pathToolStripMenuItem";
+            this.pathToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.pathToolStripMenuItem.Text = "Path";
+            this.pathToolStripMenuItem.Click += new System.EventHandler(this.pathToolStripMenuItem_Click);
+            // 
+            // FixtureButton
+            // 
+            this.FixtureButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.FixtureButton.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.rectangleCollisionToolStripMenuItem,
+            this.circleCollisionToolStripMenuItem,
+            this.pathCollisionToolStripMenuItem});
+            this.FixtureButton.Image = global::SilhouetteEditor.Properties.Resource.AddFixture;
+            this.FixtureButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.FixtureButton.Name = "FixtureButton";
+            this.FixtureButton.Size = new System.Drawing.Size(29, 22);
+            this.FixtureButton.Text = "toolStripDropDownButton2";
+            this.FixtureButton.ToolTipText = "Add Collision Domain";
+            // 
+            // rectangleCollisionToolStripMenuItem
+            // 
+            this.rectangleCollisionToolStripMenuItem.Name = "rectangleCollisionToolStripMenuItem";
+            this.rectangleCollisionToolStripMenuItem.Size = new System.Drawing.Size(175, 22);
+            this.rectangleCollisionToolStripMenuItem.Text = "Rectangle Collision";
+            this.rectangleCollisionToolStripMenuItem.Click += new System.EventHandler(this.rectangleCollisionToolStripMenuItem_Click);
+            // 
+            // circleCollisionToolStripMenuItem
+            // 
+            this.circleCollisionToolStripMenuItem.Name = "circleCollisionToolStripMenuItem";
+            this.circleCollisionToolStripMenuItem.Size = new System.Drawing.Size(175, 22);
+            this.circleCollisionToolStripMenuItem.Text = "Circle Collision";
+            this.circleCollisionToolStripMenuItem.Click += new System.EventHandler(this.circleCollisionToolStripMenuItem_Click);
+            // 
+            // pathCollisionToolStripMenuItem
+            // 
+            this.pathCollisionToolStripMenuItem.Name = "pathCollisionToolStripMenuItem";
+            this.pathCollisionToolStripMenuItem.Size = new System.Drawing.Size(175, 22);
+            this.pathCollisionToolStripMenuItem.Text = "Path Collision";
+            this.pathCollisionToolStripMenuItem.Click += new System.EventHandler(this.pathCollisionToolStripMenuItem_Click);
+            // 
+            // PhysicsButton
+            // 
+            this.PhysicsButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.PhysicsButton.Image = global::SilhouetteEditor.Properties.Resource.Physics;
+            this.PhysicsButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.PhysicsButton.Name = "PhysicsButton";
+            this.PhysicsButton.Size = new System.Drawing.Size(29, 22);
+            this.PhysicsButton.Text = "toolStripDropDownButton3";
+            this.PhysicsButton.ToolTipText = "Add Physics";
+            // 
+            // EventButton
+            // 
+            this.EventButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.EventButton.Image = global::SilhouetteEditor.Properties.Resource.AddEvent;
+            this.EventButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.EventButton.Name = "EventButton";
+            this.EventButton.Size = new System.Drawing.Size(29, 22);
+            this.EventButton.Text = "toolStripDropDownButton1";
+            this.EventButton.ToolTipText = "Add Event";
             // 
             // tabControl1
             // 
@@ -771,8 +840,6 @@
         private System.Windows.Forms.ToolStripMenuItem deleteToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem toolBoxToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
-        private System.Windows.Forms.ToolStripButton RectangleButton;
-        private System.Windows.Forms.ToolStripButton CircleButton;
         public System.Windows.Forms.ToolStripStatusLabel MouseWorldPosition;
         public System.Windows.Forms.ToolStripStatusLabel Selection;
         public System.Windows.Forms.PictureBox GameView;
@@ -797,6 +864,15 @@
         private System.Windows.Forms.Button BrowseButton3;
         private System.Windows.Forms.ListView AnimationView;
         private System.Windows.Forms.ImageList ImageListInteractive32;
-        private System.Windows.Forms.ToolStripButton PathButton;
+        private System.Windows.Forms.ToolStripDropDownButton PrimitiveButton;
+        private System.Windows.Forms.ToolStripMenuItem rectangleToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem circleToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem pathToolStripMenuItem;
+        private System.Windows.Forms.ToolStripDropDownButton FixtureButton;
+        private System.Windows.Forms.ToolStripMenuItem rectangleCollisionToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem circleCollisionToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem pathCollisionToolStripMenuItem;
+        private System.Windows.Forms.ToolStripDropDownButton PhysicsButton;
+        private System.Windows.Forms.ToolStripDropDownButton EventButton;
     }
 }

@@ -201,5 +201,6 @@ namespace Silhouette.GameMechs
         public override bool contains(Vector2 worldPosition) { return false; }
         public override void drawSelectionFrame(SpriteBatch spriteBatch, Matrix matrix) { return; }
         public override void loadContentInEditor(GraphicsDevice graphics) { }
+        public override void drawInEditor(SpriteBatch spriteBatch) { }
     }
 }

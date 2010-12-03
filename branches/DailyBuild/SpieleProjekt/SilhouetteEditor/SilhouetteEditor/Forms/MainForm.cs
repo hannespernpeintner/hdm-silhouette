@@ -355,5 +355,35 @@ namespace SilhouetteEditor.Forms
         {
             //Wird noch implementiert.
         }
+
+        private void rectangleCollisionToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Editor.Default.AddFixture(FixtureType.Rectangle);
+        }
+
+        private void circleCollisionToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Editor.Default.AddFixture(FixtureType.Circle);
+        }
+
+        private void pathCollisionToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Editor.Default.AddFixture(FixtureType.Path);
+        }
+
+        private void rectangleToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Editor.Default.AddPrimitive(PrimitiveType.Rectangle);
+        }
+
+        private void circleToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Editor.Default.AddPrimitive(PrimitiveType.Circle);
+        }
+
+        private void pathToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Editor.Default.AddPrimitive(PrimitiveType.Path);
+        }
     }
 }

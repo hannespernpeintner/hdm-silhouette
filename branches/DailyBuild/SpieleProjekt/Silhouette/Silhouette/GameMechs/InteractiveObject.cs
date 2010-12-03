@@ -20,8 +20,33 @@ namespace Silhouette.GameMechs
         [NonSerialized]
         public Fixture fixture;
 
+        private string _assetName;
+        [DisplayName("Filename"), Category("Texture Data")]
+        [Description("The filename of the attached texture.")]
+        public string assetName { get { return _assetName; } set { _assetName = value; } }
+
+        private string _fullPath;
+        [DisplayName("Path"), Category("Texture Data")]
+        [Description("The full path of the texture.")]
+        public string fullPath { get { return _fullPath; } set { _fullPath = value; } }
+
+        private Vector2 _scale;
+        [DisplayName("Scale"), Category("Texture Data")]
+        [Description("The scale factor of the object.")]
+        public Vector2 scale { get { return _scale; } set { _scale = value; transformed(); } }
+
+        private float _rotation;
+        [DisplayName("Rotation"), Category("Texture Data")]
+        [Description("The rotation factor of the object.")]
+        public float rotation { get { return _rotation; } set { _rotation = value; transformed(); } }
+
+        private Vector2 _origin;
+        [DisplayName("Origin"), Category("Texture Data")]
+        [Description("The sprite origin. Default is (0,0), which is the upper left corner.")]
+        public Vector2 origin { get { return _origin; } set { _origin = value; transformed(); } } 
+
         private float _density;
-        [DisplayName("Mass"), Category("General")]
+        [DisplayName("Mass"), Category("Physical Behavior")]
         [Description("The mass of the object to calculate physical interaction.")]
         public float density { get { return _density; } set { _density = value; } }
 
@@ -57,14 +82,19 @@ namespace Silhouette.GameMechs
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            Color color = Color.White;
-            if (mouseOn) color = new Color(255, 0, 0, 150);
-            spriteBatch.Draw(texture, position, null, color, rotation, origin, scale, SpriteEffects.None, 1);
+            spriteBatch.Draw(texture, position, null, Color.White, rotation, origin, scale, SpriteEffects.None, 1);
         }
 
         public void ToFixture()
         {
             fixture = FixtureManager.CreateRectangle(texture.Width, texture.Height, position, BodyType.Dynamic, density);
+        }
+
+        public override void drawInEditor(SpriteBatch spriteBatch)
+        {
+            Color color = Color.White;
+            if (mouseOn) color = Constants.onHover;
+            spriteBatch.Draw(texture, position, null, color, rotation, origin, scale, SpriteEffects.None, 1);
         }
 
         public override void loadContentInEditor(GraphicsDevice graphics)
@@ -135,8 +165,6 @@ namespace Silhouette.GameMechs
             {
                 Primitives.Instance.drawCircleFilled(spriteBatch, p, 4, Color.Yellow);
             }
-            Vector2 origin = new Vector2(position.X + texture.Width / 2, position.Y + texture.Height / 2);
-            Primitives.Instance.drawBoxFilled(spriteBatch, origin.X - 5, origin.Y - 5, 10, 10, Color.Yellow);
         }
     }
 }

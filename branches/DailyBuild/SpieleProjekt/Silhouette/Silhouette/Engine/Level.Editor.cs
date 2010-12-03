@@ -57,6 +57,22 @@ namespace Silhouette.Engine
             Physics.Step(Math.Min((float)gameTime.ElapsedGameTime.TotalMilliseconds * 0.001f, (1f / 30f)));
         }
 
+        public void DrawInEditor()
+        {
+            if (!GraphicsEnabled)
+            {
+                foreach (Layer l in layerList)
+                {
+                    Vector2 oldCameraPosition = Camera.Position;
+                    Camera.Position *= l.ScrollSpeed;
+                    spriteBatch.Begin(SpriteSortMode.Deferred, null, null, null, null, null, Camera.matrix);
+                    l.drawInEditor(spriteBatch);
+                    spriteBatch.End();
+                    Camera.Position = oldCameraPosition;
+                }
+            }
+        }
+
         public void SaveLevel(string fullPath)
         {
             FileStream file = FileManager.SaveLevelFile(fullPath);

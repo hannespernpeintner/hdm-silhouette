@@ -26,6 +26,13 @@ using FarseerPhysics.Collision;
 
 namespace SilhouetteEditor
 {
+    public enum PrimitiveType
+    { 
+        Rectangle,
+        Circle,
+        Path
+    }
+
     public enum FixtureType
     { 
         Rectangle,
@@ -38,6 +45,7 @@ namespace SilhouetteEditor
         IDLE,
         CAMERAMOVING,
         CREATE_FIXTURES,
+        CREATE_PRIMITIVES,
         CREATE_TEXTURES,
         CREATE_INTERACTIVE,
         CREATE_ANIMATION,
@@ -77,7 +85,9 @@ namespace SilhouetteEditor
         public LevelObject lastObject;
         public TextureWrapper currentTexture;
         public FixtureType currentFixture;
+        public PrimitiveType currentPrimitive;
         public bool fixtureStarted;
+        public bool primitiveStarted;
 
         List<Vector2> clickedPoints, initialPosition;
         Vector2 MouseWorldPosition, GrabbedPoint;
@@ -183,6 +193,57 @@ namespace SilhouetteEditor
                         }            
                     }
                 }
+                if (editorState == EditorState.CREATE_PRIMITIVES)
+                {
+                    if (mstate.LeftButton == Microsoft.Xna.Framework.Input.ButtonState.Pressed && oldmstate.LeftButton == Microsoft.Xna.Framework.Input.ButtonState.Released)
+                    {
+                        clickedPoints.Add(MouseWorldPosition);
+
+                        if (!primitiveStarted)
+                            primitiveStarted = true;
+                        else
+                        {
+                            if (currentPrimitive != PrimitiveType.Path)
+                            {
+                                paintPrimitiveObject();
+                                clickedPoints.Clear();
+                                primitiveStarted = false;
+                            }
+                        }
+                    }
+                    if (kstate.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.Back) && oldkstate.IsKeyUp(Microsoft.Xna.Framework.Input.Keys.Back))
+                    {
+                        if (currentPrimitive == PrimitiveType.Path && clickedPoints.Count > 1)
+                        {
+                            clickedPoints.RemoveAt(clickedPoints.Count - 1);
+                        }
+                    }
+
+                    if (mstate.MiddleButton == Microsoft.Xna.Framework.Input.ButtonState.Pressed && oldmstate.MiddleButton == Microsoft.Xna.Framework.Input.ButtonState.Released)
+                    {
+                        if (currentPrimitive == PrimitiveType.Path && primitiveStarted)
+                        {
+                            paintPrimitiveObject();
+                            clickedPoints.Clear();
+                            primitiveStarted = false;
+                        }
+                    }
+                    if (mstate.RightButton == Microsoft.Xna.Framework.Input.ButtonState.Pressed && oldmstate.RightButton == Microsoft.Xna.Framework.Input.ButtonState.Released)
+                    {
+                        if (primitiveStarted)
+                        {
+                            clickedPoints.Clear();
+                            primitiveStarted = false;
+                        }
+                        else
+                        {
+                            clickedPoints.Clear();
+                            primitiveStarted = false;
+                            editorState = EditorState.IDLE;
+                        }
+                    }
+                }
+
                 if (editorState == EditorState.CREATE_FIXTURES)
                 {
                     if (mstate.LeftButton == Microsoft.Xna.Framework.Input.ButtonState.Pressed && oldmstate.LeftButton == Microsoft.Xna.Framework.Input.ButtonState.Released)
@@ -293,7 +354,7 @@ namespace SilhouetteEditor
             if (level == null)
                 return;
 
-            level.Draw();
+            level.DrawInEditor();
             drawEditorRelated();
         }
 
@@ -361,6 +422,24 @@ namespace SilhouetteEditor
             currentFixture = fixtureType;
             fixtureStarted = false;
             editorState = EditorState.CREATE_FIXTURES;
+        }
+
+        public void AddPrimitive(PrimitiveType primitiveType)
+        {
+            if (level.layerList.Count() == 0)
+            {
+                System.Windows.Forms.MessageBox.Show("There is no Layer to add Primitives to it.", "Error", MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
+                return;
+            }
+            if (selectedLayer == null)
+            {
+                System.Windows.Forms.MessageBox.Show("You have to select a Layer to add Primitives to it.", "Error", MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
+                return;
+            }
+
+            currentPrimitive = primitiveType;
+            primitiveStarted = false;
+            editorState = EditorState.CREATE_PRIMITIVES;
         }
 
         //---> Create Objects <---//
@@ -468,6 +547,32 @@ namespace SilhouetteEditor
                     break;
                 case FixtureType.Path:
                     LevelObject l3 = new PathFixtureItem(clickedPoints.ToArray());
+                    l3.name = l3.getPrefix() + selectedLayer.getNextObjectNumber();
+                    l3.layer = selectedLayer;
+                    selectedLayer.loList.Add(l3);
+                    break;
+            }
+            MainForm.Default.UpdateTreeView();
+        }
+
+        public void paintPrimitiveObject()
+        {
+            switch (currentPrimitive)
+            {
+                case PrimitiveType.Rectangle:
+                    LevelObject l1 = new RectanglePrimitiveObject(Extensions.RectangleFromVectors(clickedPoints[0], clickedPoints[1]));
+                    l1.name = l1.getPrefix() + selectedLayer.getNextObjectNumber();
+                    l1.layer = selectedLayer;
+                    selectedLayer.loList.Add(l1);
+                    break;
+                case PrimitiveType.Circle:
+                    LevelObject l2 = new CirclePrimitiveObject(clickedPoints[0], (MouseWorldPosition - clickedPoints[0]).Length());
+                    l2.name = l2.getPrefix() + selectedLayer.getNextObjectNumber();
+                    l2.layer = selectedLayer;
+                    selectedLayer.loList.Add(l2);
+                    break;
+                case PrimitiveType.Path:
+                    LevelObject l3 = new PathPrimitiveObject(clickedPoints.ToArray());
                     l3.name = l3.getPrefix() + selectedLayer.getNextObjectNumber();
                     l3.layer = selectedLayer;
                     selectedLayer.loList.Add(l3);
@@ -602,6 +707,23 @@ namespace SilhouetteEditor
                         case FixtureType.Path:
                             Primitives.Instance.drawPath(spriteBatch, clickedPoints.ToArray(), Constants.ColorFixtures, Constants.DefaultPathItemLineWidth);
                             Primitives.Instance.drawLine(spriteBatch, clickedPoints.Last(), MouseWorldPosition, Constants.ColorFixtures, Constants.DefaultPathItemLineWidth);
+                            break;
+                    }
+                }
+                if (l == selectedLayer && editorState == EditorState.CREATE_PRIMITIVES && primitiveStarted)
+                {
+                    switch (currentPrimitive)
+                    {
+                        case PrimitiveType.Rectangle:
+                            Microsoft.Xna.Framework.Rectangle r = Extensions.RectangleFromVectors(clickedPoints[0], MouseWorldPosition);
+                            Primitives.Instance.drawBoxFilled(spriteBatch, r, Constants.ColorPrimitives);
+                            break;
+                        case PrimitiveType.Circle:
+                            Primitives.Instance.drawCircleFilled(spriteBatch, clickedPoints[0], (MouseWorldPosition - clickedPoints[0]).Length(), Constants.ColorPrimitives);
+                            break;
+                        case PrimitiveType.Path:
+                            Primitives.Instance.drawPath(spriteBatch, clickedPoints.ToArray(), Constants.ColorPrimitives, Constants.DefaultPathItemLineWidth);
+                            Primitives.Instance.drawLine(spriteBatch, clickedPoints.Last(), MouseWorldPosition, Constants.ColorPrimitives, Constants.DefaultPathItemLineWidth);
                             break;
                     }
                 }
