@@ -66,9 +66,8 @@ namespace Silhouette.GameMechs
         public override Vector2 getScale() { return new Vector2(width, height); }
         public override void setScale(Vector2 scale)
         {
-            float factor = scale.X / width;
             width = (float)Math.Round(scale.X);
-            height = (float)Math.Round(height * factor);
+            height = (float)Math.Round(scale.Y);
             transformed();
         }
 

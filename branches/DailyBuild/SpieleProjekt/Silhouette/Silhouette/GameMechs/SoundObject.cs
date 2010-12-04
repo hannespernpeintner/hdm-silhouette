@@ -17,8 +17,6 @@ using Silhouette.Engine.SoundEngine;
 
 using IrrKlang;
 
-
-
 /*Julius:
  * Diese Klasse repräsentiert ein SoundObjekt. Diese kommunizieren direkt mit der statischen Instanz der irrKlang Engine
  * Der SoundManager wirft ein UpdateEvent, bei dem sich jeder Sound bei Erzeugung registriert.

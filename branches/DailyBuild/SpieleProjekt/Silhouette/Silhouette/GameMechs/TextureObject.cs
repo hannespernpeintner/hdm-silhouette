@@ -75,6 +75,7 @@ namespace Silhouette.GameMechs
         public override void LoadContent()
         {
             texture = GameLoop.gameInstance.Content.Load<Texture2D>("Sprites/" + assetName);
+            origin = new Vector2((float)(texture.Width / 2), (float)(texture.Height / 2));
         }
 
         public override void Update(GameTime gameTime) {}
@@ -90,6 +91,7 @@ namespace Silhouette.GameMechs
         {
             Color color = Color.White;
             if (mouseOn) color = Constants.onHover;
+            origin = new Vector2((float)(texture.Width / 2), (float)(texture.Height / 2));
             spriteBatch.Draw(texture, position, null, color, rotation, origin, scale, SpriteEffects.None, 1);
         }
 
@@ -114,7 +116,7 @@ namespace Silhouette.GameMechs
         public override void setScale(Vector2 scale) { this.scale = scale; }
         public override bool canRotate() { return true; }
         public override float getRotation() { return rotation; }
-        public override void setRotation(float rotate) { this.rotation = rotation; }
+        public override void setRotation(float rotate) { this.rotation = rotate; }
 
         public override LevelObject clone()
         {
@@ -132,10 +134,10 @@ namespace Silhouette.GameMechs
                 Matrix.CreateRotationZ(rotation) *
                 Matrix.CreateTranslation(new Vector3(position, 0.0f));
 
-            Vector2 leftTop = new Vector2(0, 0);
-            Vector2 rightTop = new Vector2(texture.Width, 0);
-            Vector2 leftBottom = new Vector2(0, texture.Height);
-            Vector2 rightBottom = new Vector2(texture.Width, texture.Height);
+            Vector2 leftTop = new Vector2(-texture.Width, -texture.Height);
+            Vector2 rightTop = new Vector2(0, -texture.Height);
+            Vector2 leftBottom = new Vector2(-texture.Width, 0);
+            Vector2 rightBottom = new Vector2(0, 0);
 
             Vector2.Transform(ref leftTop, ref transform, out leftTop);
             Vector2.Transform(ref rightTop, ref transform, out rightTop);
