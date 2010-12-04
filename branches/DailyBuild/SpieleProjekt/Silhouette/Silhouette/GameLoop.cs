@@ -13,6 +13,7 @@ using Microsoft.Xna.Framework.Media;
 //Klassen unserer eigenen Engine
 using Silhouette;
 using Silhouette.Engine;
+using Silhouette.Engine.Manager;
 
 //Partikel-Engine Klassen
 using Silhouette.Engine.PartikelEngine;
@@ -56,6 +57,7 @@ namespace Silhouette
         protected override void Initialize()
         {
             Primitives.Instance.Initialize(this.GraphicsDevice);
+            SoundManager.initialize();
             level = Level.LoadLevelFile("12345");        //Provisorisch
             level.Initialize();
             base.Initialize();
@@ -73,6 +75,7 @@ namespace Silhouette
 
         protected override void Update(GameTime gameTime)
         {
+            SoundManager.update(gameTime);
             level.Update(gameTime);     //Provisorisch
             base.Update(gameTime);
         }
