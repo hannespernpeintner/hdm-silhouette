@@ -58,7 +58,7 @@ namespace Silhouette
         {
             Primitives.Instance.Initialize(this.GraphicsDevice);
             SoundManager.initialize();
-            level = Level.LoadLevelFile("12345");        //Provisorisch
+            level = new Level();        //Provisorisch
             level.Initialize();
             base.Initialize();
         }
