@@ -89,7 +89,8 @@ namespace SilhouetteEditor
         public bool fixtureStarted;
         public bool primitiveStarted;
 
-        List<Vector2> clickedPoints, initialPosition;
+        List<float> initialRotation;
+        List<Vector2> clickedPoints, initialPosition, initialScale;
         Vector2 MouseWorldPosition, GrabbedPoint;
         Microsoft.Xna.Framework.Rectangle selectionRectangle;
 
@@ -104,6 +105,8 @@ namespace SilhouetteEditor
             selectedLevelObjects = new List<LevelObject>();
             clickedPoints = new List<Vector2>();
             initialPosition = new List<Vector2>();
+            initialScale = new List<Vector2>();
+            initialRotation = new List<float>();
             editorState = EditorState.IDLE;
         }
 
@@ -192,7 +195,44 @@ namespace SilhouetteEditor
                             }
                         }            
                     }
+
+                    if (mstate.RightButton == Microsoft.Xna.Framework.Input.ButtonState.Pressed && oldmstate.RightButton == Microsoft.Xna.Framework.Input.ButtonState.Released)
+                    {
+                        if (selectedLevelObjects.Count > 0)
+                        {
+                            GrabbedPoint = MouseWorldPosition - selectedLevelObjects[0].position;
+
+                            initialScale.Clear();
+                            foreach (LevelObject selLO in selectedLevelObjects)
+                            {
+                                if(selLO.canScale())
+                                    initialScale.Add(selLO.getScale());
+                            }
+
+                            editorState = EditorState.SCALING;
+                        }
+                    }
                 }
+
+                if (mstate.MiddleButton == Microsoft.Xna.Framework.Input.ButtonState.Pressed)
+                {
+                    if (selectedLevelObjects.Count > 0)
+                    {   
+                        GrabbedPoint = MouseWorldPosition - selectedLevelObjects[0].position;
+
+                        initialRotation.Clear();
+                        foreach (LevelObject selLO in selectedLevelObjects)
+                        {
+                            if (selLO.canRotate())
+                            {
+                                initialRotation.Add(selLO.getRotation());
+                            }
+                        }
+
+                        editorState = EditorState.ROTATING;
+                    }
+                }
+
                 if (editorState == EditorState.CREATE_PRIMITIVES)
                 {
                     if (mstate.LeftButton == Microsoft.Xna.Framework.Input.ButtonState.Pressed && oldmstate.LeftButton == Microsoft.Xna.Framework.Input.ButtonState.Released)
@@ -343,6 +383,62 @@ namespace SilhouetteEditor
                         editorState = EditorState.IDLE;
                     }
                 }
+
+                if (editorState == EditorState.SCALING)
+                {
+                    Vector2 newdistance = MouseWorldPosition - selectedLevelObjects[0].position;
+                    float factor = newdistance.Length() / GrabbedPoint.Length();
+                    int i = 0;
+                    foreach (LevelObject selLO in selectedLevelObjects)
+                    {
+                        if (selLO.canScale())
+                        {
+                            Vector2 newscale = initialScale[i];
+                            if (!kstate.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.Y)) newscale.X = initialScale[i].X * (((factor - 1.0f) * 0.5f) + 1.0f);
+                            if (!kstate.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.X)) newscale.Y = initialScale[i].Y * (((factor - 1.0f) * 0.5f) + 1.0f);
+                            selLO.setScale(newscale);
+
+                            if (kstate.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.LeftControl))
+                            {
+                                Vector2 scale;
+                                scale.X = (float)Math.Round(selLO.getScale().X * 10) / 10;
+                                scale.Y = (float)Math.Round(selLO.getScale().Y * 10) / 10;
+                                selLO.setScale(scale);
+                            }
+                            i++;
+                        }
+                    }
+                    MainForm.Default.propertyGrid1.Refresh();
+                    if (mstate.RightButton == Microsoft.Xna.Framework.Input.ButtonState.Released && oldmstate.RightButton == Microsoft.Xna.Framework.Input.ButtonState.Pressed)
+                    {
+                        editorState = EditorState.IDLE;
+                    }
+                }
+
+                if (editorState == EditorState.ROTATING)
+                {
+                    Vector2 newpos = MouseWorldPosition - selectedLevelObjects[0].position;
+                    float deltatheta = (float)Math.Atan2(GrabbedPoint.Y, GrabbedPoint.X) - (float)Math.Atan2(newpos.Y, newpos.X);
+                    int i = 0;
+                    foreach (LevelObject selLO in selectedLevelObjects)
+                    {
+                        if (selLO.canRotate())
+                        {
+                            selLO.setRotation(initialRotation[i] - deltatheta);
+                            if (kstate.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.LeftControl))
+                            {
+                                selLO.setRotation((float)Math.Round(selLO.getRotation() / MathHelper.PiOver4) * MathHelper.PiOver4);
+                            }
+                            i++;
+                        }
+                    }
+                    MainForm.Default.propertyGrid1.Refresh();
+                    if (mstate.MiddleButton == Microsoft.Xna.Framework.Input.ButtonState.Released)
+                    {
+                        editorState = EditorState.IDLE;
+                    }
+                }
+
             #endregion
 
             oldkstate = kstate;

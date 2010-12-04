@@ -48,6 +48,12 @@ namespace Silhouette.GameMechs
         //Editor-Methoden
 
         public abstract string getPrefix();
+        public abstract bool canScale();
+        public abstract Vector2 getScale();
+        public abstract void setScale(Vector2 scale);
+        public abstract bool canRotate();
+        public abstract float getRotation();
+        public abstract void setRotation(float rotate);
         public abstract bool contains(Vector2 worldPosition);
         public abstract void transformed();
         public abstract LevelObject clone();

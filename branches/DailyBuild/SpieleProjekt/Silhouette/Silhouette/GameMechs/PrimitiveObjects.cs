@@ -77,6 +77,20 @@ namespace Silhouette.GameMechs
             return "RectanglePrimitive_";
         }
 
+        public override bool canScale() { return true; }
+        public override Vector2 getScale() { return new Vector2(width, height); }
+        public override void setScale(Vector2 scale) 
+        {
+            float factor = scale.X / width;
+            width = (float)Math.Round(scale.X);
+            height = (float)Math.Round(height * factor);
+            transformed();
+        }
+
+        public override bool canRotate() { return false; }
+        public override float getRotation() { return 0; }
+        public override void setRotation(float rotate) { }
+
         public override LevelObject clone()
         {
             throw new NotImplementedException();
@@ -147,6 +161,14 @@ namespace Silhouette.GameMechs
         {
             return "CirclePrimitive_";
         }
+
+        public override bool canScale() { return true; }
+        public override Vector2 getScale() { return new Vector2(radius, radius); }
+        public override void setScale(Vector2 scale) { radius = (float)Math.Round(scale.X); }
+
+        public override bool canRotate() { return false; }
+        public override float getRotation() { return 0; }
+        public override void setRotation(float rotate) { }
 
         public override LevelObject clone()
         {
@@ -237,6 +259,27 @@ namespace Silhouette.GameMechs
         {
             return "PathPrimitive_";
         }
+
+        public override bool canScale() { return true; }
+        public override Vector2 getScale()
+        {
+            float length = (LocalPoints[1] - LocalPoints[0]).Length();
+            return new Vector2(length, length);
+        }
+        public override void setScale(Vector2 scale) 
+        {
+            float factor = scale.X / (LocalPoints[1] - LocalPoints[0]).Length();
+            for (int i = 1; i < LocalPoints.Length; i++)
+            {
+                Vector2 olddistance = LocalPoints[i] - LocalPoints[0];
+                LocalPoints[i] = LocalPoints[0] + olddistance * factor;
+            }
+            transformed();
+        }
+
+        public override bool canRotate() { return false; }
+        public override float getRotation() { return 0; }
+        public override void setRotation(float rotate) {  }
 
         public override LevelObject clone()
         {

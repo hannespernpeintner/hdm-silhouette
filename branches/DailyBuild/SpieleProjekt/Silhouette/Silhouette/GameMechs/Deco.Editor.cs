@@ -18,6 +18,13 @@ namespace Silhouette.GameMechs
             return "Deco_";
         }
 
+        public override bool canScale() { return false; }
+        public override Vector2 getScale() { return Vector2.One; }
+        public override void setScale(Vector2 scale) { }
+        public override bool canRotate() { return false; }
+        public override float getRotation() { return 0; }
+        public override void setRotation(float rotate) { }
+
         public override LevelObject clone()
         {
             throw new NotImplementedException();
