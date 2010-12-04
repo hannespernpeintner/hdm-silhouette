@@ -149,6 +149,7 @@
     <Compile Include="GameMechs\LevelObject.cs" />
     <Compile Include="GameMechs\Player.cs" />
     <Compile Include="GameMechs\PrimitiveObjects.cs" />
+    <Compile Include="GameMechs\SoundObject.cs" />
     <Compile Include="GameMechs\TextureObject.cs" />
     <Compile Include="GameSettings.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
