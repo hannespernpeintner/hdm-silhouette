@@ -36,6 +36,7 @@ namespace Silhouette.Engine.Manager
         public static void update(GameTime gameTime)
         {
             //Julius: Schmeiss das Event!
+        if (UpdateFader != null) 
             UpdateFader(gameTime);
         
         }
