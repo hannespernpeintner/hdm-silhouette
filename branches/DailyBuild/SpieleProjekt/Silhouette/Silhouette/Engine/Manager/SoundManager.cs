@@ -12,7 +12,6 @@ using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 
 using Silhouette.Engine.SoundEngine;
-using System.Collections.Generic;
 
 
 namespace Silhouette.Engine.Manager
