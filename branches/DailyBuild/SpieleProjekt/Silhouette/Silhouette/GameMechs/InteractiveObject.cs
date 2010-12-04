@@ -4,11 +4,16 @@ using System.Linq;
 using System.Text;
 using System.IO;
 using Microsoft.Xna.Framework.Graphics;
-using FarseerPhysics.Dynamics;
 using Microsoft.Xna.Framework;
 using Silhouette.Engine.Manager;
 using System.ComponentModel;
 using Silhouette.Engine;
+
+//Physik-Engine Klassen
+using FarseerPhysics;
+using FarseerPhysics.Dynamics;
+using FarseerPhysics.Factories;
+using FarseerPhysics.Collision;
 
 namespace Silhouette.GameMechs
 {
@@ -72,6 +77,7 @@ namespace Silhouette.GameMechs
             texture = GameLoop.gameInstance.Content.Load<Texture2D>("Sprites/" + assetName);
             origin = new Vector2((float)(texture.Width / 2), (float)(texture.Height / 2));
             this.ToFixture();
+            fixture.Body.Rotation = rotation;
         }
 
         public override void Update(GameTime gameTime)
@@ -87,13 +93,16 @@ namespace Silhouette.GameMechs
 
         public void ToFixture()
         {
-            fixture = FixtureManager.CreateRectangle(texture.Width, texture.Height, position, BodyType.Dynamic, density);
+            fixture = FixtureFactory.CreateRectangle(Level.Physics, texture.Width / Level.PixelPerMeter, texture.Height / Level.PixelPerMeter, density);
+            fixture.Body.BodyType = BodyType.Dynamic;
+            fixture.Body.Position = FixtureManager.ToMeter(position);
         }
 
         public override void drawInEditor(SpriteBatch spriteBatch)
         {
             Color color = Color.White;
             if (mouseOn) color = Constants.onHover;
+            origin = new Vector2((float)(texture.Width / 2), (float)(texture.Height / 2));
             spriteBatch.Draw(texture, position, null, color, rotation, origin, scale, SpriteEffects.None, 1);
         }
 
@@ -118,7 +127,7 @@ namespace Silhouette.GameMechs
         public override void setScale(Vector2 scale) { this.scale = scale; }
         public override bool canRotate() { return true; }
         public override float getRotation() { return rotation; }
-        public override void setRotation(float rotate) { this.rotation = rotation; }
+        public override void setRotation(float rotate) { this.rotation = rotate; }
 
         public override LevelObject clone()
         {
@@ -136,10 +145,10 @@ namespace Silhouette.GameMechs
                 Matrix.CreateRotationZ(rotation) *
                 Matrix.CreateTranslation(new Vector3(position, 0.0f));
 
-            Vector2 leftTop = new Vector2(0, 0);
-            Vector2 rightTop = new Vector2(texture.Width, 0);
-            Vector2 leftBottom = new Vector2(0, texture.Height);
-            Vector2 rightBottom = new Vector2(texture.Width, texture.Height);
+            Vector2 leftTop = new Vector2(-texture.Width, -texture.Height);
+            Vector2 rightTop = new Vector2(0, -texture.Height);
+            Vector2 leftBottom = new Vector2(-texture.Width, 0);
+            Vector2 rightBottom = new Vector2(0, 0);
 
             Vector2.Transform(ref leftTop, ref transform, out leftTop);
             Vector2.Transform(ref rightTop, ref transform, out rightTop);

@@ -585,7 +585,7 @@ namespace SilhouetteEditor
                 TextureObject temp = (TextureObject)currentObject;
                 TextureObject to = new TextureObject(temp.fullPath);
                 to.texture = temp.texture;
-                to.position = MouseWorldPosition - new Vector2((to.texture.Width / 2), (to.texture.Height / 2));
+                to.position = MouseWorldPosition;
                 to.name = to.getPrefix() + selectedLayer.getNextObjectNumber();
                 to.layer = selectedLayer;
                 to.loadContentInEditor(EditorLoop.EditorLoopInstance.GraphicsDevice);
@@ -596,7 +596,7 @@ namespace SilhouetteEditor
                 InteractiveObject temp = (InteractiveObject)currentObject;
                 InteractiveObject io = new InteractiveObject(temp.fullPath);
                 io.texture = temp.texture;
-                io.position = MouseWorldPosition - new Vector2((io.texture.Width / 2), (io.texture.Height / 2));
+                io.position = MouseWorldPosition;
                 io.name = io.getPrefix() + selectedLayer.getNextObjectNumber();
                 io.layer = selectedLayer;
                 io.loadContentInEditor(EditorLoop.EditorLoopInstance.GraphicsDevice);
