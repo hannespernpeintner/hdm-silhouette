@@ -193,14 +193,43 @@ namespace Silhouette.GameMechs
             spriteBatch.DrawString(FontManager.Arial, "Falling: " + isFalling.ToString(), new Vector2(300, 95), Color.Azure);
         }
 
-        //Implementation der LevelObject-Methoden. Unwichtig für Player!
+        //---> Editor-Stuff, für Player unwichtig <---//
 
-        public override string getPrefix() { return null; }
-        public override LevelObject clone() { return null; }
-        public override void transformed() { }
-        public override bool contains(Vector2 worldPosition) { return false; }
-        public override void drawSelectionFrame(SpriteBatch spriteBatch, Matrix matrix) { return; }
-        public override void loadContentInEditor(GraphicsDevice graphics) { }
-        public override void drawInEditor(SpriteBatch spriteBatch) { }
+        public override LevelObject clone()
+        {
+            throw new NotImplementedException();
+        }
+        public override bool contains(Vector2 worldPosition)
+        {
+            throw new NotImplementedException();
+        }
+        public override string getPrefix()
+        {
+            throw new NotImplementedException();
+        }
+        public override void transformed()
+        {
+            throw new NotImplementedException();
+        }
+        public override void drawSelectionFrame(SpriteBatch spriteBatch, Matrix matrix)
+        {
+            throw new NotImplementedException();
+        }
+        public override bool canScale() { return false; }
+        public override Vector2 getScale() { return Vector2.One; }
+        public override void setScale(Vector2 scale) { }
+        public override bool canRotate() { return false; }
+        public override float getRotation() { return 0; }
+        public override void setRotation(float rotate) { }
+
+        public override void loadContentInEditor(GraphicsDevice graphics)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void drawInEditor(SpriteBatch spriteBatch)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

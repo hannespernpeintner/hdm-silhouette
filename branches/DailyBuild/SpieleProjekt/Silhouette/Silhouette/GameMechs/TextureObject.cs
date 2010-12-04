@@ -109,6 +109,13 @@ namespace Silhouette.GameMechs
             return "TextureObject_";
         }
 
+        public override bool canScale() { return true; }
+        public override Vector2 getScale() { return scale; }
+        public override void setScale(Vector2 scale) { this.scale = scale; }
+        public override bool canRotate() { return true; }
+        public override float getRotation() { return rotation; }
+        public override void setRotation(float rotate) { this.rotation = rotation; }
+
         public override LevelObject clone()
         {
             throw new NotImplementedException();
