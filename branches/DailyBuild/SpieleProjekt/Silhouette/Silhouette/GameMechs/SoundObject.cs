@@ -310,18 +310,10 @@ namespace Silhouette.GameMechs
         
         }
 
-        //Julius: Der ganze geerbte abstrakte Kladderradatsch:
+       
 
 
-        public void Initialise()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void LoadContent()
-        {
-            throw new NotImplementedException();
-        }
+       
 
         public void Update(GameTime gameTime)
         {
@@ -343,7 +335,7 @@ namespace Silhouette.GameMechs
                 }
                 //Julius: restliche FadeZeit mit der GameTime anpassen.
                 _fFadeTime -= (float)gameTime.ElapsedGameTime.TotalSeconds;
-                ///Julius: Wenn Fadezeit zu ende: Alles auf Anfang!
+                //Julius: Wenn Fadezeit zu ende: Alles auf Anfang!
                 if (_fFadeTime <= 0)
                 {
                     _fFadeTime = 0;
