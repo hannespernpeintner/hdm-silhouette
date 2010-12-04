@@ -64,6 +64,10 @@
     <XnaCompressContent>true</XnaCompressContent>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="irrKlang.NET4, Version=1.0.3861.18767, Culture=neutral, PublicKeyToken=a854741bd80517c7, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Engine\SoundEngine\irrKlang.NET4.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Xna.Framework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86">
       <Private>False</Private>
     </Reference>
@@ -128,6 +132,7 @@
     <Compile Include="Engine\Manager\FileManager.cs" />
     <Compile Include="Engine\Manager\FixtureManager.cs" />
     <Compile Include="Engine\Layer.cs" />
+    <Compile Include="Engine\Manager\SoundManager.cs" />
     <Compile Include="Engine\Primitives.cs" />
     <Compile Include="Engine\Screens\MainMenuScreen.cs" />
     <Compile Include="Engine\Manager\FontManager.cs" />
@@ -135,6 +140,7 @@
     <Compile Include="DisplayFPS.cs" />
     <Compile Include="Engine\Screens\MenuScreen.cs" />
     <Compile Include="Engine\Animation.cs" />
+    <Compile Include="Engine\SoundEngine\IrrAudioEngine.cs" />
     <Compile Include="GameMechs\Deco.cs" />
     <Compile Include="GameMechs\Deco.Editor.cs" />
     <Compile Include="GameMechs\DrawableLevelObject.cs" />
@@ -157,8 +163,15 @@
   <ItemGroup>
     <Content Include="Engine\PartikelEngine\ProjectMercury.ContentPipeline.dll" />
     <Content Include="Engine\PartikelEngine\ProjectMercury.dll" />
+    <Content Include="Engine\SoundEngine\irrKlang.NET4.dll" />
     <Content Include="Game.ico" />
     <Content Include="GameThumbnail.png" />
+    <None Include="ikpMP3.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="ikpFlac.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\FarseerPhysicsEngine\FarseerPhysicsEngine.csproj">

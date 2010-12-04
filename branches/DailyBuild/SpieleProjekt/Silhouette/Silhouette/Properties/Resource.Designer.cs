@@ -59,5 +59,19 @@ namespace Silhouette.Properties {
                 resourceCulture = value;
             }
         }
+        
+        internal static byte[] ikpFlac {
+            get {
+                object obj = ResourceManager.GetObject("ikpFlac", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        internal static byte[] ikpMP3 {
+            get {
+                object obj = ResourceManager.GetObject("ikpMP3", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
     }
 }
