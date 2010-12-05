@@ -93,7 +93,7 @@ namespace Silhouette.GameMechs
 
         public void ToFixture()
         {
-            fixture = FixtureFactory.CreateRectangle(Level.Physics, texture.Width / Level.PixelPerMeter, texture.Height / Level.PixelPerMeter, density);
+            fixture = FixtureFactory.CreateRectangle(Level.Physics, (texture.Width * scale.X) / Level.PixelPerMeter, (texture.Height * scale.Y) / Level.PixelPerMeter, density);
             fixture.Body.BodyType = BodyType.Dynamic;
             fixture.Body.Position = FixtureManager.ToMeter(position);
         }

@@ -23,6 +23,7 @@ namespace Silhouette.Engine
         {
             layerTexture = new Texture2D[width, height];
             assetName = new string[width, height];
+            assetFullPath = new string[width, height];
         }
 
         public void loadContentInEditor(GraphicsDevice graphics)
