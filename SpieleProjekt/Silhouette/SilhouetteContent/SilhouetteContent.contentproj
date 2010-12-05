@@ -57,6 +57,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Cutscenes\" />
     <Folder Include="ParticleEffects\ParticleTextures\" />
     <Folder Include="Sounds\" />
     <Folder Include="Sprites\Layer\" />
