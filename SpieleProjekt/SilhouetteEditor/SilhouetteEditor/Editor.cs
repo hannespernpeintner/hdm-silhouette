@@ -281,6 +281,15 @@ namespace SilhouetteEditor
                             editorState = EditorState.IDLE;
                         }
                     }
+
+                    /* Sascha:
+                     * Wenn der Editor im Status IDLE ist und der Benutzer die Entfernen - Taste drückt, werden alle selektierten LevelObjects gelöscht.
+                    */
+
+                    if (kstate.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.Delete) && oldkstate.IsKeyUp(Microsoft.Xna.Framework.Input.Keys.Delete))
+                    {
+                        deleteLevelObjects();
+                    }
                 }
 
                 if (editorState == EditorState.CREATE_FIXTURES)
@@ -576,6 +585,21 @@ namespace SilhouetteEditor
 
         //---> Paint Objects <---//
 
+        public void copyLevelObjects(Layer layer)
+        {
+            if (layer == null)
+                return;
+
+            foreach (LevelObject lo in selectedLevelObjects)
+            {
+                LevelObject temp = lo.clone();
+                temp.name = temp.getPrefix() + temp.layer.getNextObjectNumber();
+                layer.loList.Add(temp);
+            }
+            selectedLevelObjects.Clear();
+            MainForm.Default.UpdateTreeView();
+        }
+
         /* Sascha:
          * Der Name ist eventuell etwas irreführend. Es wird in dieser Funktion nicht wirklich etwas gezeichnet, sondern es wir ein Objekt modeliert.
          * Je nachdem welches Objekt momentan durch den Editor gesetzt wird, erzeugt diese Funktion ein entsprechendes LevelObject mit den gewünschten
@@ -744,17 +768,26 @@ namespace SilhouetteEditor
 
         public void deleteLayer(Layer l)
         {
-            level.layerList.Remove(l);
+            if (selectedLayer == null)
+                return;
+
+            if (MessageBox.Show("Do you really want to delete the layer " + Editor.Default.selectedLayer.name + "?", "Question", MessageBoxButtons.YesNo, System.Windows.Forms.MessageBoxIcon.Question) == DialogResult.Yes)
+                level.layerList.Remove(l);
+
             MainForm.Default.UpdateTreeView();
         }
 
-        public void deleteLevelObject(LevelObject lo)
+        public void deleteLevelObjects()
         {
-            foreach (Layer l in level.layerList)
+            if (MessageBox.Show("Do you really want to delete all selected LevelObjects?", "Question", MessageBoxButtons.YesNo, System.Windows.Forms.MessageBoxIcon.Question) == DialogResult.Yes)
             {
-                l.loList.Remove(lo);
-            }
-            MainForm.Default.UpdateTreeView();
+                foreach (LevelObject lo in selectedLevelObjects)
+                {
+                    lo.layer.loList.Remove(lo);
+                }
+                selectLevelObject(null);
+                MainForm.Default.UpdateTreeView();
+            }     
         }
 
         //---> Zusätzliche Editorfunktionalität <---//
@@ -785,98 +818,99 @@ namespace SilhouetteEditor
         {
             foreach (Layer l in level.layerList)
             {
-                if (!l.isVisible)
-                    return;
-                Vector2 oldCameraPosition = Camera.Position;
-                Camera.Position *= l.ScrollSpeed;
-                spriteBatch.Begin(SpriteSortMode.Deferred, null, null, null, null, null, Camera.matrix);
-                foreach (LevelObject lo in l.loList)
+                if (l.isVisible)
                 {
-                    if (lo is RectangleFixtureItem)
+                    Vector2 oldCameraPosition = Camera.Position;
+                    Camera.Position *= l.ScrollSpeed;
+                    spriteBatch.Begin(SpriteSortMode.Deferred, null, null, null, null, null, Camera.matrix);
+                    foreach (LevelObject lo in l.loList)
                     {
-                        RectangleFixtureItem r = (RectangleFixtureItem)lo;
-                        Microsoft.Xna.Framework.Color color = Constants.ColorFixtures;
-                        if (r.mouseOn) color = Constants.ColorMouseOn;
-                        Primitives.Instance.drawBoxFilled(spriteBatch, r.rectangle, color);
+                        if (lo is RectangleFixtureItem)
+                        {
+                            RectangleFixtureItem r = (RectangleFixtureItem)lo;
+                            Microsoft.Xna.Framework.Color color = Constants.ColorFixtures;
+                            if (r.mouseOn) color = Constants.ColorMouseOn;
+                            Primitives.Instance.drawBoxFilled(spriteBatch, r.rectangle, color);
+                        }
+                        if (lo is CircleFixtureItem)
+                        {
+                            CircleFixtureItem c = (CircleFixtureItem)lo;
+                            Microsoft.Xna.Framework.Color color = Constants.ColorFixtures;
+                            if (c.mouseOn) color = Constants.ColorMouseOn;
+                            Primitives.Instance.drawCircleFilled(spriteBatch, c.position, c.radius, color);
+                        }
+                        if (lo is PathFixtureItem)
+                        {
+                            PathFixtureItem p = (PathFixtureItem)lo;
+                            Microsoft.Xna.Framework.Color color = Constants.ColorFixtures;
+                            if (p.mouseOn) color = Constants.ColorMouseOn;
+                            if (p.isPolygon)
+                                Primitives.Instance.drawPolygon(spriteBatch, p.WorldPoints, color, p.lineWidth);
+                            else
+                                Primitives.Instance.drawPath(spriteBatch, p.WorldPoints, color, p.lineWidth);
+                        }
                     }
-                    if (lo is CircleFixtureItem)
-                    {
-                        CircleFixtureItem c = (CircleFixtureItem)lo;
-                        Microsoft.Xna.Framework.Color color = Constants.ColorFixtures;
-                        if (c.mouseOn) color = Constants.ColorMouseOn;
-                        Primitives.Instance.drawCircleFilled(spriteBatch, c.position, c.radius, color);
-                    }
-                    if (lo is PathFixtureItem)
-                    {
-                        PathFixtureItem p = (PathFixtureItem)lo;
-                        Microsoft.Xna.Framework.Color color = Constants.ColorFixtures;
-                        if (p.mouseOn) color = Constants.ColorMouseOn;
-                        if (p.isPolygon)
-                            Primitives.Instance.drawPolygon(spriteBatch, p.WorldPoints, color, p.lineWidth);
-                        else
-                            Primitives.Instance.drawPath(spriteBatch, p.WorldPoints, color, p.lineWidth);
-                    }
-                }
 
-                if (selectedLevelObjects.Count > 0)
-                {
-                    foreach (LevelObject lo2 in selectedLevelObjects)
+                    if (selectedLevelObjects.Count > 0)
                     {
-                        if(l == selectedLayer)
-                            lo2.drawSelectionFrame(spriteBatch, Camera.matrix);
+                        foreach (LevelObject lo2 in selectedLevelObjects)
+                        {
+                            if (l == selectedLayer)
+                                lo2.drawSelectionFrame(spriteBatch, Camera.matrix);
+                        }
                     }
-                }
 
-                if (l == selectedLayer && editorState == EditorState.CREATE_FIXTURES && fixtureStarted)
-                {
-                    switch (currentFixture)
+                    if (l == selectedLayer && editorState == EditorState.CREATE_FIXTURES && fixtureStarted)
                     {
-                        case FixtureType.Rectangle:
-                            Microsoft.Xna.Framework.Rectangle r = Extensions.RectangleFromVectors(clickedPoints[0], MouseWorldPosition);
-                            Primitives.Instance.drawBoxFilled(spriteBatch, r, Constants.ColorFixtures);
-                            break;
-                        case FixtureType.Circle:
-                            Primitives.Instance.drawCircleFilled(spriteBatch, clickedPoints[0], (MouseWorldPosition - clickedPoints[0]).Length(), Constants.ColorFixtures);
-                            break;
-                        case FixtureType.Path:
-                            Primitives.Instance.drawPath(spriteBatch, clickedPoints.ToArray(), Constants.ColorFixtures, Constants.DefaultPathItemLineWidth);
-                            Primitives.Instance.drawLine(spriteBatch, clickedPoints.Last(), MouseWorldPosition, Constants.ColorFixtures, Constants.DefaultPathItemLineWidth);
-                            break;
+                        switch (currentFixture)
+                        {
+                            case FixtureType.Rectangle:
+                                Microsoft.Xna.Framework.Rectangle r = Extensions.RectangleFromVectors(clickedPoints[0], MouseWorldPosition);
+                                Primitives.Instance.drawBoxFilled(spriteBatch, r, Constants.ColorFixtures);
+                                break;
+                            case FixtureType.Circle:
+                                Primitives.Instance.drawCircleFilled(spriteBatch, clickedPoints[0], (MouseWorldPosition - clickedPoints[0]).Length(), Constants.ColorFixtures);
+                                break;
+                            case FixtureType.Path:
+                                Primitives.Instance.drawPath(spriteBatch, clickedPoints.ToArray(), Constants.ColorFixtures, Constants.DefaultPathItemLineWidth);
+                                Primitives.Instance.drawLine(spriteBatch, clickedPoints.Last(), MouseWorldPosition, Constants.ColorFixtures, Constants.DefaultPathItemLineWidth);
+                                break;
+                        }
                     }
-                }
-                if (l == selectedLayer && editorState == EditorState.CREATE_PRIMITIVES && primitiveStarted)
-                {
-                    switch (currentPrimitive)
+                    if (l == selectedLayer && editorState == EditorState.CREATE_PRIMITIVES && primitiveStarted)
                     {
-                        case PrimitiveType.Rectangle:
-                            Microsoft.Xna.Framework.Rectangle r = Extensions.RectangleFromVectors(clickedPoints[0], MouseWorldPosition);
-                            Primitives.Instance.drawBoxFilled(spriteBatch, r, Constants.ColorPrimitives);
-                            break;
-                        case PrimitiveType.Circle:
-                            Primitives.Instance.drawCircleFilled(spriteBatch, clickedPoints[0], (MouseWorldPosition - clickedPoints[0]).Length(), Constants.ColorPrimitives);
-                            break;
-                        case PrimitiveType.Path:
-                            Primitives.Instance.drawPath(spriteBatch, clickedPoints.ToArray(), Constants.ColorPrimitives, Constants.DefaultPathItemLineWidth);
-                            Primitives.Instance.drawLine(spriteBatch, clickedPoints.Last(), MouseWorldPosition, Constants.ColorPrimitives, Constants.DefaultPathItemLineWidth);
-                            break;
+                        switch (currentPrimitive)
+                        {
+                            case PrimitiveType.Rectangle:
+                                Microsoft.Xna.Framework.Rectangle r = Extensions.RectangleFromVectors(clickedPoints[0], MouseWorldPosition);
+                                Primitives.Instance.drawBoxFilled(spriteBatch, r, Constants.ColorPrimitives);
+                                break;
+                            case PrimitiveType.Circle:
+                                Primitives.Instance.drawCircleFilled(spriteBatch, clickedPoints[0], (MouseWorldPosition - clickedPoints[0]).Length(), Constants.ColorPrimitives);
+                                break;
+                            case PrimitiveType.Path:
+                                Primitives.Instance.drawPath(spriteBatch, clickedPoints.ToArray(), Constants.ColorPrimitives, Constants.DefaultPathItemLineWidth);
+                                Primitives.Instance.drawLine(spriteBatch, clickedPoints.Last(), MouseWorldPosition, Constants.ColorPrimitives, Constants.DefaultPathItemLineWidth);
+                                break;
+                        }
                     }
+                    if (l == selectedLayer && editorState == EditorState.CREATE_TEXTURES)
+                    {
+                        TextureObject to = (TextureObject)currentObject;
+                        spriteBatch.Draw(to.texture, new Vector2(MouseWorldPosition.X, MouseWorldPosition.Y), null, new Microsoft.Xna.Framework.Color(1f, 1f, 1f, 7f), 0, new Vector2(to.texture.Width / 2, to.texture.Height / 2), 1, SpriteEffects.None, 0);
+                    }
+                    if (l == selectedLayer && editorState == EditorState.CREATE_INTERACTIVE)
+                    {
+                        InteractiveObject io = (InteractiveObject)currentObject;
+                        spriteBatch.Draw(io.texture, new Vector2(MouseWorldPosition.X, MouseWorldPosition.Y), null, new Microsoft.Xna.Framework.Color(1f, 1f, 1f, 7f), 0, new Vector2(io.texture.Width / 2, io.texture.Height / 2), 1, SpriteEffects.None, 0);
+                    }
+                    if (l == selectedLayer && editorState == EditorState.SELECTING)
+                    {
+                        Primitives.Instance.drawBoxFilled(spriteBatch, selectionRectangle, Constants.ColorSelectionBox);
+                    }
+                    spriteBatch.End();
+                    Camera.Position = oldCameraPosition;
                 }
-                if (l == selectedLayer && editorState == EditorState.CREATE_TEXTURES)
-                {
-                    TextureObject to = (TextureObject)currentObject;
-                    spriteBatch.Draw(to.texture, new Vector2(MouseWorldPosition.X, MouseWorldPosition.Y), null, new Microsoft.Xna.Framework.Color(1f, 1f, 1f, 7f), 0, new Vector2(to.texture.Width / 2, to.texture.Height / 2), 1, SpriteEffects.None, 0);
-                }
-                if (l == selectedLayer && editorState == EditorState.CREATE_INTERACTIVE)
-                {
-                    InteractiveObject io = (InteractiveObject)currentObject;
-                    spriteBatch.Draw(io.texture, new Vector2(MouseWorldPosition.X, MouseWorldPosition.Y), null, new Microsoft.Xna.Framework.Color(1f, 1f, 1f, 7f), 0, new Vector2(io.texture.Width / 2, io.texture.Height / 2), 1, SpriteEffects.None, 0);
-                }
-                if (l == selectedLayer && editorState == EditorState.SELECTING)
-                {
-                    Primitives.Instance.drawBoxFilled(spriteBatch, selectionRectangle, Constants.ColorSelectionBox);
-                }
-                spriteBatch.End();
-                Camera.Position = oldCameraPosition;
             }
         }
 

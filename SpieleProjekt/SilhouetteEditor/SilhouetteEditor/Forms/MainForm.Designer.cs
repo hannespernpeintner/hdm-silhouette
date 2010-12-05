@@ -86,9 +86,6 @@ namespace SilhouetteEditor.Forms
             this.BrowseButton2 = new System.Windows.Forms.Button();
             this.InteractiveView = new System.Windows.Forms.ListView();
             this.ImageListInteractive32 = new System.Windows.Forms.ImageList(this.components);
-            this.tabPage4 = new System.Windows.Forms.TabPage();
-            this.BrowseButton3 = new System.Windows.Forms.Button();
-            this.AnimationView = new System.Windows.Forms.ListView();
             this.GameView = new System.Windows.Forms.PictureBox();
             this.LevelContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.addLayerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -117,7 +114,6 @@ namespace SilhouetteEditor.Forms
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.tabPage3.SuspendLayout();
-            this.tabPage4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.GameView)).BeginInit();
             this.LevelContextMenu.SuspendLayout();
             this.LayerContextMenu.SuspendLayout();
@@ -351,6 +347,7 @@ namespace SilhouetteEditor.Forms
             // treeView1
             // 
             this.treeView1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.treeView1.LabelEdit = true;
             this.treeView1.Location = new System.Drawing.Point(0, 25);
             this.treeView1.Name = "treeView1";
             this.treeView1.Size = new System.Drawing.Size(247, 255);
@@ -396,6 +393,7 @@ namespace SilhouetteEditor.Forms
             this.DeleteLayerButton.Size = new System.Drawing.Size(23, 22);
             this.DeleteLayerButton.Text = "Delete Layer";
             this.DeleteLayerButton.ToolTipText = "Delete Layer";
+            this.DeleteLayerButton.Click += new System.EventHandler(this.DeleteLayerButton_Click);
             // 
             // toolStripSeparator2
             // 
@@ -435,21 +433,21 @@ namespace SilhouetteEditor.Forms
             // rectangleToolStripMenuItem
             // 
             this.rectangleToolStripMenuItem.Name = "rectangleToolStripMenuItem";
-            this.rectangleToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.rectangleToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
             this.rectangleToolStripMenuItem.Text = "Rectangle";
             this.rectangleToolStripMenuItem.Click += new System.EventHandler(this.rectangleToolStripMenuItem_Click);
             // 
             // circleToolStripMenuItem
             // 
             this.circleToolStripMenuItem.Name = "circleToolStripMenuItem";
-            this.circleToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.circleToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
             this.circleToolStripMenuItem.Text = "Circle";
             this.circleToolStripMenuItem.Click += new System.EventHandler(this.circleToolStripMenuItem_Click);
             // 
             // pathToolStripMenuItem
             // 
             this.pathToolStripMenuItem.Name = "pathToolStripMenuItem";
-            this.pathToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.pathToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
             this.pathToolStripMenuItem.Text = "Path";
             this.pathToolStripMenuItem.Click += new System.EventHandler(this.pathToolStripMenuItem_Click);
             // 
@@ -514,7 +512,6 @@ namespace SilhouetteEditor.Forms
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Controls.Add(this.tabPage3);
-            this.tabControl1.Controls.Add(this.tabPage4);
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
@@ -629,38 +626,6 @@ namespace SilhouetteEditor.Forms
             this.ImageListInteractive32.ImageSize = new System.Drawing.Size(32, 32);
             this.ImageListInteractive32.TransparentColor = System.Drawing.Color.Transparent;
             // 
-            // tabPage4
-            // 
-            this.tabPage4.Controls.Add(this.BrowseButton3);
-            this.tabPage4.Controls.Add(this.AnimationView);
-            this.tabPage4.Location = new System.Drawing.Point(4, 22);
-            this.tabPage4.Name = "tabPage4";
-            this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage4.Size = new System.Drawing.Size(239, 366);
-            this.tabPage4.TabIndex = 3;
-            this.tabPage4.Text = "Animation";
-            this.tabPage4.UseVisualStyleBackColor = true;
-            // 
-            // BrowseButton3
-            // 
-            this.BrowseButton3.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.BrowseButton3.Location = new System.Drawing.Point(3, 340);
-            this.BrowseButton3.Name = "BrowseButton3";
-            this.BrowseButton3.Size = new System.Drawing.Size(233, 23);
-            this.BrowseButton3.TabIndex = 1;
-            this.BrowseButton3.Text = "Browse...";
-            this.BrowseButton3.UseVisualStyleBackColor = true;
-            // 
-            // AnimationView
-            // 
-            this.AnimationView.AllowDrop = true;
-            this.AnimationView.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.AnimationView.Location = new System.Drawing.Point(3, 3);
-            this.AnimationView.Name = "AnimationView";
-            this.AnimationView.Size = new System.Drawing.Size(233, 360);
-            this.AnimationView.TabIndex = 0;
-            this.AnimationView.UseCompatibleStateImageBehavior = false;
-            // 
             // GameView
             // 
             this.GameView.AllowDrop = true;
@@ -701,8 +666,9 @@ namespace SilhouetteEditor.Forms
             // renameToolStripMenuItem3
             // 
             this.renameToolStripMenuItem3.Name = "renameToolStripMenuItem3";
-            this.renameToolStripMenuItem3.Size = new System.Drawing.Size(127, 22);
+            this.renameToolStripMenuItem3.Size = new System.Drawing.Size(152, 22);
             this.renameToolStripMenuItem3.Text = "Rename";
+            this.renameToolStripMenuItem3.Click += new System.EventHandler(this.renameToolStripMenuItem3_Click);
             // 
             // LayerContextMenu
             // 
@@ -711,13 +677,14 @@ namespace SilhouetteEditor.Forms
             this.copyToolStripMenuItem,
             this.deleteToolStripMenuItem});
             this.LayerContextMenu.Name = "LayerContextMenu";
-            this.LayerContextMenu.Size = new System.Drawing.Size(118, 70);
+            this.LayerContextMenu.Size = new System.Drawing.Size(153, 92);
             // 
             // renameToolStripMenuItem2
             // 
             this.renameToolStripMenuItem2.Name = "renameToolStripMenuItem2";
-            this.renameToolStripMenuItem2.Size = new System.Drawing.Size(117, 22);
+            this.renameToolStripMenuItem2.Size = new System.Drawing.Size(152, 22);
             this.renameToolStripMenuItem2.Text = "Rename";
+            this.renameToolStripMenuItem2.Click += new System.EventHandler(this.renameToolStripMenuItem2_Click);
             // 
             // copyToolStripMenuItem
             // 
@@ -744,14 +711,16 @@ namespace SilhouetteEditor.Forms
             // renameToolStripMenuItem1
             // 
             this.renameToolStripMenuItem1.Name = "renameToolStripMenuItem1";
-            this.renameToolStripMenuItem1.Size = new System.Drawing.Size(117, 22);
+            this.renameToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
             this.renameToolStripMenuItem1.Text = "Rename";
+            this.renameToolStripMenuItem1.Click += new System.EventHandler(this.renameToolStripMenuItem1_Click);
             // 
             // copyToolStripMenuItem1
             // 
             this.copyToolStripMenuItem1.Name = "copyToolStripMenuItem1";
-            this.copyToolStripMenuItem1.Size = new System.Drawing.Size(117, 22);
+            this.copyToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
             this.copyToolStripMenuItem1.Text = "Copy";
+            this.copyToolStripMenuItem1.Click += new System.EventHandler(this.copyToolStripMenuItem1_Click);
             // 
             // deleteToolStripMenuItem1
             // 
@@ -793,7 +762,6 @@ namespace SilhouetteEditor.Forms
             this.tabPage1.ResumeLayout(false);
             this.tabPage2.ResumeLayout(false);
             this.tabPage3.ResumeLayout(false);
-            this.tabPage4.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.GameView)).EndInit();
             this.LevelContextMenu.ResumeLayout(false);
             this.LayerContextMenu.ResumeLayout(false);
@@ -858,11 +826,8 @@ namespace SilhouetteEditor.Forms
         private System.Windows.Forms.ToolStripStatusLabel EditorStatus;
         public System.Windows.Forms.ToolStripStatusLabel FPS;
         private System.Windows.Forms.TabPage tabPage3;
-        private System.Windows.Forms.TabPage tabPage4;
         private System.Windows.Forms.Button BrowseButton2;
         private System.Windows.Forms.ListView InteractiveView;
-        private System.Windows.Forms.Button BrowseButton3;
-        private System.Windows.Forms.ListView AnimationView;
         private System.Windows.Forms.ImageList ImageListInteractive32;
         private System.Windows.Forms.ToolStripDropDownButton PrimitiveButton;
         private System.Windows.Forms.ToolStripMenuItem rectangleToolStripMenuItem;
