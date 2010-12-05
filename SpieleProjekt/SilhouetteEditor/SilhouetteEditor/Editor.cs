@@ -26,6 +26,16 @@ using FarseerPhysics.Collision;
 
 namespace SilhouetteEditor
 {
+    public enum EventType
+    { 
+    
+    }
+
+    public enum PhysicsType
+    { 
+    
+    }
+
     public enum PrimitiveType
     { 
         Rectangle,
@@ -49,6 +59,7 @@ namespace SilhouetteEditor
         CREATE_TEXTURES,
         CREATE_INTERACTIVE,
         CREATE_ANIMATION,
+        CREATE_PHYSICS,
         CREATE_EVENTS,
         ROTATING,
         SCALING,
@@ -89,7 +100,6 @@ namespace SilhouetteEditor
         public bool fixtureStarted;
         public bool primitiveStarted;
 
-        List<float> initialRotation;
         List<Vector2> clickedPoints, initialPosition, initialScale;
         Vector2 MouseWorldPosition, GrabbedPoint;
         Microsoft.Xna.Framework.Rectangle selectionRectangle;
@@ -106,7 +116,6 @@ namespace SilhouetteEditor
             clickedPoints = new List<Vector2>();
             initialPosition = new List<Vector2>();
             initialScale = new List<Vector2>();
-            initialRotation = new List<float>();
             editorState = EditorState.IDLE;
         }
 
@@ -217,18 +226,8 @@ namespace SilhouetteEditor
                 if (mstate.MiddleButton == Microsoft.Xna.Framework.Input.ButtonState.Pressed)
                 {
                     if (selectedLevelObjects.Count > 0)
-                    {   
+                    {
                         GrabbedPoint = MouseWorldPosition - selectedLevelObjects[0].position;
-
-                        initialRotation.Clear();
-                        foreach (LevelObject selLO in selectedLevelObjects)
-                        {
-                            if (selLO.canRotate())
-                            {
-                                initialRotation.Add(selLO.getRotation());
-                            }
-                        }
-
                         editorState = EditorState.ROTATING;
                     }
                 }
@@ -417,14 +416,13 @@ namespace SilhouetteEditor
 
                 if (editorState == EditorState.ROTATING)
                 {
-                    Vector2 newpos = MouseWorldPosition - selectedLevelObjects[0].position;
-                    float deltatheta = (float)Math.Atan2(GrabbedPoint.Y, GrabbedPoint.X) - (float)Math.Atan2(newpos.Y, newpos.X);
+                    float deltatheta = (float)Math.Atan2(GrabbedPoint.Y, GrabbedPoint.X) - (float)Math.Atan2(MouseWorldPosition.Y, MouseWorldPosition.X);
                     int i = 0;
                     foreach (LevelObject selLO in selectedLevelObjects)
                     {
                         if (selLO.canRotate())
                         {
-                            selLO.setRotation(initialRotation[i] - deltatheta);
+                            selLO.setRotation(deltatheta);
                             if (kstate.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.LeftControl))
                             {
                                 selLO.setRotation((float)Math.Round(selLO.getRotation() / MathHelper.PiOver4) * MathHelper.PiOver4);
@@ -578,6 +576,12 @@ namespace SilhouetteEditor
 
         //---> Paint Objects <---//
 
+        /* Sascha:
+         * Der Name ist eventuell etwas irreführend. Es wird in dieser Funktion nicht wirklich etwas gezeichnet, sondern es wir ein Objekt modeliert.
+         * Je nachdem welches Objekt momentan durch den Editor gesetzt wird, erzeugt diese Funktion ein entsprechendes LevelObject mit den gewünschten
+         * Attributen.
+        */
+
         public void paintCurrentObject(bool continueAfterPaint)
         {
             if (currentObject is TextureObject)
@@ -608,6 +612,10 @@ namespace SilhouetteEditor
                 destroyCurrentObject();
         }
 
+        /* Sascha:
+         * Hier gilt das gleiche wie oben. Nur das diese Funktion keine LevelObjects erzeugt, sondern einfach ein Array für im Grid angelegte Texturen.
+        */
+
         public void paintTextureWrapper()
         {
             if (selectedLayer == null)
@@ -624,6 +632,11 @@ namespace SilhouetteEditor
             MainForm.Default.UpdateTreeView();
             destroyTextureWrapper();
         }
+
+        /* Sascha:
+         * Hier gilt das gleiche wie oben. Hier werden Wrapperobjekte für Fixtures (Kollisionsdomänen) erzeugt, die im Editor noch transformiert werden können. Erst in der 
+         * Spielengine werden sie dann in Fixtures umgewandelt mit der Funktion ToFixture().
+        */
 
         public void paintFixtureItem()
         {
@@ -650,6 +663,10 @@ namespace SilhouetteEditor
             }
             MainForm.Default.UpdateTreeView();
         }
+
+        /* Sascha:
+         * Hier gilt das gleiche wie oben. Einfache Primitive zum schnellen zeichnen einer farbigen Fläche.
+        */
 
         public void paintPrimitiveObject()
         {
@@ -681,6 +698,10 @@ namespace SilhouetteEditor
 
         //---> TreeViewSelection
 
+        /* Sascha:
+         * Funktion um ein LevelObject auszuwählen. Für currentLevelObject UND die PropertyGrid.
+        */
+
         public void selectLevelObject(LevelObject lo)
         {
             selectedLevelObjects.Clear();
@@ -696,6 +717,10 @@ namespace SilhouetteEditor
                 selectLayer(selectedLayer);
         }
 
+        /* Sascha:
+         * Funktion um eine Layer auszuwählen. Für currentLevelObject UND die PropertyGrid.
+        */
+
         public void selectLayer(Layer l)
         {
             if (l == null)
@@ -705,6 +730,10 @@ namespace SilhouetteEditor
             MainForm.Default.propertyGrid1.SelectedObject = l;
             MainForm.Default.Selection.Text = "Selected Layer: " + l.name;
         }
+
+        /* Sascha:
+         * Wählt das aktuelle Level in der PropertyGrid aus.
+        */
 
         public void selectLevel()
         {
@@ -730,6 +759,10 @@ namespace SilhouetteEditor
 
         //---> Zusätzliche Editorfunktionalität <---//
 
+        /* Sascha:
+         * Durch diese Funktion wird der Editor in den Status POSITIONING versetzt, was die Neupositionierung von LevelObjects erlaubt.
+        */
+
         public void startPositioning()
         {
             GrabbedPoint = MouseWorldPosition;
@@ -742,6 +775,11 @@ namespace SilhouetteEditor
 
             editorState = EditorState.POSITIONING;
         }
+
+        /* Sascha:
+         * Diese Funktion zeichnet alle Sachen, die rein editorspezifisch sind. Zum Beispiel die Vorschaubilder beim Platzieren von Textures oder dem Selection Frame.
+         * Alle anderen Objekte (die später auch im Spiel gezeichnet werden) werden direkt in der Engine gezeichnet, auch mit speziellen EditorDraw-Funktionen.
+        */
 
         public void drawEditorRelated()
         {
@@ -842,12 +880,21 @@ namespace SilhouetteEditor
             }
         }
 
+        /* Sascha:
+         * Gibt das LevelObject an der momentanen Mouse-Position zurück. Verwendet wird dafür die Klasse Rectangle mit ihrer Funktion Contains().
+        */
+
         public LevelObject getItemAtPosition(Vector2 worldPosition)
         {
             if (selectedLayer == null)
                 return null;
             return selectedLayer.getItemAtPosition(worldPosition);
         }
+
+        /* Sascha:
+         * Mit SetMousePosition() setzen wir die Position der Mouse bei Drag and Drop wieder in die PictureView. Ohne diese Funktion würde die Transformation der Layer
+         * durch die Camera nicht berücksichtigt!
+        */
 
         public void SetMousePosition(int ScreenX, int ScreenY)
         {
@@ -856,6 +903,10 @@ namespace SilhouetteEditor
             MouseWorldPosition = Vector2.Transform(new Vector2(ScreenX, ScreenY), Matrix.Invert(Camera.matrix));
             Camera.Position = maincameraposition;
         }
+
+        /* Sascha:
+         * Diese Funktion erstellt aus einem Bild ein Vorschaubild, dass dann in der ListView angezeigt wird.
+        */
 
         public Image getThumbNail(Bitmap bmp, int imgWidth, int imgHeight)
         {
