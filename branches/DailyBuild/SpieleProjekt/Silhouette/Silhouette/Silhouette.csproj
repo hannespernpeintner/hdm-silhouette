@@ -133,6 +133,7 @@
     <Compile Include="Engine\Manager\FixtureManager.cs" />
     <Compile Include="Engine\Layer.cs" />
     <Compile Include="Engine\Manager\SoundManager.cs" />
+    <Compile Include="Engine\Manager\VideoManager.cs" />
     <Compile Include="Engine\Primitives.cs" />
     <Compile Include="Engine\Screens\MainMenuScreen.cs" />
     <Compile Include="Engine\Manager\FontManager.cs" />
@@ -151,6 +152,7 @@
     <Compile Include="GameMechs\PrimitiveObjects.cs" />
     <Compile Include="GameMechs\SoundObject.cs" />
     <Compile Include="GameMechs\TextureObject.cs" />
+    <Compile Include="GameMechs\VideoObject.cs" />
     <Compile Include="GameSettings.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Program.cs" />
