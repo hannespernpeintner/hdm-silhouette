@@ -29,13 +29,13 @@ namespace Silhouette.Engine.Manager
         static float _fvolume = 1.0f;
         static Dictionary<String, Silhouette.GameMechs.SoundObject> Container;
 
-        public static void initialize() 
+        public static void Initialize() 
         {
             IrrAudioEngine.initialize();
             Container = new Dictionary<String, Silhouette.GameMechs.SoundObject>();
         }
 
-        public static void update(GameTime gameTime)
+        public static void Update(GameTime gameTime)
         {
             //Julius: Schmeiss das Event!
         if (UpdateFader != null) 
