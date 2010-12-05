@@ -93,7 +93,9 @@ namespace Silhouette.Engine.Manager
                switch (name) 
                {case Videoname.testvideo:
                     
-                 //Julius: BEISPIEL:
+                 /*Julius: BEISPIEL:
+                  *"Testvideo" ist in diesem Beispiel der interne assetName (wie oben vergeben)
+                  */ 
                  //Container["Testvideo"].play();
                  //currentlyPlaying = "Testvideo";
                    
