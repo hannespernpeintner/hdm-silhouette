@@ -34,6 +34,7 @@ namespace Silhouette
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+        
 
         public static GameLoop gameInstance;
 
@@ -57,7 +58,8 @@ namespace Silhouette
         protected override void Initialize()
         {
             Primitives.Instance.Initialize(this.GraphicsDevice);
-            SoundManager.initialize();
+            SoundManager.Initialize();
+            VideoManager.Initialize();
             level = new Level();        //Provisorisch
             level.Initialize();
             base.Initialize();
@@ -65,9 +67,15 @@ namespace Silhouette
 
         protected override void LoadContent()
         {
+            VideoManager.LoadContent();
             spriteBatch = new SpriteBatch(GraphicsDevice);
+            
+            
             DebugViewXNA.LoadContent(GameLoop.gameInstance.GraphicsDevice, GameLoop.gameInstance.Content);
             FontManager.loadFonts();
+
+           
+            
             level.LoadContent();        //Provisorisch
         }
 
@@ -75,15 +83,28 @@ namespace Silhouette
 
         protected override void Update(GameTime gameTime)
         {
-            SoundManager.update(gameTime);
+            VideoManager.Update(gameTime);
+            SoundManager.Update(gameTime);
             level.Update(gameTime);     //Provisorisch
             base.Update(gameTime);
         }
 
         protected override void Draw(GameTime gameTime)
         {
+           
             GraphicsDevice.Clear(Color.White);
-            level.Draw();       //Provisorisch
+            if (!VideoManager.IsPlaying)
+            {
+                level.Draw();       //Provisorisch
+
+            }
+            else
+            {
+                spriteBatch.Begin();
+                spriteBatch.Draw(VideoManager.VideoFrame,  new Rectangle(0, 0, (int) GameSettings.Default.resolutionWidth, (int) GameSettings.Default.resolutionHeight), Color.White);
+                spriteBatch.End();
+                
+            }
             base.Draw(gameTime);
         }
     }
