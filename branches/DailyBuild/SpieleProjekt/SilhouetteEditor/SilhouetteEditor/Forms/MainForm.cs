@@ -353,7 +353,7 @@ namespace SilhouetteEditor.Forms
 
         private void deleteToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            //Wird noch implementiert.
+            Editor.Default.deleteLevelObjects();
         }
 
         private void rectangleCollisionToolStripMenuItem_Click(object sender, EventArgs e)
@@ -384,6 +384,36 @@ namespace SilhouetteEditor.Forms
         private void pathToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Editor.Default.AddPrimitive(PrimitiveType.Path);
+        }
+
+        private void DeleteLayerButton_Click(object sender, EventArgs e)
+        {
+            if (treeView1.SelectedNode == null) return;
+            if (treeView1.SelectedNode.Tag is Layer)
+            {
+                Layer l = (Layer)treeView1.SelectedNode.Tag;
+                Editor.Default.deleteLayer(l);
+            }
+        }
+
+        private void renameToolStripMenuItem3_Click(object sender, EventArgs e)
+        {
+            treeView1.SelectedNode.BeginEdit();
+        }
+
+        private void copyToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            //Wird noch implementiert -> Copy -> LevelObject
+        }
+
+        private void renameToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            treeView1.SelectedNode.BeginEdit();
+        }
+
+        private void renameToolStripMenuItem2_Click(object sender, EventArgs e)
+        {
+            treeView1.SelectedNode.BeginEdit();
         }
     }
 }
