@@ -188,11 +188,18 @@ namespace Silhouette.Engine
 
         public static Level LoadLevelFile(string levelPath)
         {
-            FileStream file = FileManager.LoadLevelFile(levelPath);
-            BinaryFormatter serializer = new BinaryFormatter();
-            Level level = (Level)serializer.Deserialize(file);
-            file.Close();
-            return level;
+            try
+            {
+                FileStream file = FileManager.LoadLevelFile(levelPath);
+                BinaryFormatter serializer = new BinaryFormatter();
+                Level level = (Level)serializer.Deserialize(file);
+                file.Close();
+                return level;
+            }
+            catch (Exception e)
+            {
+                return new Level();
+            }
         }
 
         #region DebugViewMethods
