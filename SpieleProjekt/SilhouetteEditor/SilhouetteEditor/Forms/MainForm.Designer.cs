@@ -50,7 +50,6 @@ namespace SilhouetteEditor.Forms
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.bearbeitenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ansichtToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolBoxToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.leveleinstellungenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.runToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -63,8 +62,6 @@ namespace SilhouetteEditor.Forms
             this.NewLayerButton = new System.Windows.Forms.ToolStripButton();
             this.DeleteLayerButton = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-            this.ToolBoxButton = new System.Windows.Forms.ToolStripButton();
-            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.PrimitiveButton = new System.Windows.Forms.ToolStripDropDownButton();
             this.rectangleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.circleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -93,7 +90,6 @@ namespace SilhouetteEditor.Forms
             this.renameToolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
             this.LayerContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.renameToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
-            this.copyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ObjectContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.renameToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
@@ -256,18 +252,9 @@ namespace SilhouetteEditor.Forms
             // 
             // ansichtToolStripMenuItem
             // 
-            this.ansichtToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolBoxToolStripMenuItem});
             this.ansichtToolStripMenuItem.Name = "ansichtToolStripMenuItem";
             this.ansichtToolStripMenuItem.Size = new System.Drawing.Size(48, 20);
             this.ansichtToolStripMenuItem.Text = "Tools";
-            // 
-            // toolBoxToolStripMenuItem
-            // 
-            this.toolBoxToolStripMenuItem.Name = "toolBoxToolStripMenuItem";
-            this.toolBoxToolStripMenuItem.Size = new System.Drawing.Size(117, 22);
-            this.toolBoxToolStripMenuItem.Text = "ToolBox";
-            this.toolBoxToolStripMenuItem.Click += new System.EventHandler(this.ToolsToolBox);
             // 
             // leveleinstellungenToolStripMenuItem
             // 
@@ -361,8 +348,6 @@ namespace SilhouetteEditor.Forms
             this.NewLayerButton,
             this.DeleteLayerButton,
             this.toolStripSeparator2,
-            this.ToolBoxButton,
-            this.toolStripSeparator3,
             this.PrimitiveButton,
             this.FixtureButton,
             this.PhysicsButton,
@@ -399,22 +384,6 @@ namespace SilhouetteEditor.Forms
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
             this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
-            // 
-            // ToolBoxButton
-            // 
-            this.ToolBoxButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.ToolBoxButton.Image = global::SilhouetteEditor.Properties.Resource.ToolBox;
-            this.ToolBoxButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.ToolBoxButton.Name = "ToolBoxButton";
-            this.ToolBoxButton.Size = new System.Drawing.Size(23, 22);
-            this.ToolBoxButton.Text = "ToolBox";
-            this.ToolBoxButton.ToolTipText = "ToolBox";
-            this.ToolBoxButton.Click += new System.EventHandler(this.ToolBoxButton_Click);
-            // 
-            // toolStripSeparator3
-            // 
-            this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(6, 25);
             // 
             // PrimitiveButton
             // 
@@ -674,10 +643,9 @@ namespace SilhouetteEditor.Forms
             // 
             this.LayerContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.renameToolStripMenuItem2,
-            this.copyToolStripMenuItem,
             this.deleteToolStripMenuItem});
             this.LayerContextMenu.Name = "LayerContextMenu";
-            this.LayerContextMenu.Size = new System.Drawing.Size(153, 92);
+            this.LayerContextMenu.Size = new System.Drawing.Size(118, 48);
             // 
             // renameToolStripMenuItem2
             // 
@@ -685,12 +653,6 @@ namespace SilhouetteEditor.Forms
             this.renameToolStripMenuItem2.Size = new System.Drawing.Size(152, 22);
             this.renameToolStripMenuItem2.Text = "Rename";
             this.renameToolStripMenuItem2.Click += new System.EventHandler(this.renameToolStripMenuItem2_Click);
-            // 
-            // copyToolStripMenuItem
-            // 
-            this.copyToolStripMenuItem.Name = "copyToolStripMenuItem";
-            this.copyToolStripMenuItem.Size = new System.Drawing.Size(117, 22);
-            this.copyToolStripMenuItem.Text = "Copy";
             // 
             // deleteToolStripMenuItem
             // 
@@ -725,7 +687,7 @@ namespace SilhouetteEditor.Forms
             // deleteToolStripMenuItem1
             // 
             this.deleteToolStripMenuItem1.Name = "deleteToolStripMenuItem1";
-            this.deleteToolStripMenuItem1.Size = new System.Drawing.Size(117, 22);
+            this.deleteToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
             this.deleteToolStripMenuItem1.Text = "Delete";
             this.deleteToolStripMenuItem1.Click += new System.EventHandler(this.deleteToolStripMenuItem1_Click);
             // 
@@ -796,7 +758,6 @@ namespace SilhouetteEditor.Forms
         private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem1;
         private System.Windows.Forms.ToolStripButton NewLayerButton;
         private System.Windows.Forms.ToolStripButton DeleteLayerButton;
-        private System.Windows.Forms.ToolStripButton ToolBoxButton;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ContextMenuStrip LevelContextMenu;
         private System.Windows.Forms.ContextMenuStrip LayerContextMenu;
@@ -804,10 +765,7 @@ namespace SilhouetteEditor.Forms
         private System.Windows.Forms.ToolStripSeparator renameToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem renameToolStripMenuItem3;
         private System.Windows.Forms.ToolStripMenuItem renameToolStripMenuItem2;
-        private System.Windows.Forms.ToolStripMenuItem copyToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem deleteToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem toolBoxToolStripMenuItem;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
         public System.Windows.Forms.ToolStripStatusLabel MouseWorldPosition;
         public System.Windows.Forms.ToolStripStatusLabel Selection;
         public System.Windows.Forms.PictureBox GameView;
