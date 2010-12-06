@@ -41,13 +41,6 @@ namespace Silhouette.Engine
         [Description("The objects of the Layer.")]
         public List<LevelObject> loList { get { return _loList; } }
 
-        [NonSerialized]
-        public Texture2D[,] layerTexture;
-
-        public string[,] assetName;
-        public string[,] assetFullPath;
-        public int width, height;
-
         public Layer()
         {
             scrollSpeed = Vector2.One;
@@ -55,20 +48,10 @@ namespace Silhouette.Engine
             _loList = new List<LevelObject>();
         }
 
-        public void initializeLayer()
-        {
-            layerTexture = new Texture2D[width, height];
-        }
+        public void initializeLayer() { }
 
         public void loadLayer()
         {
-            for(int x = 0; x < width; x++)
-                for (int y = 0; y < height; y++)
-                {
-                    if(assetName[x,y] != null) 
-                        layerTexture[x,y] = GameLoop.gameInstance.Content.Load<Texture2D>("Sprites/Layer/" + assetName[x,y]);
-                }
-
             foreach (LevelObject lo in loList)
             {
                 lo.LoadContent();
@@ -88,12 +71,6 @@ namespace Silhouette.Engine
             if (!isVisible)
                 return;
 
-            for (int x = 0; x < width; x++)
-                for (int y = 0; y < height; y++)
-                {
-                    if(layerTexture[x,y] != null)
-                        spriteBatch.Draw(layerTexture[x, y], new Vector2(x * GameSettings.Default.resolutionWidth, y * GameSettings.Default.resolutionHeight), Color.White);
-                }
             foreach (LevelObject lo in loList)
             {
                 if (lo is DrawableLevelObject)

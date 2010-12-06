@@ -53,7 +53,6 @@ namespace SilhouetteEditor
     public enum EditorState
     { 
         IDLE,
-        CAMERAMOVING,
         CREATE_FIXTURES,
         CREATE_PRIMITIVES,
         CREATE_TEXTURES,
@@ -94,9 +93,12 @@ namespace SilhouetteEditor
 
         public LevelObject currentObject;
         public LevelObject lastObject;
-        public TextureWrapper currentTexture;
+
         public FixtureType currentFixture;
         public PrimitiveType currentPrimitive;
+        public PhysicsType currentPhysics;
+        public EventType currentEvent;
+
         public bool fixtureStarted;
         public bool primitiveStarted;
 
@@ -172,7 +174,7 @@ namespace SilhouetteEditor
             #region Editorstate-Logic
                 if (editorState == EditorState.IDLE)
                 {
-                    LevelObject levelObject = getItemAtPosition(MouseWorldPosition);
+                    LevelObject levelObject = getItemAtPosition(MouseWorldPosition);                    
 
                     if (levelObject != null)
                     {
@@ -220,6 +222,52 @@ namespace SilhouetteEditor
 
                             editorState = EditorState.SCALING;
                         }
+                    }
+
+                    /* Sascha:
+                     * Wenn der Editor im Status IDLE ist und der Benutzer die Entfernen - Taste drückt, werden alle selektierten LevelObjects gelöscht.
+                    */
+
+                    if (kstate.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.Delete) && oldkstate.IsKeyUp(Microsoft.Xna.Framework.Input.Keys.Delete))
+                    {
+                        deleteLevelObjects();
+                    }
+
+                    /* Sascha:
+                     * Durch drücken von ShiftLeft kann man alle momentan selektierten Objekte kopieren.
+                    */
+
+                    if (kstate.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.LeftShift) && oldkstate.IsKeyUp(Microsoft.Xna.Framework.Input.Keys.LeftShift) && selectedLevelObjects.Count > 0)
+                    {
+                        List<LevelObject> selectedLevelObjectsCopy = new List<LevelObject>();
+                        foreach (LevelObject lo in selectedLevelObjects)
+                        {
+                            LevelObject lo2 = (LevelObject)lo.clone();
+                            selectedLevelObjectsCopy.Add(lo2);
+                        }
+                        foreach (LevelObject lo in selectedLevelObjectsCopy)
+                        {
+                            lo.name = lo.getPrefix() + lo.layer.getNextObjectNumber();
+                            AddLevelObject(lo);
+                        }
+                        selectLevelObject(selectedLevelObjectsCopy[0]);
+                        MainForm.Default.UpdateTreeView();
+
+                        foreach (LevelObject lo in selectedLevelObjectsCopy)
+                        {
+                            selectedLevelObjects.Add(lo);
+                        }
+                        startPositioning();
+                    }
+
+                    /* Sascha:
+                     * Mehrfachauswahl durch drücken von LeftControl.
+                    */
+
+                    if (kstate.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.LeftControl) && oldkstate.IsKeyUp(Microsoft.Xna.Framework.Input.Keys.LeftControl) && levelObject != null)
+                    {
+                        if (selectedLevelObjects.Contains(levelObject)) selectedLevelObjects.Remove(levelObject);
+                        else selectedLevelObjects.Add(levelObject);
                     }
                 }
 
@@ -280,15 +328,6 @@ namespace SilhouetteEditor
                             primitiveStarted = false;
                             editorState = EditorState.IDLE;
                         }
-                    }
-
-                    /* Sascha:
-                     * Wenn der Editor im Status IDLE ist und der Benutzer die Entfernen - Taste drückt, werden alle selektierten LevelObjects gelöscht.
-                    */
-
-                    if (kstate.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.Delete) && oldkstate.IsKeyUp(Microsoft.Xna.Framework.Input.Keys.Delete))
-                    {
-                        deleteLevelObjects();
                     }
                 }
 
@@ -474,6 +513,7 @@ namespace SilhouetteEditor
 
             level.InitializeInEditor(spriteBatch);
             level.LoadContentInEditor(EditorLoop.EditorLoopInstance.GraphicsDevice);
+            level.contentPath = Path.Combine(Directory.GetCurrentDirectory(), "Content");
             MainForm.Default.UpdateTreeView();
         }
 
@@ -493,12 +533,11 @@ namespace SilhouetteEditor
 
         //---> Add-Stuff <---//
 
-        public void AddLayer(string name, int width, int height)
+        public void AddLayer(string name)
         {
             Layer l = new Layer();
             l.name = name;
-            l.width = width;
-            l.height = height;
+            l.level = level;
             l.initializeInEditor();
             level.layerList.Add(l);
             MainForm.Default.UpdateTreeView();
@@ -547,12 +586,6 @@ namespace SilhouetteEditor
 
         //---> Create Objects <---//
 
-        public void createTextureWrapper(string path, int width, int height)
-        {
-            this.currentTexture = new TextureWrapper(path, width, height);
-            paintTextureWrapper();
-        }
-
         public void createTextureObject(string path)
         {
             editorState = EditorState.CREATE_TEXTURES;
@@ -570,12 +603,6 @@ namespace SilhouetteEditor
         }
 
         //---> Destroy Objects <---//
-
-        public void destroyTextureWrapper()
-        {
-            editorState = EditorState.IDLE;
-            this.currentTexture = null;
-        }
 
         public void destroyCurrentObject()
         {
@@ -634,27 +661,6 @@ namespace SilhouetteEditor
 
             if (!continueAfterPaint)
                 destroyCurrentObject();
-        }
-
-        /* Sascha:
-         * Hier gilt das gleiche wie oben. Nur das diese Funktion keine LevelObjects erzeugt, sondern einfach ein Array für im Grid angelegte Texturen.
-        */
-
-        public void paintTextureWrapper()
-        {
-            if (selectedLayer == null)
-            {
-                System.Windows.Forms.MessageBox.Show("You have to choose a Layer in order to be able to add textures to it!", "Warning", MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Warning);
-                destroyTextureWrapper();
-                return;
-            }
-
-            selectedLayer.layerTexture[currentTexture.width, currentTexture.height] = currentTexture.texture;
-            selectedLayer.assetFullPath[currentTexture.width, currentTexture.height] = currentTexture.fullPath;
-            selectedLayer.assetName[currentTexture.width, currentTexture.height] = Path.GetFileNameWithoutExtension(currentTexture.fullPath);
-
-            MainForm.Default.UpdateTreeView();
-            destroyTextureWrapper();
         }
 
         /* Sascha:

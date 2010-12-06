@@ -19,25 +19,12 @@ namespace Silhouette.Engine
 {
     public partial class Layer
     {
-        public void initializeInEditor()
-        {
-            layerTexture = new Texture2D[width, height];
-            assetName = new string[width, height];
-            assetFullPath = new string[width, height];
-        }
+        public Level level;
+
+        public void initializeInEditor() { }
 
         public void loadContentInEditor(GraphicsDevice graphics)
         {
-            for (int x = 0; x < width; x++)
-                for (int y = 0; y < height; y++)
-                {
-                    if (assetName[x, y] != null)
-                    {
-                        FileStream file = FileManager.LoadConfigFile(assetFullPath[x,y]);
-                        layerTexture[x, y] = Texture2D.FromStream(graphics, file);
-                    }
-                }
-
             foreach (LevelObject lo in loList)
             {
                 if (lo is DrawableLevelObject)
@@ -53,12 +40,6 @@ namespace Silhouette.Engine
             if (!isVisible)
                 return;
 
-            for (int x = 0; x < width; x++)
-                for (int y = 0; y < height; y++)
-                {
-                    if (layerTexture[x, y] != null)
-                        spriteBatch.Draw(layerTexture[x, y], new Vector2(x * GameSettings.Default.resolutionWidth, y * GameSettings.Default.resolutionHeight), Color.White);
-                }
             foreach (LevelObject lo in loList)
             {
                 if (lo is DrawableLevelObject)

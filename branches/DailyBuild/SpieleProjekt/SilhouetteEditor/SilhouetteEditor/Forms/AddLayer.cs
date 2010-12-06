@@ -28,12 +28,8 @@ namespace SilhouetteEditor.Forms
                 MessageBox.Show("You have to enter a layer name!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            if (textBox2.Text == "" || textBox3.Text == "")
-            {
-                Editor.Default.AddLayer(textBox1.Text, 1, 1);
-            }
-            else
-                Editor.Default.AddLayer(textBox1.Text, Convert.ToInt32(textBox2.Text), Convert.ToInt32(textBox3.Text));
+
+            Editor.Default.AddLayer(textBox1.Text);
             this.Hide();
         }
 

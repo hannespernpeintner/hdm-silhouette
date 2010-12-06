@@ -74,8 +74,25 @@ namespace Silhouette.GameMechs
 
         public override void LoadContent()
         {
-            texture = GameLoop.gameInstance.Content.Load<Texture2D>("Sprites/" + assetName);
-            origin = new Vector2((float)(texture.Width / 2), (float)(texture.Height / 2));
+            try
+            {
+                texture = GameLoop.gameInstance.Content.Load<Texture2D>("Sprites/" + assetName);
+            }
+            catch (Exception e1)
+            {
+                try
+                {
+                    string p = Path.Combine(layer.level.contentPath, Path.GetFileName(fullPath));
+                    texture = TextureManager.Instance.LoadFromFile(p);
+                }
+                catch (Exception e2)
+                {
+                    texture = TextureManager.Instance.LoadFromFile(fullPath);
+                }
+            }
+
+            if(texture != null)
+                origin = new Vector2((float)(texture.Width / 2), (float)(texture.Height / 2));
         }
 
         public override void Update(GameTime gameTime) {}
@@ -99,8 +116,20 @@ namespace Silhouette.GameMechs
         {
             if (texture == null)
             {
-                FileStream file = FileManager.LoadConfigFile(fullPath);
-                texture = Texture2D.FromStream(graphics, file);
+                try
+                {
+                    string p = Path.Combine(layer.level.contentPath, Path.GetFileName(fullPath));
+                    FileStream file = FileManager.LoadConfigFile(p);
+                    texture = Texture2D.FromStream(graphics, file);
+                    this.fullPath = p;
+                    file.Close();
+                }
+                catch (Exception e)
+                {
+                    FileStream file = FileManager.LoadConfigFile(fullPath);
+                    texture = Texture2D.FromStream(graphics, file);
+                    file.Close();
+                }
             }
 
             transformed();
@@ -120,7 +149,10 @@ namespace Silhouette.GameMechs
 
         public override LevelObject clone()
         {
-            throw new NotImplementedException();
+            TextureObject result = (TextureObject)this.MemberwiseClone();
+            result.polygon = (Vector2[])this.polygon.Clone();
+            result.mouseOn = false;
+            return result;
         }
 
         public override void transformed()

@@ -77,7 +77,9 @@ namespace Silhouette.GameMechs
 
         public override LevelObject clone()
         {
-            throw new NotImplementedException();
+            RectangleFixtureItem result = (RectangleFixtureItem)this.MemberwiseClone();
+            result.mouseOn = false;
+            return result;
         }
 
         public override void transformed()
@@ -146,7 +148,9 @@ namespace Silhouette.GameMechs
 
         public override LevelObject clone()
         {
-            throw new NotImplementedException();
+            CircleFixtureItem result = (CircleFixtureItem)this.MemberwiseClone();
+            result.mouseOn = false;
+            return result;
         }
 
         public override void transformed() { }
@@ -252,7 +256,11 @@ namespace Silhouette.GameMechs
 
         public override LevelObject clone()
         {
-            throw new NotImplementedException();
+            PathFixtureItem result = (PathFixtureItem)this.MemberwiseClone();
+            result.LocalPoints = (Vector2[])this.LocalPoints.Clone();
+            result.WorldPoints = (Vector2[])this.WorldPoints.Clone();
+            result.mouseOn = false;
+            return result;
         }
 
         public override void transformed()
