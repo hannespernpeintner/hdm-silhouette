@@ -40,6 +40,11 @@ namespace Silhouette.Engine
             [Description("The name of the level.")]
             public string name { get { return _name; } set { _name = value; } }
 
+            private string _contentPath;
+            [DisplayName("Content Path"), Category("General")]
+            [Description("The path to the content of the Level. All textures will be safed and loaded relative to this path.")]
+            public string contentPath { get { return _contentPath; } set { _contentPath = value; } }
+
             [NonSerialized]
             public static World Physics;
 

@@ -69,7 +69,7 @@ namespace SilhouetteEditor.Forms
 
         private void ToolsToolBox(object sender, EventArgs e)
         {
-            new ToolBox().Show();
+            
         }
 
         private void FileSaveAs(object sender, EventArgs e)
@@ -122,7 +122,7 @@ namespace SilhouetteEditor.Forms
 
         private void ToolBoxButton_Click(object sender, EventArgs e)
         {
-            new ToolBox().ShowDialog();
+            
         }
 
         //---> ContextMenu-Steuerungen <---//
@@ -403,7 +403,7 @@ namespace SilhouetteEditor.Forms
 
         private void copyToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            //Wird noch implementiert -> Copy -> LevelObject
+            Editor.Default.copyLevelObjects(Editor.Default.selectedLayer);
         }
 
         private void renameToolStripMenuItem1_Click(object sender, EventArgs e)

@@ -92,7 +92,9 @@ namespace Silhouette.GameMechs
 
         public override LevelObject clone()
         {
-            throw new NotImplementedException();
+            RectanglePrimitiveObject result = (RectanglePrimitiveObject)this.MemberwiseClone();
+            result.mouseOn = false;
+            return result;
         }
 
         public override bool contains(Vector2 worldPosition)
@@ -171,7 +173,9 @@ namespace Silhouette.GameMechs
 
         public override LevelObject clone()
         {
-            throw new NotImplementedException();
+            CirclePrimitiveObject result = (CirclePrimitiveObject)this.MemberwiseClone();
+            result.mouseOn = false;
+            return result;
         }
 
         public override bool contains(Vector2 worldPosition)
@@ -282,7 +286,11 @@ namespace Silhouette.GameMechs
 
         public override LevelObject clone()
         {
-            throw new NotImplementedException();
+            PathPrimitiveObject result = (PathPrimitiveObject)this.MemberwiseClone();
+            result.LocalPoints = (Vector2[])this.LocalPoints.Clone();
+            result.WorldPoints = (Vector2[])this.WorldPoints.Clone();
+            result.mouseOn = false;
+            return result;
         }
 
         public override bool contains(Vector2 worldPosition)

@@ -133,6 +133,7 @@
     <Compile Include="Engine\Manager\FixtureManager.cs" />
     <Compile Include="Engine\Layer.cs" />
     <Compile Include="Engine\Manager\SoundManager.cs" />
+    <Compile Include="Engine\Manager\TextureManager.cs" />
     <Compile Include="Engine\Manager\VideoManager.cs" />
     <Compile Include="Engine\Primitives.cs" />
     <Compile Include="Engine\Screens\MainMenuScreen.cs" />
