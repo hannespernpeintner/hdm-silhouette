@@ -215,18 +215,8 @@ namespace SilhouetteEditor.Forms
             ImageList32.Images.Clear();
             TextureView.Clear();
 
+            
             DirectoryInfo di = new DirectoryInfo(path);
-            DirectoryInfo[] folders = di.GetDirectories();
-            foreach (DirectoryInfo folder in folders)
-            {
-                ListViewItem lvi = new ListViewItem();
-                lvi.Text = folder.Name;
-                lvi.ToolTipText = folder.Name;
-                lvi.ImageIndex = 0;
-                lvi.Tag = "folder";
-                lvi.Name = folder.FullName;
-                TextureView.Items.Add(lvi);
-            }
 
             string filters = "*.jpg;*.png;*.bmp;";
             List<FileInfo> fileList = new List<FileInfo>();
@@ -274,10 +264,7 @@ namespace SilhouetteEditor.Forms
         private void TextureView_MouseDoubleClick(object sender, MouseEventArgs e)
         {
             string itemtype = TextureView.FocusedItem.Tag.ToString();
-            if (itemtype == "folder")
-            {
-                loadFolder(TextureView.FocusedItem.Name);
-            }
+
             if (itemtype == "file")
             {
                 Editor.Default.createTextureObject(TextureView.FocusedItem.Name);
@@ -292,17 +279,6 @@ namespace SilhouetteEditor.Forms
             InteractiveView.Clear();
 
             DirectoryInfo di = new DirectoryInfo(path);
-            DirectoryInfo[] folders = di.GetDirectories();
-            foreach (DirectoryInfo folder in folders)
-            {
-                ListViewItem lvi = new ListViewItem();
-                lvi.Text = folder.Name;
-                lvi.ToolTipText = folder.Name;
-                lvi.ImageIndex = 0;
-                lvi.Tag = "folder";
-                lvi.Name = folder.FullName;
-                InteractiveView.Items.Add(lvi);
-            }
 
             string filters = "*.jpg;*.png;*.bmp;";
             List<FileInfo> fileList = new List<FileInfo>();
@@ -330,10 +306,7 @@ namespace SilhouetteEditor.Forms
         private void InteractiveView_MouseDoubleClick(object sender, MouseEventArgs e)
         {
             string itemtype = InteractiveView.FocusedItem.Tag.ToString();
-            if (itemtype == "folder")
-            {
-                loadFolder(InteractiveView.FocusedItem.Name);
-            }
+
             if (itemtype == "file")
             {
                 Editor.Default.createInteractiveObject(InteractiveView.FocusedItem.Name);
