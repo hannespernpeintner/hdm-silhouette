@@ -95,6 +95,7 @@ namespace SilhouetteEditor.Forms
             this.renameToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.copyToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.deleteToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.ZoomStatus = new System.Windows.Forms.ToolStripStatusLabel();
             this.StatusBar.SuspendLayout();
             this.MenuBar.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -125,7 +126,8 @@ namespace SilhouetteEditor.Forms
             this.MouseWorldPosition,
             this.SelectedItem,
             this.EditorStatus,
-            this.FPS});
+            this.FPS,
+            this.ZoomStatus});
             this.StatusBar.Location = new System.Drawing.Point(0, 708);
             this.StatusBar.Name = "StatusBar";
             this.StatusBar.Size = new System.Drawing.Size(1264, 22);
@@ -167,13 +169,14 @@ namespace SilhouetteEditor.Forms
             // 
             this.EditorStatus.AutoSize = false;
             this.EditorStatus.Name = "EditorStatus";
-            this.EditorStatus.Size = new System.Drawing.Size(200, 17);
+            this.EditorStatus.Size = new System.Drawing.Size(180, 17);
             this.EditorStatus.ToolTipText = "The status of the editor.";
             // 
             // FPS
             // 
+            this.FPS.AutoSize = false;
             this.FPS.Name = "FPS";
-            this.FPS.Size = new System.Drawing.Size(0, 17);
+            this.FPS.Size = new System.Drawing.Size(80, 17);
             // 
             // MenuBar
             // 
@@ -635,7 +638,7 @@ namespace SilhouetteEditor.Forms
             // renameToolStripMenuItem3
             // 
             this.renameToolStripMenuItem3.Name = "renameToolStripMenuItem3";
-            this.renameToolStripMenuItem3.Size = new System.Drawing.Size(152, 22);
+            this.renameToolStripMenuItem3.Size = new System.Drawing.Size(127, 22);
             this.renameToolStripMenuItem3.Text = "Rename";
             this.renameToolStripMenuItem3.Click += new System.EventHandler(this.renameToolStripMenuItem3_Click);
             // 
@@ -650,7 +653,7 @@ namespace SilhouetteEditor.Forms
             // renameToolStripMenuItem2
             // 
             this.renameToolStripMenuItem2.Name = "renameToolStripMenuItem2";
-            this.renameToolStripMenuItem2.Size = new System.Drawing.Size(152, 22);
+            this.renameToolStripMenuItem2.Size = new System.Drawing.Size(117, 22);
             this.renameToolStripMenuItem2.Text = "Rename";
             this.renameToolStripMenuItem2.Click += new System.EventHandler(this.renameToolStripMenuItem2_Click);
             // 
@@ -673,23 +676,30 @@ namespace SilhouetteEditor.Forms
             // renameToolStripMenuItem1
             // 
             this.renameToolStripMenuItem1.Name = "renameToolStripMenuItem1";
-            this.renameToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
+            this.renameToolStripMenuItem1.Size = new System.Drawing.Size(117, 22);
             this.renameToolStripMenuItem1.Text = "Rename";
             this.renameToolStripMenuItem1.Click += new System.EventHandler(this.renameToolStripMenuItem1_Click);
             // 
             // copyToolStripMenuItem1
             // 
             this.copyToolStripMenuItem1.Name = "copyToolStripMenuItem1";
-            this.copyToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
+            this.copyToolStripMenuItem1.Size = new System.Drawing.Size(117, 22);
             this.copyToolStripMenuItem1.Text = "Copy";
             this.copyToolStripMenuItem1.Click += new System.EventHandler(this.copyToolStripMenuItem1_Click);
             // 
             // deleteToolStripMenuItem1
             // 
             this.deleteToolStripMenuItem1.Name = "deleteToolStripMenuItem1";
-            this.deleteToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
+            this.deleteToolStripMenuItem1.Size = new System.Drawing.Size(117, 22);
             this.deleteToolStripMenuItem1.Text = "Delete";
             this.deleteToolStripMenuItem1.Click += new System.EventHandler(this.deleteToolStripMenuItem1_Click);
+            // 
+            // ZoomStatus
+            // 
+            this.ZoomStatus.AutoSize = false;
+            this.ZoomStatus.Name = "ZoomStatus";
+            this.ZoomStatus.Size = new System.Drawing.Size(80, 17);
+            this.ZoomStatus.ToolTipText = "The current zoom factor of the viewport.";
             // 
             // MainForm
             // 
@@ -781,7 +791,7 @@ namespace SilhouetteEditor.Forms
         private System.Windows.Forms.ListView TextureView;
         private System.Windows.Forms.ImageList ImageList32;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
-        private System.Windows.Forms.ToolStripStatusLabel EditorStatus;
+        public System.Windows.Forms.ToolStripStatusLabel EditorStatus;
         public System.Windows.Forms.ToolStripStatusLabel FPS;
         private System.Windows.Forms.TabPage tabPage3;
         private System.Windows.Forms.Button BrowseButton2;
@@ -797,5 +807,6 @@ namespace SilhouetteEditor.Forms
         private System.Windows.Forms.ToolStripMenuItem pathCollisionToolStripMenuItem;
         private System.Windows.Forms.ToolStripDropDownButton PhysicsButton;
         private System.Windows.Forms.ToolStripDropDownButton EventButton;
+        public System.Windows.Forms.ToolStripStatusLabel ZoomStatus;
     }
 }

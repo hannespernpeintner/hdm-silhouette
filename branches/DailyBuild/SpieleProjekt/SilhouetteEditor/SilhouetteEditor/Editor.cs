@@ -119,6 +119,12 @@ namespace SilhouetteEditor
             initialPosition = new List<Vector2>();
             initialScale = new List<Vector2>();
             editorState = EditorState.IDLE;
+
+            NewLevel("");
+            MainForm.Default.loadFolder(level.contentPath);
+            MainForm.Default.loadFolderInteractive(level.contentPath);
+            MainForm.Default.EditorStatus.Text = "Editorstatus: IDLE";
+            MainForm.Default.ZoomStatus.Text = "Zoom: 100%";
         }
 
         public void Update(GameTime gameTime)
@@ -132,7 +138,7 @@ namespace SilhouetteEditor
             level.UpdateInEditor(gameTime);
 
             #region CameraControl
-                if(kstate.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.A))
+                if(kstate.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.A) && !kstate.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.LeftControl))
                 {
                     Camera.PositionX -= Constants.CameraMovingSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
                 }
@@ -152,12 +158,15 @@ namespace SilhouetteEditor
                 if (mwheeldelta > 0)
                 {
                     float zoom = (float)Math.Round(Camera.Scale * 10) * 10.0f + 10.0f;
+                    if (zoom >= 110) zoom = 100;
+                    MainForm.Default.ZoomStatus.Text = "Zoom: " + zoom.ToString() + "%";
                     Camera.Scale = zoom / 100.0f;
                 }
                 if (mwheeldelta < 0)
                 {
                     float zoom = (float)Math.Round(Camera.Scale * 10) * 10.0f - 10.0f;
-                    if (zoom <= 0.0f) return;
+                    if (zoom <= 0.0f) zoom = 10;
+                    MainForm.Default.ZoomStatus.Text = "Zoom: " + zoom.ToString() + "%";
                     Camera.Scale = zoom / 100.0f;
                 }
             #endregion
@@ -174,6 +183,8 @@ namespace SilhouetteEditor
             #region Editorstate-Logic
                 if (editorState == EditorState.IDLE)
                 {
+                    MainForm.Default.EditorStatus.Text = "Editorstatus: Idle";
+
                     LevelObject levelObject = getItemAtPosition(MouseWorldPosition);                    
 
                     if (levelObject != null)
@@ -269,6 +280,19 @@ namespace SilhouetteEditor
                         if (selectedLevelObjects.Contains(levelObject)) selectedLevelObjects.Remove(levelObject);
                         else selectedLevelObjects.Add(levelObject);
                     }
+
+                    /* Sascha:
+                     * Auswahl aller Objekte der aktuell selektierten Layer. 
+                    */
+
+                    if (kstate.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.LeftControl) && kstate.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.A))
+                    {
+                        selectedLevelObjects.Clear();
+                        foreach (LevelObject lo in selectedLayer.loList)
+                        {
+                            selectedLevelObjects.Add(lo);
+                        }
+                    }
                 }
 
                 if (mstate.MiddleButton == Microsoft.Xna.Framework.Input.ButtonState.Pressed)
@@ -282,6 +306,8 @@ namespace SilhouetteEditor
 
                 if (editorState == EditorState.CREATE_PRIMITIVES)
                 {
+                    MainForm.Default.EditorStatus.Text = "Editorstatus: Brush Primitives";
+
                     if (mstate.LeftButton == Microsoft.Xna.Framework.Input.ButtonState.Pressed && oldmstate.LeftButton == Microsoft.Xna.Framework.Input.ButtonState.Released)
                     {
                         clickedPoints.Add(MouseWorldPosition);
@@ -333,6 +359,8 @@ namespace SilhouetteEditor
 
                 if (editorState == EditorState.CREATE_FIXTURES)
                 {
+                    MainForm.Default.EditorStatus.Text = "Editorstatus: Brush Collision";
+
                     if (mstate.LeftButton == Microsoft.Xna.Framework.Input.ButtonState.Pressed && oldmstate.LeftButton == Microsoft.Xna.Framework.Input.ButtonState.Released)
                     {
                         clickedPoints.Add(MouseWorldPosition);
@@ -384,6 +412,8 @@ namespace SilhouetteEditor
 
                 if (editorState == EditorState.CREATE_TEXTURES || editorState == EditorState.CREATE_INTERACTIVE)
                 {
+                    MainForm.Default.EditorStatus.Text = "Editorstatus: Brush Texture";
+
                     if (mstate.LeftButton == Microsoft.Xna.Framework.Input.ButtonState.Pressed && oldmstate.LeftButton == Microsoft.Xna.Framework.Input.ButtonState.Released)
                     {
                         paintCurrentObject(true);
@@ -396,6 +426,8 @@ namespace SilhouetteEditor
 
                 if (editorState == EditorState.POSITIONING)
                 {
+                    MainForm.Default.EditorStatus.Text = "Editorstatus: Positioning";
+
                     int i = 0;
                     foreach (LevelObject lo in selectedLevelObjects)
                     {
@@ -433,6 +465,8 @@ namespace SilhouetteEditor
 
                 if (editorState == EditorState.SCALING)
                 {
+                    MainForm.Default.EditorStatus.Text = "Editorstatus: Scaling";
+
                     Vector2 newdistance = MouseWorldPosition - selectedLevelObjects[0].position;
                     float factor = newdistance.Length() / GrabbedPoint.Length();
                     int i = 0;
@@ -464,6 +498,8 @@ namespace SilhouetteEditor
 
                 if (editorState == EditorState.ROTATING)
                 {
+                    MainForm.Default.EditorStatus.Text = "Editorstatus: Rotating";
+
                     float deltatheta = (float)Math.Atan2(GrabbedPoint.Y, GrabbedPoint.X) - (float)Math.Atan2(MouseWorldPosition.Y, MouseWorldPosition.X);
                     int i = 0;
                     foreach (LevelObject selLO in selectedLevelObjects)
@@ -535,17 +571,25 @@ namespace SilhouetteEditor
 
         public void AddLayer(string name)
         {
+            if (level == null)
+            {
+                MessageBox.Show("You have to create a Level in order to be able to add Layers!", "Error", MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
+                return;
+            }
+
             Layer l = new Layer();
             l.name = name;
             l.level = level;
             l.initializeInEditor();
             level.layerList.Add(l);
+            selectLayer(level.layerList.Last());
             MainForm.Default.UpdateTreeView();
         }
 
         public void AddLevelObject(LevelObject lo)
         {
             selectedLayer.loList.Add(lo);
+            selectLevelObject(lo);
         }
 
         public void AddFixture(FixtureType fixtureType)
@@ -677,18 +721,21 @@ namespace SilhouetteEditor
                     l1.name = l1.getPrefix() + selectedLayer.getNextObjectNumber();
                     l1.layer = selectedLayer;
                     selectedLayer.loList.Add(l1);
+                    selectLevelObject(l1);
                     break;
                 case FixtureType.Circle:
                     LevelObject l2 = new CircleFixtureItem(clickedPoints[0], (MouseWorldPosition - clickedPoints[0]).Length());
                     l2.name = l2.getPrefix() + selectedLayer.getNextObjectNumber();
                     l2.layer = selectedLayer;
                     selectedLayer.loList.Add(l2);
+                    selectLevelObject(l2);
                     break;
                 case FixtureType.Path:
                     LevelObject l3 = new PathFixtureItem(clickedPoints.ToArray());
                     l3.name = l3.getPrefix() + selectedLayer.getNextObjectNumber();
                     l3.layer = selectedLayer;
                     selectedLayer.loList.Add(l3);
+                    selectLevelObject(l3);
                     break;
             }
             MainForm.Default.UpdateTreeView();
@@ -707,18 +754,21 @@ namespace SilhouetteEditor
                     l1.name = l1.getPrefix() + selectedLayer.getNextObjectNumber();
                     l1.layer = selectedLayer;
                     selectedLayer.loList.Add(l1);
+                    selectLevelObject(l1);
                     break;
                 case PrimitiveType.Circle:
                     LevelObject l2 = new CirclePrimitiveObject(clickedPoints[0], (MouseWorldPosition - clickedPoints[0]).Length());
                     l2.name = l2.getPrefix() + selectedLayer.getNextObjectNumber();
                     l2.layer = selectedLayer;
                     selectedLayer.loList.Add(l2);
+                    selectLevelObject(l2);
                     break;
                 case PrimitiveType.Path:
                     LevelObject l3 = new PathPrimitiveObject(clickedPoints.ToArray());
                     l3.name = l3.getPrefix() + selectedLayer.getNextObjectNumber();
                     l3.layer = selectedLayer;
                     selectedLayer.loList.Add(l3);
+                    selectLevelObject(l3);
                     break;
             }
             MainForm.Default.UpdateTreeView();
