@@ -21,11 +21,16 @@ namespace Silhouette.GameMechs
         public float speed;
         public String path;
         public Fixture fixture;
+        public bool isAnimated;
 
         public Deco(Vector2 position, int amount, String path, float speed)
         {
             this.position = position;
             this.amount = amount;
+
+            if (amount == 1) isAnimated = false;
+            else isAnimated = true;
+
             this.path = path;
             this.speed = speed;
             animation = new Animation();
@@ -43,7 +48,10 @@ namespace Silhouette.GameMechs
 
         public override void Update(GameTime gameTime)
         {
-            animation.Update(gameTime, position);
+            if (isAnimated)
+            {
+                animation.Update(gameTime, position);
+            }
         }
 
         public override void Draw(SpriteBatch spriteBatch)
@@ -53,13 +61,19 @@ namespace Silhouette.GameMechs
 
         public bool OnCollision(Fixture f1, Fixture f2, Contact contact) 
         {
-            this.animation.start();
+            if (isAnimated)
+            {
+                this.animation.start();
+            }
             return true;
         }
 
         public void OnSeperation(Fixture f1, Fixture f2)
         {
-            this.animation.playedOnce = false;
+            if (isAnimated)
+            {
+                this.animation.playedOnce = false;
+            }
         }
     }
 }

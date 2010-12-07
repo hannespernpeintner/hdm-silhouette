@@ -15,182 +15,361 @@ using FarseerPhysics.Dynamics;
 using Silhouette.Engine.Manager;
 using Silhouette.Engine;
 using FarseerPhysics.Factories;
+using FarseerPhysics.Dynamics.Joints;
+using FarseerPhysics.Dynamics.Contacts;
 
 namespace Silhouette.GameMechs
 {
     class Player : DrawableLevelObject
     {
-        public AnimationWithFixture animation;
+        
+        public Vector2 centerPosition;      // Hannes: Rectangles für Kollisionserkennung. Muss noch um Kollisionsgruppe erweitert werden.
+        public Fixture charRect;
+        public Fixture nRect;
+        public Fixture eRect;
+        public Fixture sRect;
+        public Fixture wRect;
 
         public KeyboardState oldState;
+        public Vector2 oldPosition;
+        public Vector2 movement;    // Bewegung des Characters. Wichtig zur Statusveränderungserkennung.
 
-        private bool _isRunning;    // Hannes: Statusveränderungen des Chars. Weitere folgen.
-        private bool _isJumping;
-        private bool _isFalling;
-        private bool _isStanding;
-        private bool _animationChanged;     // das brauchen wir nur für das Polygonnetz...
+        private bool isRunning;    // Hannes: Statusveränderungen des Chars. Weitere folgen.
+        private bool isJumping;
+        private bool isFalling;
+        private bool isIdle;
 
-        public bool isRunning { get { return _isRunning; } set { _isRunning = value; } }
-        public bool isJumping { get { return _isJumping; } set { _isJumping = value; } }
-        public bool isFalling { get { return _isFalling; } set { _isFalling = value; } }
-        public bool isStanding { get { return _isStanding; } set { _isStanding = value; } }
-        public bool animationChanged { get { return _animationChanged; } set { _animationChanged = value; } }
+        private int facing;                    // Wo der Chara hinschaut. 0 bedeutet links, 1 bedeutet rechts.
 
-        private int _facing;                    // Wo der Chara hinschaut. 0 bedeutet links, 1 bedeutet rechts.
+        private Animation activeAnimation;     // Die aktive Sprite, die in der UpdateMethode auch geupdatet wird.
+        private Animation nextAnimation;        // Die nächste Animation, die gespielt wird, sobald die aktuelle abgelaufen is oder unterbrochen wird.
 
-        private AnimationWithFixture _activeAnimation;     // Die aktive Sprite, die in der UpdateMethode auch geupdatet wird.
-
-        private AnimationWithFixture _running;             // In den Methoden dieser Klasse werden sie passend hintereinander geschaltet.
-        private AnimationWithFixture _jumping_left;
-        private AnimationWithFixture _jumping_right;
-        private AnimationWithFixture _falling;
-        private AnimationWithFixture _standing_left;
-        private AnimationWithFixture _standing_right;
+        private Animation running_left;             // Hier kommen alle Animationen hin, die Tom hat.
+        private Animation running_right;  
+        private Animation jumping_left;
+        private Animation jumping_right;
+        private Animation falling_left;
+        private Animation falling_right;
+        private Animation idle_left;
+        private Animation idle_right;
+        private Animation idleb_left;
+        private Animation idleb_right;
+        private Animation idlec_left;
+        private Animation idlec_right;
 
         public override void Initialise()
         {
             // Aus dem Level geht die initiale StartPos des Chars hervor. Aktuell Testposition eingetragen.
-            //position = Level.LevelSetting.CharacterStartPosition;
+            // position = Level.LevelSetting.CharacterStartPosition;
 
-            _standing_left = new AnimationWithFixture();
-            _standing_right = new AnimationWithFixture();
-            _jumping_left = new AnimationWithFixture();
-            _jumping_right = new AnimationWithFixture();
-            _running = new AnimationWithFixture();
-            _falling = new AnimationWithFixture();
+            idle_left = new Animation();
+            idle_right = new Animation();
+            idleb_left = new Animation();
+            idleb_right = new Animation();
+            idlec_left = new Animation();
+            idlec_right = new Animation();
+            jumping_left = new Animation();
+            jumping_right = new Animation();
+            running_left = new Animation();
+            running_right = new Animation();
+            falling_left = new Animation();
+            falling_right = new Animation();
 
-            animationChanged = false;
-
-            position = new Vector2(1, 1);
+            position = new Vector2(100, 100);
+            movement = Vector2.Zero;
 
             isRunning = false;
             isJumping = false;
             isFalling = false;
-            isStanding = true;
-            _facing = 0;
+            isIdle = true;
+            facing = 1;
         }
 
         public override void LoadContent()
         {
-            _standing_left.Load(2, "Sprites/PlayerAnimations/Standing_left/", 0.5f);
-            _standing_right.Load(2, "Sprites/PlayerAnimations/Standing_right/", 0.5f);
-            _jumping_left.Load(8, "Sprites/PlayerAnimations/Jumping_left/", 0.35f);
-            _jumping_right.Load(8, "Sprites/PlayerAnimations/Jumping_right/", 0.35f);
 
             // Hier müssen alle Sprites geladen werden.
+            idle_left.Load(6, "Sprites/Player/idle_left_0", 6.0f, true);
+            idle_right.Load(6, "Sprites/Player/idle_right_0", 6.0f, true);
+            idleb_left.Load(6, "Sprites/Player/idleb_left_0", 6.0f, true);
+            idleb_right.Load(6, "Sprites/Player/idleb_right_0", 6.0f, true);
+            idlec_left.Load(6, "Sprites/Player/idlec_left_0", 6.0f, true);
+            idlec_right.Load(6, "Sprites/Player/idlec_right_0", 6.0f, true);
+            jumping_left.Load(7, "Sprites/Player/jump_left_0", 8.0f, true);
+            jumping_right.Load(7, "Sprites/Player/jump_right_0", 8.0f, true);
+            running_left.Load(8, "Sprites/Player/walk_left_0", 6.0f, true);
+            running_right.Load(8, "Sprites/Player/walk_right_0", 6.0f, true);
 
-            _activeAnimation = _standing_left;
-            _activeAnimation.activePolygon[0].Body.BodyType = BodyType.Dynamic;
-            _activeAnimation.activePolygon[0].Body.Mass = 100;
-            _activeAnimation.activePolygon[0].Body.FixedRotation = true;
+            activeAnimation = idlec_right;
+            nextAnimation = idlec_right;
+            charRect = FixtureManager.CreateRectangle(150, 120, position, BodyType.Dynamic, 1);
+            nRect = FixtureManager.CreateRectangle(120, 20, position, BodyType.Dynamic, 0);
+            eRect = FixtureManager.CreateRectangle(20, 90, position, BodyType.Dynamic, 0);
+            sRect = FixtureManager.CreateRectangle(120, 20, position, BodyType.Dynamic, 0);
+            wRect = FixtureManager.CreateRectangle(20, 90, position, BodyType.Dynamic, 0);
+            Joint joint0 = JointFactory.CreateWeldJoint(Level.Physics, charRect.Body, nRect.Body, new Vector2(0, -60 / Level.PixelPerMeter), Vector2.Zero);
+            Joint joint1 = JointFactory.CreateWeldJoint(Level.Physics, charRect.Body, eRect.Body, new Vector2(75 / Level.PixelPerMeter, 0), Vector2.Zero);
+            Joint joint2 = JointFactory.CreateWeldJoint(Level.Physics, charRect.Body, sRect.Body, new Vector2(0, 60 / Level.PixelPerMeter), Vector2.Zero);
+            Joint joint3 = JointFactory.CreateWeldJoint(Level.Physics, charRect.Body, wRect.Body, new Vector2(-75 / Level.PixelPerMeter, 0), Vector2.Zero);
+
+            sRect.OnCollision += sOnCollision;
+            //sRect.OnSeparation += sOnSeperation;
         }
 
         public override void Update(GameTime gameTime)
         {
+            ObserveMovement();
+            UpdateNextAnimation();
+            UpdatePositions();
             UpdateControls(gameTime);
             UpdateTexture(gameTime);
         }
 
+        public void UpdatePositions()
+        {
+            centerPosition = new Vector2(charRect.Body.Position.X * Level.PixelPerMeter, charRect.Body.Position.Y * Level.PixelPerMeter);
+            position = new Vector2(centerPosition.X - 150, centerPosition.Y - 150);
+        }
+
         private void UpdateControls(GameTime gameTime)
         {
-            //////////////////////////////////////////////////////////////////////////////////
-            if (Keyboard.GetState().IsKeyDown(Keys.A))
+            if (Keyboard.GetState().IsKeyDown(Keys.A) && !isFalling && !isJumping)
             {
-                if (_facing == 1)
+                if (facing == 1)
                 {
-                    _facing = 0;
-
-                }
-
-                else if (!isJumping)
-                {
-                    if (_facing == 1)
+                    facing = 0;
+                    if (isIdle)
                     {
-                        _facing = 0;
-                    }
-
-                    if (_facing == 0)
-                    {
-                        _activeAnimation.activePolygon[0].Body.ApplyForce(new Vector2(-15, 0));
-                        isStanding = !isStanding;
-                        _isRunning = !isRunning;
+                        choseIdleAnimation();
                     }
                 }
-            }
-            //////////////////////////////////////////////////////////////////////////////////
-            if (Keyboard.GetState().IsKeyDown(Keys.D))
-            {
-                if (_facing == 0)
+                
                 {
-                    _facing = 1;
-                }
-
-                else if (!isJumping)
-                {
-                    if (_facing == 0)
-                    {
-                        _facing = 1;
-                    }
-
-                    if (_facing == 1)
-                    {
-                        _activeAnimation.activePolygon[0].Body.ApplyForce(new Vector2(15, 0));
-                        isStanding = !isStanding;
-                        _isRunning = !isRunning;
-                    }
-                }
-            }
-            //////////////////////////////////////////////////////////////////////////////////
-            if (Keyboard.GetState().IsKeyDown(Keys.W) && oldState.IsKeyUp(Keys.W))
-            {
-                isStanding = false;
-                isRunning = false;
-                isFalling = false;
-                isJumping = true;
-
-                if (_facing == 0)
-                {
-                    _activeAnimation = _jumping_left;
-                    _activeAnimation.activePolygon[0].Body.ApplyForce(new Vector2(-50, -250));
-                }
-                if (_facing == 1)
-                {
-                    _activeAnimation = _jumping_right;
-                    _activeAnimation.activePolygon[0].Body.ApplyForce(new Vector2(50, -250));
+                    isRunning = true;
+                    activeAnimation = running_left;
+                    nextAnimation = choseIdleAnimation();
+                    charRect.Body.ApplyForce(new Vector2(-20, 0));
                 }
             }
 
-            if (_activeAnimation.activePolygon[0].Body.GetLinearVelocityFromLocalPoint(Vector2.Zero).X.Equals(0) || _activeAnimation.activePolygon[0].Body.GetLinearVelocityFromLocalPoint(Vector2.Zero).Y.Equals(0))
+            if (Keyboard.GetState().IsKeyDown(Keys.D) && !isFalling && !isJumping)
+            {
+                if (facing == 0)
+                {
+                    facing = 1;
+                    if (isIdle)
+                    {
+                        choseIdleAnimation();
+                    }
+                }
+                
+                {
+                    isRunning = true;
+                    activeAnimation = running_right;
+                    nextAnimation = choseIdleAnimation();
+                    charRect.Body.ApplyForce(new Vector2(20, 0));
+                }
+            }
+
+            if (Keyboard.GetState().IsKeyUp(Keys.D) && oldState.IsKeyDown(Keys.D))
             {
                 isRunning = false;
-                isJumping = false;
-                isFalling = false;
-                isStanding = true;
-                if (_facing == 0)
+                activeAnimation = choseIdleAnimation();
+            }
+
+            if (Keyboard.GetState().IsKeyUp(Keys.A) && oldState.IsKeyDown(Keys.A))
+            {
+                isRunning = false;
+                activeAnimation = choseIdleAnimation();
+            }
+
+            if (Keyboard.GetState().IsKeyDown(Keys.Space) && oldState.IsKeyUp(Keys.Space) && isIdle)
+            {
+                if (facing == 0)
                 {
-                    _activeAnimation = _standing_left;
+                    activeAnimation = jumping_left;
+                    activeAnimation.activeFrameNumber = 0;
+                    isJumping = true;
+                    isIdle = false;
+                    isFalling = false;
+                    isRunning = false;
+                    charRect.Body.ApplyForce(new Vector2(-1000, -1400));
                 }
-                if (_facing == 1)
+                else if (facing == 1)
                 {
-                    _activeAnimation = _standing_right;
+                    activeAnimation = jumping_right;
+                    activeAnimation.activeFrameNumber = 0;
+                    isJumping = true;
+                    isIdle = false;
+                    isFalling = false;
+                    isRunning = false;
+                    charRect.Body.ApplyForce(new Vector2(1000, -1400));
                 }
             }
 
             oldState = Keyboard.GetState();
+            oldPosition = charRect.Body.Position;
         }
 
         private void UpdateTexture(GameTime gameTime)
         {
-            _activeAnimation.Update(gameTime, position);
+            activeAnimation.Update(gameTime, position);
+        }
+
+        public Animation choseIdleAnimation() 
+        {
+            // Methode dient um zufällig zw. Idle-Animationen zu wechseln.
+            double random = new Random().NextDouble();
+
+            if (facing == 0)
+            {
+                if (random < 0.1)
+                {
+                    return idleb_left;
+                }
+                if (random > 0.1 && random < 0.2)
+                {
+                    return idlec_left;
+                }
+                else return idle_left;
+            }
+            else 
+            {
+                if (random < 0.1)
+                {
+                    return idleb_right;
+                }
+                if (random > 0.1 && random < 0.2)
+                {
+                    return idlec_right;
+                }
+                else return idle_right;
+            }
+        }
+
+        public void UpdateNextAnimation()
+        {
+            if (nextAnimation == null)
+            {
+                nextAnimation = choseIdleAnimation();    
+            }
+
+            if (activeAnimation == null)
+            {
+                activeAnimation = choseIdleAnimation();
+            }
+
+            if (activeAnimation.activeFrameNumber == activeAnimation.amount - 1 && isJumping)
+            {
+                activeAnimation = nextAnimation;
+                activeAnimation.activeFrameNumber = 0;
+                nextAnimation = null;
+            }
+
+            if (activeAnimation.activeFrameNumber == activeAnimation.amount - 1 && isIdle)
+            {
+                activeAnimation = nextAnimation;
+                activeAnimation.activeFrameNumber = 0;
+                nextAnimation = choseIdleAnimation();
+            }
+        }
+
+        public void ObserveMovement()
+        {
+            movement = charRect.Body.GetLinearVelocityFromWorldPoint(Vector2.Zero);
+
+            if (movement.Y + Level.Physics.Gravity.Y < 0)
+            {
+                isIdle = false;
+                isFalling = false;
+                isRunning = false;
+                isJumping = true;
+            }
+
+            if (isJumping && oldPosition.Y < charRect.Body.Position.Y)
+            {
+                isIdle = false;
+                isFalling = true;
+                isRunning = false;
+                isJumping = false;
+            }
+
+            if (movement.Y > Level.Physics.Gravity.Y)
+            {
+                isIdle = false;
+                isFalling = true;
+                isRunning = false;
+                isJumping = false;
+            }
+
+            if (facing == 0)
+            {
+                if (activeAnimation == idle_right)
+                {
+                    activeAnimation = idle_left;
+                }
+
+                if (activeAnimation == idleb_right)
+                {
+                    activeAnimation = idleb_left;
+                }
+
+                if (activeAnimation == idlec_right)
+                {
+                    activeAnimation = idlec_left;
+                }
+            }
+
+            if (facing == 1)
+            {
+                if (activeAnimation == idle_left)
+                {
+                    activeAnimation = idle_right;
+                }
+
+                if (activeAnimation == idleb_left)
+                {
+                    activeAnimation = idleb_right;
+                }
+
+                if (activeAnimation == idlec_left)
+                {
+                    activeAnimation = idlec_right;
+                }
+            }
+        }
+
+        public bool sOnCollision(Fixture fixtureA, Fixture fixtureB, Contact contact)
+        {
+
+            isJumping = false;
+            isFalling = false;
+            isIdle = true;
+
+            activeAnimation = choseIdleAnimation();
+            activeAnimation.activeFrameNumber = 0;
+            nextAnimation = null;
+
+            return true;
+        }
+
+        public void sOnSeperation(Fixture fixtureA, Fixture fixtureB)
+        {
+            if (facing == 0) activeAnimation = jumping_left;
+            activeAnimation.activeFrameNumber = 0;
+            if (facing == 1) activeAnimation = jumping_right;
+            activeAnimation.activeFrameNumber = 0;
         }
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            _activeAnimation.Draw(spriteBatch);
-            spriteBatch.DrawString(FontManager.Arial, "Standing: " + isStanding.ToString(), new Vector2(300, 20), Color.Azure);
-            spriteBatch.DrawString(FontManager.Arial, "Running: " + isRunning.ToString(), new Vector2(300, 45), Color.Azure);
-            spriteBatch.DrawString(FontManager.Arial, "Jumping: " + isJumping.ToString(), new Vector2(300, 70), Color.Azure);
-            spriteBatch.DrawString(FontManager.Arial, "Falling: " + isFalling.ToString(), new Vector2(300, 95), Color.Azure);
+            activeAnimation.Draw(spriteBatch);
+            //Das auskommentierte hier kann als Debugview dienen.
+            /*spriteBatch.DrawString(FontManager.Arial, "Standing: " + isIdle.ToString(), new Vector2(300, 20), Color.Black);
+            spriteBatch.DrawString(FontManager.Arial, "Running: " + isRunning.ToString(), new Vector2(300, 45), Color.Black);
+            spriteBatch.DrawString(FontManager.Arial, "Jumping: " + isJumping.ToString(), new Vector2(300, 70), Color.Black);
+            spriteBatch.DrawString(FontManager.Arial, "Falling: " + isFalling.ToString(), new Vector2(300, 95), Color.Black);
+            spriteBatch.DrawString(FontManager.Arial, charRect.Body.Position.ToString(), new Vector2(300, 120), Color.Black);*/
         }
 
         //---> Editor-Stuff, für Player unwichtig <---//

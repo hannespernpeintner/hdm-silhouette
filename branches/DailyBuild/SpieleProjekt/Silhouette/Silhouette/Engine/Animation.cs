@@ -34,7 +34,7 @@ namespace Silhouette.Engine
 
         private bool started;
         private float totalElapsed;
-        private int amount;
+        public int amount;
 
         public Animation()
         {
