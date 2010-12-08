@@ -297,188 +297,333 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Sprites\Player\idleb_left_00.png">
-      <Name>idleb_left_00</Name>
+    <Compile Include="Sprites\Player\climb_left_01.png">
+      <Name>climb_left_01</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Sprites\Player\idleb_left_01.png">
-      <Name>idleb_left_01</Name>
+    <Compile Include="Sprites\Player\climb_left_02.png">
+      <Name>climb_left_02</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Sprites\Player\idleb_left_02.png">
-      <Name>idleb_left_02</Name>
+    <Compile Include="Sprites\Player\climb_left_03.png">
+      <Name>climb_left_03</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Sprites\Player\idleb_left_03.png">
-      <Name>idleb_left_03</Name>
+    <Compile Include="Sprites\Player\climb_left_04.png">
+      <Name>climb_left_04</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Sprites\Player\idleb_left_04.png">
-      <Name>idleb_left_04</Name>
+    <Compile Include="Sprites\Player\climb_left_05.png">
+      <Name>climb_left_05</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Sprites\Player\idleb_left_05.png">
-      <Name>idleb_left_05</Name>
+    <Compile Include="Sprites\Player\climb_left_06.png">
+      <Name>climb_left_06</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Sprites\Player\idleb_right_00.png">
-      <Name>idleb_right_00</Name>
+    <Compile Include="Sprites\Player\climb_left_07.png">
+      <Name>climb_left_07</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Sprites\Player\idleb_right_01.png">
-      <Name>idleb_right_01</Name>
+    <Compile Include="Sprites\Player\climb_left_08.png">
+      <Name>climb_left_08</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Sprites\Player\idleb_right_02.png">
-      <Name>idleb_right_02</Name>
+    <Compile Include="Sprites\Player\climb_left_09.png">
+      <Name>climb_left_09</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Sprites\Player\idleb_right_03.png">
-      <Name>idleb_right_03</Name>
+    <Compile Include="Sprites\Player\climb_left_10.png">
+      <Name>climb_left_10</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Sprites\Player\idleb_right_04.png">
-      <Name>idleb_right_04</Name>
+    <Compile Include="Sprites\Player\climb_left_11.png">
+      <Name>climb_left_11</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Sprites\Player\idleb_right_05.png">
-      <Name>idleb_right_05</Name>
+    <Compile Include="Sprites\Player\climb_right_01.png">
+      <Name>climb_right_01</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Sprites\Player\idlec_left_00.png">
-      <Name>idlec_left_00</Name>
+    <Compile Include="Sprites\Player\climb_right_02.png">
+      <Name>climb_right_02</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Sprites\Player\idlec_left_01.png">
-      <Name>idlec_left_01</Name>
+    <Compile Include="Sprites\Player\climb_right_03.png">
+      <Name>climb_right_03</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Sprites\Player\idlec_left_02.png">
-      <Name>idlec_left_02</Name>
+    <Compile Include="Sprites\Player\climb_right_04.png">
+      <Name>climb_right_04</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Sprites\Player\idlec_left_03.png">
-      <Name>idlec_left_03</Name>
+    <Compile Include="Sprites\Player\climb_right_05.png">
+      <Name>climb_right_05</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Sprites\Player\idlec_left_04.png">
-      <Name>idlec_left_04</Name>
+    <Compile Include="Sprites\Player\climb_right_06.png">
+      <Name>climb_right_06</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Sprites\Player\idlec_left_05.png">
-      <Name>idlec_left_05</Name>
+    <Compile Include="Sprites\Player\climb_right_07.png">
+      <Name>climb_right_07</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Sprites\Player\idlec_right_00.png">
-      <Name>idlec_right_00</Name>
+    <Compile Include="Sprites\Player\climb_right_08.png">
+      <Name>climb_right_08</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Sprites\Player\idlec_right_01.png">
-      <Name>idlec_right_01</Name>
+    <Compile Include="Sprites\Player\climb_right_09.png">
+      <Name>climb_right_09</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Sprites\Player\idlec_right_02.png">
-      <Name>idlec_right_02</Name>
+    <Compile Include="Sprites\Player\climb_right_10.png">
+      <Name>climb_right_10</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Sprites\Player\idlec_right_03.png">
-      <Name>idlec_right_03</Name>
+    <Compile Include="Sprites\Player\climb_right_11.png">
+      <Name>climb_right_11</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Sprites\Player\idlec_right_04.png">
-      <Name>idlec_right_04</Name>
+    <Compile Include="Sprites\Player\die_left_01.png">
+      <Name>die_left_01</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Sprites\Player\idlec_right_05.png">
-      <Name>idlec_right_05</Name>
+    <Compile Include="Sprites\Player\die_left_02.png">
+      <Name>die_left_02</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Sprites\Player\idle_left_00.png">
-      <Name>idle_left_00</Name>
+    <Compile Include="Sprites\Player\die_left_03.png">
+      <Name>die_left_03</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Sprites\Player\idle_left_01.png">
-      <Name>idle_left_01</Name>
+    <Compile Include="Sprites\Player\die_left_04.png">
+      <Name>die_left_04</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Sprites\Player\idle_left_02.png">
-      <Name>idle_left_02</Name>
+    <Compile Include="Sprites\Player\die_right_01.png">
+      <Name>die_right_01</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Sprites\Player\idle_left_03.png">
-      <Name>idle_left_03</Name>
+    <Compile Include="Sprites\Player\die_right_02.png">
+      <Name>die_right_02</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Sprites\Player\idle_left_04.png">
-      <Name>idle_left_04</Name>
+    <Compile Include="Sprites\Player\die_right_03.png">
+      <Name>die_right_03</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Sprites\Player\idle_left_05.png">
-      <Name>idle_left_05</Name>
+    <Compile Include="Sprites\Player\die_right_04.png">
+      <Name>die_right_04</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Sprites\Player\idle_right_00.png">
-      <Name>idle_right_00</Name>
+    <Compile Include="Sprites\Player\idleA_left_01.png">
+      <Name>idleA_left_01</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Sprites\Player\idle_right_01.png">
-      <Name>idle_right_01</Name>
+    <Compile Include="Sprites\Player\idleA_left_02.png">
+      <Name>idleA_left_02</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Sprites\Player\idle_right_02.png">
-      <Name>idle_right_02</Name>
+    <Compile Include="Sprites\Player\idleA_left_03.png">
+      <Name>idleA_left_03</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Sprites\Player\idle_right_03.png">
-      <Name>idle_right_03</Name>
+    <Compile Include="Sprites\Player\idleA_left_04.png">
+      <Name>idleA_left_04</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Sprites\Player\idle_right_04.png">
-      <Name>idle_right_04</Name>
+    <Compile Include="Sprites\Player\idleA_left_05.png">
+      <Name>idleA_left_05</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Sprites\Player\idle_right_05.png">
-      <Name>idle_right_05</Name>
+    <Compile Include="Sprites\Player\idleA_left_06.png">
+      <Name>idleA_left_06</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Sprites\Player\jump_left_00.png">
-      <Name>jump_left_00</Name>
+    <Compile Include="Sprites\Player\idleA_right_01.png">
+      <Name>idleA_right_01</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Sprites\Player\idleA_right_02.png">
+      <Name>idleA_right_02</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Sprites\Player\idleA_right_03.png">
+      <Name>idleA_right_03</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Sprites\Player\idleA_right_04.png">
+      <Name>idleA_right_04</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Sprites\Player\idleA_right_05.png">
+      <Name>idleA_right_05</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Sprites\Player\idleA_right_06.png">
+      <Name>idleA_right_06</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Sprites\Player\idleB_left_01.png">
+      <Name>idleB_left_01</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Sprites\Player\idleB_left_02.png">
+      <Name>idleB_left_02</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Sprites\Player\idleB_left_03.png">
+      <Name>idleB_left_03</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Sprites\Player\idleB_left_04.png">
+      <Name>idleB_left_04</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Sprites\Player\idleB_left_05.png">
+      <Name>idleB_left_05</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Sprites\Player\idleB_left_06.png">
+      <Name>idleB_left_06</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Sprites\Player\idleB_right_01.png">
+      <Name>idleB_right_01</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Sprites\Player\idleB_right_02.png">
+      <Name>idleB_right_02</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Sprites\Player\idleB_right_03.png">
+      <Name>idleB_right_03</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Sprites\Player\idleB_right_04.png">
+      <Name>idleB_right_04</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Sprites\Player\idleB_right_05.png">
+      <Name>idleB_right_05</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Sprites\Player\idleB_right_06.png">
+      <Name>idleB_right_06</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Sprites\Player\idleC_left_01.png">
+      <Name>idleC_left_01</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Sprites\Player\idleC_left_02.png">
+      <Name>idleC_left_02</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Sprites\Player\idleC_left_03.png">
+      <Name>idleC_left_03</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Sprites\Player\idleC_left_04.png">
+      <Name>idleC_left_04</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Sprites\Player\idleC_left_05.png">
+      <Name>idleC_left_05</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Sprites\Player\idleC_left_06.png">
+      <Name>idleC_left_06</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Sprites\Player\idleC_right_01.png">
+      <Name>idleC_right_01</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Sprites\Player\idleC_right_02.png">
+      <Name>idleC_right_02</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Sprites\Player\idleC_right_03.png">
+      <Name>idleC_right_03</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Sprites\Player\idleC_right_04.png">
+      <Name>idleC_right_04</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Sprites\Player\idleC_right_05.png">
+      <Name>idleC_right_05</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Sprites\Player\idleC_right_06.png">
+      <Name>idleC_right_06</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
@@ -512,8 +657,23 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Sprites\Player\jump_right_00.png">
-      <Name>jump_right_00</Name>
+    <Compile Include="Sprites\Player\jump_left_07.png">
+      <Name>jump_left_07</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Sprites\Player\jump_left_08.png">
+      <Name>jump_left_08</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Sprites\Player\jump_left_09.png">
+      <Name>jump_left_09</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Sprites\Player\jump_left_10.png">
+      <Name>jump_left_10</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
@@ -547,8 +707,23 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Sprites\Player\walk_left_00.png">
-      <Name>walk_left_00</Name>
+    <Compile Include="Sprites\Player\jump_right_07.png">
+      <Name>jump_right_07</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Sprites\Player\jump_right_08.png">
+      <Name>jump_right_08</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Sprites\Player\jump_right_09.png">
+      <Name>jump_right_09</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Sprites\Player\jump_right_10.png">
+      <Name>jump_right_10</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
@@ -587,8 +762,13 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Sprites\Player\walk_right_00.png">
-      <Name>walk_right_00</Name>
+    <Compile Include="Sprites\Player\walk_left_08.png">
+      <Name>walk_left_08</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Sprites\Player\walk_left_09.png">
+      <Name>walk_left_09</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
@@ -624,6 +804,16 @@
     </Compile>
     <Compile Include="Sprites\Player\walk_right_07.png">
       <Name>walk_right_07</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Sprites\Player\walk_right_08.png">
+      <Name>walk_right_08</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Sprites\Player\walk_right_09.png">
+      <Name>walk_right_09</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
