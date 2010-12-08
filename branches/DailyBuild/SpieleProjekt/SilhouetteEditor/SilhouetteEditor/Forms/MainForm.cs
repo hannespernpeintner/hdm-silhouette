@@ -142,18 +142,21 @@ namespace SilhouetteEditor.Forms
 
             TreeNode levelTreeNode = treeView1.Nodes.Add(Editor.Default.level.name);
             levelTreeNode.Tag = Editor.Default.level;
+            levelTreeNode.Checked = Editor.Default.level.isVisible;
             levelTreeNode.ContextMenuStrip = LevelContextMenu;
 
             foreach (Layer l in Editor.Default.level.layerList)
             {
                 TreeNode layerTreeNode = levelTreeNode.Nodes.Add(l.name);
                 layerTreeNode.Tag = l;
+                layerTreeNode.Checked = l.isVisible;
                 layerTreeNode.ContextMenuStrip = LayerContextMenu;
 
                 foreach (LevelObject lo in l.loList)
                 {
                     TreeNode loTreeNode = layerTreeNode.Nodes.Add(lo.name);
                     loTreeNode.Tag = lo;
+                    loTreeNode.Checked = lo.isVisible;
                     loTreeNode.ContextMenuStrip = ObjectContextMenu;
                 }
             }
@@ -175,6 +178,61 @@ namespace SilhouetteEditor.Forms
             {
                 LevelObject lo = (LevelObject)e.Node.Tag;
                 Editor.Default.selectLevelObject(lo);
+            }
+        }
+
+        private void treeView1_AfterLabelEdit(object sender, NodeLabelEditEventArgs e)
+        {
+            if (e.Label == null) return;
+
+            TreeNode[] nodes = treeView1.Nodes.Find(e.Label, true);
+            if (nodes.Length > 0)
+            {
+                MessageBox.Show("A layer or object with the name \"" + e.Label + "\" already exists in the level. Please use another name!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                e.CancelEdit = true;
+                return;
+            }
+            if (e.Node.Tag is Level)
+            {
+                Level l = (Level)e.Node.Tag;
+                l.name = e.Label;
+                e.Node.Name = e.Label;
+            }
+            if (e.Node.Tag is Layer)
+            {
+                Layer l = (Layer)e.Node.Tag;
+                l.name = e.Label;
+                e.Node.Name = e.Label;
+            }
+            if (e.Node.Tag is LevelObject)
+            {
+                LevelObject i = (LevelObject)e.Node.Tag;
+                i.name = e.Label;
+                e.Node.Name = e.Label;
+            }
+            propertyGrid1.Refresh();
+            GameView.Select();
+        }
+
+        private void treeView1_AfterCheck(object sender, TreeViewEventArgs e)
+        {
+            if (e.Node.Tag is Level)
+            {
+                Level level = (Level)e.Node.Tag;
+                level.isVisible = e.Node.Checked;
+                propertyGrid1.Refresh();
+            }
+            if (e.Node.Tag is Layer)
+            {
+                Layer l = (Layer)e.Node.Tag;
+                l.isVisible = e.Node.Checked;
+                propertyGrid1.Refresh();
+            }
+            if (e.Node.Tag is LevelObject)
+            {
+                LevelObject lo = (LevelObject)e.Node.Tag;
+                lo.isVisible = e.Node.Checked;
+                propertyGrid1.Refresh();
             }
         }
 

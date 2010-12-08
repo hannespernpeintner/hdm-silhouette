@@ -75,7 +75,6 @@ namespace Silhouette.GameMechs
             falling_left = new Animation();
             falling_right = new Animation();
 
-            position = new Vector2(100, 100);
             movement = Vector2.Zero;
 
             isRunning = false;

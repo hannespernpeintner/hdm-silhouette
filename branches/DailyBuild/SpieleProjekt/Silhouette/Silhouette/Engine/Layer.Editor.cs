@@ -45,7 +45,8 @@ namespace Silhouette.Engine
                 if (lo is DrawableLevelObject)
                 {
                     DrawableLevelObject dlo = (DrawableLevelObject)lo;
-                    dlo.drawInEditor(spriteBatch);
+                    if (dlo.isVisible)
+                        dlo.drawInEditor(spriteBatch);
                 }
             }
         }

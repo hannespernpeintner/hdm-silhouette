@@ -40,6 +40,7 @@ namespace SilhouetteEditor.Forms
             this.SelectedItem = new System.Windows.Forms.ToolStripStatusLabel();
             this.EditorStatus = new System.Windows.Forms.ToolStripStatusLabel();
             this.FPS = new System.Windows.Forms.ToolStripStatusLabel();
+            this.ZoomStatus = new System.Windows.Forms.ToolStripStatusLabel();
             this.MenuBar = new System.Windows.Forms.MenuStrip();
             this.dateiToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.newToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -95,7 +96,6 @@ namespace SilhouetteEditor.Forms
             this.renameToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.copyToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.deleteToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.ZoomStatus = new System.Windows.Forms.ToolStripStatusLabel();
             this.StatusBar.SuspendLayout();
             this.MenuBar.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -177,6 +177,13 @@ namespace SilhouetteEditor.Forms
             this.FPS.AutoSize = false;
             this.FPS.Name = "FPS";
             this.FPS.Size = new System.Drawing.Size(80, 17);
+            // 
+            // ZoomStatus
+            // 
+            this.ZoomStatus.AutoSize = false;
+            this.ZoomStatus.Name = "ZoomStatus";
+            this.ZoomStatus.Size = new System.Drawing.Size(80, 17);
+            this.ZoomStatus.ToolTipText = "The current zoom factor of the viewport.";
             // 
             // MenuBar
             // 
@@ -336,12 +343,15 @@ namespace SilhouetteEditor.Forms
             // 
             // treeView1
             // 
+            this.treeView1.CheckBoxes = true;
             this.treeView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.treeView1.LabelEdit = true;
             this.treeView1.Location = new System.Drawing.Point(0, 25);
             this.treeView1.Name = "treeView1";
             this.treeView1.Size = new System.Drawing.Size(247, 255);
             this.treeView1.TabIndex = 1;
+            this.treeView1.AfterLabelEdit += new System.Windows.Forms.NodeLabelEditEventHandler(this.treeView1_AfterLabelEdit);
+            this.treeView1.AfterCheck += new System.Windows.Forms.TreeViewEventHandler(this.treeView1_AfterCheck);
             this.treeView1.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView1_AfterSelect);
             // 
             // ToolBar
@@ -693,13 +703,6 @@ namespace SilhouetteEditor.Forms
             this.deleteToolStripMenuItem1.Size = new System.Drawing.Size(117, 22);
             this.deleteToolStripMenuItem1.Text = "Delete";
             this.deleteToolStripMenuItem1.Click += new System.EventHandler(this.deleteToolStripMenuItem1_Click);
-            // 
-            // ZoomStatus
-            // 
-            this.ZoomStatus.AutoSize = false;
-            this.ZoomStatus.Name = "ZoomStatus";
-            this.ZoomStatus.Size = new System.Drawing.Size(80, 17);
-            this.ZoomStatus.ToolTipText = "The current zoom factor of the viewport.";
             // 
             // MainForm
             // 
