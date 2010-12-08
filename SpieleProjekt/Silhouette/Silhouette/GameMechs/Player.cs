@@ -371,44 +371,5 @@ namespace Silhouette.GameMechs
             spriteBatch.DrawString(FontManager.Arial, "Falling: " + isFalling.ToString(), new Vector2(300, 95), Color.Black);
             spriteBatch.DrawString(FontManager.Arial, charRect.Body.Position.ToString(), new Vector2(300, 120), Color.Black);*/
         }
-
-        //---> Editor-Stuff, für Player unwichtig <---//
-
-        public override LevelObject clone()
-        {
-            throw new NotImplementedException();
-        }
-        public override bool contains(Vector2 worldPosition)
-        {
-            throw new NotImplementedException();
-        }
-        public override string getPrefix()
-        {
-            throw new NotImplementedException();
-        }
-        public override void transformed()
-        {
-            throw new NotImplementedException();
-        }
-        public override void drawSelectionFrame(SpriteBatch spriteBatch, Matrix matrix)
-        {
-            throw new NotImplementedException();
-        }
-        public override bool canScale() { return false; }
-        public override Vector2 getScale() { return Vector2.One; }
-        public override void setScale(Vector2 scale) { }
-        public override bool canRotate() { return false; }
-        public override float getRotation() { return 0; }
-        public override void setRotation(float rotate) { }
-
-        public override void loadContentInEditor(GraphicsDevice graphics)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override void drawInEditor(SpriteBatch spriteBatch)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

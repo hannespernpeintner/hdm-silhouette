@@ -22,7 +22,7 @@ namespace Silhouette.GameMechs
 
         //Editor-Methoden
 
-        public abstract void loadContentInEditor(GraphicsDevice graphics);
-        public abstract void drawInEditor(SpriteBatch spriteBatch);
+        public virtual void loadContentInEditor(GraphicsDevice graphics) { }
+        public virtual void drawInEditor(SpriteBatch spriteBatch) { }
     }
 }
