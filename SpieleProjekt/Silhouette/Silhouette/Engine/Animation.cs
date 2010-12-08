@@ -51,12 +51,20 @@ namespace Silhouette.Engine
             this.amount = amount;
             this.position = Vector2.Zero;
             this.looped = looped;
-            
 
-            for (int i = 0; i <= amount - 1; i++)
+            //Achtung, Zählung beginnt bei den AMlern mit 01, nicht 00!!!!!
+            for (int i = 1; i <= amount; i++)
             {
-                String temp = path + i.ToString();
-                pictures.Add(GameLoop.gameInstance.Content.Load<Texture2D>(temp));
+                if (i < 10)
+                {
+                    String temp = (path + "0" + i).ToString();
+                    pictures.Add(GameLoop.gameInstance.Content.Load<Texture2D>(temp));
+                }
+                else
+                {
+                    String temp = (path + i).ToString();
+                    pictures.Add(GameLoop.gameInstance.Content.Load<Texture2D>(temp));
+                }
             }
             activeFrameNumber = 0;
             activeTexture = pictures[activeFrameNumber];
@@ -107,7 +115,7 @@ namespace Silhouette.Engine
         // Wird in der Draw des Trägers gerufen
         public void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(activeTexture,new Rectangle((int)position.X, (int)position.Y, activeTexture.Width, activeTexture.Height),new Rectangle(0,0,activeTexture.Width, activeTexture.Height), Color.White, this.rotation, Vector2.Zero, SpriteEffects.None, 0.0f);
+            spriteBatch.Draw(activeTexture, new Rectangle((int)position.X, (int)position.Y, activeTexture.Width, activeTexture.Height), new Rectangle(0, 0, activeTexture.Width, activeTexture.Height), Color.White, this.rotation, Vector2.Zero, SpriteEffects.None, 0.0f);
         }
 
         public void start()
