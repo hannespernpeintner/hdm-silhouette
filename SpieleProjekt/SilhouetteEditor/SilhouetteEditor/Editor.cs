@@ -559,6 +559,9 @@ namespace SilhouetteEditor
             Editor.Default.level = Level.LoadLevelFile(filename);
             level.InitializeInEditor(spriteBatch);
             level.LoadContentInEditor(EditorLoop.EditorLoopInstance.GraphicsDevice);
+            editorState = EditorState.IDLE;
+            selectLayer(level.layerList.First());
+            selectLevelObject(selectedLayer.loList.First());
             MainForm.Default.UpdateTreeView();
         }
 
@@ -884,26 +887,35 @@ namespace SilhouetteEditor
                         if (lo is RectangleFixtureItem)
                         {
                             RectangleFixtureItem r = (RectangleFixtureItem)lo;
-                            Microsoft.Xna.Framework.Color color = Constants.ColorFixtures;
-                            if (r.mouseOn) color = Constants.ColorMouseOn;
-                            Primitives.Instance.drawBoxFilled(spriteBatch, r.rectangle, color);
+                            if (r.isVisible)
+                            {
+                                Microsoft.Xna.Framework.Color color = Constants.ColorFixtures;
+                                if (r.mouseOn) color = Constants.ColorMouseOn;
+                                Primitives.Instance.drawBoxFilled(spriteBatch, r.rectangle, color);
+                            }
                         }
                         if (lo is CircleFixtureItem)
                         {
                             CircleFixtureItem c = (CircleFixtureItem)lo;
-                            Microsoft.Xna.Framework.Color color = Constants.ColorFixtures;
-                            if (c.mouseOn) color = Constants.ColorMouseOn;
-                            Primitives.Instance.drawCircleFilled(spriteBatch, c.position, c.radius, color);
+                            if (c.isVisible)
+                            {
+                                Microsoft.Xna.Framework.Color color = Constants.ColorFixtures;
+                                if (c.mouseOn) color = Constants.ColorMouseOn;
+                                Primitives.Instance.drawCircleFilled(spriteBatch, c.position, c.radius, color);
+                            }
                         }
                         if (lo is PathFixtureItem)
                         {
                             PathFixtureItem p = (PathFixtureItem)lo;
-                            Microsoft.Xna.Framework.Color color = Constants.ColorFixtures;
-                            if (p.mouseOn) color = Constants.ColorMouseOn;
-                            if (p.isPolygon)
-                                Primitives.Instance.drawPolygon(spriteBatch, p.WorldPoints, color, p.lineWidth);
-                            else
-                                Primitives.Instance.drawPath(spriteBatch, p.WorldPoints, color, p.lineWidth);
+                            if (p.isVisible)
+                            {
+                                Microsoft.Xna.Framework.Color color = Constants.ColorFixtures;
+                                if (p.mouseOn) color = Constants.ColorMouseOn;
+                                if (p.isPolygon)
+                                    Primitives.Instance.drawPolygon(spriteBatch, p.WorldPoints, color, p.lineWidth);
+                                else
+                                    Primitives.Instance.drawPath(spriteBatch, p.WorldPoints, color, p.lineWidth);
+                            }
                         }
                     }
 

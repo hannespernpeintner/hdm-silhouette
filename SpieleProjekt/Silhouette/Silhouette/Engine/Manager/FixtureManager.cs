@@ -23,12 +23,14 @@ namespace Silhouette.Engine.Manager
 {
     public static class FixtureManager
     {
-        public static List<Fixture> TextureToPolygon(Texture2D texture, BodyType bodyType, Vector2 position, float density)
+        public static List<Fixture> TextureToPolygon(Texture2D texture, Vector2 scaling, BodyType bodyType, Vector2 position, float density)
         {
             uint[] data = new uint[texture.Width * texture.Height];
             texture.GetData(data);
             Vertices vertices = PolygonTools.CreatePolygon(data, texture.Width, texture.Height, true);
-            Vector2 scale = new Vector2(0.01f, 0.01f);
+            var polygonOffset = new Vector2(-texture.Width / 2, -texture.Height / 2);
+            vertices.Translate(ref polygonOffset);
+            Vector2 scale = new Vector2(0.01f, 0.01f) * scaling;
             vertices.Scale(ref scale);
 
             List<Vertices> tempList = EarclipDecomposer.ConvexPartition(vertices);
@@ -49,7 +51,7 @@ namespace Silhouette.Engine.Manager
 
             foreach (Texture2D picture in animation.pictures)
             {
-                polygons.Add(FixtureManager.TextureToPolygon(picture, BodyType.Static, Vector2.Zero, 1.0f));
+                polygons.Add(FixtureManager.TextureToPolygon(picture, Vector2.One, BodyType.Static, Vector2.Zero, 1.0f));
             }
 
             return polygons;

@@ -15,6 +15,7 @@ using Microsoft.Xna.Framework.Media;
 using System.Runtime.Serialization.Formatters.Binary;
 
 using Silhouette;
+using Silhouette.GameMechs;
 using Silhouette.Engine.Manager;
 using Silhouette.Engine.Screens;
 using Silhouette.Engine;
@@ -61,6 +62,7 @@ namespace Silhouette.Engine
             [Description("Defines the characters starting position.")]
             public Vector2 startPosition { get { return _startPosition; } set { _startPosition = value; } }
 
+            public bool isVisible = true;
             [NonSerialized]
             private DebugViewXNA debugView;
             [NonSerialized]
@@ -108,6 +110,10 @@ namespace Silhouette.Engine
         {
             proj = Matrix.CreateOrthographicOffCenter(0, GameSettings.Default.resolutionWidth / PixelPerMeter, GameSettings.Default.resolutionHeight / PixelPerMeter, 0, 0, 1);
 
+            Layer playerLayer = getLayerByName("Player");
+            if (playerLayer != null)
+                AddPlayer(playerLayer);
+
             foreach (Layer l in layerList)
             {
                 l.loadLayer();
@@ -126,6 +132,7 @@ namespace Silhouette.Engine
             #region DebugView
                 keyboardState = Keyboard.GetState();
 
+               
                 if (keyboardState.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.A))
                 {
                     Camera.PositionX -= 100;
@@ -142,6 +149,7 @@ namespace Silhouette.Engine
                 {
                     Camera.PositionY -= 100;
                 }
+                
 
                 if (keyboardState.IsKeyDown(Keys.F1) && oldKeyboardState.IsKeyUp(Keys.F1))
                     DebugViewEnabled = !DebugViewEnabled;
@@ -173,6 +181,9 @@ namespace Silhouette.Engine
 
         public void Draw()
         {
+            if (!isVisible)
+                return;
+
             if (!GraphicsEnabled)
             {
                 foreach (Layer l in layerList)
@@ -189,6 +200,16 @@ namespace Silhouette.Engine
             {
                 debugView.RenderDebugData(ref proj, ref Camera.debugMatrix);
             }
+        }
+
+        public void AddPlayer(Layer layer)
+        {
+            Player player = new Player();
+            player.Initialise();
+            player.LoadContent();
+            player.position = startPosition;
+            player.layer = layer;
+            layer.loList.Add(player);
         }
 
         public static Level LoadLevelFile(string levelPath)
