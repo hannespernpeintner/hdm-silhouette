@@ -59,6 +59,9 @@ namespace Silhouette.Engine
 
         public void DrawInEditor()
         {
+            if (!isVisible)
+                return;
+
             if (!GraphicsEnabled)
             {
                 foreach (Layer l in layerList)
@@ -83,6 +86,15 @@ namespace Silhouette.Engine
                 serializer.Serialize(file, this);
                 file.Close();
             }
+        }
+
+        public Layer getLayerByName(string name)
+        {
+            foreach (Layer layer in layerList)
+            {
+                if (layer.name == name) return layer;
+            }
+            return null;
         }
     }
 }

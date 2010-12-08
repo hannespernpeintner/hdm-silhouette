@@ -24,6 +24,8 @@ namespace Silhouette.GameMechs
         public Texture2D texture;
         [NonSerialized]
         public Fixture fixture;
+        [NonSerialized]
+        public List<Fixture> fixtures;
 
         private string _assetName;
         [DisplayName("Filename"), Category("Texture Data")]
@@ -94,13 +96,26 @@ namespace Silhouette.GameMechs
             if (texture != null)
                 origin = new Vector2((float)(texture.Width / 2), (float)(texture.Height / 2));
             this.ToFixture();
-            fixture.Body.Rotation = rotation;
+
+            if (fixture != null)
+                fixture.Body.Rotation = rotation;
+            else
+                fixtures[0].Body.Rotation = rotation;
         }
 
         public override void Update(GameTime gameTime)
         {
-            position = FixtureManager.ToPixel(fixture.Body.Position);
-            rotation = fixture.Body.Rotation;
+            if (fixture != null)
+            {
+                position = FixtureManager.ToPixel(fixture.Body.Position);
+                rotation = fixture.Body.Rotation;
+            }
+            else
+            {
+                position = FixtureManager.ToPixel(fixtures[0].Body.Position);
+                rotation = fixtures[0].Body.Rotation;
+            }
+            
         }
 
         public override void Draw(SpriteBatch spriteBatch)
@@ -110,9 +125,16 @@ namespace Silhouette.GameMechs
 
         public void ToFixture()
         {
-            fixture = FixtureFactory.CreateRectangle(Level.Physics, (texture.Width * scale.X) / Level.PixelPerMeter, (texture.Height * scale.Y) / Level.PixelPerMeter, density);
-            fixture.Body.BodyType = BodyType.Dynamic;
-            fixture.Body.Position = FixtureManager.ToMeter(position);
+            try
+            {
+                fixtures = FixtureManager.TextureToPolygon(texture, scale, BodyType.Dynamic, position, density);
+            }
+            catch (Exception e)
+            {
+                fixture = FixtureFactory.CreateRectangle(Level.Physics, (texture.Width * scale.X) / Level.PixelPerMeter, (texture.Height * scale.Y) / Level.PixelPerMeter, density);
+                fixture.Body.BodyType = BodyType.Dynamic;
+                fixture.Body.Position = FixtureManager.ToMeter(position);
+            }
         }
 
         public override void drawInEditor(SpriteBatch spriteBatch)

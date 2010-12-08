@@ -68,9 +68,6 @@ namespace Silhouette.Engine
 
         public void drawLayer(SpriteBatch spriteBatch)
         {
-            if (!isVisible)
-                return;
-
             foreach (LevelObject lo in loList)
             {
                 if (lo is DrawableLevelObject)
