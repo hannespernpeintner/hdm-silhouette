@@ -127,7 +127,8 @@ namespace Silhouette.GameMechs
         {
             try
             {
-                fixtures = FixtureManager.TextureToPolygon(texture, scale, BodyType.Dynamic, position, density);
+                //fixtures = FixtureManager.TextureToPolygon(texture, scale, BodyType.Dynamic, position, density);
+                fixture = FixtureManager.CreatePolygon(texture, scale, BodyType.Dynamic, position, density);
             }
             catch (Exception e)
             {
