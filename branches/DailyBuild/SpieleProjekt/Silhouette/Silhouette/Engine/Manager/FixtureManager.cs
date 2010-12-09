@@ -43,8 +43,7 @@ namespace Silhouette.Engine.Manager
             combine[0].Body.Position = ToMeter(position);
             return combine;
         }
-
-        
+       
         public static List<List<Fixture>> AnimationToPolygons(Animation animation)
         {
             List<List<Fixture>> polygons = new List<List<Fixture>>();
@@ -75,15 +74,18 @@ namespace Silhouette.Engine.Manager
             return fixture;
         }
 
-        public static Fixture CreatePolygon(Vector2[] vertices, Vector2 position, BodyType bodyType, float density)
+        public static Fixture CreatePolygon(Texture2D texture, Vector2 scaling, BodyType bodyType, Vector2 position, float density)
         {
-            Vector2[] temp = new Vector2[vertices.Length];
-            for(int i = 0; i < vertices.Length; i++)
-            {
-                temp[i] = ToMeter(vertices[i]);
-            }
-            Vertices vert = new Vertices(temp);
-            Fixture fixture = FixtureFactory.CreatePolygon(Level.Physics, vert, density);
+            uint[] data = new uint[texture.Width * texture.Height];
+            texture.GetData(data);
+            Vertices vertices = PolygonTools.CreatePolygon(data, texture.Width, texture.Height, true);
+            var polygonOffset = new Vector2(-texture.Width / 2, -texture.Height / 2);
+            vertices.Translate(ref polygonOffset);
+            Vector2 scale = new Vector2(0.01f, 0.01f) * scaling;
+            vertices.Scale(ref scale);
+
+            Vertices temp = Melkman.GetConvexHull(vertices);
+            Fixture fixture = FixtureFactory.CreatePolygon(Level.Physics, temp, density);
             fixture.Body.BodyType = bodyType;
             fixture.Body.Position = ToMeter(position);
             return fixture;
