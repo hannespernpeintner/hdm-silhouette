@@ -386,7 +386,7 @@ namespace SilhouetteEditor
                     {
                         clickedPoints.Add(MouseWorldPosition);
 
-                        if (currentPrimitive == PrimitiveType.Path)
+                        if (currentFixture == FixtureType.Path)
                             selectedLevelObjects.Clear();
 
                         if (!fixtureStarted)
