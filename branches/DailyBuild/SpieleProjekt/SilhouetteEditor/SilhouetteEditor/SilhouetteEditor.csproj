@@ -157,7 +157,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resource.resx</DependentUpon>
     </Compile>
-    <Compile Include="Texture2DLoader.cs" />
+    <Compile Include="EditorTextureManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Game.ico" />

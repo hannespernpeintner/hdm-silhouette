@@ -12,18 +12,21 @@ using System.Windows.Forms;
 
 namespace SilhouetteEditor
 {
-    class Texture2DLoader
+    class EditorTextureManager
     {
         /* Sascha:
          * Diese Klasse ist zuständig das Laden und Speichern der Texturen. Sie stellt zum einen Funktionen zum Laden bereit und prüft gleichzeitig ob
          * die Textur schonmal geladen wurde um mehrfaches Laden der gleichen Textur zu verhindern.
+         * 
+         * Für den Editor wird ein extra Manager gebraucht, da der Graphicsdevice mit übergeben werden muss für die Methode FromStream aus Texture2D.
         */
-        private static Texture2DLoader instance;
-        public static Texture2DLoader Instance
+
+        private static EditorTextureManager instance;
+        public static EditorTextureManager Instance
         {
             get
             {
-                if (instance == null) instance = new Texture2DLoader();
+                if (instance == null) instance = new EditorTextureManager();
                 return instance;
             }
         }
