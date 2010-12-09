@@ -135,7 +135,16 @@ namespace SilhouetteEditor
             if (level == null)
                 return;
 
+            /* Sascha:
+             * Startet die Updatefunktionen aller Elemente des Levels. Es gibt jeweils verschiedene für Spiel und Editor. 
+            */
+
             level.UpdateInEditor(gameTime);
+
+            /* Sascha:
+             * Diese Funktion kontrolliert die Camera im Editor-Viewport. Benutzt wird dabei die statische Klasse Camera aus der Spielengine.
+             * Gibt die aktuellen Camera-Daten in der StatusBar aus.
+            */
 
             #region CameraControl
                 if(kstate.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.A) && !kstate.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.LeftControl))
@@ -171,6 +180,10 @@ namespace SilhouetteEditor
                 }
             #endregion
 
+            /* Sascha:
+             * Gibt die aktuelle Mouseposition zurück, berücksichtigt dabei auch den Scrollspeed und die aktuelle Transformation der selektierten Layer.
+            */
+
             #region getMouseWorldPosition
                 Vector2 maincameraposition = Camera.Position;
                 if (selectedLayer != null) Camera.Position *= selectedLayer.ScrollSpeed;
@@ -179,6 +192,11 @@ namespace SilhouetteEditor
                 MainForm.Default.MouseWorldPosition.Text = "Mouse: (" + MouseWorldPosition.X + ", " + MouseWorldPosition.Y + ")";
                 Camera.Position = maincameraposition;
             #endregion
+
+            /* Sascha:
+             * Die Satusmethoden des Editors. Hier wird bei jedem durchlauf der aktuelle Status des Editors geprüft und bei bestimmten Aktionen geändert. Arbeitet stark mit
+             * drawEditorRelated zusammen um statusabhängige Anzeigen zu zeichnen.
+            */
 
             #region Editorstate-Logic
                 if (editorState == EditorState.IDLE)
@@ -312,6 +330,9 @@ namespace SilhouetteEditor
                     {
                         clickedPoints.Add(MouseWorldPosition);
 
+                        if(currentPrimitive == PrimitiveType.Path)
+                            selectedLevelObjects.Clear();
+
                         if (!primitiveStarted)
                             primitiveStarted = true;
                         else
@@ -365,6 +386,9 @@ namespace SilhouetteEditor
                     {
                         clickedPoints.Add(MouseWorldPosition);
 
+                        if (currentPrimitive == PrimitiveType.Path)
+                            selectedLevelObjects.Clear();
+
                         if (!fixtureStarted)
                             fixtureStarted = true;
                         else
@@ -389,6 +413,7 @@ namespace SilhouetteEditor
                     {
                         if (currentFixture == FixtureType.Path && fixtureStarted)
                         {
+                            selectedLevelObjects.Clear();
                             paintFixtureItem();
                             clickedPoints.Clear();
                             fixtureStarted = false;
@@ -637,7 +662,7 @@ namespace SilhouetteEditor
         {
             editorState = EditorState.CREATE_TEXTURES;
             TextureObject to = new TextureObject(path);
-            to.texture = Texture2DLoader.Instance.LoadFromFile(path);
+            to.texture = EditorTextureManager.Instance.LoadFromFile(path);
             currentObject = to;
         }
 
@@ -645,7 +670,7 @@ namespace SilhouetteEditor
         {
             editorState = EditorState.CREATE_INTERACTIVE;
             InteractiveObject io = new InteractiveObject(path);
-            io.texture = Texture2DLoader.Instance.LoadFromFile(path);
+            io.texture = EditorTextureManager.Instance.LoadFromFile(path);
             currentObject = io;
         }
 
