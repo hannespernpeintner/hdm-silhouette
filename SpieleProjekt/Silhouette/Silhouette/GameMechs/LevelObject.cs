@@ -36,8 +36,8 @@ namespace Silhouette.GameMechs
 
         public Layer layer;
 
-        [NonSerialized]
         public bool isVisible = true;
+
         [NonSerialized]
         public bool mouseOn;
 
