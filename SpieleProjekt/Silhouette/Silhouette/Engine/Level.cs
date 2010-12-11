@@ -170,9 +170,9 @@ namespace Silhouette.Engine
                     EnableOrDisableFlag(DebugViewFlags.ContactPoints);
                     EnableOrDisableFlag(DebugViewFlags.ContactNormals);
                 }
-                if (keyboardState.IsKeyDown(Keys.F9) && oldKeyboardState.IsKeyDown(Keys.F9))
+                if (keyboardState.IsKeyDown(Keys.F9) && oldKeyboardState.IsKeyUp(Keys.F9))
                     EnableOrDisableFlag(DebugViewFlags.PolygonPoints);
-                if (keyboardState.IsKeyDown(Keys.F10) && oldKeyboardState.IsKeyDown(Keys.F10))
+                if (keyboardState.IsKeyDown(Keys.F10) && oldKeyboardState.IsKeyUp(Keys.F10))
                     GraphicsEnabled = !GraphicsEnabled;
 
                 oldKeyboardState = keyboardState;
