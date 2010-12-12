@@ -12,7 +12,6 @@ using Microsoft.Xna.Framework.Media;
 using Microsoft.Xna.Framework.Net;
 using Microsoft.Xna.Framework.Storage;
 
-
 namespace Silhouette.Engine
 {
     public class Primitives
@@ -27,18 +26,50 @@ namespace Silhouette.Engine
             }
         }
 
+        GraphicsDevice graphics;
+
         Texture2D pixel;
         Texture2D circle;
         const int circleTextureRadius = 512;
+
+        BasicEffect effect;
+
+        Matrix proj;
+        Matrix world;
 
 
         public Primitives() {}
 
         public void Initialize(GraphicsDevice graphics)
         {
+            this.graphics = graphics;
+
             pixel = new Texture2D(graphics, 1, 1);
             pixel.SetData(new[] { Color.White });
             circle = CreateCircleTexture(graphics, circleTextureRadius, 0, 1, 1, Color.White, Color.White);
+
+            proj = Matrix.CreateOrthographicOffCenter(0, GameSettings.Default.resolutionWidth, GameSettings.Default.resolutionHeight, 0, 0, 1);
+            world = Matrix.Identity;
+
+            effect = new BasicEffect(graphics);
+            effect.View = Camera.matrix;
+            effect.Projection = proj;
+            effect.World = world;
+            
+        }
+
+        public void drawFilledPolygon(VertexPositionColor[] vertices, int parts,  Matrix view)
+        {
+            effect.View = view;
+            effect.Projection = proj;
+            graphics.RasterizerState = RasterizerState.CullNone;
+            effect.VertexColorEnabled = true;
+
+            foreach (EffectPass pass in effect.CurrentTechnique.Passes)
+            {
+                pass.Apply();
+                graphics.DrawUserPrimitives(PrimitiveType.TriangleList, vertices, 0, parts);
+            }
         }
 
         public Texture2D CreateCircleTexture(GraphicsDevice graphicsDevice, int radius, int borderWidth,
@@ -47,7 +78,6 @@ namespace Silhouette.Engine
         {
             int diameter = radius * 2;
             Vector2 center = new Vector2(radius, radius);
-            
             
             Texture2D circle = new Texture2D(graphicsDevice, diameter, diameter, false, SurfaceFormat.Color);
             Color[] colors = new Color[diameter * diameter];
@@ -168,7 +198,6 @@ namespace Silhouette.Engine
             drawPath(sb, points, c, linewidth);
             drawLine(sb, points[points.Length-1], points[0], c, linewidth);
         }
-
 
         public Vector2[] makeCircle(Vector2 position, float radius, int numpoints)
         {
