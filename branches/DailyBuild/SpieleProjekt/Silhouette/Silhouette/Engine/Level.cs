@@ -206,7 +206,6 @@ namespace Silhouette.Engine
         {
             Player player = new Player();
             player.Initialise();
-            player.LoadContent();
             player.position = startPosition;
             player.layer = layer;
             layer.loList.Add(player);
