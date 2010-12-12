@@ -11,7 +11,7 @@ Project("{F088123C-0E9E-452A-89E6-6BA2F21D5CAC}") = "SilhouetteUML", "Silhouette
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SilhouetteEditor", "SilhouetteEditor\SilhouetteEditor\SilhouetteEditor.csproj", "{BA75E713-1B46-40DA-A576-4CFECE4099B7}"
 EndProject
-Project("{96E2B04D-8817-42C6-938A-82C39BA4D311}") = "SilhouetteEditorContent", "SilhouetteEditor\SilhouetteEditorContent\SilhouetteEditorContent.contentproj", "{60B84928-9064-4F0A-B050-3BE061C6613F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SilhouetteEditorContent", "SilhouetteEditor\SilhouetteEditorContent\SilhouetteEditorContent.contentproj", "{60B84928-9064-4F0A-B050-3BE061C6613F}"
 EndProject
 Global
 	GlobalSection(SubversionScc) = preSolution
