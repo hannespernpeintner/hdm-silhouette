@@ -86,7 +86,7 @@ namespace Silhouette.GameMechs
         {
             // Aus dem Level geht die initiale StartPos des Chars hervor. Aktuell Testposition eingetragen.
             // position = Level.LevelSetting.CharacterStartPosition;
-            position = Vector2.Zero;
+            //position = Vector2.Zero;
 
             idle_left = new Animation();
             idle_right = new Animation();
