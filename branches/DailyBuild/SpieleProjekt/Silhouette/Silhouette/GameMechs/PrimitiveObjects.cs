@@ -15,6 +15,7 @@ using Silhouette.Engine.Manager;
 using Silhouette.GameMechs;
 using System.IO;
 using System.ComponentModel;
+using FarseerPhysics.Common.Decomposition;
 
 //Physik-Engine Klassen
 using FarseerPhysics;
@@ -222,6 +223,13 @@ namespace Silhouette.GameMechs
         public Vector2[] LocalPoints;
         public Vector2[] WorldPoints;
 
+        [NonSerialized]
+        public bool isInitialized;
+        [NonSerialized]
+        public List<VertexPositionColor[]> vertices;
+        [NonSerialized]
+        List<Vector2[]> polygons;
+
         public PathPrimitiveObject(Vector2[] Points)
         {
             WorldPoints = Points;
@@ -234,14 +242,84 @@ namespace Silhouette.GameMechs
         }
 
         public override void Initialise() { }
-        public override void LoadContent() { }
+
+        public override void LoadContent() 
+        {
+            if (!isInitialized)
+            {
+                polygons = new List<Vector2[]>();
+                vertices = new List<VertexPositionColor[]>();
+                Vertices tempVertices = new Vertices(WorldPoints);
+                List<Vertices> tempVerticesList = EarclipDecomposer.ConvexPartition(tempVertices);
+
+                int index = 0;
+
+                foreach (Vertices v in tempVerticesList)
+                {
+                    polygons.Add(new Vector2[v.Count]);
+
+                    for (int i = 0; i < polygons[index].Length; i++)
+                    {
+                        polygons.ElementAt(index)[i] = v.ElementAt(i);
+                    }
+                    index++;
+                }
+
+                for (int i = 0; i < polygons.Count; i++)
+                {
+                    vertices.Add(new VertexPositionColor[polygons[i].Length * 3]);
+
+                    for (int i2 = 1; i2 < polygons[i].Length - 1; i2++)
+                    {
+                        vertices.ElementAt(i)[(i2 - 1) * 3].Position = new Vector3(polygons.ElementAt(i)[0], 0.0f);
+                        vertices.ElementAt(i)[(i2 - 1) * 3].Color = color;
+
+                        vertices.ElementAt(i)[(i2 - 1) * 3 + 1].Position = new Vector3(polygons.ElementAt(i)[i2], 0.0f);
+                        vertices.ElementAt(i)[(i2 - 1) * 3 + 1].Color = color;
+
+                        vertices.ElementAt(i)[(i2 - 1) * 3 + 2].Position = new Vector3(polygons.ElementAt(i)[i2 + 1], 0.0f);
+                        vertices.ElementAt(i)[(i2 - 1) * 3 + 2].Color = color;
+                    }
+                }
+
+                /*
+                vertices = new VertexPositionColor[WorldPoints.Length * 3];
+
+                for (int i = 1; i < WorldPoints.Length - 1; i++)
+                {
+                    vertices[parts * 3].Position = new Vector3(WorldPoints[0], 0.0f);
+                    vertices[parts * 3].Color = color;
+
+                    vertices[parts * 3 + 1].Position = new Vector3(WorldPoints[i], 0.0f);
+                    vertices[parts * 3 + 1].Color = color;
+
+                    vertices[parts * 3 + 2].Position = new Vector3(WorldPoints[i + 1], 0.0f);
+                    vertices[parts * 3 + 2].Color = color;
+
+                    parts++;
+                }
+                */
+
+                isInitialized = true;
+            }
+        }
+
         public override void loadContentInEditor(GraphicsDevice graphics) { }
         public override void Update(GameTime gameTime) { }
 
         public override void Draw(SpriteBatch spriteBatch)
         {
             if (this.isPolygon)
-                Primitives.Instance.drawPolygon(spriteBatch, WorldPoints, color, lineWidth);
+            {
+                //Primitives.Instance.drawPolygon(spriteBatch, WorldPoints, color, lineWidth);
+                if (!isInitialized)
+                    LoadContent();
+
+                for (int i = 0; i < vertices.Count; i++)
+                { 
+                    Primitives.Instance.drawFilledPolygon(vertices[i], vertices[i].Length / 3, Camera.matrix);
+                }
+            }
             else
                 Primitives.Instance.drawPath(spriteBatch, WorldPoints, color, lineWidth);
         }

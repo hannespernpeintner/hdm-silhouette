@@ -44,6 +44,7 @@ namespace Silhouette
         public GameLoop()
         {
             graphics = new GraphicsDeviceManager(this);
+            //graphics.GraphicsProfile = GraphicsProfile.HiDef;
             Content.RootDirectory = "Content";
 
             displayFPS = new DisplayFPS(this);
@@ -93,6 +94,7 @@ namespace Silhouette
         {
            
             GraphicsDevice.Clear(Color.White);
+
             if (!VideoManager.IsPlaying)
             {
                 level.Draw();       //Provisorisch
