@@ -35,6 +35,7 @@ namespace Silhouette.GameMechs
             this.speed = speed;
             animation = new Animation();
             fixture = FixtureManager.CreateRectangle(animation.activeTexture.Width, animation.activeTexture.Height, position, BodyType.Static, 1.0f);
+            fixture.IsSensor = true;
             fixture.OnCollision += this.OnCollision;
             fixture.OnSeparation += this.OnSeperation;
         }
