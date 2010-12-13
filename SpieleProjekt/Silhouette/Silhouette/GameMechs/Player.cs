@@ -17,6 +17,7 @@ using Silhouette.Engine;
 using FarseerPhysics.Factories;
 using FarseerPhysics.Dynamics.Joints;
 using FarseerPhysics.Dynamics.Contacts;
+using FarseerPhysics.Controllers;
 
 namespace Silhouette.GameMechs
 {
@@ -24,8 +25,14 @@ namespace Silhouette.GameMechs
     {
 
         public Vector2 centerPosition;      // Hannes: Rectangles für Kollisionserkennung. Muss noch um Kollisionsgruppe erweitert werden.
+        public Vector2 camPosition;
         public Fixture charRect;
         public Fixture sRect;
+        public Fixture camRect;
+        public RopeJoint joint0;
+        public RopeJoint joint1;
+        public RopeJoint joint2;
+        public RopeJoint joint3;
 
         public KeyboardState oldState;
         public Vector2 oldPosition;
@@ -86,7 +93,7 @@ namespace Silhouette.GameMechs
         {
             // Aus dem Level geht die initiale StartPos des Chars hervor. Aktuell Testposition eingetragen.
             // position = Level.LevelSetting.CharacterStartPosition;
-            //position = Vector2.Zero;
+            // position = Vector2.Zero;
 
             idle_left = new Animation();
             idle_right = new Animation();
@@ -171,6 +178,27 @@ namespace Silhouette.GameMechs
             sRect = FixtureManager.CreateRectangle(100, 80, new Vector2(position.X, position.Y + 65), BodyType.Dynamic, 1);
             sRect.IsSensor = true;
 
+            camRect = FixtureManager.CreateRectangle(100, 100, charRect.Body.Position, BodyType.Dynamic, 0.1f);
+            camRect.Body.IgnoreGravity = true;
+            camRect.Body.FixedRotation = false;
+            camRect.IsSensor = true;
+
+            joint0 = new RopeJoint(charRect.Body, camRect.Body, new Vector2(100 / Level.PixelPerMeter, 80 / Level.PixelPerMeter) * 2, new Vector2(50 / Level.PixelPerMeter, 50 / Level.PixelPerMeter));
+            joint1 = new RopeJoint(charRect.Body, camRect.Body, new Vector2(-100 / Level.PixelPerMeter, -80 / Level.PixelPerMeter) * 2, new Vector2(-50 / Level.PixelPerMeter, -50 / Level.PixelPerMeter));
+            joint2 = new RopeJoint(charRect.Body, camRect.Body, new Vector2(100 / Level.PixelPerMeter, -80 / Level.PixelPerMeter) * 2, new Vector2(50 / Level.PixelPerMeter, -50 / Level.PixelPerMeter));
+            joint3 = new RopeJoint(charRect.Body, camRect.Body, new Vector2(-100 / Level.PixelPerMeter, 80 / Level.PixelPerMeter) * 2, new Vector2(-50 / Level.PixelPerMeter, 50 / Level.PixelPerMeter));
+
+            joint0.MaxLength += 0.000125f;
+            joint1.MaxLength += 0.000125f;
+            joint2.MaxLength += 0.000125f;
+            joint3.MaxLength += 0.000125f;
+
+
+            Level.Physics.AddJoint(joint0);
+            Level.Physics.AddJoint(joint1);
+            Level.Physics.AddJoint(joint2);
+            Level.Physics.AddJoint(joint3);
+
             charRect.OnCollision += this.OnCollision;
             sRect.OnCollision += this.sOnCollision;
         }
@@ -203,12 +231,14 @@ namespace Silhouette.GameMechs
             centerPosition = new Vector2(charRect.Body.Position.X * Level.PixelPerMeter, charRect.Body.Position.Y * Level.PixelPerMeter);
             position = new Vector2(centerPosition.X - 250, centerPosition.Y - 250);
             sRect.Body.Position = charRect.Body.Position + new Vector2(0, 120 / Level.PixelPerMeter);
+            camPosition = new Vector2(camRect.Body.Position.X * Level.PixelPerMeter, camRect.Body.Position.Y * Level.PixelPerMeter);
         }
 
         public void UpdateCamera()
         {
-            //Vorerst nicht verwendet, wegen Editor
-            //Camera.Position = position;
+            Camera.Position = camPosition;
+
+            Camera.Rotation = camRect.Body.Rotation;
         }
 
         private void UpdateControls(GameTime gameTime)
@@ -359,10 +389,12 @@ namespace Silhouette.GameMechs
                 if (facing == 1)
                 {
                     charRect.Body.Position += new Vector2(1.5f / Level.PixelPerMeter, -2 / Level.PixelPerMeter);
+                    camRect.Body.Position += new Vector2(1.5f / Level.PixelPerMeter, -2 / Level.PixelPerMeter);
                 }
                 else
                 {
                     charRect.Body.Position += new Vector2(-1.5f / Level.PixelPerMeter, -2 / Level.PixelPerMeter);
+                    camRect.Body.Position += new Vector2(-1.5f / Level.PixelPerMeter, -2 / Level.PixelPerMeter);
                 }
             }
 
