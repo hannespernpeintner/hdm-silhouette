@@ -27,15 +27,15 @@ using FarseerPhysics.Dynamics.Contacts;
 
 namespace Silhouette.GameMechs.Events
 {
+    [Serializable]
     public class PhysicEvent : Event
     {
         // Hannes: Aktiviert einfach bei Kollision alle in der Liste befindlichen InteractiveObjects
 
-        private List<InteractiveObject> _list;
-
+        private List<LevelObject> _list;
         [DisplayName("Object List"), Category("Event Data")]
         [Description("The list of Objects which are affected by the event.")]
-        public List<InteractiveObject> list { get { return _list; } set { _list = value; } }
+        public List<LevelObject> list { get { return _list; } set { _list = value; } }
 
         public PhysicEvent(Rectangle rectangle)
         {
@@ -43,7 +43,7 @@ namespace Silhouette.GameMechs.Events
             position = rectangle.Location.ToVector2();
             width = rectangle.Width;
             height = rectangle.Height;
-            list = new List<InteractiveObject>();
+            list = new List<LevelObject>();
             isActivated = true;
         }
 
@@ -53,7 +53,24 @@ namespace Silhouette.GameMechs.Events
             {
                 foreach (InteractiveObject io in this.list)
                 {
-                    io.fixture.Body.BodyType = BodyType.Dynamic;
+                    if (io.fixture.Body.BodyType == BodyType.Static)
+                        io.fixture.Body.BodyType = BodyType.Dynamic;
+                    else
+                        io.fixture.Body.BodyType = BodyType.Static;
+                }
+                foreach (RectangleFixtureItem r in this.list)
+                {
+                    if (r.fixture.Body.BodyType == BodyType.Static)
+                        r.fixture.Body.BodyType = BodyType.Dynamic;
+                    else
+                        r.fixture.Body.BodyType = BodyType.Static;
+                }
+                foreach (CircleFixtureItem c in this.list)
+                {
+                    if (c.fixture.Body.BodyType == BodyType.Static)
+                        c.fixture.Body.BodyType = BodyType.Dynamic;
+                    else
+                        c.fixture.Body.BodyType = BodyType.Static;
                 }
                 isActivated = false;
                 return true;
@@ -64,12 +81,12 @@ namespace Silhouette.GameMechs.Events
             }
         }
 
-        public void addInteractiveObject(InteractiveObject io)
+        public override void AddLevelObject(LevelObject lo)
         {
             if (this.list != null)
             {
-                if(!this.list.Contains(io))
-                    this.list.Add(io);
+                if(!this.list.Contains(lo))
+                    this.list.Add(lo);
             }
         }
 
