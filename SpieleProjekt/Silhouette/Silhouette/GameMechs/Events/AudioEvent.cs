@@ -27,6 +27,7 @@ using FarseerPhysics.Dynamics.Contacts;
 
 namespace Silhouette.GameMechs.Events
 {
+    [Serializable]
     public class AudioEvent : Event
     {
         // Julius: Spielt einfach bei Kollision alle in der List befindlichen AudioObjects
@@ -64,7 +65,9 @@ namespace Silhouette.GameMechs.Events
             }
         }
 
-        public void addInteractiveObject(SoundObject so)
+        public override void AddLevelObject(LevelObject lo) { }
+
+        public void addSoundObject(SoundObject so)
         {
             if (this.list != null)
             {

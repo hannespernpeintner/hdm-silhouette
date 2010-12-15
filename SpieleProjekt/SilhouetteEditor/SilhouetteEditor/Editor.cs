@@ -5,6 +5,7 @@ using System.Text;
 using Silhouette;
 using Silhouette.Engine;
 using Silhouette.Engine.Manager;
+using Silhouette.GameMechs.Events;
 using Silhouette.GameMechs;
 using SilhouetteEditor.Forms;
 using System.IO;
@@ -102,6 +103,7 @@ namespace SilhouetteEditor
 
         public bool fixtureStarted;
         public bool primitiveStarted;
+        public bool eventStarted;
 
         List<Vector2> clickedPoints, initialPosition, initialScale;
         Vector2 MouseWorldPosition, GrabbedPoint;
@@ -439,6 +441,41 @@ namespace SilhouetteEditor
                 }
             }
 
+            if (editorState == EditorState.CREATE_EVENTS)
+            {
+                MainForm.Default.EditorStatus.Text = "Editorstatus: Brush Events";
+                MainForm.Default.GameView.Cursor = Cursors.Cross;
+
+                if (mstate.LeftButton == Microsoft.Xna.Framework.Input.ButtonState.Pressed && oldmstate.LeftButton == Microsoft.Xna.Framework.Input.ButtonState.Released)
+                {
+                    clickedPoints.Add(MouseWorldPosition);
+
+                    if (!eventStarted)
+                        eventStarted = true;
+                    else
+                    {
+                        paintEvent();
+                        clickedPoints.Clear();
+                        eventStarted = false;
+                    }
+                }
+
+                if (mstate.RightButton == Microsoft.Xna.Framework.Input.ButtonState.Pressed && oldmstate.RightButton == Microsoft.Xna.Framework.Input.ButtonState.Released)
+                {
+                    if (eventStarted)
+                    {
+                        clickedPoints.Clear();
+                        eventStarted = false;
+                    }
+                    else
+                    {
+                        clickedPoints.Clear();
+                        eventStarted = false;
+                        editorState = EditorState.IDLE;
+                    }
+                }
+            }
+
             if (editorState == EditorState.CREATE_TEXTURES || editorState == EditorState.CREATE_INTERACTIVE)
             {
                 MainForm.Default.EditorStatus.Text = "Editorstatus: Brush Texture";
@@ -644,6 +681,24 @@ namespace SilhouetteEditor
             selectLevelObject(lo);
         }
 
+        public void AddEvents(EventType eventType)
+        {
+            if (level.layerList.Count() == 0)
+            {
+                System.Windows.Forms.MessageBox.Show("There is no Layer to add Events to it.", "Error", MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
+                return;
+            }
+            if (selectedLayer == null)
+            {
+                System.Windows.Forms.MessageBox.Show("You have to select a Layer to add Events to it.", "Error", MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
+                return;
+            }
+
+            currentEvent = eventType;
+            eventStarted = false;
+            editorState = EditorState.CREATE_EVENTS;
+        }
+
         public void AddFixture(FixtureType fixtureType)
         {
             if (level.layerList.Count() == 0)
@@ -757,6 +812,25 @@ namespace SilhouetteEditor
 
             if (!continueAfterPaint)
                 destroyCurrentObject();
+        }
+
+        /* Sascha:
+         * Fügt die Events in die LevelObject-Liste der aktuell selektierten Layer ein.
+        */
+
+        public void paintEvent()
+        {
+            switch (currentEvent)
+            { 
+                case EventType.PHYSIC:
+                    PhysicEvent e = new PhysicEvent(Extensions.RectangleFromVectors(clickedPoints[0], clickedPoints[1]));
+                    e.name = e.getPrefix() + selectedLayer.getNextObjectNumber();
+                    e.layer = selectedLayer;
+                    selectedLayer.loList.Add(e);
+                    selectLevelObject(e);
+                    break;
+            }
+            MainForm.Default.UpdateTreeView();
         }
 
         /* Sascha:
@@ -980,6 +1054,16 @@ namespace SilhouetteEditor
                                     Primitives.Instance.drawPath(spriteBatch, p.WorldPoints, color, p.lineWidth);
                             }
                         }
+                        if (lo is PhysicEvent)
+                        {
+                            PhysicEvent e = (PhysicEvent)lo;
+                            if (e.isVisible)
+                            {
+                                Microsoft.Xna.Framework.Color color = Constants.ColorEvents;
+                                if (e.mouseOn) color = Constants.ColorMouseOn;
+                                Primitives.Instance.drawBoxFilled(spriteBatch, e.rectangle, color);
+                            }
+                        }
                     }
 
                     if (selectedLevelObjects.Count > 0)
@@ -1007,6 +1091,11 @@ namespace SilhouetteEditor
                                 Primitives.Instance.drawLine(spriteBatch, clickedPoints.Last(), MouseWorldPosition, Constants.ColorFixtures, Constants.DefaultPathItemLineWidth);
                                 break;
                         }
+                    }
+                    if (l == selectedLayer && editorState == EditorState.CREATE_EVENTS && eventStarted)
+                    {
+                        Microsoft.Xna.Framework.Rectangle r = Extensions.RectangleFromVectors(clickedPoints[0], MouseWorldPosition);
+                        Primitives.Instance.drawBoxFilled(spriteBatch, r, Constants.ColorEvents);
                     }
                     if (l == selectedLayer && editorState == EditorState.CREATE_PRIMITIVES && primitiveStarted)
                     {

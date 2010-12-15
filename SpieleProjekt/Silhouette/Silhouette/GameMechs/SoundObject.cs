@@ -31,7 +31,7 @@ using IrrKlang;
  */
 namespace Silhouette.GameMechs
 {   [Serializable]
-    class SoundObject
+    public class SoundObject
     {
         public String  Trackpath { get; set; }
 
