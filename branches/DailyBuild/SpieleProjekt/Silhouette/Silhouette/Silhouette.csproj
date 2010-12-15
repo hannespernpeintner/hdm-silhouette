@@ -146,6 +146,8 @@
     <Compile Include="GameMechs\Deco.cs" />
     <Compile Include="GameMechs\Deco.Editor.cs" />
     <Compile Include="GameMechs\DrawableLevelObject.cs" />
+    <Compile Include="GameMechs\Events\AnimationEvent.cs" />
+    <Compile Include="GameMechs\Events\PhysicEvent.cs" />
     <Compile Include="GameMechs\FixtureItems.cs" />
     <Compile Include="GameMechs\InteractiveObject.cs" />
     <Compile Include="GameMechs\LevelObject.cs" />
@@ -211,9 +213,7 @@
       <Install>true</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="GameMechs\Events\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\Microsoft.Xna.GameStudio.targets" />
   <!--
