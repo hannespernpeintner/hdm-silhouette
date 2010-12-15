@@ -3,56 +3,93 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
+using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.GamerServices;
+using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Media;
+using Silhouette;
+using Silhouette.Engine;
 using Silhouette.Engine.Manager;
+using Silhouette.GameMechs;
+using System.IO;
+using System.ComponentModel;
+
+//Physik-Engine Klassen
+using FarseerPhysics;
+using FarseerPhysics.Common;
 using FarseerPhysics.Dynamics;
+using FarseerPhysics.Factories;
+using FarseerPhysics.Collision;
+using FarseerPhysics.Collision.Shapes;
 using FarseerPhysics.Dynamics.Contacts;
 
 namespace Silhouette.GameMechs.Events
 {
-    public class PhysicEvent
+    public class PhysicEvent : Event
     {
         // Hannes: Aktiviert einfach bei Kollision alle in der Liste befindlichen InteractiveObjects
-        List<InteractiveObject> list;
-        RectangleFixtureItem rectFixItem;
-        public bool activated;
 
-        public PhysicEvent() { }
-        public PhysicEvent(Vector2 position, int width, int height, List<InteractiveObject> list)
+        private List<InteractiveObject> _list;
+
+        [DisplayName("Object List"), Category("Event Data")]
+        [Description("The list of Objects which are affected by the event.")]
+        public List<InteractiveObject> list { get { return _list; } set { _list = value; } }
+
+        public PhysicEvent(Rectangle rectangle)
         {
-            activated = false;
-            rectFixItem.fixture = FixtureManager.CreateRectangle(width, height, position, BodyType.Static, 1);
-            rectFixItem.fixture.IsSensor = true;
-            rectFixItem.fixture.OnCollision += this.OnCollision;
+            this.rectangle = rectangle;
+            position = rectangle.Location.ToVector2();
+            width = rectangle.Width;
+            height = rectangle.Height;
+            list = new List<InteractiveObject>();
+            isActivated = true;
         }
 
         public bool OnCollision(Fixture a, Fixture b, Contact contact)
         {
-            activated = true;
-            foreach (InteractiveObject io in this.list)
+            if (isActivated)
             {
-                try { io.fixture.Body.BodyType = BodyType.Dynamic; }
-                catch (Exception e)
+                foreach (InteractiveObject io in this.list)
                 {
-                    foreach (Fixture fix in io.fixtures)
-                    {
-                        fix.Body.BodyType = BodyType.Dynamic;
-                    }
+                    io.fixture.Body.BodyType = BodyType.Dynamic;
                 }
+                isActivated = false;
+                return true;
             }
-            return true;
+            else
+            {
+                return false;
+            }
         }
 
         public void addInteractiveObject(InteractiveObject io)
         {
             if (this.list != null)
             {
-                this.list.Add(io);
+                if(!this.list.Contains(io))
+                    this.list.Add(io);
             }
-            else
-            {
-                this.list = new List<InteractiveObject>();
-                this.list.Add(io);
-            }
+        }
+
+        public override string getPrefix()
+        {
+            return "PhysicEvent_";
+        }
+
+        public override LevelObject clone()
+        {
+            PhysicEvent result = (PhysicEvent)this.MemberwiseClone();
+            result.mouseOn = false;
+            return result;
+        }
+
+        public override void ToFixture()
+        {
+            fixture = FixtureManager.CreateRectangle(width, height, position, BodyType.Static, 1);
+            fixture.OnCollision += this.OnCollision;
+            fixture.IsSensor = true;
         }
     }
 }

@@ -146,7 +146,7 @@
     <Compile Include="GameMechs\Deco.cs" />
     <Compile Include="GameMechs\Deco.Editor.cs" />
     <Compile Include="GameMechs\DrawableLevelObject.cs" />
-    <Compile Include="GameMechs\Events\AnimationEvent.cs" />
+    <Compile Include="GameMechs\Events\Event.cs" />
     <Compile Include="GameMechs\Events\PhysicEvent.cs" />
     <Compile Include="GameMechs\FixtureItems.cs" />
     <Compile Include="GameMechs\InteractiveObject.cs" />
