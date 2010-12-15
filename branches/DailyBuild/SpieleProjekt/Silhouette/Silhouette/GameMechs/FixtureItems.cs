@@ -32,8 +32,6 @@ namespace Silhouette.GameMechs
         public Microsoft.Xna.Framework.Rectangle rectangle;
 
         [NonSerialized]
-        public Texture2D texture;
-        [NonSerialized]
         public Fixture fixture;
 
         private float _width;
@@ -44,6 +42,16 @@ namespace Silhouette.GameMechs
         [DisplayName("Height"), Category("Fixture Data")]
         [Description("The height of the rectangle.")]
         public float height { get { return _height; } set { _height = value; transformed(); } }
+
+        private float _density;
+        [DisplayName("Mass"), Category("Physical Behavior")]
+        [Description("The mass of the object to calculate physical interaction.")]
+        public float density { get { return _density; } set { _density = value; } }
+
+        private BodyType _bodyType;
+        [DisplayName("BodyType"), Category("Physical Behavior")]
+        [Description("The BodyType defines the behavior of an object. A static object never changes position or rotation, like the dynamic ones do.")]
+        public BodyType bodyType { get { return _bodyType; } set { _bodyType = value; } }
 
         public RectangleFixtureItem(Microsoft.Xna.Framework.Rectangle rectangle)
         {
@@ -108,7 +116,7 @@ namespace Silhouette.GameMechs
 
         public void ToFixture()
         {
-            fixture = FixtureManager.CreateRectangle(width, height, position, BodyType.Static, 1);
+            fixture = FixtureManager.CreateRectangle(width, height, position, bodyType, density);
         }
     }
 
@@ -119,6 +127,16 @@ namespace Silhouette.GameMechs
         [DisplayName("Radius"), Category("Fixture Data")]
         [Description("The radius of the circle fixture.")]
         public float radius { get { return _radius; } set { _radius = value; } }
+
+        private float _density;
+        [DisplayName("Mass"), Category("Physical Behavior")]
+        [Description("The mass of the object to calculate physical interaction.")]
+        public float density { get { return _density; } set { _density = value; } }
+
+        private BodyType _bodyType;
+        [DisplayName("BodyType"), Category("Physical Behavior")]
+        [Description("The BodyType defines the behavior of an object. A static object never changes position or rotation, like the dynamic ones do.")]
+        public BodyType bodyType { get { return _bodyType; } set { _bodyType = value; } }
 
         [NonSerialized]
         public Fixture fixture;
@@ -179,16 +197,13 @@ namespace Silhouette.GameMechs
 
         public void ToFixture()
         {
-            fixture = FixtureManager.CreateCircle(radius, position, BodyType.Static, 1);
+            fixture = FixtureManager.CreateCircle(radius, position, bodyType, density);
         }
     }
 
     [Serializable]
     public class PathFixtureItem : LevelObject
     {
-        [NonSerialized]
-        Fixture[] fixtures;
-
         private bool _isPolygon;
         [DisplayName("Polygon"), Category("Fixture Data")]
         [Description("Defines wether or not the path should be treated like a polygon. If the value is true the start and end of the path will be connected.")]
@@ -198,6 +213,11 @@ namespace Silhouette.GameMechs
         [DisplayName("Line Width"), Category("Fixture Data")]
         [Description("The line width of this path. Can be used for rendering.")]
         public int lineWidth { get { return _lineWidth; } set { _lineWidth = value; } }
+
+        private float _density;
+        [DisplayName("Mass"), Category("Physical Behavior")]
+        [Description("The mass of the object to calculate physical interaction.")]
+        public float density { get { return _density; } set { _density = value; } }
 
         public Vector2[] LocalPoints;
         public Vector2[] WorldPoints;
@@ -292,7 +312,7 @@ namespace Silhouette.GameMechs
                 }
                 path.Closed = true;
 
-                PathManager.ConvertPathToPolygon(path, new Body(Level.Physics), 1, WorldPoints.Length);
+                PathManager.ConvertPathToPolygon(path, new Body(Level.Physics), density, WorldPoints.Length);
             }
             else
             {
