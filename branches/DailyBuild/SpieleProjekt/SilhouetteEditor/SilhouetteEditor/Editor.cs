@@ -28,7 +28,7 @@ namespace SilhouetteEditor
 {
     public enum EventType
     {
-
+        PHYSIC
     }
 
     public enum PhysicsType
@@ -358,7 +358,7 @@ namespace SilhouetteEditor
 
                 if (mstate.MiddleButton == Microsoft.Xna.Framework.Input.ButtonState.Pressed && oldmstate.MiddleButton == Microsoft.Xna.Framework.Input.ButtonState.Released)
                 {
-                    if (currentPrimitive == PrimitiveType.Path && primitiveStarted)
+                    if (currentPrimitive == PrimitiveType.Path && primitiveStarted && clickedPoints.Count > 1)
                     {
                         paintPrimitiveObject();
                         clickedPoints.Clear();
@@ -415,7 +415,7 @@ namespace SilhouetteEditor
 
                 if (mstate.MiddleButton == Microsoft.Xna.Framework.Input.ButtonState.Pressed && oldmstate.MiddleButton == Microsoft.Xna.Framework.Input.ButtonState.Released)
                 {
-                    if (currentFixture == FixtureType.Path && fixtureStarted)
+                    if (currentFixture == FixtureType.Path && fixtureStarted && clickedPoints.Count > 1)
                     {
                         selectedLevelObjects.Clear();
                         paintFixtureItem();
@@ -444,6 +444,9 @@ namespace SilhouetteEditor
                 MainForm.Default.EditorStatus.Text = "Editorstatus: Brush Texture";
                 MainForm.Default.GameView.Cursor = Cursors.Hand;
 
+                if (kstate.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.G))
+                    MouseWorldPosition = SnapToGrid(MouseWorldPosition);
+
                 if (mstate.LeftButton == Microsoft.Xna.Framework.Input.ButtonState.Pressed && oldmstate.LeftButton == Microsoft.Xna.Framework.Input.ButtonState.Released)
                 {
                     paintCurrentObject(true);
@@ -458,6 +461,9 @@ namespace SilhouetteEditor
             {
                 MainForm.Default.EditorStatus.Text = "Editorstatus: Positioning";
                 MainForm.Default.GameView.Cursor = Cursors.Hand;
+
+                if (kstate.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.G))
+                    MouseWorldPosition = SnapToGrid(MouseWorldPosition);
 
                 int i = 0;
                 foreach (LevelObject lo in selectedLevelObjects)
@@ -591,9 +597,8 @@ namespace SilhouetteEditor
             else
                 level.name = name;
 
-            level.InitializeInEditor(spriteBatch);
+            level.InitializeInEditor(spriteBatch, MainForm.Default.GameView.Width, MainForm.Default.GameView.Height);
             level.LoadContentInEditor(EditorLoop.EditorLoopInstance.GraphicsDevice);
-            level.contentPath = Path.Combine(Directory.GetCurrentDirectory(), "Content");
             MainForm.Default.UpdateTreeView();
         }
 
@@ -601,7 +606,7 @@ namespace SilhouetteEditor
         {
             Editor.Default.levelFileName = filename;
             Editor.Default.level = Level.LoadLevelFile(filename);
-            level.InitializeInEditor(spriteBatch);
+            level.InitializeInEditor(spriteBatch, MainForm.Default.GameView.Width, MainForm.Default.GameView.Height);
             level.LoadContentInEditor(EditorLoop.EditorLoopInstance.GraphicsDevice);
             editorState = EditorState.IDLE;
             selectLayer(level.layerList.First());
@@ -911,6 +916,19 @@ namespace SilhouetteEditor
 
 
             editorState = EditorState.POSITIONING;
+        }
+
+        /* Sascha:
+         * Funktion zur Anordnung über SnapToGrid.
+        */
+
+        public Vector2 SnapToGrid(Vector2 position)
+        {
+            Vector2 result = position;
+            result.X = GameSettings.Default.resolutionWidth * (int)Math.Round(result.X / GameSettings.Default.resolutionWidth);
+            result.Y = GameSettings.Default.resolutionHeight * (int)Math.Round(result.Y / GameSettings.Default.resolutionHeight);
+            result = result - new Vector2(GameSettings.Default.resolutionWidth / 2, GameSettings.Default.resolutionHeight / 2);
+            return result;
         }
 
         /* Sascha:

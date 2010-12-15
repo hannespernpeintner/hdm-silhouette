@@ -264,6 +264,8 @@ namespace SilhouetteEditor.Forms
         {
             if(EditorLoop.EditorLoopInstance != null) 
                 EditorLoop.EditorLoopInstance.resizebackbuffer(GameView.Width, GameView.Height);
+
+            Camera.updateViewport(GameView.Width, GameView.Height);
         }
 
         //---> TextureView-Steuerung <---//
