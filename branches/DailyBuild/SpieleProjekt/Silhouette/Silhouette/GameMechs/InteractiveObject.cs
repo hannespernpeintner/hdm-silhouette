@@ -24,8 +24,6 @@ namespace Silhouette.GameMechs
         public Texture2D texture;
         [NonSerialized]
         public Fixture fixture;
-        [NonSerialized]
-        public List<Fixture> fixtures;
 
         private string _assetName;
         [DisplayName("Filename"), Category("Texture Data")]
@@ -57,6 +55,11 @@ namespace Silhouette.GameMechs
         [Description("The mass of the object to calculate physical interaction.")]
         public float density { get { return _density; } set { _density = value; } }
 
+        private BodyType _bodyType;
+        [DisplayName("BodyType"), Category("Physical Behavior")]
+        [Description("The BodyType defines the behavior of an object. A static object never changes position or rotation, like the dynamic ones do.")]
+        public BodyType bodyType { get { return _bodyType; } set { _bodyType = value; } }
+
         Matrix transform;
         Rectangle boundingBox;
         Vector2[] polygon;
@@ -70,6 +73,7 @@ namespace Silhouette.GameMechs
             this.origin = Vector2.Zero;
             this.polygon = new Vector2[4];
             density = 1;
+            bodyType = BodyType.Dynamic;
         }
 
         public override void Initialise() {}
@@ -99,23 +103,15 @@ namespace Silhouette.GameMechs
 
             if (fixture != null)
                 fixture.Body.Rotation = rotation;
-            else
-                fixtures[0].Body.Rotation = rotation;
         }
 
         public override void Update(GameTime gameTime)
         {
-            if (fixture != null)
+            if (fixture != null && bodyType == BodyType.Dynamic)
             {
                 position = FixtureManager.ToPixel(fixture.Body.Position);
                 rotation = fixture.Body.Rotation;
             }
-            else
-            {
-                position = FixtureManager.ToPixel(fixtures[0].Body.Position);
-                rotation = fixtures[0].Body.Rotation;
-            }
-            
         }
 
         public override void Draw(SpriteBatch spriteBatch)
@@ -127,13 +123,12 @@ namespace Silhouette.GameMechs
         {
             try
             {
-                //fixtures = FixtureManager.TextureToPolygon(texture, scale, BodyType.Dynamic, position, density);
                 fixture = FixtureManager.CreatePolygon(texture, scale, BodyType.Dynamic, position, density);
             }
             catch (Exception e)
             {
                 fixture = FixtureFactory.CreateRectangle(Level.Physics, (texture.Width * scale.X) / Level.PixelPerMeter, (texture.Height * scale.Y) / Level.PixelPerMeter, density);
-                fixture.Body.BodyType = BodyType.Dynamic;
+                fixture.Body.BodyType = bodyType;
                 fixture.Body.Position = FixtureManager.ToMeter(position);
             }
         }
