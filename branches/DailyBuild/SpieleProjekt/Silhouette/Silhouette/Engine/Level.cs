@@ -41,6 +41,7 @@ namespace Silhouette.Engine
             [Description("The name of the level.")]
             public string name { get { return _name; } set { _name = value; } }
 
+            [NonSerialized]
             private string _contentPath;
             [DisplayName("Content Path"), Category("General")]
             [Description("The path to the content of the Level. All textures will be safed and loaded relative to this path.")]
@@ -98,7 +99,10 @@ namespace Silhouette.Engine
             _Gravitation = new Vector2(0.0f, 9.8f);
             Physics = new World(_Gravitation);
             debugView = new DebugViewXNA(Level.Physics);
-            Camera.initialize(0, 0);
+            Camera.initialize(GameSettings.Default.resolutionWidth, GameSettings.Default.resolutionHeight);
+            Camera.Position = new Vector2(GameSettings.Default.resolutionWidth / 2, GameSettings.Default.resolutionHeight / 2);
+
+            this._contentPath = Path.Combine(Directory.GetCurrentDirectory(), "Content");
 
             foreach (Layer l in layerList)
             {

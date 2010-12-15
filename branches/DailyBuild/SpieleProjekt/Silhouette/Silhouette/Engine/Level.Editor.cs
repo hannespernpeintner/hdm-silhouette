@@ -28,13 +28,16 @@ namespace Silhouette.Engine
 {
     public partial class Level
     {
-        public void InitializeInEditor(SpriteBatch spriteBatch)
+        public void InitializeInEditor(SpriteBatch spriteBatch, float viewportWidth, float viewportHeight)
         {
             this.spriteBatch = spriteBatch;
             _Gravitation = new Vector2(0.0f, 9.8f);
             Physics = new World(_Gravitation);
             debugView = new DebugViewXNA(Level.Physics);
-            Camera.initialize(0, 0);
+            Camera.initialize(viewportWidth, viewportHeight);
+            Camera.Position = new Vector2(viewportWidth / 2, viewportHeight / 2);
+
+            this._contentPath = Path.Combine(Directory.GetCurrentDirectory(), "Content");
 
             foreach (Layer l in layerList)
             {
