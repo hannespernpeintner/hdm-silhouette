@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using Silhouette.Engine;
 using Silhouette.GameMechs;
 using System.IO;
+using Silhouette.GameMechs.Events;
 
 //Physik-Engine Klassen
 using FarseerPhysics;
@@ -157,7 +158,10 @@ namespace SilhouetteEditor.Forms
                     TreeNode loTreeNode = layerTreeNode.Nodes.Add(lo.name);
                     loTreeNode.Tag = lo;
                     loTreeNode.Checked = lo.isVisible;
-                    loTreeNode.ContextMenuStrip = ObjectContextMenu;
+                    if (lo is Event)
+                        loTreeNode.ContextMenuStrip = EventContextMenü;
+                    else
+                        loTreeNode.ContextMenuStrip = ObjectContextMenu;
                 }
             }
             levelTreeNode.ExpandAll();
@@ -447,6 +451,31 @@ namespace SilhouetteEditor.Forms
         private void renameToolStripMenuItem2_Click(object sender, EventArgs e)
         {
             treeView1.SelectedNode.BeginEdit();
+        }
+
+        private void physicToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Editor.Default.AddEvents(EventType.PHYSIC);
+        }
+
+        private void renameToolStripMenuItem4_Click(object sender, EventArgs e)
+        {
+            treeView1.SelectedNode.BeginEdit();
+        }
+
+        private void copyToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Editor.Default.copyLevelObjects(Editor.Default.selectedLayer);
+        }
+
+        private void deleteToolStripMenuItem2_Click(object sender, EventArgs e)
+        {
+            Editor.Default.deleteLevelObjects();
+        }
+
+        private void addObjectToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            new ManageEvents().ShowDialog();
         }
     }
 }

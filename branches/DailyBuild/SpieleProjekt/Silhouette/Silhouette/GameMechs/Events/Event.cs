@@ -26,6 +26,7 @@ using FarseerPhysics.Collision.Shapes;
 
 namespace Silhouette.GameMechs.Events
 {
+    [Serializable]
     public abstract class Event : LevelObject
     {
         /* Sascha:
@@ -102,5 +103,6 @@ namespace Silhouette.GameMechs.Events
         }
 
         public abstract void ToFixture();
+        public abstract void AddLevelObject(LevelObject lo);
     }
 }
