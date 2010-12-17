@@ -13,32 +13,36 @@ namespace Silhouette.Engine.SoundEngine
         public static float volume { get { return engine.SoundVolume; } set { engine.SoundVolume = value; } }
         public static void initialize() 
         {
-            engine = new IrrKlang.ISoundEngine();
+            try
+            {
+                engine = new IrrKlang.ISoundEngine();
+            }
+            catch (Exception e)
+            {
+                return;
+            }
         }
 
          public static IrrKlang.ISound play(String path, Boolean looped, Boolean startPaused)
-         {
-             
-          return (ISound)engine.Play2D(path, looped, startPaused);
-
-          
+         {  
+            return (ISound)engine.Play2D(path, looped, startPaused);         
          }
          public static void stopAllSounds()
          {
-             engine.StopAllSounds();
+             if (engine != null)
+                engine.StopAllSounds();
          }
 
          public static void pauseAllSounds()
          {
-             engine.SetAllSoundsPaused(true);
+             if (engine != null)
+                engine.SetAllSoundsPaused(true);
          }
 
          public static void unpauseAllSounds()
          {
-             engine.SetAllSoundsPaused(false);
-         }
-
-
-      
+             if (engine != null)
+                engine.SetAllSoundsPaused(false);
+         }    
     }
 }

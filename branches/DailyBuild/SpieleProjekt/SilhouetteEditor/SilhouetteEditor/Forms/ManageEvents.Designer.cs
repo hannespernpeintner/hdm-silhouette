@@ -28,21 +28,22 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.treeView1 = new System.Windows.Forms.TreeView();
+            this.EventView = new System.Windows.Forms.TreeView();
             this.CancelButton = new System.Windows.Forms.Button();
             this.OKButton = new System.Windows.Forms.Button();
             this.AddButton = new System.Windows.Forms.Button();
             this.DeleteButton = new System.Windows.Forms.Button();
             this.propertyGrid1 = new System.Windows.Forms.PropertyGrid();
-            this.treeView2 = new System.Windows.Forms.TreeView();
+            this.ObjectView = new System.Windows.Forms.TreeView();
             this.SuspendLayout();
             // 
-            // treeView1
+            // EventView
             // 
-            this.treeView1.Location = new System.Drawing.Point(12, 12);
-            this.treeView1.Name = "treeView1";
-            this.treeView1.Size = new System.Drawing.Size(222, 422);
-            this.treeView1.TabIndex = 0;
+            this.EventView.Location = new System.Drawing.Point(12, 12);
+            this.EventView.Name = "EventView";
+            this.EventView.ShowLines = false;
+            this.EventView.Size = new System.Drawing.Size(222, 422);
+            this.EventView.TabIndex = 0;
             // 
             // CancelButton
             // 
@@ -88,39 +89,40 @@
             this.propertyGrid1.TabIndex = 5;
             this.propertyGrid1.ToolbarVisible = false;
             // 
-            // treeView2
+            // ObjectView
             // 
-            this.treeView2.Location = new System.Drawing.Point(321, 12);
-            this.treeView2.Name = "treeView2";
-            this.treeView2.Size = new System.Drawing.Size(222, 422);
-            this.treeView2.TabIndex = 6;
+            this.ObjectView.Location = new System.Drawing.Point(321, 12);
+            this.ObjectView.Name = "ObjectView";
+            this.ObjectView.ShowLines = false;
+            this.ObjectView.Size = new System.Drawing.Size(222, 422);
+            this.ObjectView.TabIndex = 6;
             // 
-            // ManageObjects
+            // ManageEvents
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(824, 475);
-            this.Controls.Add(this.treeView2);
+            this.Controls.Add(this.ObjectView);
             this.Controls.Add(this.propertyGrid1);
             this.Controls.Add(this.DeleteButton);
             this.Controls.Add(this.AddButton);
             this.Controls.Add(this.OKButton);
             this.Controls.Add(this.CancelButton);
-            this.Controls.Add(this.treeView1);
-            this.Name = "ManageObjects";
-            this.Text = "Manage Objects";
+            this.Controls.Add(this.EventView);
+            this.Name = "ManageEvents";
+            this.Text = "Manage Events";
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private System.Windows.Forms.TreeView treeView1;
+        private System.Windows.Forms.TreeView EventView;
         private System.Windows.Forms.Button CancelButton;
         private System.Windows.Forms.Button OKButton;
         private System.Windows.Forms.Button AddButton;
         private System.Windows.Forms.Button DeleteButton;
         private System.Windows.Forms.PropertyGrid propertyGrid1;
-        private System.Windows.Forms.TreeView treeView2;
+        private System.Windows.Forms.TreeView ObjectView;
     }
 }
