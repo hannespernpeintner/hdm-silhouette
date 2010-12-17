@@ -17,7 +17,7 @@ using Silhouette.GameMechs;
 
 namespace Silhouette.Engine
 {
-    enum ShaderType
+    public enum ShaderType
     { 
         None
     }
