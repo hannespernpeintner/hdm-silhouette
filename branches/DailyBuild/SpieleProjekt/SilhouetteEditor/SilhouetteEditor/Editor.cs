@@ -517,7 +517,10 @@ namespace SilhouetteEditor
                         Vector2 newPosition = initialPosition[i] + MouseWorldPosition - GrabbedPoint;
 
                         if (kstate.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.G))
+                        {
+                            MouseWorldPosition = SnapToGrid(newPosition);
                             lo.position = SnapToGrid(newPosition);
+                        }
                         else
                             lo.position = newPosition;
 
@@ -956,10 +959,14 @@ namespace SilhouetteEditor
 
         public void selectLayer(Layer l)
         {
-            if (l == null)
-                return;
-
             selectedLayer = l;
+
+            if (l == null)
+            {
+                MainForm.Default.Selection.Text = "Selected Layer: -";
+                return;
+            }
+
             MainForm.Default.propertyGrid1.SelectedObject = l;
             MainForm.Default.Selection.Text = "Selected Layer: " + l.name;
         }
@@ -980,7 +987,10 @@ namespace SilhouetteEditor
             if (selectedLayer == null)
                 return;
 
-            if (MessageBox.Show("Do you really want to delete the layer " + Editor.Default.selectedLayer.name + "?", "Question", MessageBoxButtons.YesNo, System.Windows.Forms.MessageBoxIcon.Question) == DialogResult.Yes)
+            if (selectedLayer == l)
+                selectLayer(null);
+
+            if (MessageBox.Show("Do you really want to delete the layer " + l.name + "?", "Question", MessageBoxButtons.YesNo, System.Windows.Forms.MessageBoxIcon.Question) == DialogResult.Yes)
                 level.layerList.Remove(l);
 
             MainForm.Default.UpdateTreeView();

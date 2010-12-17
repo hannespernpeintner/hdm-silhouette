@@ -324,6 +324,16 @@ namespace SilhouetteEditor.Forms
 
         private void TextureView_MouseDoubleClick(object sender, MouseEventArgs e)
         {
+            if (Editor.Default.selectedLayer == null)
+            {
+                DialogResult result = MessageBox.Show("There is no layer to add textures to it! Do you want to create one?", "Error", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
+
+                if (result == DialogResult.Yes)
+                    new AddLayer().ShowDialog();
+                else
+                    return;
+            }
+
             Editor.Default.createTextureObject(TextureView.FocusedItem.Name);
         }
 
@@ -361,6 +371,15 @@ namespace SilhouetteEditor.Forms
 
         private void InteractiveView_MouseDoubleClick(object sender, MouseEventArgs e)
         {
+            if (Editor.Default.selectedLayer == null)
+            {
+                DialogResult result = MessageBox.Show("There is no layer to add textures to it! Do you want to create one?", "Error", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
+
+                if (result == DialogResult.Yes)
+                    new AddLayer().ShowDialog();
+                else
+                    return;
+            }
             Editor.Default.createInteractiveObject(InteractiveView.FocusedItem.Name);
         }
 
