@@ -59,6 +59,7 @@ namespace Silhouette.GameMechs
         Matrix transform;
         Rectangle boundingBox;
         Vector2[] polygon;
+        Color[] collisionData;
 
         public TextureObject(string path)
         {
@@ -132,6 +133,8 @@ namespace Silhouette.GameMechs
                 }
             }
 
+            collisionData = new Color[texture.Width * texture.Height];
+            texture.GetData(collisionData);
             transformed();
         }
 
@@ -161,15 +164,15 @@ namespace Silhouette.GameMechs
                 return;
 
             transform =
-                Matrix.CreateTranslation(new Vector3(origin.X, origin.Y, 0.0f)) *
+                Matrix.CreateTranslation(new Vector3(-origin.X, -origin.Y, 0.0f)) *
                 Matrix.CreateScale(scale.X, scale.Y, 1) *
                 Matrix.CreateRotationZ(rotation) *
                 Matrix.CreateTranslation(new Vector3(position, 0.0f));
 
-            Vector2 leftTop = new Vector2(-texture.Width, -texture.Height);
-            Vector2 rightTop = new Vector2(0, -texture.Height);
-            Vector2 leftBottom = new Vector2(-texture.Width, 0);
-            Vector2 rightBottom = new Vector2(0, 0);
+            Vector2 leftTop = new Vector2(0, 0);
+            Vector2 rightTop = new Vector2(texture.Width, 0);
+            Vector2 leftBottom = new Vector2(0, texture.Height);
+            Vector2 rightBottom = new Vector2(texture.Width, texture.Height);
 
             Vector2.Transform(ref leftTop, ref transform, out leftTop);
             Vector2.Transform(ref rightTop, ref transform, out rightTop);
@@ -192,7 +195,12 @@ namespace Silhouette.GameMechs
 
         public override bool contains(Vector2 worldPosition)
         {
-            return boundingBox.Contains((int)worldPosition.X, (int)worldPosition.Y);
+            if (boundingBox.Contains(new Point((int)worldPosition.X, (int)worldPosition.Y)))
+            {
+                return intersectPixels(worldPosition);
+            }
+
+            return false;
         }
 
         public override void drawSelectionFrame(SpriteBatch spriteBatch, Matrix matrix)
@@ -202,6 +210,23 @@ namespace Silhouette.GameMechs
             {
                 Primitives.Instance.drawCircleFilled(spriteBatch, p, 4, Color.Yellow);
             }
+        }
+
+        public bool intersectPixels(Vector2 worldPosition)
+        {
+            Vector2 positionInB = Vector2.Transform(worldPosition, Matrix.Invert(transform));
+            int xB = (int)Math.Round(positionInB.X);
+            int yB = (int)Math.Round(positionInB.Y);
+
+            if (0 <= xB && xB < texture.Width && 0 <= yB && yB < texture.Height)
+            {
+                Color colorB = collisionData[xB + yB * texture.Width];
+                if (colorB.A != 0)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
     }
 }

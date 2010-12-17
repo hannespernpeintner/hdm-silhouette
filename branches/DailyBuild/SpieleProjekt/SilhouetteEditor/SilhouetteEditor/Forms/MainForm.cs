@@ -43,22 +43,32 @@ namespace SilhouetteEditor.Forms
 
         private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
         {
-            if (MessageBox.Show("Do you want to save the current level beforce closing?", "Question", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            DialogResult result = MessageBox.Show("Do you want to save the current level beforce closing?", "Question", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+            if (result == DialogResult.Yes)
             {
                 FileSave(sender, e);
+                EditorLoop.EditorLoopInstance.Exit();
             }
-            EditorLoop.EditorLoopInstance.Exit();
+            else if (result == DialogResult.No)
+                EditorLoop.EditorLoopInstance.Exit();
+            else
+                return;
         }
 
         //---> MenuBar-Steuerung <---//
 
         private void FileExit(object sender, EventArgs e)
         {
-            if (MessageBox.Show("Do you want to save the current level beforce closing?", "Question", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            DialogResult result = MessageBox.Show("Do you want to save the current level beforce closing?", "Question", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+            if (result == DialogResult.Yes)
             {
                 FileSave(sender, e);
+                EditorLoop.EditorLoopInstance.Exit();
             }
-            EditorLoop.EditorLoopInstance.Exit();
+            else if (result == DialogResult.No)
+                EditorLoop.EditorLoopInstance.Exit();
+            else
+                return;
         }
 
         private void FileNew(object sender, EventArgs e)
@@ -212,6 +222,12 @@ namespace SilhouetteEditor.Forms
             }
         }
 
+        private void treeView1_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Delete)
+                ActionDelete(sender, e);
+        }
+
         //---> GameView-Steuerung <---//
 
         private void GameView_MouseEnter(object sender, EventArgs e)
@@ -226,15 +242,26 @@ namespace SilhouetteEditor.Forms
 
         private void GameView_DragEnter(object sender, DragEventArgs e)
         {
-            e.Effect = DragDropEffects.Move;
-            ListViewItem lvi = (ListViewItem)e.Data.GetData(typeof(ListViewItem));
-            Editor.Default.createTextureObject(lvi.Name);
-        }
+            if (Editor.Default.selectedLayer == null)
+                return;
 
-        private void GameView_DragDrop(object sender, DragEventArgs e)
-        {
-            Editor.Default.paintCurrentObject(false);
-        }
+            e.Effect = DragDropEffects.Move;
+
+            ListViewItem lvi = (ListViewItem)e.Data.GetData(typeof(ListViewItem));
+
+            if (lvi.Tag == "TextureObject")
+            {
+                Editor.Default.createTextureObject(lvi.Name);
+                Editor.Default.paintCurrentObject(false);
+                Editor.Default.startPositioning();
+            }
+            else if (lvi.Tag == "InteractiveObject")
+            {
+                Editor.Default.createInteractiveObject(lvi.Name);
+                Editor.Default.paintCurrentObject(false);
+                Editor.Default.startPositioning();
+            }
+        }   
 
         private void GameView_Resize(object sender, EventArgs e)
         {
@@ -270,7 +297,7 @@ namespace SilhouetteEditor.Forms
                 lvi.Name = file.FullName;
                 lvi.Text = file.Name;
                 lvi.ImageKey = file.FullName;
-                lvi.Tag = "file";
+                lvi.Tag = "TextureObject";
                 lvi.ToolTipText = file.Name + " (" + bmp.Width.ToString() + " x " + bmp.Height.ToString() + ")";
 
                 TextureView.Items.Add(lvi);
@@ -279,8 +306,6 @@ namespace SilhouetteEditor.Forms
 
         private void TextureView_ItemDrag(object sender, ItemDragEventArgs e)
         {
-            ListViewItem lvi = (ListViewItem)e.Item;
-            if (lvi.Tag.ToString() == "folder") return;
             TextureView.DoDragDrop(e.Item, DragDropEffects.Move);
         }
 
@@ -299,12 +324,7 @@ namespace SilhouetteEditor.Forms
 
         private void TextureView_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-            string itemtype = TextureView.FocusedItem.Tag.ToString();
-
-            if (itemtype == "file")
-            {
-                Editor.Default.createTextureObject(TextureView.FocusedItem.Name);
-            }
+            Editor.Default.createTextureObject(TextureView.FocusedItem.Name);
         }
 
         //---> InteractiveView-Steuerung <---//
@@ -332,7 +352,7 @@ namespace SilhouetteEditor.Forms
                 lvi.Name = file.FullName;
                 lvi.Text = file.Name;
                 lvi.ImageKey = file.FullName;
-                lvi.Tag = "file";
+                lvi.Tag = "InteractiveObject";
                 lvi.ToolTipText = file.Name + " (" + bmp.Width.ToString() + " x " + bmp.Height.ToString() + ")";
 
                 InteractiveView.Items.Add(lvi);
@@ -341,18 +361,25 @@ namespace SilhouetteEditor.Forms
 
         private void InteractiveView_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-            string itemtype = InteractiveView.FocusedItem.Tag.ToString();
-
-            if (itemtype == "file")
-            {
-                Editor.Default.createInteractiveObject(InteractiveView.FocusedItem.Name);
-            }
+            Editor.Default.createInteractiveObject(InteractiveView.FocusedItem.Name);
         }
 
         private void BrowseButton2_Click(object sender, EventArgs e)
         {
             FolderBrowserDialog d = new FolderBrowserDialog();
             if (d.ShowDialog() == DialogResult.OK) loadFolderInteractive(d.SelectedPath);
+        }
+
+        private void InteractiveView_ItemDrag(object sender, ItemDragEventArgs e)
+        {
+            InteractiveView.DoDragDrop(e.Item, DragDropEffects.Move);
+        }
+
+        private void InteractiveView_DragOver(object sender, DragEventArgs e)
+        {
+            e.Effect = DragDropEffects.Move;
+            Point p = GameView.PointToClient(new Point(e.X, e.Y));
+            Editor.Default.SetMousePosition(p.X, p.Y);
         }
 
         //---> Toolbar-Buttons <---//
@@ -463,6 +490,22 @@ namespace SilhouetteEditor.Forms
         private void addObjectToolStripMenuItem_Click(object sender, EventArgs e)
         {
             new ManageEvents().ShowDialog();
+        }
+
+        //---> Actions <---//
+
+        private void ActionDelete(object sender, EventArgs e)
+        {
+            if (treeView1.SelectedNode == null) return;
+            if (treeView1.SelectedNode.Tag is Layer)
+            {
+                Layer l = (Layer)treeView1.SelectedNode.Tag;
+                Editor.Default.deleteLayer(l);
+            }
+            else if (treeView1.SelectedNode.Tag is LevelObject)
+            {
+                Editor.Default.deleteLevelObjects();
+            }
         }
     }
 }

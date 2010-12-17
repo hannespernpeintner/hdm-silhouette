@@ -364,6 +364,7 @@ namespace SilhouetteEditor.Forms
             this.treeView1.AfterLabelEdit += new System.Windows.Forms.NodeLabelEditEventHandler(this.treeView1_AfterLabelEdit);
             this.treeView1.AfterCheck += new System.Windows.Forms.TreeViewEventHandler(this.treeView1_AfterCheck);
             this.treeView1.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView1_AfterSelect);
+            this.treeView1.KeyDown += new System.Windows.Forms.KeyEventHandler(treeView1_KeyDown);
             // 
             // ToolBar
             // 
@@ -635,6 +636,8 @@ namespace SilhouetteEditor.Forms
             this.InteractiveView.TabIndex = 0;
             this.InteractiveView.UseCompatibleStateImageBehavior = false;
             this.InteractiveView.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.InteractiveView_MouseDoubleClick);
+            this.InteractiveView.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(InteractiveView_ItemDrag);
+            this.InteractiveView.DragOver += new System.Windows.Forms.DragEventHandler(InteractiveView_DragOver);
             // 
             // ImageListInteractive32
             // 
@@ -652,7 +655,6 @@ namespace SilhouetteEditor.Forms
             this.GameView.Size = new System.Drawing.Size(1005, 680);
             this.GameView.TabIndex = 0;
             this.GameView.TabStop = false;
-            this.GameView.DragDrop += new System.Windows.Forms.DragEventHandler(this.GameView_DragDrop);
             this.GameView.DragEnter += new System.Windows.Forms.DragEventHandler(this.GameView_DragEnter);
             this.GameView.MouseEnter += new System.EventHandler(this.GameView_MouseEnter);
             this.GameView.MouseLeave += new System.EventHandler(this.GameView_MouseLeave);
