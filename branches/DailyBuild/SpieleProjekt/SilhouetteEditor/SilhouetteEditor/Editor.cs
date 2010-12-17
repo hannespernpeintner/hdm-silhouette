@@ -68,7 +68,7 @@ namespace SilhouetteEditor
         MOVING
     }
 
-    class Editor
+    public class Editor
     {
         /* Sascha:
          * Die Hauptklasse des Editors. Stellt alle direkt im Editor gebrauchten Funktionen zur Verfügung.
