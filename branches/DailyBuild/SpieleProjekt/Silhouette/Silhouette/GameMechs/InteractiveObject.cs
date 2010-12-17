@@ -63,6 +63,7 @@ namespace Silhouette.GameMechs
         Matrix transform;
         Rectangle boundingBox;
         Vector2[] polygon;
+        [NonSerialized]
         Color[] collisionData;
 
         public InteractiveObject(String path)
