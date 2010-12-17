@@ -43,6 +43,10 @@ namespace SilhouetteEditor.Forms
 
         private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
         {
+            if (MessageBox.Show("Do you want to save the current level beforce closing?", "Question", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            {
+                FileSave(sender, e);
+            }
             EditorLoop.EditorLoopInstance.Exit();
         }
 
@@ -50,6 +54,10 @@ namespace SilhouetteEditor.Forms
 
         private void FileExit(object sender, EventArgs e)
         {
+            if (MessageBox.Show("Do you want to save the current level beforce closing?", "Question", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            {
+                FileSave(sender, e);
+            }
             EditorLoop.EditorLoopInstance.Exit();
         }
 
@@ -66,11 +74,6 @@ namespace SilhouetteEditor.Forms
         private void HelpHelp(object sender, EventArgs e)
         {
             new Help().Show();
-        }
-
-        private void ToolsToolBox(object sender, EventArgs e)
-        {
-            
         }
 
         private void FileSaveAs(object sender, EventArgs e)
@@ -104,37 +107,6 @@ namespace SilhouetteEditor.Forms
             }
         }
 
-        //---> ToolBar-Steuerung <---//
-
-        private void ToolStripButton_AddRectangleFixture(object sender, EventArgs e)
-        {
-            Editor.Default.AddFixture(FixtureType.Rectangle);
-        }
-
-        private void ToolStripButton_AddCircleFixture(object sender, EventArgs e)
-        {
-            Editor.Default.AddFixture(FixtureType.Circle);
-        }
-
-        private void PathButton_Click(object sender, EventArgs e)
-        {
-            Editor.Default.AddFixture(FixtureType.Path);
-        }
-
-        private void ToolBoxButton_Click(object sender, EventArgs e)
-        {
-            
-        }
-
-        //---> ContextMenu-Steuerungen <---//
-
-        //--->Level
-
-        private void LevelToolStrip_AddLayer(object sender, EventArgs e)
-        {
-            new AddLayer().ShowDialog();
-        }
-
         //---> TreeView-Steuerung <---//
 
         public void UpdateTreeView()
@@ -164,7 +136,7 @@ namespace SilhouetteEditor.Forms
                         loTreeNode.ContextMenuStrip = ObjectContextMenu;
                 }
             }
-            levelTreeNode.ExpandAll();
+            levelTreeNode.Expand();
         }
 
         private void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
@@ -383,30 +355,24 @@ namespace SilhouetteEditor.Forms
             if (d.ShowDialog() == DialogResult.OK) loadFolderInteractive(d.SelectedPath);
         }
 
-        private void deleteToolStripMenuItem_Click(object sender, EventArgs e)
+        //---> Toolbar-Buttons <---//
+
+        private void DeleteLayerButton_Click(object sender, EventArgs e)
         {
-            Editor.Default.deleteLayer(Editor.Default.selectedLayer);
+            if (treeView1.SelectedNode == null) return;
+            if (treeView1.SelectedNode.Tag is Layer)
+            {
+                Layer l = (Layer)treeView1.SelectedNode.Tag;
+                Editor.Default.deleteLayer(l);
+            }
         }
 
-        private void deleteToolStripMenuItem1_Click(object sender, EventArgs e)
+        private void LevelToolStrip_AddLayer(object sender, EventArgs e)
         {
-            Editor.Default.deleteLevelObjects();
+            new AddLayer().ShowDialog();
         }
 
-        private void rectangleCollisionToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            Editor.Default.AddFixture(FixtureType.Rectangle);
-        }
-
-        private void circleCollisionToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            Editor.Default.AddFixture(FixtureType.Circle);
-        }
-
-        private void pathCollisionToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            Editor.Default.AddFixture(FixtureType.Path);
-        }
+        //---> PrimitiveObject
 
         private void rectangleToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -423,14 +389,40 @@ namespace SilhouetteEditor.Forms
             Editor.Default.AddPrimitive(PrimitiveType.Path);
         }
 
-        private void DeleteLayerButton_Click(object sender, EventArgs e)
+        //---> FixtureItem
+
+        private void rectangleCollisionToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (treeView1.SelectedNode == null) return;
-            if (treeView1.SelectedNode.Tag is Layer)
-            {
-                Layer l = (Layer)treeView1.SelectedNode.Tag;
-                Editor.Default.deleteLayer(l);
-            }
+            Editor.Default.AddFixture(FixtureType.Rectangle);
+        }
+
+        private void circleCollisionToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Editor.Default.AddFixture(FixtureType.Circle);
+        }
+
+        private void pathCollisionToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Editor.Default.AddFixture(FixtureType.Path);
+        }
+
+        //---> Events
+
+        private void physicToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Editor.Default.AddEvents(EventType.PHYSIC);
+        }
+
+        //---> ToolStrips <---//
+
+        private void deleteToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Editor.Default.deleteLayer(Editor.Default.selectedLayer);
+        }
+
+        private void deleteToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            Editor.Default.deleteLevelObjects();
         }
 
         private void renameToolStripMenuItem3_Click(object sender, EventArgs e)
@@ -451,11 +443,6 @@ namespace SilhouetteEditor.Forms
         private void renameToolStripMenuItem2_Click(object sender, EventArgs e)
         {
             treeView1.SelectedNode.BeginEdit();
-        }
-
-        private void physicToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            Editor.Default.AddEvents(EventType.PHYSIC);
         }
 
         private void renameToolStripMenuItem4_Click(object sender, EventArgs e)
