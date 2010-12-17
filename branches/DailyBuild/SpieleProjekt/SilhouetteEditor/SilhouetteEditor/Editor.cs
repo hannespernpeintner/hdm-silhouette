@@ -819,6 +819,8 @@ namespace SilhouetteEditor
                 to.layer = selectedLayer;
                 to.loadContentInEditor(EditorLoop.EditorLoopInstance.GraphicsDevice);
                 AddLevelObject(to);
+                selectedLevelObjects.Clear();
+                selectedLevelObjects.Add(to);
             }
             if (currentObject is InteractiveObject)
             {
@@ -830,6 +832,8 @@ namespace SilhouetteEditor
                 io.layer = selectedLayer;
                 io.loadContentInEditor(EditorLoop.EditorLoopInstance.GraphicsDevice);
                 AddLevelObject(io);
+                selectedLevelObjects.Clear();
+                selectedLevelObjects.Add(io);
             }
             MainForm.Default.UpdateTreeView();
 
