@@ -17,6 +17,11 @@ using Silhouette.GameMechs;
 
 namespace Silhouette.Engine
 {
+    enum ShaderType
+    { 
+        None
+    }
+
     [Serializable]
     public partial class Layer
     {
@@ -36,6 +41,11 @@ namespace Silhouette.Engine
         "so Vector2.One means same scrolling speed as the main camera. To be used for parallax scrolling.")]
         public Vector2 ScrollSpeed { get { return scrollSpeed; } set { scrollSpeed = value; } }
 
+        private ShaderType _shaderType;
+        [DisplayName("Shader"), Category("General")]
+        [Description("Defines the shader which affect the whole layer.")]
+        public ShaderType shaderType { get { return _shaderType; } set { _shaderType = value; } }
+
         private List<LevelObject> _loList;
         [DisplayName("Level Objects"), Category("Objects")]
         [Description("The objects of the Layer.")]
@@ -46,6 +56,7 @@ namespace Silhouette.Engine
             scrollSpeed = Vector2.One;
             isVisible = true;
             _loList = new List<LevelObject>();
+            shaderType = ShaderType.None;
         }
 
         public void initializeLayer() { }
@@ -75,6 +86,17 @@ namespace Silhouette.Engine
                     DrawableLevelObject dlo = (DrawableLevelObject)lo;
                     dlo.Draw(spriteBatch);
                 }
+            }
+        }
+
+        public Effect getShaderByType(ShaderType shaderType)
+        {
+            switch (shaderType)
+            {
+                case ShaderType.None:
+                    return null;
+                default:
+                    return null;
             }
         }
     }

@@ -60,7 +60,22 @@ namespace SilhouetteEditor.Forms
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.treeView1 = new System.Windows.Forms.TreeView();
             this.ToolBar = new System.Windows.Forms.ToolStrip();
+            this.NewLayerButton = new System.Windows.Forms.ToolStripButton();
+            this.DeleteLayerButton = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.PrimitiveButton = new System.Windows.Forms.ToolStripDropDownButton();
+            this.rectangleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.circleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.pathToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.FixtureButton = new System.Windows.Forms.ToolStripDropDownButton();
+            this.rectangleCollisionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.circleCollisionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.pathCollisionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.PhysicsButton = new System.Windows.Forms.ToolStripDropDownButton();
+            this.EventButton = new System.Windows.Forms.ToolStripDropDownButton();
+            this.physicToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.propertyGrid1 = new System.Windows.Forms.PropertyGrid();
@@ -72,6 +87,7 @@ namespace SilhouetteEditor.Forms
             this.BrowseButton2 = new System.Windows.Forms.Button();
             this.InteractiveView = new System.Windows.Forms.ListView();
             this.ImageListInteractive32 = new System.Windows.Forms.ImageList(this.components);
+            this.GameView = new System.Windows.Forms.PictureBox();
             this.LevelContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.addLayerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.renameToolStripMenuItem = new System.Windows.Forms.ToolStripSeparator();
@@ -89,22 +105,6 @@ namespace SilhouetteEditor.Forms
             this.deleteToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.addObjectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.NewLayerButton = new System.Windows.Forms.ToolStripButton();
-            this.DeleteLayerButton = new System.Windows.Forms.ToolStripButton();
-            this.PrimitiveButton = new System.Windows.Forms.ToolStripDropDownButton();
-            this.rectangleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.circleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.pathToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.FixtureButton = new System.Windows.Forms.ToolStripDropDownButton();
-            this.rectangleCollisionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.circleCollisionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.pathCollisionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.PhysicsButton = new System.Windows.Forms.ToolStripDropDownButton();
-            this.EventButton = new System.Windows.Forms.ToolStripDropDownButton();
-            this.physicToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.GameView = new System.Windows.Forms.PictureBox();
-            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.StatusBar.SuspendLayout();
             this.MenuBar.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -120,11 +120,11 @@ namespace SilhouetteEditor.Forms
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.tabPage3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.GameView)).BeginInit();
             this.LevelContextMenu.SuspendLayout();
             this.LayerContextMenu.SuspendLayout();
             this.ObjectContextMenu.SuspendLayout();
             this.EventContextMenü.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.GameView)).BeginInit();
             this.SuspendLayout();
             // 
             // StatusBar
@@ -383,10 +383,143 @@ namespace SilhouetteEditor.Forms
             this.ToolBar.TabIndex = 0;
             this.ToolBar.Text = "ToolBar";
             // 
+            // NewLayerButton
+            // 
+            this.NewLayerButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.NewLayerButton.Image = global::SilhouetteEditor.Properties.Resource.NewLayer;
+            this.NewLayerButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.NewLayerButton.Name = "NewLayerButton";
+            this.NewLayerButton.Size = new System.Drawing.Size(23, 22);
+            this.NewLayerButton.ToolTipText = "New Layer";
+            this.NewLayerButton.Click += new System.EventHandler(this.LevelToolStrip_AddLayer);
+            // 
+            // DeleteLayerButton
+            // 
+            this.DeleteLayerButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.DeleteLayerButton.Image = global::SilhouetteEditor.Properties.Resource.DeleteLayer;
+            this.DeleteLayerButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.DeleteLayerButton.Name = "DeleteLayerButton";
+            this.DeleteLayerButton.Size = new System.Drawing.Size(23, 22);
+            this.DeleteLayerButton.Text = "Delete Layer";
+            this.DeleteLayerButton.ToolTipText = "Delete Layer";
+            this.DeleteLayerButton.Click += new System.EventHandler(this.DeleteLayerButton_Click);
+            // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
             this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
+            // 
+            // PrimitiveButton
+            // 
+            this.PrimitiveButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.PrimitiveButton.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.rectangleToolStripMenuItem,
+            this.circleToolStripMenuItem,
+            this.pathToolStripMenuItem});
+            this.PrimitiveButton.Image = global::SilhouetteEditor.Properties.Resource.AddPrimitive;
+            this.PrimitiveButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.PrimitiveButton.Name = "PrimitiveButton";
+            this.PrimitiveButton.Size = new System.Drawing.Size(29, 22);
+            this.PrimitiveButton.Text = "toolStripDropDownButton1";
+            this.PrimitiveButton.ToolTipText = "Paint Primitives";
+            // 
+            // rectangleToolStripMenuItem
+            // 
+            this.rectangleToolStripMenuItem.Name = "rectangleToolStripMenuItem";
+            this.rectangleToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
+            this.rectangleToolStripMenuItem.Text = "Rectangle";
+            this.rectangleToolStripMenuItem.Click += new System.EventHandler(this.rectangleToolStripMenuItem_Click);
+            // 
+            // circleToolStripMenuItem
+            // 
+            this.circleToolStripMenuItem.Name = "circleToolStripMenuItem";
+            this.circleToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
+            this.circleToolStripMenuItem.Text = "Circle";
+            this.circleToolStripMenuItem.Click += new System.EventHandler(this.circleToolStripMenuItem_Click);
+            // 
+            // pathToolStripMenuItem
+            // 
+            this.pathToolStripMenuItem.Name = "pathToolStripMenuItem";
+            this.pathToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
+            this.pathToolStripMenuItem.Text = "Path";
+            this.pathToolStripMenuItem.Click += new System.EventHandler(this.pathToolStripMenuItem_Click);
+            // 
+            // FixtureButton
+            // 
+            this.FixtureButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.FixtureButton.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.rectangleCollisionToolStripMenuItem,
+            this.circleCollisionToolStripMenuItem,
+            this.pathCollisionToolStripMenuItem});
+            this.FixtureButton.Image = global::SilhouetteEditor.Properties.Resource.AddFixture;
+            this.FixtureButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.FixtureButton.Name = "FixtureButton";
+            this.FixtureButton.Size = new System.Drawing.Size(29, 22);
+            this.FixtureButton.Text = "toolStripDropDownButton2";
+            this.FixtureButton.ToolTipText = "Add Collision Domain";
+            // 
+            // rectangleCollisionToolStripMenuItem
+            // 
+            this.rectangleCollisionToolStripMenuItem.Name = "rectangleCollisionToolStripMenuItem";
+            this.rectangleCollisionToolStripMenuItem.Size = new System.Drawing.Size(175, 22);
+            this.rectangleCollisionToolStripMenuItem.Text = "Rectangle Collision";
+            this.rectangleCollisionToolStripMenuItem.Click += new System.EventHandler(this.rectangleCollisionToolStripMenuItem_Click);
+            // 
+            // circleCollisionToolStripMenuItem
+            // 
+            this.circleCollisionToolStripMenuItem.Name = "circleCollisionToolStripMenuItem";
+            this.circleCollisionToolStripMenuItem.Size = new System.Drawing.Size(175, 22);
+            this.circleCollisionToolStripMenuItem.Text = "Circle Collision";
+            this.circleCollisionToolStripMenuItem.Click += new System.EventHandler(this.circleCollisionToolStripMenuItem_Click);
+            // 
+            // pathCollisionToolStripMenuItem
+            // 
+            this.pathCollisionToolStripMenuItem.Name = "pathCollisionToolStripMenuItem";
+            this.pathCollisionToolStripMenuItem.Size = new System.Drawing.Size(175, 22);
+            this.pathCollisionToolStripMenuItem.Text = "Path Collision";
+            this.pathCollisionToolStripMenuItem.Click += new System.EventHandler(this.pathCollisionToolStripMenuItem_Click);
+            // 
+            // PhysicsButton
+            // 
+            this.PhysicsButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.PhysicsButton.Image = global::SilhouetteEditor.Properties.Resource.Physics;
+            this.PhysicsButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.PhysicsButton.Name = "PhysicsButton";
+            this.PhysicsButton.Size = new System.Drawing.Size(29, 22);
+            this.PhysicsButton.Text = "toolStripDropDownButton3";
+            this.PhysicsButton.ToolTipText = "Add Physics";
+            // 
+            // EventButton
+            // 
+            this.EventButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.EventButton.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.physicToolStripMenuItem,
+            this.toolStripSeparator4,
+            this.toolStripMenuItem1});
+            this.EventButton.Image = global::SilhouetteEditor.Properties.Resource.AddEvent;
+            this.EventButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.EventButton.Name = "EventButton";
+            this.EventButton.Size = new System.Drawing.Size(29, 22);
+            this.EventButton.Text = "toolStripDropDownButton1";
+            this.EventButton.ToolTipText = "Add Event";
+            // 
+            // physicToolStripMenuItem
+            // 
+            this.physicToolStripMenuItem.Name = "physicToolStripMenuItem";
+            this.physicToolStripMenuItem.Size = new System.Drawing.Size(154, 22);
+            this.physicToolStripMenuItem.Text = "Physic";
+            this.physicToolStripMenuItem.Click += new System.EventHandler(this.physicToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator4
+            // 
+            this.toolStripSeparator4.Name = "toolStripSeparator4";
+            this.toolStripSeparator4.Size = new System.Drawing.Size(151, 6);
+            // 
+            // toolStripMenuItem1
+            // 
+            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(154, 22);
+            this.toolStripMenuItem1.Text = "Manage Events";
             // 
             // tabControl1
             // 
@@ -508,6 +641,22 @@ namespace SilhouetteEditor.Forms
             this.ImageListInteractive32.ColorDepth = System.Windows.Forms.ColorDepth.Depth8Bit;
             this.ImageListInteractive32.ImageSize = new System.Drawing.Size(32, 32);
             this.ImageListInteractive32.TransparentColor = System.Drawing.Color.Transparent;
+            // 
+            // GameView
+            // 
+            this.GameView.AllowDrop = true;
+            this.GameView.BackColor = System.Drawing.SystemColors.Window;
+            this.GameView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.GameView.Location = new System.Drawing.Point(0, 0);
+            this.GameView.Name = "GameView";
+            this.GameView.Size = new System.Drawing.Size(1005, 680);
+            this.GameView.TabIndex = 0;
+            this.GameView.TabStop = false;
+            this.GameView.DragDrop += new System.Windows.Forms.DragEventHandler(this.GameView_DragDrop);
+            this.GameView.DragEnter += new System.Windows.Forms.DragEventHandler(this.GameView_DragEnter);
+            this.GameView.MouseEnter += new System.EventHandler(this.GameView_MouseEnter);
+            this.GameView.MouseLeave += new System.EventHandler(this.GameView_MouseLeave);
+            this.GameView.Resize += new System.EventHandler(this.GameView_Resize);
             // 
             // LevelContextMenu
             // 
@@ -633,155 +782,6 @@ namespace SilhouetteEditor.Forms
             this.addObjectToolStripMenuItem.Text = "Manage Events";
             this.addObjectToolStripMenuItem.Click += new System.EventHandler(this.addObjectToolStripMenuItem_Click);
             // 
-            // NewLayerButton
-            // 
-            this.NewLayerButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.NewLayerButton.Image = global::SilhouetteEditor.Properties.Resource.NewLayer;
-            this.NewLayerButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.NewLayerButton.Name = "NewLayerButton";
-            this.NewLayerButton.Size = new System.Drawing.Size(23, 22);
-            this.NewLayerButton.ToolTipText = "New Layer";
-            this.NewLayerButton.Click += new System.EventHandler(this.LevelToolStrip_AddLayer);
-            // 
-            // DeleteLayerButton
-            // 
-            this.DeleteLayerButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.DeleteLayerButton.Image = global::SilhouetteEditor.Properties.Resource.DeleteLayer;
-            this.DeleteLayerButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.DeleteLayerButton.Name = "DeleteLayerButton";
-            this.DeleteLayerButton.Size = new System.Drawing.Size(23, 22);
-            this.DeleteLayerButton.Text = "Delete Layer";
-            this.DeleteLayerButton.ToolTipText = "Delete Layer";
-            this.DeleteLayerButton.Click += new System.EventHandler(this.DeleteLayerButton_Click);
-            // 
-            // PrimitiveButton
-            // 
-            this.PrimitiveButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.PrimitiveButton.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.rectangleToolStripMenuItem,
-            this.circleToolStripMenuItem,
-            this.pathToolStripMenuItem});
-            this.PrimitiveButton.Image = global::SilhouetteEditor.Properties.Resource.AddPrimitive;
-            this.PrimitiveButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.PrimitiveButton.Name = "PrimitiveButton";
-            this.PrimitiveButton.Size = new System.Drawing.Size(29, 22);
-            this.PrimitiveButton.Text = "toolStripDropDownButton1";
-            this.PrimitiveButton.ToolTipText = "Paint Primitives";
-            // 
-            // rectangleToolStripMenuItem
-            // 
-            this.rectangleToolStripMenuItem.Name = "rectangleToolStripMenuItem";
-            this.rectangleToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
-            this.rectangleToolStripMenuItem.Text = "Rectangle";
-            this.rectangleToolStripMenuItem.Click += new System.EventHandler(this.rectangleToolStripMenuItem_Click);
-            // 
-            // circleToolStripMenuItem
-            // 
-            this.circleToolStripMenuItem.Name = "circleToolStripMenuItem";
-            this.circleToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
-            this.circleToolStripMenuItem.Text = "Circle";
-            this.circleToolStripMenuItem.Click += new System.EventHandler(this.circleToolStripMenuItem_Click);
-            // 
-            // pathToolStripMenuItem
-            // 
-            this.pathToolStripMenuItem.Name = "pathToolStripMenuItem";
-            this.pathToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
-            this.pathToolStripMenuItem.Text = "Path";
-            this.pathToolStripMenuItem.Click += new System.EventHandler(this.pathToolStripMenuItem_Click);
-            // 
-            // FixtureButton
-            // 
-            this.FixtureButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.FixtureButton.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.rectangleCollisionToolStripMenuItem,
-            this.circleCollisionToolStripMenuItem,
-            this.pathCollisionToolStripMenuItem});
-            this.FixtureButton.Image = global::SilhouetteEditor.Properties.Resource.AddFixture;
-            this.FixtureButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.FixtureButton.Name = "FixtureButton";
-            this.FixtureButton.Size = new System.Drawing.Size(29, 22);
-            this.FixtureButton.Text = "toolStripDropDownButton2";
-            this.FixtureButton.ToolTipText = "Add Collision Domain";
-            // 
-            // rectangleCollisionToolStripMenuItem
-            // 
-            this.rectangleCollisionToolStripMenuItem.Name = "rectangleCollisionToolStripMenuItem";
-            this.rectangleCollisionToolStripMenuItem.Size = new System.Drawing.Size(175, 22);
-            this.rectangleCollisionToolStripMenuItem.Text = "Rectangle Collision";
-            this.rectangleCollisionToolStripMenuItem.Click += new System.EventHandler(this.rectangleCollisionToolStripMenuItem_Click);
-            // 
-            // circleCollisionToolStripMenuItem
-            // 
-            this.circleCollisionToolStripMenuItem.Name = "circleCollisionToolStripMenuItem";
-            this.circleCollisionToolStripMenuItem.Size = new System.Drawing.Size(175, 22);
-            this.circleCollisionToolStripMenuItem.Text = "Circle Collision";
-            this.circleCollisionToolStripMenuItem.Click += new System.EventHandler(this.circleCollisionToolStripMenuItem_Click);
-            // 
-            // pathCollisionToolStripMenuItem
-            // 
-            this.pathCollisionToolStripMenuItem.Name = "pathCollisionToolStripMenuItem";
-            this.pathCollisionToolStripMenuItem.Size = new System.Drawing.Size(175, 22);
-            this.pathCollisionToolStripMenuItem.Text = "Path Collision";
-            this.pathCollisionToolStripMenuItem.Click += new System.EventHandler(this.pathCollisionToolStripMenuItem_Click);
-            // 
-            // PhysicsButton
-            // 
-            this.PhysicsButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.PhysicsButton.Image = global::SilhouetteEditor.Properties.Resource.Physics;
-            this.PhysicsButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.PhysicsButton.Name = "PhysicsButton";
-            this.PhysicsButton.Size = new System.Drawing.Size(29, 22);
-            this.PhysicsButton.Text = "toolStripDropDownButton3";
-            this.PhysicsButton.ToolTipText = "Add Physics";
-            // 
-            // EventButton
-            // 
-            this.EventButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.EventButton.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.physicToolStripMenuItem,
-            this.toolStripSeparator4,
-            this.toolStripMenuItem1});
-            this.EventButton.Image = global::SilhouetteEditor.Properties.Resource.AddEvent;
-            this.EventButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.EventButton.Name = "EventButton";
-            this.EventButton.Size = new System.Drawing.Size(29, 22);
-            this.EventButton.Text = "toolStripDropDownButton1";
-            this.EventButton.ToolTipText = "Add Event";
-            // 
-            // physicToolStripMenuItem
-            // 
-            this.physicToolStripMenuItem.Name = "physicToolStripMenuItem";
-            this.physicToolStripMenuItem.Size = new System.Drawing.Size(108, 22);
-            this.physicToolStripMenuItem.Text = "Physic";
-            this.physicToolStripMenuItem.Click += new System.EventHandler(this.physicToolStripMenuItem_Click);
-            // 
-            // GameView
-            // 
-            this.GameView.AllowDrop = true;
-            this.GameView.BackColor = System.Drawing.SystemColors.Window;
-            this.GameView.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.GameView.Location = new System.Drawing.Point(0, 0);
-            this.GameView.Name = "GameView";
-            this.GameView.Size = new System.Drawing.Size(1005, 680);
-            this.GameView.TabIndex = 0;
-            this.GameView.TabStop = false;
-            this.GameView.DragDrop += new System.Windows.Forms.DragEventHandler(this.GameView_DragDrop);
-            this.GameView.DragEnter += new System.Windows.Forms.DragEventHandler(this.GameView_DragEnter);
-            this.GameView.MouseEnter += new System.EventHandler(this.GameView_MouseEnter);
-            this.GameView.MouseLeave += new System.EventHandler(this.GameView_MouseLeave);
-            this.GameView.Resize += new System.EventHandler(this.GameView_Resize);
-            // 
-            // toolStripSeparator4
-            // 
-            this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new System.Drawing.Size(151, 6);
-            // 
-            // toolStripMenuItem1
-            // 
-            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(154, 22);
-            this.toolStripMenuItem1.Text = "Manage Events";
-            // 
             // MainForm
             // 
             this.AllowDrop = true;
@@ -815,11 +815,11 @@ namespace SilhouetteEditor.Forms
             this.tabPage1.ResumeLayout(false);
             this.tabPage2.ResumeLayout(false);
             this.tabPage3.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.GameView)).EndInit();
             this.LevelContextMenu.ResumeLayout(false);
             this.LayerContextMenu.ResumeLayout(false);
             this.ObjectContextMenu.ResumeLayout(false);
             this.EventContextMenü.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.GameView)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
