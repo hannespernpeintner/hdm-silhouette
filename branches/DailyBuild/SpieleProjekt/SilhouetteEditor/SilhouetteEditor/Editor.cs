@@ -188,12 +188,12 @@ namespace SilhouetteEditor
             */
 
             #region getMouseWorldPosition
-            Vector2 maincameraposition = Camera.Position;
-            if (selectedLayer != null) Camera.Position *= selectedLayer.ScrollSpeed;
-            MouseWorldPosition = Vector2.Transform(new Vector2(mstate.X, mstate.Y), Matrix.Invert(Camera.matrix));
-            MouseWorldPosition = MouseWorldPosition.Round();
-            MainForm.Default.MouseWorldPosition.Text = "Mouse: (" + MouseWorldPosition.X + ", " + MouseWorldPosition.Y + ")";
-            Camera.Position = maincameraposition;
+                Vector2 maincameraposition = Camera.Position;
+                if (selectedLayer != null) Camera.Position *= selectedLayer.ScrollSpeed;
+                MouseWorldPosition = Vector2.Transform(new Vector2(mstate.X, mstate.Y), Matrix.Invert(Camera.matrix));
+                MouseWorldPosition = MouseWorldPosition.Round();
+                MainForm.Default.MouseWorldPosition.Text = "Mouse: (" + MouseWorldPosition.X + ", " + MouseWorldPosition.Y + ")";
+                Camera.Position = maincameraposition;
             #endregion
 
             /* Sascha:
@@ -324,6 +324,21 @@ namespace SilhouetteEditor
                         foreach (LevelObject lo in selectedLayer.loList)
                         {
                             selectedLevelObjects.Add(lo);
+                        }
+                    }
+
+                    /* Sascha:
+                     * Photoshop-Navigation!
+                    */
+
+                    if (kstate.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.Space))
+                    {
+                        MainForm.Default.GameView.Cursor = Cursors.NoMove2D;
+
+                        if (mstate.LeftButton == Microsoft.Xna.Framework.Input.ButtonState.Pressed)
+                        {
+                            GrabbedPoint = MouseWorldPosition;
+                            editorState = EditorState.MOVING;
                         }
                     }
                 }
@@ -518,7 +533,6 @@ namespace SilhouetteEditor
 
                         if (kstate.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.G))
                         {
-                            MouseWorldPosition = SnapToGrid(newPosition);
                             lo.position = SnapToGrid(newPosition);
                         }
                         else
@@ -599,13 +613,14 @@ namespace SilhouetteEditor
                     MainForm.Default.EditorStatus.Text = "Editorstatus: Rotating";
                     MainForm.Default.GameView.Cursor = null;
 
-                    float deltatheta = (float)Math.Atan2(GrabbedPoint.Y, GrabbedPoint.X) - (float)Math.Atan2(MouseWorldPosition.Y, MouseWorldPosition.X);
+                    Vector2 newpos = MouseWorldPosition - selectedLevelObjects[0].position;
+                    float deltatheta = (float)Math.Atan2(GrabbedPoint.Y, GrabbedPoint.X) - (float)Math.Atan2(newpos.Y, newpos.X);
                     int i = 0;
                     foreach (LevelObject selLO in selectedLevelObjects)
                     {
                         if (selLO.canRotate())
                         {
-                            selLO.setRotation(deltatheta);
+                            selLO.setRotation(-deltatheta);
                             if (kstate.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.LeftControl))
                             {
                                 selLO.setRotation((float)Math.Round(selLO.getRotation() / MathHelper.PiOver4) * MathHelper.PiOver4);
@@ -627,7 +642,9 @@ namespace SilhouetteEditor
                     MainForm.Default.EditorStatus.Text = "Editorstatus: Moving";
                     MainForm.Default.GameView.Cursor = Cursors.NoMove2D;
 
-                    if (kstate.IsKeyUp(Microsoft.Xna.Framework.Input.Keys.Space))
+                    Camera.Position = GrabbedPoint;
+
+                    if (mstate.LeftButton == Microsoft.Xna.Framework.Input.ButtonState.Released)
                     {
                         editorState = EditorState.IDLE;
                     }
@@ -1010,6 +1027,40 @@ namespace SilhouetteEditor
         }
 
         //---> Zusätzliche Editorfunktionalität <---//
+
+        public void moveLayerUp(Layer l)
+        {
+            int index = level.layerList.IndexOf(l);
+
+            if (index == 0)
+                return;
+
+            level.layerList[index] = level.layerList[index - 1];
+            level.layerList[index - 1] = l;
+            MainForm.Default.UpdateTreeView();
+            selectLayer(l);
+        }
+
+        public void moveLayerDown(Layer l)
+        {
+            int index = level.layerList.IndexOf(l);
+
+            if(index >= (level.layerList.Count - 1))
+                return;
+
+            level.layerList[index] = level.layerList[index + 1];
+            level.layerList[index + 1] = l;
+            MainForm.Default.UpdateTreeView();
+            selectLayer(l);
+        }
+
+        public void moveObjectToLayer(LevelObject i1, Layer l2, LevelObject i2)
+        {
+            int index2 = i2 == null ? 0 : l2.loList.IndexOf(i2);
+            i1.layer.loList.Remove(i1);
+            l2.loList.Insert(index2, i1);
+            i1.layer = l2;
+        }
 
         /* Sascha:
          * Durch diese Funktion wird der Editor in den Status POSITIONING versetzt, was die Neupositionierung von LevelObjects erlaubt.

@@ -21,7 +21,7 @@ namespace SilhouetteEditor
 {
     public static class Constants
     {
-        private const int _CameraMovingSpeed = 800;
+        private const int _CameraMovingSpeed = 1500;
         public static int CameraMovingSpeed { get { return _CameraMovingSpeed; } }
         private const int _DefaultPathItemLineWidth = 4;
         public static int DefaultPathItemLineWidth { get { return _DefaultPathItemLineWidth; } }

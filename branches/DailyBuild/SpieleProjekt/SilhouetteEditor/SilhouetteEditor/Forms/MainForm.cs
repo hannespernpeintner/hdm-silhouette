@@ -167,6 +167,19 @@ namespace SilhouetteEditor.Forms
             }
         }
 
+        private void treeView1_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right)
+            {
+                treeView1.SelectedNode = treeView1.GetNodeAt(e.X, e.Y);
+                if (treeView1.SelectedNode.Tag is Layer)
+                {
+                    Layer l = (Layer)treeView1.SelectedNode.Tag;
+                    Editor.Default.selectLayer(l);
+                }
+            }
+        }
+
         private void treeView1_AfterLabelEdit(object sender, NodeLabelEditEventArgs e)
         {
             if (e.Label == null) return;
@@ -226,6 +239,57 @@ namespace SilhouetteEditor.Forms
         {
             if (e.KeyCode == Keys.Delete)
                 ActionDelete(sender, e);
+            if (e.KeyCode == Keys.PageUp)
+                Editor.Default.moveLayerUp(Editor.Default.selectedLayer);
+            if (e.KeyCode == Keys.PageDown)
+                Editor.Default.moveLayerDown(Editor.Default.selectedLayer);
+        }
+
+        private void treeView1_ItemDrag(object sender, ItemDragEventArgs e)
+        {
+            if (((TreeNode)e.Item).Tag is Layer) return;
+            if (((TreeNode)e.Item).Tag is Level) return;
+            DoDragDrop(e.Item, DragDropEffects.Move);
+        }
+
+        private void treeView1_DragOver(object sender, DragEventArgs e)
+        {
+            TreeNode sourcenode = (TreeNode)e.Data.GetData(typeof(TreeNode));
+
+            if (sourcenode == null)
+            {
+                e.Effect = DragDropEffects.None;
+                return;
+            }
+            else e.Effect = DragDropEffects.Move;
+
+            Point p = treeView1.PointToClient(new Point(e.X, e.Y));
+            TreeNode destnode = treeView1.GetNodeAt(p);
+            if (destnode.Tag is Level) return;
+            treeView1.SelectedNode = destnode;
+
+            if (destnode != sourcenode)
+            {
+                LevelObject i1 = (LevelObject)sourcenode.Tag;
+                if (destnode.Tag is LevelObject)
+                {
+                    LevelObject i2 = (LevelObject)destnode.Tag;
+                    Editor.Default.moveObjectToLayer(i1, i2.layer, i2);
+                    int delta = 0;
+                    if (destnode.Index > sourcenode.Index && i1.layer == i2.layer) delta = 1;
+                    sourcenode.Remove();
+                    destnode.Parent.Nodes.Insert(destnode.Index + delta, sourcenode);
+                }
+                if (destnode.Tag is Layer)
+                {
+                    Layer l2 = (Layer)destnode.Tag;
+                    Editor.Default.moveObjectToLayer(i1, l2, null);
+                    sourcenode.Remove();
+                    destnode.Nodes.Insert(0, sourcenode);
+                }
+                Editor.Default.selectLevelObject(i1);
+                Application.DoEvents();
+            }
         }
 
         //---> GameView-Steuerung <---//
@@ -248,6 +312,9 @@ namespace SilhouetteEditor.Forms
             e.Effect = DragDropEffects.Move;
 
             ListViewItem lvi = (ListViewItem)e.Data.GetData(typeof(ListViewItem));
+
+            if (lvi == null)
+                return;
 
             if (lvi.Tag == "TextureObject")
             {
@@ -524,6 +591,24 @@ namespace SilhouetteEditor.Forms
             else if (treeView1.SelectedNode.Tag is LevelObject)
             {
                 Editor.Default.deleteLevelObjects();
+            }
+        }
+
+        private void moveUpToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (treeView1.SelectedNode.Tag is Layer)
+            {
+                Layer l = (Layer)treeView1.SelectedNode.Tag;
+                Editor.Default.moveLayerUp(l);
+            }
+        }
+
+        private void moveDownToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (treeView1.SelectedNode.Tag is Layer)
+            {
+                Layer l = (Layer)treeView1.SelectedNode.Tag;
+                Editor.Default.moveLayerDown(Editor.Default.selectedLayer);
             }
         }
     }
