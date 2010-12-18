@@ -149,12 +149,12 @@
     <Compile Include="GameMechs\Events\AudioEvent.cs" />
     <Compile Include="GameMechs\Events\Event.cs" />
     <Compile Include="GameMechs\Events\PhysicEvent.cs" />
-    <Compile Include="GameMechs\FixtureItems.cs" />
+    <Compile Include="GameMechs\FixtureItem.cs" />
     <Compile Include="GameMechs\InteractiveObject.cs" />
     <Compile Include="GameMechs\LevelObject.cs" />
     <Compile Include="GameMechs\Physics\PhJoint.cs" />
     <Compile Include="GameMechs\Player.cs" />
-    <Compile Include="GameMechs\PrimitiveObjects.cs" />
+    <Compile Include="GameMechs\PrimitiveObject.cs" />
     <Compile Include="GameMechs\SoundObject.cs" />
     <Compile Include="GameMechs\TextureObject.cs" />
     <Compile Include="GameMechs\VideoObject.cs" />

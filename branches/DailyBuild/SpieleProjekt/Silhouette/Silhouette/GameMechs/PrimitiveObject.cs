@@ -27,9 +27,18 @@ using FarseerPhysics.Collision.Shapes;
 
 namespace Silhouette.GameMechs
 {
+    [Serializable]
+    public abstract class PrimitiveObject : DrawableLevelObject
+    {
+        private Color _color;
+        [DisplayName("Color"), Category("Primitive Data")]
+        [Description("The color of the primitive.")]
+        public Color color { get { return _color; } set { _color = value; } }
+    }
+
     #region Rectangle
         [Serializable]
-        public class RectanglePrimitiveObject : DrawableLevelObject
+        public class RectanglePrimitiveObject : PrimitiveObject
         {
             private float _width;
             [DisplayName("Width"), Category("Primitive Data")]
@@ -39,10 +48,6 @@ namespace Silhouette.GameMechs
             [DisplayName("Height"), Category("Primitive Data")]
             [Description("The height of the rectangle.")]
             public float height { get { return _height; } set { _height = value; transformed(); } }
-            private Color _color;
-            [DisplayName("Color"), Category("Primitive Data")]
-            [Description("The color of the primitive.")]
-            public Color color { get { return _color; } set { _color = value; } }
 
             public Rectangle rectangle;
 
@@ -127,13 +132,8 @@ namespace Silhouette.GameMechs
 
     #region Circle
         [Serializable]
-        public class CirclePrimitiveObject : DrawableLevelObject
+        public class CirclePrimitiveObject : PrimitiveObject
         {
-            private Color _color;
-            [DisplayName("Color"), Category("Primitive Data")]
-            [Description("The color of the primitive.")]
-            public Color color { get { return _color; } set { _color = value; } }
-
             public float radius;
 
             public CirclePrimitiveObject(Vector2 position, float radius)
@@ -210,7 +210,7 @@ namespace Silhouette.GameMechs
 
     #region Path
         [Serializable]
-        public class PathPrimitiveObject : DrawableLevelObject
+        public class PathPrimitiveObject : PrimitiveObject
         {
             private bool _isPolygon;
             [DisplayName("Polygon"), Category("Primitive Data")]
@@ -220,10 +220,6 @@ namespace Silhouette.GameMechs
             [DisplayName("Line Width"), Category("Primitive Data")]
             [Description("The line width of this path. Can be used for rendering.")]
             public int lineWidth { get { return _lineWidth; } set { _lineWidth = value; } }
-            private Color _color;
-            [DisplayName("Color"), Category("Primitive Data")]
-            [Description("The color of the primitive.")]
-            public Color color { get { return _color; } set { _color = value; } }
 
             public Vector2[] LocalPoints;
             public Vector2[] WorldPoints;

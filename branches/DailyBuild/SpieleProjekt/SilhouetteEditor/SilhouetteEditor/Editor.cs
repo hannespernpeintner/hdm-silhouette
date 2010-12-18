@@ -150,37 +150,37 @@ namespace SilhouetteEditor
             */
 
             #region CameraControl
-            if (kstate.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.A) && !kstate.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.LeftControl))
-            {
-                Camera.PositionX -= Constants.CameraMovingSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
-            }
-            if (kstate.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.D))
-            {
-                Camera.PositionX += Constants.CameraMovingSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
-            }
-            if (kstate.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.S))
-            {
-                Camera.PositionY += Constants.CameraMovingSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
-            }
-            if (kstate.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.W))
-            {
-                Camera.PositionY -= Constants.CameraMovingSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
-            }
-            int mwheeldelta = mstate.ScrollWheelValue - oldmstate.ScrollWheelValue;
-            if (mwheeldelta > 0)
-            {
-                float zoom = (float)Math.Round(Camera.Scale * 10) * 10.0f + 10.0f;
-                if (zoom >= 110) zoom = 100;
-                MainForm.Default.ZoomStatus.Text = "Zoom: " + zoom.ToString() + "%";
-                Camera.Scale = zoom / 100.0f;
-            }
-            if (mwheeldelta < 0)
-            {
-                float zoom = (float)Math.Round(Camera.Scale * 10) * 10.0f - 10.0f;
-                if (zoom <= 0.0f) zoom = 10;
-                MainForm.Default.ZoomStatus.Text = "Zoom: " + zoom.ToString() + "%";
-                Camera.Scale = zoom / 100.0f;
-            }
+                if (kstate.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.A) && !kstate.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.LeftControl))
+                {
+                    Camera.PositionX -= Constants.CameraMovingSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                }
+                if (kstate.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.D))
+                {
+                    Camera.PositionX += Constants.CameraMovingSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                }
+                if (kstate.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.S))
+                {
+                    Camera.PositionY += Constants.CameraMovingSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                }
+                if (kstate.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.W))
+                {
+                    Camera.PositionY -= Constants.CameraMovingSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                }
+                int mwheeldelta = mstate.ScrollWheelValue - oldmstate.ScrollWheelValue;
+                if (mwheeldelta > 0)
+                {
+                    float zoom = (float)Math.Round(Camera.Scale * 10) * 10.0f + 10.0f;
+                    if (zoom >= 110) zoom = 100;
+                    MainForm.Default.ZoomStatus.Text = "Zoom: " + zoom.ToString() + "%";
+                    Camera.Scale = zoom / 100.0f;
+                }
+                if (mwheeldelta < 0)
+                {
+                    float zoom = (float)Math.Round(Camera.Scale * 10) * 10.0f - 10.0f;
+                    if (zoom <= 0.0f) zoom = 10;
+                    MainForm.Default.ZoomStatus.Text = "Zoom: " + zoom.ToString() + "%";
+                    Camera.Scale = zoom / 100.0f;
+                }
             #endregion
 
             /* Sascha:
