@@ -1015,6 +1015,14 @@ namespace SilhouetteEditor
 
         public void deleteLevelObjects()
         {
+            if (selectedLevelObjects.Count == 1)
+            {
+                selectedLevelObjects[0].layer.loList.Remove(selectedLevelObjects[0]);
+                selectLevelObject(null);
+                MainForm.Default.UpdateTreeView();
+                return;
+            }
+
             if (MessageBox.Show("Do you really want to delete all selected LevelObjects?", "Question", MessageBoxButtons.YesNo, System.Windows.Forms.MessageBoxIcon.Question) == DialogResult.Yes)
             {
                 foreach (LevelObject lo in selectedLevelObjects)
