@@ -49,6 +49,11 @@ namespace Silhouette.GameMechs.Events
         [Description("The height of the rectangle.")]
         public float height { get { return _height; } set { _height = value; transformed(); } }
 
+        private List<LevelObject> _list;
+        [DisplayName("Object List"), Category("Event Data")]
+        [Description("The list of Objects which are affected by the event.")]
+        public List<LevelObject> list { get { return _list; } set { _list = value; } }
+
         public override void Initialise() { }
         public override void LoadContent() { ToFixture(); }
         public override void Update(GameTime gameTime) { }

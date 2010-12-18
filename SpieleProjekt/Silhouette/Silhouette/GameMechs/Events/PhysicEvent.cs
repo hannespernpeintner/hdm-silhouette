@@ -30,13 +30,6 @@ namespace Silhouette.GameMechs.Events
     [Serializable]
     public class PhysicEvent : Event
     {
-        // Hannes: Aktiviert einfach bei Kollision alle in der Liste befindlichen InteractiveObjects
-
-        private List<LevelObject> _list;
-        [DisplayName("Object List"), Category("Event Data")]
-        [Description("The list of Objects which are affected by the event.")]
-        public List<LevelObject> list { get { return _list; } set { _list = value; } }
-
         public PhysicEvent(Rectangle rectangle)
         {
             this.rectangle = rectangle;
@@ -85,7 +78,7 @@ namespace Silhouette.GameMechs.Events
         {
             if (this.list != null)
             {
-                if(!this.list.Contains(lo))
+                if(!this.list.Contains(lo) && (lo is InteractiveObject || lo is FixtureItem))
                     this.list.Add(lo);
             }
         }

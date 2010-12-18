@@ -26,14 +26,25 @@ using FarseerPhysics.Collision.Shapes;
 
 namespace Silhouette.GameMechs
 {
+    [Serializable]
+    public abstract class FixtureItem : LevelObject
+    {
+        [NonSerialized]
+        public Fixture fixture;
+
+        private float _density;
+        [DisplayName("Mass"), Category("Physical Behavior")]
+        [Description("The mass of the object to calculate physical interaction.")]
+        public float density { get { return _density; } set { _density = value; } }
+
+        public abstract void ToFixture();
+    }
+
     #region Rectangle
         [Serializable]
-        public class RectangleFixtureItem : LevelObject
+        public class RectangleFixtureItem : FixtureItem
         {
             public Microsoft.Xna.Framework.Rectangle rectangle;
-
-            [NonSerialized]
-            public Fixture fixture;
 
             private float _width;
             [DisplayName("Width"), Category("Fixture Data")]
@@ -115,7 +126,7 @@ namespace Silhouette.GameMechs
                 }
             }
 
-            public void ToFixture()
+            public override void ToFixture()
             {
                 fixture = FixtureManager.CreateRectangle(width, height, position, bodyType, density);
             }
@@ -124,25 +135,17 @@ namespace Silhouette.GameMechs
 
     #region Circle
         [Serializable]
-        public class CircleFixtureItem : LevelObject
+        public class CircleFixtureItem : FixtureItem
         {
             private float _radius;
             [DisplayName("Radius"), Category("Fixture Data")]
             [Description("The radius of the circle fixture.")]
             public float radius { get { return _radius; } set { _radius = value; } }
 
-            private float _density;
-            [DisplayName("Mass"), Category("Physical Behavior")]
-            [Description("The mass of the object to calculate physical interaction.")]
-            public float density { get { return _density; } set { _density = value; } }
-
             private BodyType _bodyType;
             [DisplayName("BodyType"), Category("Physical Behavior")]
             [Description("The BodyType defines the behavior of an object. A static object never changes position or rotation, like the dynamic ones do.")]
             public BodyType bodyType { get { return _bodyType; } set { _bodyType = value; } }
-
-            [NonSerialized]
-            public Fixture fixture;
 
             public CircleFixtureItem(Vector2 position, float radius)
             {
@@ -198,7 +201,7 @@ namespace Silhouette.GameMechs
                 }
             }
 
-            public void ToFixture()
+            public override void ToFixture()
             {
                 fixture = FixtureManager.CreateCircle(radius, position, bodyType, density);
             }
@@ -207,7 +210,7 @@ namespace Silhouette.GameMechs
 
     #region Path
         [Serializable]
-        public class PathFixtureItem : LevelObject
+        public class PathFixtureItem : FixtureItem
         {
             private bool _isPolygon;
             [DisplayName("Polygon"), Category("Fixture Data")]
@@ -219,14 +222,8 @@ namespace Silhouette.GameMechs
             [Description("The line width of this path. Can be used for rendering.")]
             public int lineWidth { get { return _lineWidth; } set { _lineWidth = value; } }
 
-            private float _density;
-            [DisplayName("Mass"), Category("Physical Behavior")]
-            [Description("The mass of the object to calculate physical interaction.")]
-            public float density { get { return _density; } set { _density = value; } }
-
             public Vector2[] LocalPoints;
             public Vector2[] WorldPoints;
-
 
             public override void Initialise() { }
             public override void LoadContent() { ToFixture(); }
@@ -306,7 +303,7 @@ namespace Silhouette.GameMechs
                 }
             }
 
-            public void ToFixture()
+            public override void ToFixture()
             {
                 if (isPolygon)
                 {
