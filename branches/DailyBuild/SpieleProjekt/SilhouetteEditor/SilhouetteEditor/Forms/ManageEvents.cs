@@ -16,6 +16,10 @@ namespace SilhouetteEditor.Forms
 {
     public partial class ManageEvents : Form
     {
+        Event selectedEvent;
+        LevelObject selectedLevelObject;
+        LevelObject selectedLevelObject2;
+
         public ManageEvents()
         {
             InitializeComponent();
@@ -31,12 +35,15 @@ namespace SilhouetteEditor.Forms
 
             foreach (Layer l in Editor.Default.level.layerList)
             {
+                TreeNode layerTreeNode = EventView.Nodes.Add(l.name);
+                layerTreeNode.Tag = l;
+
                 foreach (LevelObject lo in l.loList)
                 {
                     if (lo is Event)
                     {
                         Event e = (Event)lo;
-                        TreeNode eventTreeNode = EventView.Nodes.Add(e.name);
+                        TreeNode eventTreeNode = layerTreeNode.Nodes.Add(e.name);
                         eventTreeNode.Tag = e;
 
                         foreach (LevelObject lo2 in e.list)
@@ -46,6 +53,55 @@ namespace SilhouetteEditor.Forms
                         }
                     }
                     EventView.ExpandAll();
+                }
+            }
+        }
+
+        private void EventView_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left || e.Button == MouseButtons.Right)
+            {
+                EventView.SelectedNode = EventView.GetNodeAt(e.X, e.Y);
+
+                if (EventView.SelectedNode == null)
+                    return;
+
+                if (EventView.SelectedNode.Tag is Layer)
+                {
+                    Layer l = (Layer)EventView.SelectedNode.Tag;
+                    Editor.Default.selectLayer(l);
+                    propertyGrid1.SelectedObject = l;
+                }
+
+                if (EventView.SelectedNode.Tag is Event)
+                {
+                    Event ev = (Event)EventView.SelectedNode.Tag;
+                    Editor.Default.selectLevelObject(ev);
+                    selectedEvent = ev;
+                    propertyGrid1.SelectedObject = ev;
+                    Camera.Position = ev.position;
+                }
+
+                if (EventView.SelectedNode.Tag is InteractiveObject)
+                {
+                    InteractiveObject lo = (InteractiveObject)EventView.SelectedNode.Tag;
+                    Editor.Default.selectLevelObject(lo);
+                    selectedLevelObject2 = lo;
+                    Event ev = (Event)EventView.SelectedNode.Parent.Tag;
+                    selectedEvent = ev;
+                    propertyGrid1.SelectedObject = lo;
+                    Camera.Position = lo.position;
+                }
+
+                if (EventView.SelectedNode.Tag is FixtureItem)
+                {
+                    FixtureItem lo = (FixtureItem)EventView.SelectedNode.Tag;
+                    Editor.Default.selectLevelObject(lo);
+                    selectedLevelObject2 = lo;
+                    Event ev = (Event)EventView.SelectedNode.Parent.Tag;
+                    selectedEvent = ev;
+                    propertyGrid1.SelectedObject = lo;
+                    Camera.Position = lo.position;
                 }
             }
         }
@@ -72,6 +128,62 @@ namespace SilhouetteEditor.Forms
             }
 
             ObjectView.ExpandAll();
+        }
+
+        private void ObjectView_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left || e.Button == MouseButtons.Right)
+            {
+                ObjectView.SelectedNode = ObjectView.GetNodeAt(e.X, e.Y);
+
+                if (ObjectView.SelectedNode == null)
+                    return;
+
+                if (ObjectView.SelectedNode.Tag is Layer)
+                {
+                    Layer l = (Layer)ObjectView.SelectedNode.Tag;
+                    Editor.Default.selectLayer(l);
+                    propertyGrid1.SelectedObject = l;
+                }
+
+                if (ObjectView.SelectedNode.Tag is LevelObject)
+                {
+                    LevelObject lo = (LevelObject)ObjectView.SelectedNode.Tag;
+                    Editor.Default.selectLevelObject(lo);
+                    selectedLevelObject = lo;
+                    propertyGrid1.SelectedObject = lo;
+                    Camera.Position = lo.position;
+                }
+            }
+        }
+
+        //---> Button Steuerung <---//
+
+        private void DeleteButton_Click(object sender, EventArgs e)
+        {
+            if (selectedEvent == null || selectedLevelObject2 == null)
+                return;
+
+            selectedEvent.list.Remove(selectedLevelObject2);
+        }
+
+        private void AddButton_Click(object sender, EventArgs e)
+        {
+            if (selectedEvent == null || selectedLevelObject == null)
+                return;
+
+            if (!selectedEvent.list.Contains(selectedLevelObject))
+                selectedEvent.AddLevelObject(selectedLevelObject);
+            else
+                MessageBox.Show("Object is already in the list of this event!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+            UpdateEventView();
+            UpdateObjectView();
+        }
+
+        private void OKButton_Click(object sender, EventArgs e)
+        {
+            this.Hide();
         }
     }
 }
