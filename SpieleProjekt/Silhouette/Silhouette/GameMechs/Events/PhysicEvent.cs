@@ -44,27 +44,35 @@ namespace Silhouette.GameMechs.Events
         {
             if (isActivated)
             {
-                foreach (InteractiveObject io in this.list)
+                foreach (LevelObject lo in this.list)
                 {
-                    if (io.fixture.Body.BodyType == BodyType.Static)
-                        io.fixture.Body.BodyType = BodyType.Dynamic;
-                    else
-                        io.fixture.Body.BodyType = BodyType.Static;
+                    if (lo is InteractiveObject)
+                    {
+                        InteractiveObject io = (InteractiveObject)lo;
+
+                        if (io.fixture.Body.BodyType == BodyType.Static)
+                        {
+                            io.bodyType = BodyType.Dynamic;
+                            io.fixture.Body.BodyType = BodyType.Dynamic;
+                        }
+                        else
+                        {
+                            io.bodyType = BodyType.Static;
+                            io.fixture.Body.BodyType = BodyType.Static;
+                        }
+                    }
+
+                    if (lo is FixtureItem)
+                    {
+                        FixtureItem fi = (FixtureItem)lo;
+
+                        if (fi.fixture.Body.BodyType == BodyType.Static)
+                            fi.fixture.Body.BodyType = BodyType.Dynamic;
+                        else
+                            fi.fixture.Body.BodyType = BodyType.Static;
+                    }
                 }
-                foreach (RectangleFixtureItem r in this.list)
-                {
-                    if (r.fixture.Body.BodyType == BodyType.Static)
-                        r.fixture.Body.BodyType = BodyType.Dynamic;
-                    else
-                        r.fixture.Body.BodyType = BodyType.Static;
-                }
-                foreach (CircleFixtureItem c in this.list)
-                {
-                    if (c.fixture.Body.BodyType == BodyType.Static)
-                        c.fixture.Body.BodyType = BodyType.Dynamic;
-                    else
-                        c.fixture.Body.BodyType = BodyType.Static;
-                }
+
                 isActivated = false;
                 return true;
             }

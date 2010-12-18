@@ -238,7 +238,7 @@ namespace Silhouette.GameMechs
         {
             Camera.Position = camPosition;
 
-            Camera.Rotation = camRect.Body.Rotation;
+            //Camera.Rotation = camRect.Body.Rotation;
         }
 
         private void UpdateControls(GameTime gameTime)
