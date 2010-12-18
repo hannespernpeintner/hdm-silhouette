@@ -172,6 +172,10 @@ namespace SilhouetteEditor.Forms
             if (e.Button == MouseButtons.Right)
             {
                 treeView1.SelectedNode = treeView1.GetNodeAt(e.X, e.Y);
+
+                if (treeView1.SelectedNode == null)
+                    return;
+
                 if (treeView1.SelectedNode.Tag is Layer)
                 {
                     Layer l = (Layer)treeView1.SelectedNode.Tag;
@@ -265,7 +269,12 @@ namespace SilhouetteEditor.Forms
 
             Point p = treeView1.PointToClient(new Point(e.X, e.Y));
             TreeNode destnode = treeView1.GetNodeAt(p);
+
+            if (destnode == null)
+                return;
+
             if (destnode.Tag is Level) return;
+
             treeView1.SelectedNode = destnode;
 
             if (destnode != sourcenode)

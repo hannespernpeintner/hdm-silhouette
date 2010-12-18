@@ -33,7 +33,7 @@ namespace SilhouetteEditor
         public static Color ColorPrimitives { get { return _ColorPrimitives; } }
         private static Color _ColorEvents = new Color(0, 200, 0, 145);
         public static Color ColorEvents { get { return _ColorEvents; } }
-        private static Color _ColorMouseOn = new Color(255, 0, 0, 228);
+        private static Color _ColorMouseOn = new Color(255, 255, 0, 90);
         public static Color ColorMouseOn { get { return _ColorMouseOn; } }
     }
 }

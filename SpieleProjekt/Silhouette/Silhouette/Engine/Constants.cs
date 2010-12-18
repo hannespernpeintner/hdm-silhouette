@@ -25,7 +25,7 @@ namespace Silhouette.Engine
 {
     public static class Constants
     {
-        private static Color _onHover = new Color(255, 0, 0, 150);
+        private static Color _onHover = new Color(255, 255, 0, 90);
         public static Color onHover { get { return _onHover; } }
         private static Color _ColorPrimitives = new Color(0, 0, 0, 255);
         public static Color ColorPrimitives { get { return _ColorPrimitives; } }
