@@ -31,7 +31,7 @@ using IrrKlang;
  */
 namespace Silhouette.GameMechs
 {   [Serializable]
-    public class SoundObject
+    public class SoundObject : LevelObject
     {
         public String  Trackpath { get; set; }
 
@@ -313,7 +313,7 @@ namespace Silhouette.GameMechs
 
        
 
-        public void Update(GameTime gameTime)
+        public override void Update(GameTime gameTime)
         {
             //Julius: Wir updaten den Fader...
             if ((Sound != null) && (_FaderActivated))
@@ -343,7 +343,17 @@ namespace Silhouette.GameMechs
             }
         }
 
-        
+
+
+        public override void Initialise()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void LoadContent()
+        {
+            throw new NotImplementedException();
+        }
     }
 
    
