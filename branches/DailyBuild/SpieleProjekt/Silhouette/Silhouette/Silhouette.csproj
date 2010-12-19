@@ -144,7 +144,6 @@
     <Compile Include="Engine\Animation.cs" />
     <Compile Include="Engine\SoundEngine\IrrAudioEngine.cs" />
     <Compile Include="GameMechs\Deco.cs" />
-    <Compile Include="GameMechs\Deco.Editor.cs" />
     <Compile Include="GameMechs\DrawableLevelObject.cs" />
     <Compile Include="GameMechs\Events\AudioEvent.cs" />
     <Compile Include="GameMechs\Events\Event.cs" />
