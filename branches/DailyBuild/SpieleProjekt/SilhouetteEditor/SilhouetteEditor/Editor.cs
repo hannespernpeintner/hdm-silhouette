@@ -341,6 +341,63 @@ namespace SilhouetteEditor
                             editorState = EditorState.MOVING;
                         }
                     }
+
+                    /* Sascha:
+                     * Automatische Erstellung eines Kollisionsobjekt aus einem gegebenen Primitiv.
+                    */
+
+                    if (kstate.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.C) && oldkstate.IsKeyUp(Microsoft.Xna.Framework.Input.Keys.C) && selectedLevelObjects.Count > 0)
+                    {
+                        List<LevelObject> copy = new List<LevelObject>();
+
+                        foreach (LevelObject lo in selectedLevelObjects)
+                        {
+                            if (lo is PrimitiveObject)
+                                copy.Add(lo);
+                        }
+
+                        selectedLevelObjects.Clear();
+
+                        foreach (LevelObject lo in copy)
+                        {
+                            if (lo is RectanglePrimitiveObject)
+                            {
+                                RectanglePrimitiveObject r = (RectanglePrimitiveObject)lo;
+
+                                RectangleFixtureItem rf = new RectangleFixtureItem(r.rectangle);
+                                rf.name = rf.getPrefix() + r.layer.getNextObjectNumber();
+                                rf.layer = r.layer;
+                                r.layer.loList.Add(rf);
+                                selectedLevelObjects.Add(rf);
+                            }
+
+                            if (lo is CirclePrimitiveObject)
+                            {
+                                CirclePrimitiveObject c = (CirclePrimitiveObject)lo;
+
+                                CircleFixtureItem cf = new CircleFixtureItem(c.position, c.radius);
+                                cf.name = cf.getPrefix() + c.layer.getNextObjectNumber();
+                                cf.layer = c.layer;
+                                c.layer.loList.Add(cf);
+                                selectedLevelObjects.Add(cf);
+                            }
+
+                            if (lo is PathPrimitiveObject)
+                            {
+                                PathPrimitiveObject p = (PathPrimitiveObject)lo;
+
+                                PathFixtureItem pf = new PathFixtureItem((Vector2[])p.WorldPoints.Clone());
+                                pf.isPolygon = p.isPolygon;
+                                pf.name = pf.getPrefix() + p.layer.getNextObjectNumber();
+                                pf.layer = p.layer;
+                                p.layer.loList.Add(pf);
+                                selectedLevelObjects.Add(pf);
+                            }
+                        }
+
+                        MainForm.Default.UpdateTreeView();
+                        startPositioning();
+                    }
                 }
             #endregion
 

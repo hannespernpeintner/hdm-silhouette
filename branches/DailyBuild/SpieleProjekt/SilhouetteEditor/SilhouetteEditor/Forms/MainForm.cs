@@ -169,6 +169,7 @@ namespace SilhouetteEditor.Forms
             {
                 LevelObject lo = (LevelObject)e.Node.Tag;
                 Editor.Default.selectLevelObject(lo);
+                Camera.Position = lo.position;
             }
         }
 
@@ -185,6 +186,12 @@ namespace SilhouetteEditor.Forms
                 {
                     Layer l = (Layer)treeView1.SelectedNode.Tag;
                     Editor.Default.selectLayer(l);
+                }
+                if (treeView1.SelectedNode.Tag is LevelObject)
+                {
+                    LevelObject lo = (LevelObject)treeView1.SelectedNode.Tag;
+                    Editor.Default.selectLevelObject(lo);
+                    Camera.Position = lo.position;
                 }
             }
         }
