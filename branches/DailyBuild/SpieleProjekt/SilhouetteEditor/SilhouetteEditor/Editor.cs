@@ -104,6 +104,7 @@ namespace SilhouetteEditor
         public bool fixtureStarted;
         public bool primitiveStarted;
         public bool eventStarted;
+        public bool physicsStarted;
 
         List<Vector2> clickedPoints, initialPosition, initialScale;
         Vector2 MouseWorldPosition, GrabbedPoint;
@@ -479,7 +480,7 @@ namespace SilhouetteEditor
                         {
                             if (currentFixture != FixtureType.Path)
                             {
-                                createFixtureItem();
+                                createCollisionObject();
                                 clickedPoints.Clear();
                                 fixtureStarted = false;
                             }
@@ -498,7 +499,7 @@ namespace SilhouetteEditor
                         if (currentFixture == FixtureType.Path && fixtureStarted && clickedPoints.Count > 1)
                         {
                             selectedLevelObjects.Clear();
-                            createFixtureItem();
+                            createCollisionObject();
                             clickedPoints.Clear();
                             fixtureStarted = false;
                         }
@@ -879,7 +880,6 @@ namespace SilhouetteEditor
         }
 
         /* Sascha:
-         * Der Name ist eventuell etwas irreführend. Es wird in dieser Funktion nicht wirklich etwas gezeichnet, sondern es wir ein Objekt modeliert.
          * Je nachdem welches Objekt momentan durch den Editor gesetzt wird, erzeugt diese Funktion ein entsprechendes LevelObject mit den gewünschten
          * Attributen.
         */
@@ -942,7 +942,7 @@ namespace SilhouetteEditor
          * Spielengine werden sie dann in Fixtures umgewandelt mit der Funktion ToFixture().
         */
 
-        public void createFixtureItem()
+        public void createCollisionObject()
         {
             switch (currentFixture)
             {

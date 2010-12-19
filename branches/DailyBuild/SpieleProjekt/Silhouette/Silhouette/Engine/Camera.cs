@@ -106,7 +106,7 @@ namespace Silhouette.Engine
             debugMatrix = Matrix.CreateTranslation(-_Position.X / Level.PixelPerMeter, -_Position.Y / Level.PixelPerMeter, 0.0f) *
                             Matrix.CreateRotationZ(_Rotation) *
                             Matrix.CreateScale(_Scale) *
-                            Matrix.CreateTranslation(0, 0, 0);//viewport.X / 2, viewport.Y / 2, 0.0f);
+                            Matrix.CreateTranslation((viewport.X /2) / Level.PixelPerMeter, (viewport.Y / 2) / Level.PixelPerMeter, 0.0f);
         }
        
         public static void updateViewport(float width, float height)
