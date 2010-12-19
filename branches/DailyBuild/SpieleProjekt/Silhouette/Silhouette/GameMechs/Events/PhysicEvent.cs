@@ -62,9 +62,9 @@ namespace Silhouette.GameMechs.Events
                         }
                     }
 
-                    if (lo is FixtureItem)
+                    if (lo is CollisionObject)
                     {
-                        FixtureItem fi = (FixtureItem)lo;
+                        CollisionObject fi = (CollisionObject)lo;
 
                         if (fi.fixture.Body.BodyType == BodyType.Static)
                             fi.fixture.Body.BodyType = BodyType.Dynamic;
@@ -86,7 +86,7 @@ namespace Silhouette.GameMechs.Events
         {
             if (this.list != null)
             {
-                if(!this.list.Contains(lo) && (lo is InteractiveObject || lo is FixtureItem))
+                if(!this.list.Contains(lo) && (lo is InteractiveObject || lo is CollisionObject))
                     this.list.Add(lo);
             }
         }

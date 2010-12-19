@@ -308,11 +308,6 @@ namespace Silhouette.GameMechs
         
         }
 
-       
-
-
-       
-
         public override void Update(GameTime gameTime)
         {
             //Julius: Wir updaten den Fader...
@@ -343,17 +338,8 @@ namespace Silhouette.GameMechs
             }
         }
 
-
-
-        public override void Initialise()
-        {
-            throw new NotImplementedException();
-        }
-
-        public override void LoadContent()
-        {
-            throw new NotImplementedException();
-        }
+        public override void Initialise() { }
+        public override void LoadContent() { }
     }
 
    

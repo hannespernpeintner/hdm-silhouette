@@ -364,7 +364,7 @@ namespace SilhouetteEditor
                             {
                                 RectanglePrimitiveObject r = (RectanglePrimitiveObject)lo;
 
-                                RectangleFixtureItem rf = new RectangleFixtureItem(r.rectangle);
+                                RectangleCollisionObject rf = new RectangleCollisionObject(r.rectangle);
                                 rf.name = rf.getPrefix() + r.layer.getNextObjectNumber();
                                 rf.layer = r.layer;
                                 r.layer.loList.Add(rf);
@@ -375,7 +375,7 @@ namespace SilhouetteEditor
                             {
                                 CirclePrimitiveObject c = (CirclePrimitiveObject)lo;
 
-                                CircleFixtureItem cf = new CircleFixtureItem(c.position, c.radius);
+                                CircleCollisionObject cf = new CircleCollisionObject(c.position, c.radius);
                                 cf.name = cf.getPrefix() + c.layer.getNextObjectNumber();
                                 cf.layer = c.layer;
                                 c.layer.loList.Add(cf);
@@ -386,7 +386,7 @@ namespace SilhouetteEditor
                             {
                                 PathPrimitiveObject p = (PathPrimitiveObject)lo;
 
-                                PathFixtureItem pf = new PathFixtureItem((Vector2[])p.WorldPoints.Clone());
+                                PathCollisionObject pf = new PathCollisionObject((Vector2[])p.WorldPoints.Clone());
                                 pf.isPolygon = p.isPolygon;
                                 pf.name = pf.getPrefix() + p.layer.getNextObjectNumber();
                                 pf.layer = p.layer;
@@ -420,7 +420,7 @@ namespace SilhouetteEditor
                         {
                             if (currentPrimitive != PrimitiveType.Path)
                             {
-                                paintPrimitiveObject();
+                                createPrimitiveObject();
                                 clickedPoints.Clear();
                                 primitiveStarted = false;
                             }
@@ -438,7 +438,7 @@ namespace SilhouetteEditor
                     {
                         if (currentPrimitive == PrimitiveType.Path && primitiveStarted && clickedPoints.Count > 1)
                         {
-                            paintPrimitiveObject();
+                            createPrimitiveObject();
                             clickedPoints.Clear();
                             primitiveStarted = false;
                         }
@@ -479,7 +479,7 @@ namespace SilhouetteEditor
                         {
                             if (currentFixture != FixtureType.Path)
                             {
-                                paintFixtureItem();
+                                createFixtureItem();
                                 clickedPoints.Clear();
                                 fixtureStarted = false;
                             }
@@ -498,7 +498,7 @@ namespace SilhouetteEditor
                         if (currentFixture == FixtureType.Path && fixtureStarted && clickedPoints.Count > 1)
                         {
                             selectedLevelObjects.Clear();
-                            paintFixtureItem();
+                            createFixtureItem();
                             clickedPoints.Clear();
                             fixtureStarted = false;
                         }
@@ -534,7 +534,7 @@ namespace SilhouetteEditor
                             eventStarted = true;
                         else
                         {
-                            paintEvent();
+                            createEvent();
                             clickedPoints.Clear();
                             eventStarted = false;
                         }
@@ -568,7 +568,7 @@ namespace SilhouetteEditor
 
                     if (mstate.LeftButton == Microsoft.Xna.Framework.Input.ButtonState.Pressed && oldmstate.LeftButton == Microsoft.Xna.Framework.Input.ButtonState.Released)
                     {
-                        paintCurrentObject(true);
+                        createCurrentObject(true);
                     }
                     if (mstate.RightButton == Microsoft.Xna.Framework.Input.ButtonState.Pressed && oldmstate.LeftButton == Microsoft.Xna.Framework.Input.ButtonState.Released)
                     {
@@ -861,7 +861,7 @@ namespace SilhouetteEditor
             this.currentObject = null;
         }
 
-        //---> Paint Objects <---//
+        //---> Create Objects <---//
 
         public void copyLevelObjects(Layer layer)
         {
@@ -884,7 +884,7 @@ namespace SilhouetteEditor
          * Attributen.
         */
 
-        public void paintCurrentObject(bool continueAfterPaint)
+        public void createCurrentObject(bool continueAfterPaint)
         {
             if (currentObject is TextureObject)
             {
@@ -922,7 +922,7 @@ namespace SilhouetteEditor
          * Fügt die Events in die LevelObject-Liste der aktuell selektierten Layer ein.
         */
 
-        public void paintEvent()
+        public void createEvent()
         {
             switch (currentEvent)
             { 
@@ -942,26 +942,26 @@ namespace SilhouetteEditor
          * Spielengine werden sie dann in Fixtures umgewandelt mit der Funktion ToFixture().
         */
 
-        public void paintFixtureItem()
+        public void createFixtureItem()
         {
             switch (currentFixture)
             {
                 case FixtureType.Rectangle:
-                    LevelObject l1 = new RectangleFixtureItem(Extensions.RectangleFromVectors(clickedPoints[0], clickedPoints[1]));
+                    LevelObject l1 = new RectangleCollisionObject(Extensions.RectangleFromVectors(clickedPoints[0], clickedPoints[1]));
                     l1.name = l1.getPrefix() + selectedLayer.getNextObjectNumber();
                     l1.layer = selectedLayer;
                     selectedLayer.loList.Add(l1);
                     selectLevelObject(l1);
                     break;
                 case FixtureType.Circle:
-                    LevelObject l2 = new CircleFixtureItem(clickedPoints[0], (MouseWorldPosition - clickedPoints[0]).Length());
+                    LevelObject l2 = new CircleCollisionObject(clickedPoints[0], (MouseWorldPosition - clickedPoints[0]).Length());
                     l2.name = l2.getPrefix() + selectedLayer.getNextObjectNumber();
                     l2.layer = selectedLayer;
                     selectedLayer.loList.Add(l2);
                     selectLevelObject(l2);
                     break;
                 case FixtureType.Path:
-                    LevelObject l3 = new PathFixtureItem(clickedPoints.ToArray());
+                    LevelObject l3 = new PathCollisionObject(clickedPoints.ToArray());
                     l3.name = l3.getPrefix() + selectedLayer.getNextObjectNumber();
                     l3.layer = selectedLayer;
                     selectedLayer.loList.Add(l3);
@@ -975,7 +975,7 @@ namespace SilhouetteEditor
          * Hier gilt das gleiche wie oben. Einfache Primitive zum schnellen zeichnen einer farbigen Fläche.
         */
 
-        public void paintPrimitiveObject()
+        public void createPrimitiveObject()
         {
             switch (currentPrimitive)
             {
@@ -1174,9 +1174,9 @@ namespace SilhouetteEditor
                     spriteBatch.Begin(SpriteSortMode.Deferred, null, null, null, null, null, Camera.matrix);
                     foreach (LevelObject lo in l.loList)
                     {
-                        if (lo is RectangleFixtureItem)
+                        if (lo is RectangleCollisionObject)
                         {
-                            RectangleFixtureItem r = (RectangleFixtureItem)lo;
+                            RectangleCollisionObject r = (RectangleCollisionObject)lo;
                             if (r.isVisible)
                             {
                                 Microsoft.Xna.Framework.Color color = Constants.ColorFixtures;
@@ -1184,9 +1184,9 @@ namespace SilhouetteEditor
                                 Primitives.Instance.drawBoxFilled(spriteBatch, r.rectangle, color);
                             }
                         }
-                        if (lo is CircleFixtureItem)
+                        if (lo is CircleCollisionObject)
                         {
-                            CircleFixtureItem c = (CircleFixtureItem)lo;
+                            CircleCollisionObject c = (CircleCollisionObject)lo;
                             if (c.isVisible)
                             {
                                 Microsoft.Xna.Framework.Color color = Constants.ColorFixtures;
@@ -1194,9 +1194,9 @@ namespace SilhouetteEditor
                                 Primitives.Instance.drawCircleFilled(spriteBatch, c.position, c.radius, color);
                             }
                         }
-                        if (lo is PathFixtureItem)
+                        if (lo is PathCollisionObject)
                         {
-                            PathFixtureItem p = (PathFixtureItem)lo;
+                            PathCollisionObject p = (PathCollisionObject)lo;
                             if (p.isVisible)
                             {
                                 Microsoft.Xna.Framework.Color color = Constants.ColorFixtures;

@@ -340,13 +340,13 @@ namespace SilhouetteEditor.Forms
             if (lvi.Tag == "TextureObject")
             {
                 Editor.Default.createTextureObject(lvi.Name);
-                Editor.Default.paintCurrentObject(false);
+                Editor.Default.createCurrentObject(false);
                 Editor.Default.startPositioning();
             }
             else if (lvi.Tag == "InteractiveObject")
             {
                 Editor.Default.createInteractiveObject(lvi.Name);
-                Editor.Default.paintCurrentObject(false);
+                Editor.Default.createCurrentObject(false);
                 Editor.Default.startPositioning();
             }
         }   
