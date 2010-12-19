@@ -51,7 +51,7 @@ namespace SilhouetteEditor.Forms
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.bearbeitenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ansichtToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.leveleinstellungenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.eventManagerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.runToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -74,8 +74,6 @@ namespace SilhouetteEditor.Forms
             this.PhysicsButton = new System.Windows.Forms.ToolStripDropDownButton();
             this.EventButton = new System.Windows.Forms.ToolStripDropDownButton();
             this.physicToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.propertyGrid1 = new System.Windows.Forms.PropertyGrid();
@@ -95,6 +93,9 @@ namespace SilhouetteEditor.Forms
             this.LayerContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.renameToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
+            this.moveUpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.moveDownToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ObjectContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.renameToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.copyToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
@@ -105,9 +106,6 @@ namespace SilhouetteEditor.Forms
             this.deleteToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.addObjectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
-            this.moveUpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.moveDownToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.StatusBar.SuspendLayout();
             this.MenuBar.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -205,7 +203,6 @@ namespace SilhouetteEditor.Forms
             this.dateiToolStripMenuItem,
             this.bearbeitenToolStripMenuItem,
             this.ansichtToolStripMenuItem,
-            this.leveleinstellungenToolStripMenuItem,
             this.runToolStripMenuItem,
             this.helpToolStripMenuItem});
             this.MenuBar.Location = new System.Drawing.Point(0, 0);
@@ -275,15 +272,18 @@ namespace SilhouetteEditor.Forms
             // 
             // ansichtToolStripMenuItem
             // 
+            this.ansichtToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.eventManagerToolStripMenuItem});
             this.ansichtToolStripMenuItem.Name = "ansichtToolStripMenuItem";
             this.ansichtToolStripMenuItem.Size = new System.Drawing.Size(48, 20);
             this.ansichtToolStripMenuItem.Text = "Tools";
             // 
-            // leveleinstellungenToolStripMenuItem
+            // eventManagerToolStripMenuItem
             // 
-            this.leveleinstellungenToolStripMenuItem.Name = "leveleinstellungenToolStripMenuItem";
-            this.leveleinstellungenToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
-            this.leveleinstellungenToolStripMenuItem.Text = "Settings";
+            this.eventManagerToolStripMenuItem.Name = "eventManagerToolStripMenuItem";
+            this.eventManagerToolStripMenuItem.Size = new System.Drawing.Size(153, 22);
+            this.eventManagerToolStripMenuItem.Text = "Event Manager";
+            this.eventManagerToolStripMenuItem.Click += new System.EventHandler(this.ToolsEventManager);
             // 
             // runToolStripMenuItem
             // 
@@ -434,21 +434,21 @@ namespace SilhouetteEditor.Forms
             // rectangleToolStripMenuItem
             // 
             this.rectangleToolStripMenuItem.Name = "rectangleToolStripMenuItem";
-            this.rectangleToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
+            this.rectangleToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.rectangleToolStripMenuItem.Text = "Rectangle";
             this.rectangleToolStripMenuItem.Click += new System.EventHandler(this.rectangleToolStripMenuItem_Click);
             // 
             // circleToolStripMenuItem
             // 
             this.circleToolStripMenuItem.Name = "circleToolStripMenuItem";
-            this.circleToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
+            this.circleToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.circleToolStripMenuItem.Text = "Circle";
             this.circleToolStripMenuItem.Click += new System.EventHandler(this.circleToolStripMenuItem_Click);
             // 
             // pathToolStripMenuItem
             // 
             this.pathToolStripMenuItem.Name = "pathToolStripMenuItem";
-            this.pathToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
+            this.pathToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.pathToolStripMenuItem.Text = "Path";
             this.pathToolStripMenuItem.Click += new System.EventHandler(this.pathToolStripMenuItem_Click);
             // 
@@ -501,9 +501,7 @@ namespace SilhouetteEditor.Forms
             // 
             this.EventButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.EventButton.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.physicToolStripMenuItem,
-            this.toolStripSeparator4,
-            this.toolStripMenuItem1});
+            this.physicToolStripMenuItem});
             this.EventButton.Image = global::SilhouetteEditor.Properties.Resource.AddEvent;
             this.EventButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.EventButton.Name = "EventButton";
@@ -514,20 +512,9 @@ namespace SilhouetteEditor.Forms
             // physicToolStripMenuItem
             // 
             this.physicToolStripMenuItem.Name = "physicToolStripMenuItem";
-            this.physicToolStripMenuItem.Size = new System.Drawing.Size(154, 22);
+            this.physicToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.physicToolStripMenuItem.Text = "Physic";
             this.physicToolStripMenuItem.Click += new System.EventHandler(this.physicToolStripMenuItem_Click);
-            // 
-            // toolStripSeparator4
-            // 
-            this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new System.Drawing.Size(151, 6);
-            // 
-            // toolStripMenuItem1
-            // 
-            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(154, 22);
-            this.toolStripMenuItem1.Text = "Manage Events";
             // 
             // tabControl1
             // 
@@ -720,6 +707,25 @@ namespace SilhouetteEditor.Forms
             this.deleteToolStripMenuItem.Text = "Delete";
             this.deleteToolStripMenuItem.Click += new System.EventHandler(this.deleteToolStripMenuItem_Click);
             // 
+            // toolStripSeparator5
+            // 
+            this.toolStripSeparator5.Name = "toolStripSeparator5";
+            this.toolStripSeparator5.Size = new System.Drawing.Size(149, 6);
+            // 
+            // moveUpToolStripMenuItem
+            // 
+            this.moveUpToolStripMenuItem.Name = "moveUpToolStripMenuItem";
+            this.moveUpToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.moveUpToolStripMenuItem.Text = "Move Up";
+            this.moveUpToolStripMenuItem.Click += new System.EventHandler(this.moveUpToolStripMenuItem_Click);
+            // 
+            // moveDownToolStripMenuItem
+            // 
+            this.moveDownToolStripMenuItem.Name = "moveDownToolStripMenuItem";
+            this.moveDownToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.moveDownToolStripMenuItem.Text = "Move Down";
+            this.moveDownToolStripMenuItem.Click += new System.EventHandler(this.moveDownToolStripMenuItem_Click);
+            // 
             // ObjectContextMenu
             // 
             this.ObjectContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -794,25 +800,6 @@ namespace SilhouetteEditor.Forms
             this.addObjectToolStripMenuItem.Text = "Manage Events";
             this.addObjectToolStripMenuItem.Click += new System.EventHandler(this.addObjectToolStripMenuItem_Click);
             // 
-            // toolStripSeparator5
-            // 
-            this.toolStripSeparator5.Name = "toolStripSeparator5";
-            this.toolStripSeparator5.Size = new System.Drawing.Size(149, 6);
-            // 
-            // moveUpToolStripMenuItem
-            // 
-            this.moveUpToolStripMenuItem.Name = "moveUpToolStripMenuItem";
-            this.moveUpToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.moveUpToolStripMenuItem.Text = "Move Up";
-            this.moveUpToolStripMenuItem.Click += new System.EventHandler(this.moveUpToolStripMenuItem_Click);
-            // 
-            // moveDownToolStripMenuItem
-            // 
-            this.moveDownToolStripMenuItem.Name = "moveDownToolStripMenuItem";
-            this.moveDownToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.moveDownToolStripMenuItem.Text = "Move Down";
-            this.moveDownToolStripMenuItem.Click += new System.EventHandler(this.moveDownToolStripMenuItem_Click);
-            // 
             // MainForm
             // 
             this.AllowDrop = true;
@@ -863,7 +850,6 @@ namespace SilhouetteEditor.Forms
         private System.Windows.Forms.ToolStripMenuItem dateiToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem bearbeitenToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem ansichtToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem leveleinstellungenToolStripMenuItem;
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.SplitContainer splitContainer2;
         private System.Windows.Forms.ToolStrip ToolBar;
@@ -928,10 +914,9 @@ namespace SilhouetteEditor.Forms
         private System.Windows.Forms.ToolStripMenuItem deleteToolStripMenuItem2;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
         private System.Windows.Forms.ToolStripMenuItem addObjectToolStripMenuItem;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
-        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
         private System.Windows.Forms.ToolStripMenuItem moveUpToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem moveDownToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem eventManagerToolStripMenuItem;
     }
 }
