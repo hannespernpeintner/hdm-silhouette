@@ -117,6 +117,11 @@ namespace SilhouetteEditor.Forms
             }
         }
 
+        private void ToolsEventManager(object sender, EventArgs e)
+        {
+            new ManageEvents().ShowDialog();
+        }
+
         //---> TreeView-Steuerung <---//
 
         public void UpdateTreeView()
@@ -587,21 +592,6 @@ namespace SilhouetteEditor.Forms
             new ManageEvents().ShowDialog();
         }
 
-        //---> Actions <---//
-
-        private void ActionDelete(object sender, EventArgs e)
-        {
-            if (treeView1.SelectedNode == null) return;
-            if (treeView1.SelectedNode.Tag is Layer)
-            {
-                Layer l = (Layer)treeView1.SelectedNode.Tag;
-                Editor.Default.deleteLayer(l);
-            }
-            else if (treeView1.SelectedNode.Tag is LevelObject)
-            {
-                Editor.Default.deleteLevelObjects();
-            }
-        }
 
         private void moveUpToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -618,6 +608,22 @@ namespace SilhouetteEditor.Forms
             {
                 Layer l = (Layer)treeView1.SelectedNode.Tag;
                 Editor.Default.moveLayerDown(Editor.Default.selectedLayer);
+            }
+        }
+
+        //---> Actions <---//
+
+        private void ActionDelete(object sender, EventArgs e)
+        {
+            if (treeView1.SelectedNode == null) return;
+            if (treeView1.SelectedNode.Tag is Layer)
+            {
+                Layer l = (Layer)treeView1.SelectedNode.Tag;
+                Editor.Default.deleteLayer(l);
+            }
+            else if (treeView1.SelectedNode.Tag is LevelObject)
+            {
+                Editor.Default.deleteLevelObjects();
             }
         }
     }
