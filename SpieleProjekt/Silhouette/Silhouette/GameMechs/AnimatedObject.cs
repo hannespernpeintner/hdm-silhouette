@@ -14,7 +14,7 @@ namespace Silhouette.GameMechs
     /* Deco containert eine Animation, ist jedoch dafür vorgesehen nur einmalig eine Position zu übergeben, die sich im Folgenden
     auch nicht mehr ändert. Daher wird sie auch beim Konstruktor übergeben und nicht mehr in der Updatemethode. */
 
-    public class Deco: DrawableLevelObject
+    public class AnimatedObject: DrawableLevelObject
     {
         public Animation animation;
         public int amount;
@@ -23,7 +23,7 @@ namespace Silhouette.GameMechs
         public Fixture fixture;
         public bool isAnimated;
 
-        public Deco(Vector2 position, int amount, String path, float speed)
+        public AnimatedObject(Vector2 position, int amount, String path, float speed)
         {
             this.position = position;
             this.amount = amount;

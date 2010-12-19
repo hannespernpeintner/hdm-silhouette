@@ -27,7 +27,7 @@ using FarseerPhysics.Collision.Shapes;
 namespace Silhouette.GameMechs
 {
     [Serializable]
-    public abstract class FixtureItem : LevelObject
+    public abstract class CollisionObject : LevelObject
     {
         [NonSerialized]
         public Fixture fixture;
@@ -42,7 +42,7 @@ namespace Silhouette.GameMechs
 
     #region Rectangle
         [Serializable]
-        public class RectangleFixtureItem : FixtureItem
+        public class RectangleCollisionObject : CollisionObject
         {
             public Microsoft.Xna.Framework.Rectangle rectangle;
 
@@ -65,7 +65,7 @@ namespace Silhouette.GameMechs
             [Description("The BodyType defines the behavior of an object. A static object never changes position or rotation, like the dynamic ones do.")]
             public BodyType bodyType { get { return _bodyType; } set { _bodyType = value; } }
 
-            public RectangleFixtureItem(Microsoft.Xna.Framework.Rectangle rectangle)
+            public RectangleCollisionObject(Microsoft.Xna.Framework.Rectangle rectangle)
             {
                 this.rectangle = rectangle;
                 position = rectangle.Location.ToVector2();
@@ -79,7 +79,7 @@ namespace Silhouette.GameMechs
 
             public override string getPrefix()
             {
-                return "RectangleFixture_";
+                return "RectangleCollisionObject_";
             }
 
             public override bool canScale() { return true; }
@@ -97,7 +97,7 @@ namespace Silhouette.GameMechs
 
             public override LevelObject clone()
             {
-                RectangleFixtureItem result = (RectangleFixtureItem)this.MemberwiseClone();
+                RectangleCollisionObject result = (RectangleCollisionObject)this.MemberwiseClone();
                 result.mouseOn = false;
                 return result;
             }
@@ -135,7 +135,7 @@ namespace Silhouette.GameMechs
 
     #region Circle
         [Serializable]
-        public class CircleFixtureItem : FixtureItem
+        public class CircleCollisionObject : CollisionObject
         {
             private float _radius;
             [DisplayName("Radius"), Category("Fixture Data")]
@@ -147,7 +147,7 @@ namespace Silhouette.GameMechs
             [Description("The BodyType defines the behavior of an object. A static object never changes position or rotation, like the dynamic ones do.")]
             public BodyType bodyType { get { return _bodyType; } set { _bodyType = value; } }
 
-            public CircleFixtureItem(Vector2 position, float radius)
+            public CircleCollisionObject(Vector2 position, float radius)
             {
                 this.position = position;
                 this.radius = radius;
@@ -159,7 +159,7 @@ namespace Silhouette.GameMechs
 
             public override string getPrefix()
             {
-                return "CircleFixture_";
+                return "CircleCollisionObject_";
             }
 
             public override bool canScale() { return true; }
@@ -172,7 +172,7 @@ namespace Silhouette.GameMechs
 
             public override LevelObject clone()
             {
-                CircleFixtureItem result = (CircleFixtureItem)this.MemberwiseClone();
+                CircleCollisionObject result = (CircleCollisionObject)this.MemberwiseClone();
                 result.mouseOn = false;
                 return result;
             }
@@ -210,7 +210,7 @@ namespace Silhouette.GameMechs
 
     #region Path
         [Serializable]
-        public class PathFixtureItem : FixtureItem
+        public class PathCollisionObject : CollisionObject
         {
             private bool _isPolygon;
             [DisplayName("Polygon"), Category("Fixture Data")]
@@ -229,7 +229,7 @@ namespace Silhouette.GameMechs
             public override void LoadContent() { ToFixture(); }
             public override void Update(GameTime gameTime) { }
 
-            public PathFixtureItem(Vector2[] Points)
+            public PathCollisionObject(Vector2[] Points)
             {
                 WorldPoints = Points;
                 LocalPoints = (Vector2[])Points.Clone();
@@ -252,7 +252,7 @@ namespace Silhouette.GameMechs
 
             public override string getPrefix()
             {
-                return "PathFixture_";
+                return "PathCollisionObject_";
             }
 
             public override bool canScale() { return true; }
@@ -278,7 +278,7 @@ namespace Silhouette.GameMechs
 
             public override LevelObject clone()
             {
-                PathFixtureItem result = (PathFixtureItem)this.MemberwiseClone();
+                PathCollisionObject result = (PathCollisionObject)this.MemberwiseClone();
                 result.LocalPoints = (Vector2[])this.LocalPoints.Clone();
                 result.WorldPoints = (Vector2[])this.WorldPoints.Clone();
                 result.mouseOn = false;

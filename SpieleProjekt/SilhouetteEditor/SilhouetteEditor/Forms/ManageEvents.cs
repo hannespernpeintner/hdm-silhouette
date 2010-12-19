@@ -93,9 +93,9 @@ namespace SilhouetteEditor.Forms
                     Camera.Position = lo.position;
                 }
 
-                if (EventView.SelectedNode.Tag is FixtureItem)
+                if (EventView.SelectedNode.Tag is CollisionObject)
                 {
-                    FixtureItem lo = (FixtureItem)EventView.SelectedNode.Tag;
+                    CollisionObject lo = (CollisionObject)EventView.SelectedNode.Tag;
                     Editor.Default.selectLevelObject(lo);
                     selectedLevelObject2 = lo;
                     Event ev = (Event)EventView.SelectedNode.Parent.Tag;
@@ -119,7 +119,7 @@ namespace SilhouetteEditor.Forms
 
                 foreach (LevelObject lo in l.loList)
                 {
-                    if (lo is InteractiveObject || lo is FixtureItem)
+                    if (lo is InteractiveObject || lo is CollisionObject)
                     {
                         TreeNode levelObjectTreeNode = layerTreeNode.Nodes.Add(lo.name);
                         levelObjectTreeNode.Tag = lo;
