@@ -33,6 +33,7 @@ namespace Silhouette.GameMechs
         public RopeJoint joint1;
         public RopeJoint joint2;
         public RopeJoint joint3;
+        public AngleJoint joint4;
 
         public KeyboardState oldState;
         public Vector2 oldPosition;
@@ -94,6 +95,7 @@ namespace Silhouette.GameMechs
             // Aus dem Level geht die initiale StartPos des Chars hervor. Aktuell Testposition eingetragen.
             // position = Level.LevelSetting.CharacterStartPosition;
             // position = Vector2.Zero;
+
 
             idle_left = new Animation();
             idle_right = new Animation();
@@ -172,10 +174,15 @@ namespace Silhouette.GameMechs
             nextAnimation = choseIdleAnimation();
 
             charRect = FixtureManager.CreateRectangle(200, 160, position, BodyType.Dynamic, 1);
-            charRect.Body.FixedRotation = true;
+            charRect.Body.FixedRotation = false;
             charRect.Friction = 5;
 
+            //charRect = FixtureManager.CreateCircle(75, position, BodyType.Dynamic, 1);
+            //charRect.Body.FixedRotation = false;
+            //charRect.Friction = 5;
+
             sRect = FixtureManager.CreateRectangle(100, 80, new Vector2(position.X, position.Y + 65), BodyType.Dynamic, 1);
+            sRect.Body.FixedRotation = true;
             sRect.IsSensor = true;
 
             camRect = FixtureManager.CreateRectangle(100, 100, charRect.Body.Position, BodyType.Dynamic, 0.1f);
@@ -183,15 +190,20 @@ namespace Silhouette.GameMechs
             camRect.Body.FixedRotation = false;
             camRect.IsSensor = true;
 
+            sRect.IgnoreCollisionWith(charRect);
+            charRect.IgnoreCollisionWith(sRect);
+
             joint0 = new RopeJoint(charRect.Body, camRect.Body, new Vector2(100 / Level.PixelPerMeter, 80 / Level.PixelPerMeter) * 2, new Vector2(50 / Level.PixelPerMeter, 50 / Level.PixelPerMeter));
             joint1 = new RopeJoint(charRect.Body, camRect.Body, new Vector2(-100 / Level.PixelPerMeter, -80 / Level.PixelPerMeter) * 2, new Vector2(-50 / Level.PixelPerMeter, -50 / Level.PixelPerMeter));
             joint2 = new RopeJoint(charRect.Body, camRect.Body, new Vector2(100 / Level.PixelPerMeter, -80 / Level.PixelPerMeter) * 2, new Vector2(50 / Level.PixelPerMeter, -50 / Level.PixelPerMeter));
             joint3 = new RopeJoint(charRect.Body, camRect.Body, new Vector2(-100 / Level.PixelPerMeter, 80 / Level.PixelPerMeter) * 2, new Vector2(-50 / Level.PixelPerMeter, 50 / Level.PixelPerMeter));
+            joint4 = JointFactory.CreateAngleJoint(Level.Physics, charRect.Body, sRect.Body);
+            joint4.Softness = 0.999f;
 
-            joint0.MaxLength += 0.000125f;
-            joint1.MaxLength += 0.000125f;
-            joint2.MaxLength += 0.000125f;
-            joint3.MaxLength += 0.000125f;
+            joint0.MaxLength = 0.000000125f;
+            joint1.MaxLength = 0.000000125f;
+            joint2.MaxLength = 0.000000125f;
+            joint3.MaxLength = 0.000000125f;
 
 
             Level.Physics.AddJoint(joint0);
@@ -238,7 +250,7 @@ namespace Silhouette.GameMechs
         {
             Camera.Position = camPosition;
             // Die Camera wird nur rotiert, wenn die Rotation unter einem bestimmten Winkel bleibt. Damit das nicht ausartet.
-            if (camRect.Body.Rotation >= -0.05f && camRect.Body.Rotation <= 0.05f) { Camera.Rotation = camRect.Body.Rotation; }
+            if (camRect.Body.Rotation >= -0.1f && camRect.Body.Rotation <= 0.1f) { Camera.Rotation = camRect.Body.Rotation; }
         }
 
         private void UpdateControls(GameTime gameTime)
@@ -344,10 +356,12 @@ namespace Silhouette.GameMechs
 
         private void doScriptedMove()
         {
+            charRect.Body.FixedRotation = true;
             if (actScriptedMove.Equals("climb") && isScriptedMoving)
             {
                 climb();
             }
+            charRect.Body.FixedRotation = false;
         }
 
         private void climb()
@@ -422,6 +436,7 @@ namespace Silhouette.GameMechs
         private void UpdateTexture(GameTime gameTime)
         {
             activeAnimation.Update(gameTime, position);
+            this.activeAnimation.rotation = charRect.Body.Rotation;
         }
 
         public Animation choseIdleAnimation()
