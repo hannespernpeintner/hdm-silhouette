@@ -11,7 +11,7 @@ using FarseerPhysics.Dynamics.Contacts;
 
 namespace Silhouette.GameMechs
 {
-    /* Deco containert eine Animation, ist jedoch dafür vorgesehen nur einmalig eine Position zu übergeben, die sich im Folgenden
+    /* AnimatedObject containert eine Animation, ist jedoch dafür vorgesehen nur einmalig eine Position zu übergeben, die sich im Folgenden
     auch nicht mehr ändert. Daher wird sie auch beim Konstruktor übergeben und nicht mehr in der Updatemethode. */
 
     public class AnimatedObject: DrawableLevelObject

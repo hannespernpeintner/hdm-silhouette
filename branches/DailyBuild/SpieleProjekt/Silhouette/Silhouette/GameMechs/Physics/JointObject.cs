@@ -18,7 +18,7 @@ using FarseerPhysics.Collision;
 
 namespace Silhouette.GameMechs.Physics
 {
-    public abstract class PhJoint : LevelObject
+    public abstract class JointObject : LevelObject
     {
         private InteractiveObject _Body1;
         [DisplayName("First Body"), Category("Joint Data")]
@@ -38,12 +38,12 @@ namespace Silhouette.GameMechs.Physics
         public override void Update(GameTime gameTime) { }
     }
 
-    public class PhRevoluteJoint : PhJoint
+    public class RevoluteJointObject : JointObject
     {
         RevoluteJoint joint;
         Vector2 anchor;
 
-        public PhRevoluteJoint(InteractiveObject b1, InteractiveObject b2, Vector2 anchor) 
+        public RevoluteJointObject(InteractiveObject b1, InteractiveObject b2, Vector2 anchor) 
         {
             this.Body1 = b1;
             this.Body2 = b2;
