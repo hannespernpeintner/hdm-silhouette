@@ -48,7 +48,7 @@ namespace Silhouette.GameMechs.Events
 
 
 
-        public override string getPrefix();
+      
 
         public override LevelObject clone()
         {
