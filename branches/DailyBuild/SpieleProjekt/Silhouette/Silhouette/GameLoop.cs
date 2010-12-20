@@ -44,14 +44,13 @@ namespace Silhouette
         public GameLoop()
         {
             graphics = new GraphicsDeviceManager(this);
-            //graphics.GraphicsProfile = GraphicsProfile.HiDef;
             Content.RootDirectory = "Content";
 
             displayFPS = new DisplayFPS(this);
             Components.Add(displayFPS);
 
             gameInstance = this;
-            //Voreinstellungen gemäß der Spezifikationen
+
             GameSettings.Initialise();
             GameSettings.ApplyChanges(ref graphics);    
         }
