@@ -25,22 +25,28 @@ using FarseerPhysics.Collision;
 using FarseerPhysics.Collision.Shapes;
 using FarseerPhysics.Dynamics.Contacts;
 
-/*
+
+
 namespace Silhouette.GameMechs.Events
 {
     [Serializable]
-    public class AudioEvent : Event
+    public class AudioModifyPlayback : AudioEvent
     {
-        // Julius: Spielt einfach bei Kollision alle in der List befindlichen AudioObjects
+        public enum Type {play, stop, pause }
+        public Type EventType { get; set; }
+        public Boolean looped { get; set; }
 
-        public AudioEvent(Rectangle rectangle)
+        public  AudioModifyPlayback(Rectangle rectangle, Type EventType, Boolean looped)
         {
             this.rectangle = rectangle;
             position = rectangle.Location.ToVector2();
             width = rectangle.Width;
             height = rectangle.Height;
-            list = new List<SoundObject>();
+            list = new List<LevelObject>();
             isActivated = true;
+            this.EventType = EventType;
+            this.looped = looped;
+            
         }
 
         public bool OnCollision(Fixture a, Fixture b, Contact contact)
@@ -49,7 +55,21 @@ namespace Silhouette.GameMechs.Events
             {
                 foreach (SoundObject so in this.list)
                 {
-                    so.Play();
+                   
+                    switch (EventType)
+                    {
+                        case (Type.play):
+                            so.looped = looped;
+                            so.Play();
+                                break;
+                        case (Type.pause):
+                                so.Pause = !so.Pause;
+                                break;
+                        case (Type.stop):
+                                so.Stop();
+                                break;
+
+                    }
                 }
                 isActivated = false;
                 return true;
@@ -60,35 +80,14 @@ namespace Silhouette.GameMechs.Events
             }
         }
 
-        public override void AddLevelObject(LevelObject lo) { }
-
-        public void addSoundObject(SoundObject so)
-        {
-            if (this.list != null)
-            {
-                if (!this.list.Contains(so))
-                    this.list.Add(so);
-            }
-        }
+        
 
         public override string getPrefix()
         {
-            return "AudioEvent_";
+            return "AudioModifyPlaybackEvent_";
         }
 
-        public override LevelObject clone()
-        {
-            AudioEvent result = (AudioEvent)this.MemberwiseClone();
-            result.mouseOn = false;
-            return result;
-        }
-
-        public override void ToFixture()
-        {
-            fixture = FixtureManager.CreateRectangle(width, height, position, BodyType.Static, 1);
-            fixture.OnCollision += this.OnCollision;
-            fixture.IsSensor = true;
-        }
+       
     }
 }
-*/
+
