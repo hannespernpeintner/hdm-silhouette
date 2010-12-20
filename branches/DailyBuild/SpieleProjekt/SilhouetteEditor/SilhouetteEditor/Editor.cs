@@ -105,6 +105,7 @@ namespace SilhouetteEditor
         public bool primitiveStarted;
         public bool eventStarted;
         public bool physicsStarted;
+        public bool originsVisible;
 
         List<Vector2> clickedPoints, initialPosition, initialScale;
         Vector2 MouseWorldPosition, GrabbedPoint;
@@ -181,6 +182,13 @@ namespace SilhouetteEditor
                     if (zoom <= 0.0f) zoom = 10;
                     MainForm.Default.ZoomStatus.Text = "Zoom: " + zoom.ToString() + "%";
                     Camera.Scale = zoom / 100.0f;
+                }
+            #endregion
+
+            #region EditorVisibles
+                if (kstate.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.F1) && oldkstate.IsKeyUp(Microsoft.Xna.Framework.Input.Keys.F1))
+                {
+                    originsVisible = !originsVisible;
                 }
             #endregion
 
@@ -279,7 +287,7 @@ namespace SilhouetteEditor
                     }
 
                     /* Sascha:
-                     * Durch drücken von ShiftLeft kann man alle momentan selektierten Objekte kopieren.
+                     * Durch drücken von Control + Alt kann man alle momentan selektierten Objekte kopieren.
                     */
 
                     if (kstate.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.LeftControl) && kstate.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.LeftAlt) && selectedLevelObjects.Count > 0)
@@ -596,13 +604,42 @@ namespace SilhouetteEditor
                         editorState = EditorState.IDLE;
                     }
 
-                    if (kstate.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.LeftControl) && mstate.RightButton == Microsoft.Xna.Framework.Input.ButtonState.Pressed)
-                    { 
-                        
-                    }
-                    if (kstate.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.LeftControl) && mstate.MiddleButton == Microsoft.Xna.Framework.Input.ButtonState.Pressed)
+                    /* Sascha:
+                     * UltraBrush-Scaling!
+                    */
+                    if (currentObject != null)
                     {
+                        if (kstate.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.Q))
+                        {
+                            Vector2 tempScale = currentObject.getScale();
+                            tempScale.X *= 1.1f;
+                            tempScale.Y *= 1.1f;
+                            currentObject.setScale(tempScale);
+                        }
+                        if (kstate.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.E))
+                        {
+                            Vector2 tempScale = currentObject.getScale();
+                            tempScale.X *= 0.9f;
+                            tempScale.Y *= 0.9f;
+                            currentObject.setScale(tempScale);
+                        }
 
+                        /* Sascha:
+                         * UltraBrush-Rotation!
+                        */
+
+                        if (kstate.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.Y))
+                        {
+                            float tempRotation = currentObject.getRotation();
+                            tempRotation += 0.1f;
+                            currentObject.setRotation(tempRotation);
+                        }
+                        if (kstate.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.X))
+                        {
+                            float tempRotation = currentObject.getRotation();
+                            tempRotation += -0.1f;
+                            currentObject.setRotation(tempRotation);
+                        }
                     }
                 }
             #endregion
@@ -729,7 +766,9 @@ namespace SilhouetteEditor
                     MainForm.Default.EditorStatus.Text = "Editorstatus: Moving";
                     MainForm.Default.GameView.Cursor = Cursors.NoMove2D;
 
-                    Camera.Position = GrabbedPoint;
+                    Vector2 newPosition = GrabbedPoint - MouseWorldPosition;
+
+                    Camera.Position += newPosition;
 
                     if (mstate.LeftButton == Microsoft.Xna.Framework.Input.ButtonState.Released)
                     {
@@ -1315,13 +1354,23 @@ namespace SilhouetteEditor
                         Primitives.Instance.drawBoxFilled(spriteBatch, selectionRectangle, Constants.ColorSelectionBox);
                     }
 
+                    if (level.layerList.Contains(level.getLayerByName("Player")))
+                    {
+                        if (l == level.getLayerByName("Player"))
+                        {
+                            Primitives.Instance.drawCircleFilled(spriteBatch, level.startPosition, 5, new Microsoft.Xna.Framework.Color(255, 0, 0));
+                        }
+                    }
+
+                    if (originsVisible)
+                    {
+                        Primitives.Instance.drawLine(spriteBatch, new Vector2(0, 0), new Vector2(50, 0), new Microsoft.Xna.Framework.Color(100, 0, 100), 3);
+                        Primitives.Instance.drawLine(spriteBatch, new Vector2(0, 0), new Vector2(0, 50), new Microsoft.Xna.Framework.Color(100, 0, 100), 3);
+                    }
+
                     spriteBatch.End();
                     Camera.Position = oldCameraPosition;
                 }
-
-                spriteBatch.Begin(SpriteSortMode.Deferred, null, null, null, null, null, Camera.matrix);
-                    Primitives.Instance.drawCircleFilled(spriteBatch, level.startPosition, 5, new Microsoft.Xna.Framework.Color(255, 0, 0));
-                spriteBatch.End();
             }
         }
 
