@@ -81,22 +81,22 @@ namespace Silhouette.GameMechs
         //Julius: Zustandsspeicher und Parameter für EQ
         Boolean _EQActivated = false;
 
-        float _EQBandwith;
-        float _EQCenter;
-        float _EQGain;
+        public float _EQBandwith{ get; set; }
+        public float _EQCenter { get; set; }
+        public float _EQGain { get; set; } 
 
         //Julius: Zustandsspeicher sammt Paramter für Reverb
         Boolean _ReverbActivated = false;
 
-        float _RevInGain;
-        float _RevfReverbMix;
-        float _RevfReverbTime;
-        float _RevfHighFreqRTRatio;
+        public float _RevInGain { get; set; }
+        public float _RevfReverbMix { get; set; }
+        public float _RevfReverbTime { get; set; }
+        public float _RevfHighFreqRTRatio { get; set; } 
 
         //Julius: Zustandsspeicher & Krempel für Fader
         Boolean _FaderActivated;
 
-        float _fFadeTime;
+        public float _fFadeTime { get; set; }
         float _fFadeStep;
         enum FadeType {FadeUp, FadeDown }
         FadeType _eFadeType; 
@@ -263,6 +263,8 @@ namespace Silhouette.GameMechs
                 _RevfReverbMix = fReverbMix;
                 _RevfReverbTime = fReverbTime;
                 _RevfHighFreqRTRatio = fHighFreqRTRatio;
+
+                
             }
             else
             {
