@@ -399,6 +399,26 @@ namespace SilhouetteEditor
                         MainForm.Default.UpdateTreeView();
                         startPositioning();
                     }
+
+                    /* Sascha:
+                     * Setzt die Startposition des Players an die Mausposition.
+                    */
+
+                    if (kstate.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.P) && oldkstate.IsKeyUp(Microsoft.Xna.Framework.Input.Keys.P))
+                    {
+                        if (level.layerList.Contains(level.getLayerByName("Player")))
+                        {
+                            selectLayer(level.getLayerByName("Player"));
+                            level.startPosition = MouseWorldPosition;
+                        }
+                        else
+                        {
+                            DialogResult result = MessageBox.Show("You must create a layer with the name \"Player\" to set the start position of player. Do you want to create one?", "Error", MessageBoxButtons.YesNo, System.Windows.Forms.MessageBoxIcon.Error);
+
+                            if (result == DialogResult.Yes)
+                                new AddLayer().ShowDialog();
+                        }
+                    }
                 }
             #endregion
 
@@ -574,6 +594,15 @@ namespace SilhouetteEditor
                     if (mstate.RightButton == Microsoft.Xna.Framework.Input.ButtonState.Pressed && oldmstate.LeftButton == Microsoft.Xna.Framework.Input.ButtonState.Released)
                     {
                         editorState = EditorState.IDLE;
+                    }
+
+                    if (kstate.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.LeftControl) && mstate.RightButton == Microsoft.Xna.Framework.Input.ButtonState.Pressed)
+                    { 
+                        
+                    }
+                    if (kstate.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.LeftControl) && mstate.MiddleButton == Microsoft.Xna.Framework.Input.ButtonState.Pressed)
+                    {
+
                     }
                 }
             #endregion
@@ -892,6 +921,8 @@ namespace SilhouetteEditor
                 TextureObject to = new TextureObject(temp.fullPath);
                 to.texture = temp.texture;
                 to.position = MouseWorldPosition;
+                to.rotation = temp.rotation;
+                to.scale = temp.scale;
                 to.name = to.getPrefix() + selectedLayer.getNextObjectNumber();
                 to.layer = selectedLayer;
                 to.loadContentInEditor(EditorLoop.EditorLoopInstance.GraphicsDevice);
@@ -905,6 +936,8 @@ namespace SilhouetteEditor
                 InteractiveObject io = new InteractiveObject(temp.fullPath);
                 io.texture = temp.texture;
                 io.position = MouseWorldPosition;
+                io.rotation = temp.rotation;
+                io.scale = temp.scale;
                 io.name = io.getPrefix() + selectedLayer.getNextObjectNumber();
                 io.layer = selectedLayer;
                 io.loadContentInEditor(EditorLoop.EditorLoopInstance.GraphicsDevice);
@@ -1171,7 +1204,7 @@ namespace SilhouetteEditor
                 {
                     Vector2 oldCameraPosition = Camera.Position;
                     Camera.Position *= l.ScrollSpeed;
-                    spriteBatch.Begin(SpriteSortMode.Deferred, null, null, null, null, null, Camera.matrix);
+                    spriteBatch.Begin(SpriteSortMode.Deferred, null, null, null, null, l.getShaderByType(l.shaderType), Camera.matrix);
                     foreach (LevelObject lo in l.loList)
                     {
                         if (lo is RectangleCollisionObject)
@@ -1207,9 +1240,9 @@ namespace SilhouetteEditor
                                     Primitives.Instance.drawPath(spriteBatch, p.WorldPoints, color, p.lineWidth);
                             }
                         }
-                        if (lo is PhysicEvent)
+                        if (lo is Event)
                         {
-                            PhysicEvent e = (PhysicEvent)lo;
+                            Event e = (Event)lo;
                             if (e.isVisible)
                             {
                                 Microsoft.Xna.Framework.Color color = Constants.ColorEvents;
@@ -1270,20 +1303,25 @@ namespace SilhouetteEditor
                     if (l == selectedLayer && editorState == EditorState.CREATE_TEXTURES)
                     {
                         TextureObject to = (TextureObject)currentObject;
-                        spriteBatch.Draw(to.texture, new Vector2(MouseWorldPosition.X, MouseWorldPosition.Y), null, new Microsoft.Xna.Framework.Color(1f, 1f, 1f, 7f), 0, new Vector2(to.texture.Width / 2, to.texture.Height / 2), 1, SpriteEffects.None, 0);
+                        spriteBatch.Draw(to.texture, new Vector2(MouseWorldPosition.X, MouseWorldPosition.Y), null, new Microsoft.Xna.Framework.Color(1f, 1f, 1f, 7f), to.rotation, new Vector2(to.texture.Width / 2, to.texture.Height / 2), to.scale, SpriteEffects.None, 0);
                     }
                     if (l == selectedLayer && editorState == EditorState.CREATE_INTERACTIVE)
                     {
                         InteractiveObject io = (InteractiveObject)currentObject;
-                        spriteBatch.Draw(io.texture, new Vector2(MouseWorldPosition.X, MouseWorldPosition.Y), null, new Microsoft.Xna.Framework.Color(1f, 1f, 1f, 7f), 0, new Vector2(io.texture.Width / 2, io.texture.Height / 2), 1, SpriteEffects.None, 0);
+                        spriteBatch.Draw(io.texture, new Vector2(MouseWorldPosition.X, MouseWorldPosition.Y), null, new Microsoft.Xna.Framework.Color(1f, 1f, 1f, 7f), io.rotation, new Vector2(io.texture.Width / 2, io.texture.Height / 2), io.scale, SpriteEffects.None, 0);
                     }
                     if (l == selectedLayer && editorState == EditorState.SELECTING)
                     {
                         Primitives.Instance.drawBoxFilled(spriteBatch, selectionRectangle, Constants.ColorSelectionBox);
                     }
+
                     spriteBatch.End();
                     Camera.Position = oldCameraPosition;
                 }
+
+                spriteBatch.Begin(SpriteSortMode.Deferred, null, null, null, null, null, Camera.matrix);
+                    Primitives.Instance.drawCircleFilled(spriteBatch, level.startPosition, 5, new Microsoft.Xna.Framework.Color(255, 0, 0));
+                spriteBatch.End();
             }
         }
 
