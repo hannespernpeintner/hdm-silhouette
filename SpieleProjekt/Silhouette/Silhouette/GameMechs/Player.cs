@@ -23,7 +23,13 @@ namespace Silhouette.GameMechs
 {
     public class Player : DrawableLevelObject
     {
-
+        public float oldRotation;           // alte und aktuelle Rotationswerte des charRects. Wird benötigt für die Texturrotation
+        public float oldRotation1;
+        public float oldRotation2;
+        public float oldRotation3;
+        public float tempRotation;
+        Contact lastNewContact;             // Hier wird jeder neue Contact und die Fixture dazu gespeichert
+        Fixture fixtureBFromContact;
         public Vector2 centerPosition;      // Hannes: Rectangles für Kollisionserkennung. Muss noch um Kollisionsgruppe erweitert werden.
         public Vector2 camPosition;
         public Fixture charRect;
@@ -33,7 +39,7 @@ namespace Silhouette.GameMechs
         public RopeJoint joint1;
         public RopeJoint joint2;
         public RopeJoint joint3;
-        public AngleJoint joint4;
+        public AngleJoint joint4;           // Joint, der die Camera nicht zu weit rotieren lässt
 
         public KeyboardState oldState;
         public Vector2 oldPosition;
@@ -137,6 +143,11 @@ namespace Silhouette.GameMechs
             isSuperMoving = false;
             canClimb = false;
             maxClimbHeight = 825;
+            oldRotation = 0.0f;
+            oldRotation1 = 0.0f;
+            oldRotation2 = 0.0f;
+            oldRotation3 = 0.0f;
+            tempRotation = 0.0f;
 
             facing = 1;
         }
@@ -173,21 +184,21 @@ namespace Silhouette.GameMechs
             activeAnimation.start();
             nextAnimation = choseIdleAnimation();
 
-            charRect = FixtureManager.CreateRectangle(200, 160, position, BodyType.Dynamic, 1);
-            charRect.Body.FixedRotation = false;
-            charRect.Friction = 5;
-
-            //charRect = FixtureManager.CreateCircle(75, position, BodyType.Dynamic, 1);
+            //charRect = FixtureManager.CreateRectangle(200, 160, position, BodyType.Dynamic, 5);
             //charRect.Body.FixedRotation = false;
-            //charRect.Friction = 5;
+            //charRect.Friction = 0;
 
-            sRect = FixtureManager.CreateRectangle(100, 80, new Vector2(position.X, position.Y + 65), BodyType.Dynamic, 1);
+            charRect = FixtureManager.CreateCircle(80, position, BodyType.Dynamic, 3);
+            charRect.Body.FixedRotation = true;
+            charRect.Friction = 1f;
+
+            sRect = FixtureManager.CreateRectangle(100, 10, new Vector2(position.X, position.Y + 120), BodyType.Dynamic, 1);
             sRect.Body.FixedRotation = true;
             sRect.IsSensor = true;
 
             camRect = FixtureManager.CreateRectangle(100, 100, charRect.Body.Position, BodyType.Dynamic, 0.1f);
             camRect.Body.IgnoreGravity = true;
-            camRect.Body.FixedRotation = false;
+            camRect.Body.FixedRotation = true;
             camRect.IsSensor = true;
 
             sRect.IgnoreCollisionWith(charRect);
@@ -197,19 +208,21 @@ namespace Silhouette.GameMechs
             joint1 = new RopeJoint(charRect.Body, camRect.Body, new Vector2(-100 / Level.PixelPerMeter, -80 / Level.PixelPerMeter) * 2, new Vector2(-50 / Level.PixelPerMeter, -50 / Level.PixelPerMeter));
             joint2 = new RopeJoint(charRect.Body, camRect.Body, new Vector2(100 / Level.PixelPerMeter, -80 / Level.PixelPerMeter) * 2, new Vector2(50 / Level.PixelPerMeter, -50 / Level.PixelPerMeter));
             joint3 = new RopeJoint(charRect.Body, camRect.Body, new Vector2(-100 / Level.PixelPerMeter, 80 / Level.PixelPerMeter) * 2, new Vector2(-50 / Level.PixelPerMeter, 50 / Level.PixelPerMeter));
-            joint4 = JointFactory.CreateAngleJoint(Level.Physics, charRect.Body, sRect.Body);
-            joint4.Softness = 0.999f;
+            //joint4 = JointFactory.CreateAngleJoint(Level.Physics, charRect.Body, sRect.Body);
+            //joint4.Softness = 0.999f;
+            //joint4.Softness = 0.99f;
 
-            joint0.MaxLength = 0.000000125f;
-            joint1.MaxLength = 0.000000125f;
-            joint2.MaxLength = 0.000000125f;
-            joint3.MaxLength = 0.000000125f;
+            joint0.MaxLength = 2.1f;
+            joint1.MaxLength = 2.1f;
+            joint2.MaxLength = 2.1f;
+            joint3.MaxLength = 2.1f;
 
 
             Level.Physics.AddJoint(joint0);
             Level.Physics.AddJoint(joint1);
             Level.Physics.AddJoint(joint2);
             Level.Physics.AddJoint(joint3);
+            //Level.Physics.AddJoint(joint4);
 
             charRect.OnCollision += this.OnCollision;
             sRect.OnCollision += this.sOnCollision;
@@ -241,7 +254,7 @@ namespace Silhouette.GameMechs
         public void UpdatePositions()
         {
             centerPosition = new Vector2(charRect.Body.Position.X * Level.PixelPerMeter, charRect.Body.Position.Y * Level.PixelPerMeter);
-            position = new Vector2(centerPosition.X - 250, centerPosition.Y - 250);
+            position = new Vector2(centerPosition.X, centerPosition.Y);
             sRect.Body.Position = charRect.Body.Position + new Vector2(0, 120 / Level.PixelPerMeter);
             camPosition = new Vector2(camRect.Body.Position.X * Level.PixelPerMeter, camRect.Body.Position.Y * Level.PixelPerMeter);
         }
@@ -273,7 +286,7 @@ namespace Silhouette.GameMechs
 
                     isIdle = false;
                     isRunning = true;
-                    charRect.Body.ApplyForce(new Vector2(-50, 0));
+                    charRect.Body.ApplyForce(new Vector2(-80, 0));
                 }
             }
 
@@ -295,7 +308,7 @@ namespace Silhouette.GameMechs
 
                     isIdle = false;
                     isRunning = true;
-                    charRect.Body.ApplyForce(new Vector2(50, 0));
+                    charRect.Body.ApplyForce(new Vector2(80, 0));
                 }
             }
 
@@ -315,7 +328,7 @@ namespace Silhouette.GameMechs
                     isIdle = false;
                     isFalling = false;
                     isRunning = false;
-                    charRect.Body.ApplyForce(new Vector2(-750, -850));
+                    charRect.Body.ApplyForce(new Vector2(-750, -1000));
                 }
                 else if (facing == 1)
                 {
@@ -326,7 +339,7 @@ namespace Silhouette.GameMechs
                     isIdle = false;
                     isFalling = false;
                     isRunning = false;
-                    charRect.Body.ApplyForce(new Vector2(750, -850));
+                    charRect.Body.ApplyForce(new Vector2(750, -1000));
                 }
             }
 
@@ -356,12 +369,10 @@ namespace Silhouette.GameMechs
 
         private void doScriptedMove()
         {
-            charRect.Body.FixedRotation = true;
             if (actScriptedMove.Equals("climb") && isScriptedMoving)
             {
                 climb();
             }
-            charRect.Body.FixedRotation = false;
         }
 
         private void climb()
@@ -424,9 +435,9 @@ namespace Silhouette.GameMechs
                 charRect.Body.BodyType = BodyType.Dynamic;
                 charRect.Body.IgnoreGravity = false;
                 isScriptedMoving = false;
-                isIdle = true;
+                isIdle = false;
                 isRunning = false;
-                isFalling = false;
+                isFalling = true;
                 isJumping = false;
                 isDying = false;
             }
@@ -435,8 +446,9 @@ namespace Silhouette.GameMechs
 
         private void UpdateTexture(GameTime gameTime)
         {
+            //if (lastNewContact != null) { calcRotation(fixtureBFromContact, lastNewContact); }
+            //activeAnimation.rotation = tempRotation - tempRotation/2;
             activeAnimation.Update(gameTime, position);
-            this.activeAnimation.rotation = charRect.Body.Rotation;
         }
 
         public Animation choseIdleAnimation()
@@ -564,11 +576,28 @@ namespace Silhouette.GameMechs
                 activeAnimation.start();
                 nextAnimation = null;
             }
+
+            if ((activeAnimation == falling_left || activeAnimation == falling_right) && isIdle)
+            {
+                activeAnimation = choseIdleAnimation();
+                activeAnimation.activeFrameNumber = 0;
+                activeAnimation.start();
+                nextAnimation = null;
+            }
         }
 
         public void ObserveMovement()
         {
             movement = charRect.Body.GetLinearVelocityFromWorldPoint(Vector2.Zero);
+
+            if (Math.Max(oldPosition.X, charRect.Body.Position.X) - Math.Min(oldPosition.X, charRect.Body.Position.X) < 0.001 &&
+                Math.Max(oldPosition.Y, charRect.Body.Position.Y) - Math.Min(oldPosition.Y, charRect.Body.Position.Y) < 0.001)
+            {
+                isIdle = true;
+                isFalling = false;
+                isRunning = false;
+                isJumping = false;
+            }
 
             if (movement.Y + Level.Physics.Gravity.Y < 0)
             {
@@ -578,7 +607,7 @@ namespace Silhouette.GameMechs
                 isJumping = true;
             }
 
-            if (isJumping && oldPosition.Y < charRect.Body.Position.Y)
+            else if (isJumping && oldPosition.Y < charRect.Body.Position.Y)
             {
                 isIdle = false;
                 isFalling = true;
@@ -586,13 +615,14 @@ namespace Silhouette.GameMechs
                 isJumping = false;
             }
 
-            if (movement.Y > Level.Physics.Gravity.Y)
+            else if (movement.Y > Level.Physics.Gravity.Y + 0.1f)
             {
                 isIdle = false;
                 isFalling = true;
                 isRunning = false;
                 isJumping = false;
             }
+
 
             if (facing == 0)
             {
@@ -631,11 +661,42 @@ namespace Silhouette.GameMechs
             }
         }
 
+        public void calcRotation(Fixture fixB, Contact contact)
+        {
+            Vector2 temp;
+            temp.X = (contact.Manifold.LocalPoint.X - charRect.Body.Position.X) * Level.PixelPerMeter;
+            temp.Y = (contact.Manifold.LocalPoint.Y - charRect.Body.Position.Y) * Level.PixelPerMeter;
+            temp.Normalize();
+            Vector2 temp1 = new Vector2(-2, 1);
+            temp1.Normalize();
+            float temp2 = Vector2.Dot(temp, temp1);
+
+            oldRotation = oldRotation1;
+            oldRotation1 = oldRotation2;
+            oldRotation2 = oldRotation3;
+            oldRotation3 = tempRotation;
+            tempRotation = (temp2 / (temp.Length() * temp1.Length()));
+        }
+
         public bool OnCollision(Fixture fixtureA, Fixture fixtureB, Contact contact)
         {
+            /*this.lastNewContact = contact;
+            this.fixtureBFromContact = fixtureB;
+
+            Vector2 temp;
+            temp.X = (contact.Manifold.LocalPoint.X - charRect.Body.Position.X) * Level.PixelPerMeter;
+            temp.Y = (contact.Manifold.LocalPoint.Y - charRect.Body.Position.Y) * Level.PixelPerMeter;
+            temp.Normalize();
+            Vector2 temp1 = new Vector2(-2, 1);
+            temp1.Normalize();
+            float temp2 = Vector2.Dot(temp, temp1);
+            tempRotation = temp2;
+            activeAnimation.rotation = temp2;*/
+
             if (isFalling)
             {
                 isFalling = false;
+                isJumping = false;
                 isIdle = true;
                 if (facing == 0)
                 {
@@ -659,6 +720,7 @@ namespace Silhouette.GameMechs
             {
                 isFalling = false;
                 isIdle = true;
+                isJumping = false;
                 if (facing == 0)
                 {
                     activeAnimation = landing_left;
@@ -678,7 +740,8 @@ namespace Silhouette.GameMechs
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            activeAnimation.Draw(spriteBatch);
+            //activeAnimation.Draw(spriteBatch);
+            spriteBatch.Draw(activeAnimation.activeTexture, position, null, Color.White, activeAnimation.rotation, new Vector2(250, 250), 1, SpriteEffects.None, 1);
             //Das auskommentierte hier kann als Debugview dienen.
             /*spriteBatch.DrawString(FontManager.Arial, "Standing: " + isIdle.ToString(), new Vector2(300, 20), Color.Black);
             spriteBatch.DrawString(FontManager.Arial, "Running: " + isRunning.ToString(), new Vector2(300, 45), Color.Black);
@@ -689,7 +752,8 @@ namespace Silhouette.GameMechs
             spriteBatch.DrawString(FontManager.Arial, actClimbHeight.ToString(), new Vector2(300, 180), Color.Black);
             spriteBatch.DrawString(FontManager.Arial, "X: " + movement.X.ToString() + " Y: " + movement.Y.ToString(), new Vector2(300, 205), Color.Black);
             spriteBatch.DrawString(FontManager.Arial, "CamRectRotation: " + camRect.Body.Rotation.ToString(), new Vector2(300, 230), Color.Black);
-            spriteBatch.DrawString(FontManager.Arial, "CamRotation: " + Camera.Rotation.ToString(), new Vector2(300, 255), Color.Black);*/
+            spriteBatch.DrawString(FontManager.Arial, "CamRotation: " + Camera.Rotation.ToString(), new Vector2(300, 255), Color.Black);
+            spriteBatch.DrawString(FontManager.Arial, "tempRotation: " + tempRotation.ToString(), new Vector2(300, 280), Color.Black);*/
         }
     }
 }
