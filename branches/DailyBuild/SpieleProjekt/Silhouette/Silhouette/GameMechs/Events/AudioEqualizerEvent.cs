@@ -36,10 +36,14 @@ namespace Silhouette.GameMechs.Events
         public Type eqType { get { return _eqType; } set { _eqType = value; } }
         private Type _eqType;
 
-        public float fCenter { get; set; }
+        public float fCenter { get { return _fCenter; } set { _fCenter = value; } }
         private float _fCenter;
-        public float fBandwidth { get; set; }
-        public float fGain {get; set;}
+
+        public float fBandwidth { get { return _fBandwidth; } set { _fBandwidth = value; } }
+        private float _fBandwidth;
+
+        public float fGain { get { return _fGain; } set { _fGain = value; } }
+        private float _fGain;
 
 
         public AudioEqualizerEvent(Rectangle rectangle )
@@ -51,9 +55,9 @@ namespace Silhouette.GameMechs.Events
             list = new List<LevelObject>();
             isActivated = true;
 
-           // this.fCenter = 0.0f;
-            this.fBandwidth = 0.0f;
-            this.fGain = 0.0f;
+            _fCenter = 0.0f;
+            _fBandwidth = 0.0f;
+            _fGain = 0.0f;
 
             
 
@@ -64,7 +68,7 @@ namespace Silhouette.GameMechs.Events
         public override void AddLevelObject(LevelObject lo)
         {
 
-            if (this.list != null)
+            if ((this.list != null) && (lo is SoundObject))
             {
                 if (!this.list.Contains(lo))
                     this.list.Add(lo);
@@ -80,10 +84,10 @@ namespace Silhouette.GameMechs.Events
                     switch (eqType)
                     {
                         case (Type.enable):
-                            so.EnableEqualizer(fCenter, fBandwidth, fGain);
+                            so.EnableEqualizer(_fCenter, _fBandwidth, _fGain);
                             break;
                         case (Type.modify):
-                            so.EnableEqualizer(fCenter, fBandwidth, fGain);
+                            so.EnableEqualizer(_fCenter, _fBandwidth, _fGain);
                             break;
                         case (Type.disable):
                             so.DisableEqualizer();
