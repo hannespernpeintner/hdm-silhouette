@@ -30,7 +30,7 @@ using FarseerPhysics.Dynamics.Contacts;
 namespace Silhouette.GameMechs.Events
 {
     [Serializable]
-    public class AudioModifyPlayback : AudioEvent
+    public class AudioModifyPlayback : Event
     {
         public enum Type {play, stop, pause }
         public Type EventType { get; set; }
@@ -87,7 +87,17 @@ namespace Silhouette.GameMechs.Events
             return "AudioModifyPlaybackEvent_";
         }
 
-       
+
+
+        public override void ToFixture()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void AddLevelObject(LevelObject lo)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
 
