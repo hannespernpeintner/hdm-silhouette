@@ -32,6 +32,7 @@ using FarseerPhysics.Common;
 using FarseerPhysics.Dynamics.Contacts;
 using Microsoft.Xna.Framework;
 
+
 namespace FarseerPhysics.Dynamics
 {
     [Flags]
@@ -97,6 +98,12 @@ namespace FarseerPhysics.Dynamics
     public class Fixture
     {
         private static int _fixtureIdCounter;
+
+        public Boolean isClimbable { get { return _isClimbable; } set { _isClimbable = value; } }
+        private Boolean _isClimbable;
+
+        public Boolean isHalfTransparent { get { return _isHalfTransparent; } set { _isHalfTransparent = value; } }
+        private Boolean _isHalfTransparent;
 
         /// <summary>
         /// Fires when two shapes collide and a contact is created between them.
