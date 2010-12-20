@@ -74,6 +74,7 @@ namespace Silhouette.GameMechs
 
         //Julius: Zustandsspeicher, falls sound noch nicht erzeugt wurde
         float _volume;
+        [NonSerialized]
          IrrKlang.ISound Sound;
         
 
