@@ -17,7 +17,9 @@ using Microsoft.Xna.Framework.Media;
 
 namespace Silhouette.Engine.Manager
 {
+    [Serializable]
    static class VideoManager
+
     {
         //Julius: Deklarieren des Delegates für Frame Update
         public delegate void UpdateFrameEventHandler(GameTime gt);

@@ -30,7 +30,7 @@ using FarseerPhysics.Dynamics.Contacts;
 namespace Silhouette.GameMechs.Events
 {
     [Serializable]
-    public class AudioFadeEvent : AudioEvent
+    public class AudioFadeEvent : Event
     {
         public enum Type {FadeUp, FadeDown}
         public  Type fadeType { get; set; }
@@ -39,7 +39,7 @@ namespace Silhouette.GameMechs.Events
         public float gainOrLoss { get; set; }
         
 
-        public AudioFadeEvent(Rectangle rectangle, Type fadeType, float fadeTime)
+        public AudioFadeEvent(Rectangle rectangle)
         {
             this.rectangle = rectangle;
             position = rectangle.Location.ToVector2();
@@ -48,29 +48,15 @@ namespace Silhouette.GameMechs.Events
             list = new List<LevelObject>();
             isActivated = true;
 
-            this.fadeType = fadeType;
-            this.fadeTime = fadeTime;
+            this.fadeType = 0;
+            this.fadeTime = 0;
             gainOrLoss = 0;
             
 
 
         }
 
-        public AudioFadeEvent(Rectangle rectangle, Type fadeType, float fadeTime, float gainOrLoss)
-        {
-            this.rectangle = rectangle;
-            position = rectangle.Location.ToVector2();
-            width = rectangle.Width;
-            height = rectangle.Height;
-            list = new List<LevelObject>();
-            isActivated = true;
-
-            this.fadeType = fadeType;
-            this.fadeTime = fadeTime;
-            this.gainOrLoss = gainOrLoss;
-
-
-        }
+       
 
         public bool OnCollision(Fixture a, Fixture b, Contact contact)
         {
@@ -112,13 +98,39 @@ namespace Silhouette.GameMechs.Events
         }
 
 
+        public void AddLevelObject(SoundObject so)
+        {
+
+            if (this.list != null)
+            {
+                if (!this.list.Contains(so))
+                    this.list.Add(so);
+            }
+        }
 
         public override string getPrefix()
         {
             return "AudioFadeEvent_";
         }
 
+        public override LevelObject clone()
+        {
+            AudioModifyPlayback result = (AudioModifyPlayback)this.MemberwiseClone();
+            result.mouseOn = false;
+            return result;
+        }
 
+        public override void ToFixture()
+        {
+            fixture = FixtureManager.CreateRectangle(width, height, position, BodyType.Static, 1);
+            fixture.OnCollision += this.OnCollision;
+            fixture.IsSensor = true;
+        }
+
+        public override void AddLevelObject(LevelObject lo)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
 

@@ -30,17 +30,19 @@ using FarseerPhysics.Dynamics.Contacts;
 namespace Silhouette.GameMechs.Events
 {
     [Serializable]
-    public class AudioEqualizerEvent : AudioEvent
+    public class AudioEqualizerEvent : Event
     {
         public enum Type { enable, disable, modify }
-        public Type eqType { get; set; }
+        public Type eqType { get { return _eqType; } set { _eqType = value; } }
+        private Type _eqType;
 
         public float fCenter { get; set; }
+        private float _fCenter;
         public float fBandwidth { get; set; }
         public float fGain {get; set;}
 
 
-        public AudioEqualizerEvent(Rectangle rectangle, Type eqType, float fCenter, float fBandwidth, float fGain )
+        public AudioEqualizerEvent(Rectangle rectangle )
         {
             this.rectangle = rectangle;
             position = rectangle.Location.ToVector2();
@@ -49,16 +51,25 @@ namespace Silhouette.GameMechs.Events
             list = new List<LevelObject>();
             isActivated = true;
 
-            this.fCenter = fCenter;
-            this.fBandwidth = fBandwidth;
-            this.fGain = fGain;
+           // this.fCenter = 0.0f;
+            this.fBandwidth = 0.0f;
+            this.fGain = 0.0f;
 
-        
+            
 
 
         }
 
-       
+
+        public override void AddLevelObject(LevelObject lo)
+        {
+
+            if (this.list != null)
+            {
+                if (!this.list.Contains(lo))
+                    this.list.Add(lo);
+            }
+        }
 
         public bool OnCollision(Fixture a, Fixture b, Contact contact)
         {
@@ -96,6 +107,19 @@ namespace Silhouette.GameMechs.Events
             return "AudioEqualizerEvent_";
         }
 
+        public override LevelObject clone()
+        {
+            AudioModifyPlayback result = (AudioModifyPlayback)this.MemberwiseClone();
+            result.mouseOn = false;
+            return result;
+        }
+
+        public override void ToFixture()
+        {
+            fixture = FixtureManager.CreateRectangle(width, height, position, BodyType.Static, 1);
+            fixture.OnCollision += this.OnCollision;
+            fixture.IsSensor = true;
+        }
 
     }
 }
