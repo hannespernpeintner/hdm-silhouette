@@ -180,8 +180,7 @@ namespace SilhouetteEditor.Forms
             UpdateEventView();
             UpdateObjectView();
         }
-
-        private void OKButton_Click(object sender, EventArgs e)
+        private void button1_Click(object sender, EventArgs e)
         {
             this.Hide();
         }
