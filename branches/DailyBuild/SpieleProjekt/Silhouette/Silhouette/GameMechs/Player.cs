@@ -23,17 +23,12 @@ namespace Silhouette.GameMechs
 {
     public class Player : DrawableLevelObject
     {
-        public float oldRotation;           // alte und aktuelle Rotationswerte des charRects. Wird benötigt für die Texturrotation
-        public float oldRotation1;
-        public float oldRotation2;
-        public float oldRotation3;
         public float tempRotation;
-        Contact lastNewContact;             // Hier wird jeder neue Contact und die Fixture dazu gespeichert
-        Fixture fixtureBFromContact;
         public Vector2 centerPosition;      // Hannes: Rectangles für Kollisionserkennung. Muss noch um Kollisionsgruppe erweitert werden.
         public Vector2 camPosition;
         public Fixture charRect;
         public Fixture sRect;
+        public Fixture nRect;
         public Fixture camRect;             // Camrect ist n Rectangle, dessen Bewegung auf die Camera übertragen wird.
         public RopeJoint joint0;            // Joints nötig, um die Cam am Player zu fixieren
         public RopeJoint joint1;
@@ -101,6 +96,7 @@ namespace Silhouette.GameMechs
             // Aus dem Level geht die initiale StartPos des Chars hervor. Aktuell Testposition eingetragen.
             // position = Level.LevelSetting.CharacterStartPosition;
             // position = Vector2.Zero;
+            // position = new Vector2(200, 200);
 
 
             idle_left = new Animation();
@@ -143,10 +139,6 @@ namespace Silhouette.GameMechs
             isSuperMoving = false;
             canClimb = false;
             maxClimbHeight = 825;
-            oldRotation = 0.0f;
-            oldRotation1 = 0.0f;
-            oldRotation2 = 0.0f;
-            oldRotation3 = 0.0f;
             tempRotation = 0.0f;
 
             facing = 1;
@@ -184,13 +176,13 @@ namespace Silhouette.GameMechs
             activeAnimation.start();
             nextAnimation = choseIdleAnimation();
 
-            //charRect = FixtureManager.CreateRectangle(200, 160, position, BodyType.Dynamic, 5);
-            //charRect.Body.FixedRotation = false;
-            //charRect.Friction = 0;
-
-            charRect = FixtureManager.CreateCircle(80, position, BodyType.Dynamic, 3);
+            charRect = FixtureManager.CreateCircle(80, position, BodyType.Dynamic, 1);
             charRect.Body.FixedRotation = true;
-            charRect.Friction = 1f;
+            charRect.Friction = 5;
+
+            nRect = FixtureManager.CreateRectangle(140, 10, new Vector2(position.X, position.Y - 85), BodyType.Dynamic, 1);
+            nRect.Body.FixedRotation = true;
+            nRect.IsSensor = true;
 
             sRect = FixtureManager.CreateRectangle(100, 10, new Vector2(position.X, position.Y + 120), BodyType.Dynamic, 1);
             sRect.Body.FixedRotation = true;
@@ -202,7 +194,11 @@ namespace Silhouette.GameMechs
             camRect.IsSensor = true;
 
             sRect.IgnoreCollisionWith(charRect);
+            nRect.IgnoreCollisionWith(charRect);
+            nRect.IgnoreCollisionWith(camRect);
+            nRect.IgnoreCollisionWith(sRect);
             charRect.IgnoreCollisionWith(sRect);
+            charRect.IgnoreCollisionWith(nRect);
 
             joint0 = new RopeJoint(charRect.Body, camRect.Body, new Vector2(100 / Level.PixelPerMeter, 80 / Level.PixelPerMeter) * 2, new Vector2(50 / Level.PixelPerMeter, 50 / Level.PixelPerMeter));
             joint1 = new RopeJoint(charRect.Body, camRect.Body, new Vector2(-100 / Level.PixelPerMeter, -80 / Level.PixelPerMeter) * 2, new Vector2(-50 / Level.PixelPerMeter, -50 / Level.PixelPerMeter));
@@ -225,6 +221,8 @@ namespace Silhouette.GameMechs
             //Level.Physics.AddJoint(joint4);
 
             charRect.OnCollision += this.OnCollision;
+            charRect.OnSeparation += this.OnSeperation;
+            nRect.OnCollision += this.nOnCollision;
             sRect.OnCollision += this.sOnCollision;
         }
 
@@ -256,6 +254,7 @@ namespace Silhouette.GameMechs
             centerPosition = new Vector2(charRect.Body.Position.X * Level.PixelPerMeter, charRect.Body.Position.Y * Level.PixelPerMeter);
             position = new Vector2(centerPosition.X, centerPosition.Y);
             sRect.Body.Position = charRect.Body.Position + new Vector2(0, 120 / Level.PixelPerMeter);
+            nRect.Body.Position = charRect.Body.Position + new Vector2(0, -85 / Level.PixelPerMeter);
             camPosition = new Vector2(camRect.Body.Position.X * Level.PixelPerMeter, camRect.Body.Position.Y * Level.PixelPerMeter);
         }
 
@@ -312,7 +311,7 @@ namespace Silhouette.GameMechs
                 }
             }
 
-            if (Keyboard.GetState().IsKeyDown(Keys.Up) && !isScriptedMoving)
+            if (Keyboard.GetState().IsKeyDown(Keys.Up) && !isScriptedMoving && canClimb)
             {
                 climb();
             }
@@ -328,7 +327,7 @@ namespace Silhouette.GameMechs
                     isIdle = false;
                     isFalling = false;
                     isRunning = false;
-                    charRect.Body.ApplyForce(new Vector2(-750, -1000));
+                    charRect.Body.ApplyForce(new Vector2(-300, -800));
                 }
                 else if (facing == 1)
                 {
@@ -339,7 +338,7 @@ namespace Silhouette.GameMechs
                     isIdle = false;
                     isFalling = false;
                     isRunning = false;
-                    charRect.Body.ApplyForce(new Vector2(750, -1000));
+                    charRect.Body.ApplyForce(new Vector2(300, -800));
                 }
             }
 
@@ -671,10 +670,6 @@ namespace Silhouette.GameMechs
             temp1.Normalize();
             float temp2 = Vector2.Dot(temp, temp1);
 
-            oldRotation = oldRotation1;
-            oldRotation1 = oldRotation2;
-            oldRotation2 = oldRotation3;
-            oldRotation3 = tempRotation;
             tempRotation = (temp2 / (temp.Length() * temp1.Length()));
         }
 
@@ -711,8 +706,33 @@ namespace Silhouette.GameMechs
                     activeAnimation.start();
                 }
             }
+
+            if (fixtureB.isClimbable)
+            {
+                this.canClimb = true;
+            }
+
             return true;
         }
+
+        public void OnSeperation(Fixture fixtureA, Fixture fixtureB)
+        {
+            if (canClimb)
+            {
+                canClimb = false;
+            }
+        }
+
+        public bool nOnCollision(Fixture fixtureA, Fixture fixtureB, Contact contact)
+        {
+            if (fixtureB.isHalfTransparent)
+            {
+                charRect.IsSensor = true;
+            }
+            return true;
+
+        }
+
 
         public bool sOnCollision(Fixture fixtureA, Fixture fixtureB, Contact contact)
         {
@@ -733,6 +753,11 @@ namespace Silhouette.GameMechs
                     activeAnimation.activeFrameNumber = 0;
                     activeAnimation.start();
                 }
+            }
+
+            if (charRect.IsSensor == true)
+            {
+                charRect.IsSensor = false;
             }
 
             return true;
