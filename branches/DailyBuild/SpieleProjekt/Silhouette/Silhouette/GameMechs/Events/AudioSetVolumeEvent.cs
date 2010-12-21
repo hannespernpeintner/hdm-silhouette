@@ -26,29 +26,71 @@ using FarseerPhysics.Collision.Shapes;
 using FarseerPhysics.Dynamics.Contacts;
 
 
+
 namespace Silhouette.GameMechs.Events
 {
     [Serializable]
-    public abstract class AudioEvent : Event
+    public class AudioSetVolumeEvent : Event
     {
 
 
-       
-        public abstract bool OnCollision(Fixture a, Fixture b, Contact contact);
-       
+        public float Volume { get { return _Volume; } set { _Volume = value; } }
+        private float _Volume;
 
-        public override void AddLevelObject(LevelObject lo) {
 
-            if (this.list != null)
+
+
+        public AudioSetVolumeEvent(Rectangle rectangle)
+        {
+            this.rectangle = rectangle;
+            position = rectangle.Location.ToVector2();
+            width = rectangle.Width;
+            height = rectangle.Height;
+            list = new List<LevelObject>();
+            isActivated = true;
+            _Volume = 1.0f;
+    
+
+
+
+        }
+
+
+        public override void AddLevelObject(LevelObject lo)
+        {
+
+            if ((this.list != null) && (lo is SoundObject))
             {
                 if (!this.list.Contains(lo))
                     this.list.Add(lo);
             }
         }
 
+        public bool OnCollision(Fixture a, Fixture b, Contact contact)
+        {
+            if (isActivated)
+            {
+                foreach (SoundObject so in this.list)
+                {
+                    so.volume = _Volume;
+                   
+
+                }
+                isActivated = false;
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
 
 
-      
+
+        public override string getPrefix()
+        {
+            return "AudioSetVolumeEvent_";
+        }
 
         public override LevelObject clone()
         {
@@ -63,6 +105,7 @@ namespace Silhouette.GameMechs.Events
             fixture.OnCollision += this.OnCollision;
             fixture.IsSensor = true;
         }
+
     }
 }
 

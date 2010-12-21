@@ -72,6 +72,24 @@ namespace Silhouette.GameMechs
             }
         }
 
+        public Boolean mute { get { return _mute; } set {
+            if (value == false)
+            {
+                volume = _MuteVolume;
+                _mute = false;
+            }
+            else
+            {
+                _mute = true;
+                _MuteVolume = volume;
+                volume = 0;
+            
+            }
+
+        
+        } }
+        private Boolean _mute;
+        private float _MuteVolume = -1;
         //Julius: Zustandsspeicher, falls sound noch nicht erzeugt wurde
         float _volume;
         [NonSerialized]

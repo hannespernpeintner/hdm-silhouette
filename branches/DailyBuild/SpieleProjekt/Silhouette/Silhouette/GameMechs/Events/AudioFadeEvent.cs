@@ -33,10 +33,14 @@ namespace Silhouette.GameMechs.Events
     public class AudioFadeEvent : Event
     {
         public enum Type {FadeUp, FadeDown}
-        public  Type fadeType { get; set; }
+        public Type fadeType { get { return _fadeType; } set { _fadeType = value; } }
+        private Type _fadeType;
 
-        public float fadeTime { get; set; }
-        public float gainOrLoss { get; set; }
+        public float fadeTime { get { return _fadeTime; } set { _fadeTime = value; } }
+        private float _fadeTime;
+
+        public float gainOrLoss { get { return _gainOrLoss; } set { _gainOrLoss = value; } }
+        private float _gainOrLoss;
         
 
         public AudioFadeEvent(Rectangle rectangle)
@@ -48,9 +52,9 @@ namespace Silhouette.GameMechs.Events
             list = new List<LevelObject>();
             isActivated = true;
 
-            this.fadeType = 0;
-            this.fadeTime = 0;
-            gainOrLoss = 0;
+            _fadeType = 0;
+            _fadeTime = 0;
+            _gainOrLoss = 0;
             
 
 
@@ -64,26 +68,26 @@ namespace Silhouette.GameMechs.Events
             {
                 foreach (SoundObject so in this.list)
                 {
-                    if (gainOrLoss != 0)
+                    if (_gainOrLoss != 0)
                     {
                         if (fadeType == Type.FadeDown)
                         {
-                            so.fadeDown(fadeTime, gainOrLoss);
+                            so.fadeDown(_fadeTime, _gainOrLoss);
                         }
                         else
                         {
-                            so.fadeUp(fadeTime, gainOrLoss);
+                            so.fadeUp(_fadeTime, _gainOrLoss);
                         }
                     }
                     else
                     {
                         if (fadeType == Type.FadeDown)
                         {
-                            so.fadeDown(fadeTime);
+                            so.fadeDown(_fadeTime);
                         }
                         else
                         {
-                            so.fadeUp(fadeTime);
+                            so.fadeUp(_fadeTime);
                         }
                     }
 
@@ -98,13 +102,13 @@ namespace Silhouette.GameMechs.Events
         }
 
 
-        public void AddLevelObject(SoundObject so)
+        public override void AddLevelObject(LevelObject lo)
         {
 
-            if (this.list != null)
+            if ((this.list != null) && (lo is SoundObject) )
             {
-                if (!this.list.Contains(so))
-                    this.list.Add(so);
+                if (!this.list.Contains(lo))
+                    this.list.Add(lo);
             }
         }
 
@@ -127,10 +131,7 @@ namespace Silhouette.GameMechs.Events
             fixture.IsSensor = true;
         }
 
-        public override void AddLevelObject(LevelObject lo)
-        {
-            throw new NotImplementedException();
-        }
+       
     }
 }
 
