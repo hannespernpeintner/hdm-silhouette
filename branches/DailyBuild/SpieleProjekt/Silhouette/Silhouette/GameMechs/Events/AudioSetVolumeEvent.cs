@@ -49,10 +49,6 @@ namespace Silhouette.GameMechs.Events
             list = new List<LevelObject>();
             isActivated = true;
             _Volume = 1.0f;
-    
-
-
-
         }
 
 
