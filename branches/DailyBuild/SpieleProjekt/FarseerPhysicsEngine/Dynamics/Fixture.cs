@@ -105,6 +105,12 @@ namespace FarseerPhysics.Dynamics
         public Boolean isHalfTransparent { get { return _isHalfTransparent; } set { _isHalfTransparent = value; } }
         private Boolean _isHalfTransparent;
 
+        public Boolean isDeadly { get { return _isDeadly; } set { _isDeadly = value; } }
+        private Boolean _isDeadly;
+
+        public Boolean isPlayer { get { return _isPlayer; } set { _isPlayer = value; } }
+        private Boolean _isPlayer;
+
         /// <summary>
         /// Fires when two shapes collide and a contact is created between them.
         /// Note that the first fixture argument is always the fixture that the delegate is subscribed to.
