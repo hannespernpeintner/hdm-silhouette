@@ -60,6 +60,11 @@ namespace Silhouette.GameMechs
         [Description("The BodyType defines the behavior of an object. A static object never changes position or rotation, like the dynamic ones do.")]
         public BodyType bodyType { get { return _bodyType; } set { _bodyType = value; } }
 
+        private bool _isDeadly;
+        [DisplayName("Deadly"), Category("Behavior")]
+        [Description("Defines if the object can kill the player if it hits him with an defined force.")]
+        public bool isDeadly { get { return _isDeadly; } set { _isDeadly = value; } }
+
         Matrix transform;
         Rectangle boundingBox;
         Vector2[] polygon;
@@ -126,12 +131,14 @@ namespace Silhouette.GameMechs
             try
             {
                 fixture = FixtureManager.CreatePolygon(texture, scale, bodyType, position, density);
+                fixture.isDeadly = isDeadly;
             }
             catch (Exception e)
             {
                 fixture = FixtureFactory.CreateRectangle(Level.Physics, (texture.Width * scale.X) / Level.PixelPerMeter, (texture.Height * scale.Y) / Level.PixelPerMeter, density);
                 fixture.Body.BodyType = bodyType;
                 fixture.Body.Position = FixtureManager.ToMeter(position);
+                fixture.isDeadly = isDeadly;
             }
         }
 
