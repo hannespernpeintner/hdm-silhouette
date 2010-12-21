@@ -425,20 +425,24 @@ namespace Silhouette.GameMechs
 
             if (activeAnimation.activeFrameNumber == activeAnimation.amount - 1)
             {
-                activeAnimation.activeFrameNumber = 0;
-                activeAnimation = choseIdleAnimation();
-                activeAnimation.activeFrameNumber = 0;
-                activeAnimation.start();
-                actClimbHeight = 0;
-                actScriptedMove = "";
-                charRect.Body.BodyType = BodyType.Dynamic;
-                charRect.Body.IgnoreGravity = false;
-                isScriptedMoving = false;
-                isIdle = false;
-                isRunning = false;
-                isFalling = true;
-                isJumping = false;
-                isDying = false;
+                try
+                {
+                    activeAnimation.activeFrameNumber = 0;
+                    activeAnimation = choseIdleAnimation();
+                    activeAnimation.activeFrameNumber = 0;
+                    activeAnimation.start();
+                    actClimbHeight = 0;
+                    actScriptedMove = "";
+                    charRect.Body.BodyType = BodyType.Dynamic;
+                    charRect.Body.IgnoreGravity = false;
+                    isScriptedMoving = false;
+                    isIdle = false;
+                    isRunning = false;
+                    isFalling = true;
+                    isJumping = false;
+                    isDying = false;
+                }
+                catch (Exception e) { activeAnimation.activeFrameNumber = 0; }
             }
 
         }
@@ -757,7 +761,8 @@ namespace Silhouette.GameMechs
 
             if (charRect.IsSensor == true)
             {
-                charRect.IsSensor = false;
+                try { charRect.IsSensor = false; }
+                catch (Exception e) { }
             }
 
             return true;
