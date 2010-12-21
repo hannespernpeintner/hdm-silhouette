@@ -26,20 +26,19 @@ using FarseerPhysics.Collision.Shapes;
 using FarseerPhysics.Dynamics.Contacts;
 
 
-
 namespace Silhouette.GameMechs.Events
 {
     [Serializable]
-    public class AudioModifyPlayback : Event
+    public class AudioMuteEvent : Event
     {
-        public enum Type {play, stop, pause }
-        public Type EventType { get { return _EventType; } set { _EventType = value; } }
+        public enum Type { mute, unmute }
+        public Type muteType { get{return _muteType;} set{_muteType = value;} }
 
-        private Type _EventType;
+        private Type _muteType;
 
-        public Boolean looped { get { return _looped; } set { _looped = value; } }
-        private Boolean _looped;
-        public  AudioModifyPlayback(Rectangle rectangle)
+
+
+        public AudioMuteEvent(Rectangle rectangle)
         {
             this.rectangle = rectangle;
             position = rectangle.Location.ToVector2();
@@ -47,10 +46,14 @@ namespace Silhouette.GameMechs.Events
             height = rectangle.Height;
             list = new List<LevelObject>();
             isActivated = true;
-            this.EventType = Type.play;
-            this.looped = false;
-            
+
+            this.muteType = Type.mute;
+
+
+
         }
+
+
 
         public bool OnCollision(Fixture a, Fixture b, Contact contact)
         {
@@ -58,21 +61,16 @@ namespace Silhouette.GameMechs.Events
             {
                 foreach (SoundObject so in this.list)
                 {
-                   
-                    switch (EventType)
+                    switch (muteType)
                     {
-                        case (Type.play):
-                            so.looped = looped;
-                            so.Play();
-                                break;
-                        case (Type.pause):
-                                so.Pause = !so.Pause;
-                                break;
-                        case (Type.stop):
-                                so.Stop();
-                                break;
-
+                        case (Type.mute):
+                            so.mute = true;  
+                            break;
+                        case (Type.unmute):
+                            so.mute = false;
+                            break;
                     }
+
                 }
                 isActivated = false;
                 return true;
@@ -83,16 +81,14 @@ namespace Silhouette.GameMechs.Events
             }
         }
 
-        
+
 
         public override string getPrefix()
         {
-            return "AudioModifyPlaybackEvent_";
+            return "AudioMuteEvent_";
         }
 
-
-
-        public override LevelObject clone()
+         public override LevelObject clone()
         {
             AudioModifyPlayback result = (AudioModifyPlayback)this.MemberwiseClone();
             result.mouseOn = false;
