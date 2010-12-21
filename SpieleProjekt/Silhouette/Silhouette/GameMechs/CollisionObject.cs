@@ -55,10 +55,15 @@ namespace Silhouette.GameMechs
             [Description("The height of the rectangle.")]
             public float height { get { return _height; } set { _height = value; transformed(); } }
 
-            private float _density;
-            [DisplayName("Mass"), Category("Physical Behavior")]
-            [Description("The mass of the object to calculate physical interaction.")]
-            public float density { get { return _density; } set { _density = value; } }
+            private bool _isClimbable;
+            [DisplayName("Climbable"), Category("Fixture Data")]
+            [Description("Defines if the player can climb up the collision object.")]
+            public bool isClimbable { get { return _isClimbable; } set { _isClimbable = value; } }
+
+            private bool _isPervious;
+            [DisplayName("Pervious"), Category("Fixture Data")]
+            [Description("Defines if the player can jump through the collision object, but stand on it.")]
+            public bool isPervious { get { return _isPervious; } set { _isPervious = value; } }
 
             private BodyType _bodyType;
             [DisplayName("BodyType"), Category("Physical Behavior")]
@@ -129,6 +134,8 @@ namespace Silhouette.GameMechs
             public override void ToFixture()
             {
                 fixture = FixtureManager.CreateRectangle(width, height, position, bodyType, density);
+                fixture.isClimbable = isClimbable;
+                fixture.isHalfTransparent = isPervious;
             }
         }
     #endregion
@@ -141,6 +148,16 @@ namespace Silhouette.GameMechs
             [DisplayName("Radius"), Category("Fixture Data")]
             [Description("The radius of the circle fixture.")]
             public float radius { get { return _radius; } set { _radius = value; } }
+
+            private bool _isClimbable;
+            [DisplayName("Climbable"), Category("Fixture Data")]
+            [Description("Defines if the player can climb up the collision object.")]
+            public bool isClimbable { get { return _isClimbable; } set { _isClimbable = value; } }
+
+            private bool _isPervious;
+            [DisplayName("Pervious"), Category("Fixture Data")]
+            [Description("Defines if the player can jump through the collision object, but stand on it.")]
+            public bool isPervious { get { return _isPervious; } set { _isPervious = value; } }
 
             private BodyType _bodyType;
             [DisplayName("BodyType"), Category("Physical Behavior")]
@@ -204,6 +221,8 @@ namespace Silhouette.GameMechs
             public override void ToFixture()
             {
                 fixture = FixtureManager.CreateCircle(radius, position, bodyType, density);
+                fixture.isClimbable = isClimbable;
+                fixture.isHalfTransparent = isPervious;
             }
         }
     #endregion
