@@ -33,8 +33,9 @@ namespace Silhouette.GameMechs.Events
     {
         public enum Type { Mute, Unmute }
 
-
         private Type _muteType;
+        [DisplayName("Mute"), Category("Event Data")]
+        [Description("Defines if the event mutes or unmutes the SoundObjects in the list.")]
         public Type muteType { get{ return _muteType; } set { _muteType = value; } }
 
         public AudioMuteEvent(Rectangle rectangle)

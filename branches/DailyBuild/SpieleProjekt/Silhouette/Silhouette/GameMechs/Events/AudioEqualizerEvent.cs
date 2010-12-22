@@ -35,15 +35,23 @@ namespace Silhouette.GameMechs.Events
         public enum Type { Enable, Disable, Modify }
 
         private Type _eqType;
+        [DisplayName("Action"), Category("Event Data")]
+        [Description("")]
         public Type eqType { get { return _eqType; } set { _eqType = value; } }
 
         private float _fCenter;
+        [DisplayName("Center"), Category("Event Data")]
+        [Description("")]
         public float fCenter { get { return _fCenter; } set { _fCenter = value; } }
 
         private float _fBandwidth;
+        [DisplayName("Bandwidth"), Category("Event Data")]
+        [Description("")]
         public float fBandwidth { get { return _fBandwidth; } set { _fBandwidth = value; } }
 
         private float _fGain;
+        [DisplayName("Gain"), Category("Event Data")]
+        [Description("")]
         public float fGain { get { return _fGain; } set { _fGain = value; } }
 
         public AudioEqualizerEvent(Rectangle rectangle )
