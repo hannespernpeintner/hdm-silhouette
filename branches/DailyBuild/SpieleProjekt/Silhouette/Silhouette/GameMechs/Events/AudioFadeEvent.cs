@@ -35,12 +35,18 @@ namespace Silhouette.GameMechs.Events
         public enum Type {FadeUp, FadeDown}
 
         private Type _fadeType;
+        [DisplayName("Fade"), Category("Event Data")]
+        [Description("Defines if the event fades up or fades down the SoundObjects in the list.")]
         public Type fadeType { get { return _fadeType; } set { _fadeType = value; } }
 
         private float _fadeTime;
+        [DisplayName("Fade Time"), Category("Event Data")]
+        [Description("Defines the time needed till the fade is complete.")]
         public float fadeTime { get { return _fadeTime; } set { _fadeTime = value; } }
 
         private float _gainOrLoss;
+        [DisplayName("Gain or Loss"), Category("Event Data")]
+        [Description("")]
         public float gainOrLoss { get { return _gainOrLoss; } set { _gainOrLoss = value; } }
 
         public AudioFadeEvent(Rectangle rectangle)

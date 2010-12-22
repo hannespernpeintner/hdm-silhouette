@@ -33,6 +33,8 @@ namespace Silhouette.GameMechs.Events
     public class AudioSetVolumeEvent : Event
     {
         private float _Volume;
+        [DisplayName("Volume"), Category("Event Data")]
+        [Description("The sound volume which should be applied to the SoundObjects in the list.")]
         public float Volume { get { return _Volume; } set { _Volume = value; } }
 
         public AudioSetVolumeEvent(Rectangle rectangle)

@@ -35,9 +35,13 @@ namespace Silhouette.GameMechs.Events
         public enum Type {Play, Stop, Pause }
 
         private Type _EventType;
+        [DisplayName("Action"), Category("Event Data")]
+        [Description("Defines if the event plays, stops or pauses the SoundObjects in the list.")]
         public Type EventType { get { return _EventType; } set { _EventType = value; } }
 
         private Boolean _looped;
+        [DisplayName("Loop"), Category("Event Data")]
+        [Description("Defines if the event makes the SoundObjects in the list loopable.")]
         public Boolean looped { get { return _looped; } set { _looped = value; } }
         
         public  AudioModifyPlayback(Rectangle rectangle)
