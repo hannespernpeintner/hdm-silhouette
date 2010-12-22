@@ -193,7 +193,7 @@ namespace Silhouette.GameMechs
             sRect.Body.FixedRotation = true;
             sRect.IsSensor = true;
 
-            camRect = FixtureManager.CreateRectangle(100, 100, charRect.Body.Position, BodyType.Dynamic, 0.1f);
+            camRect = FixtureManager.CreateRectangle(100, 100, position, BodyType.Dynamic, 0.1f);
             camRect.Body.IgnoreGravity = true;
             camRect.Body.FixedRotation = true;
             camRect.IsSensor = true;
