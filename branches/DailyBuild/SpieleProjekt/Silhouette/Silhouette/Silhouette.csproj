@@ -151,7 +151,7 @@
     <Compile Include="GameMechs\Events\AudioMuteEvent.cs" />
     <Compile Include="GameMechs\Events\AudioSetVolumeEvent.cs" />
     <Compile Include="GameMechs\Events\Event.cs" />
-    <Compile Include="GameMechs\Events\PhysicEvent.cs" />
+    <Compile Include="GameMechs\Events\PhysicChangeBodyTypeEvent.cs" />
     <Compile Include="GameMechs\CollisionObject.cs" />
     <Compile Include="GameMechs\Events\VideoPlayEvent.cs" />
     <Compile Include="GameMechs\InteractiveObject.cs" />

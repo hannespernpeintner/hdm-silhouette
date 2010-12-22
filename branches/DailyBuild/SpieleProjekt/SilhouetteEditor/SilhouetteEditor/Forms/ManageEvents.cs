@@ -103,6 +103,16 @@ namespace SilhouetteEditor.Forms
                     propertyGrid1.SelectedObject = lo;
                     Camera.Position = lo.position;
                 }
+
+                if (EventView.SelectedNode.Tag is SoundObject)
+                {
+                    SoundObject so = (SoundObject)EventView.SelectedNode.Tag;
+                    Editor.Default.selectLevelObject(so);
+                    selectedLevelObject2 = so;
+                    Event ev = (Event)EventView.SelectedNode.Parent.Tag;
+                    selectedEvent = ev;
+                    propertyGrid1.SelectedObject = so;
+                }
             }
         }
 
@@ -119,7 +129,7 @@ namespace SilhouetteEditor.Forms
 
                 foreach (LevelObject lo in l.loList)
                 {
-                    if (lo is InteractiveObject || lo is CollisionObject)
+                    if (lo is InteractiveObject || lo is CollisionObject || lo is SoundObject)
                     {
                         TreeNode levelObjectTreeNode = layerTreeNode.Nodes.Add(lo.name);
                         levelObjectTreeNode.Tag = lo;
@@ -179,10 +189,6 @@ namespace SilhouetteEditor.Forms
 
             UpdateEventView();
             UpdateObjectView();
-        }
-        private void button1_Click(object sender, EventArgs e)
-        {
-            this.Hide();
         }
     }
 }

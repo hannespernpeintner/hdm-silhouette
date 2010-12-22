@@ -540,11 +540,61 @@ namespace SilhouetteEditor.Forms
             Editor.Default.AddFixture(FixtureType.Path);
         }
 
+        //---> AddObjects
+
+        private void soundObjectToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog files = new OpenFileDialog();
+            DialogResult result = files.ShowDialog();
+
+            if (result == System.Windows.Forms.DialogResult.OK)
+            {
+                if (files.FileNames.Length == 0)
+                    return;
+
+                foreach (string s in files.FileNames)
+                {
+                    Editor.Default.AddSoundObject(s);
+                }
+            }
+        }
+
         //---> Events
 
-        private void physicToolStripMenuItem_Click(object sender, EventArgs e)
+
+        private void changeBodyTypeToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Editor.Default.AddEvents(EventType.PHYSIC);
+            Editor.Default.AddEvents(EventType.ChangeBodyType);
+        }
+
+        private void fadeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Editor.Default.AddEvents(EventType.Fade);
+        }
+
+        private void equalizerToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Editor.Default.AddEvents(EventType.Equalizer);
+        }
+
+        private void modifyPlaybackToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Editor.Default.AddEvents(EventType.ModifyPlayback);
+        }
+
+        private void muteToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Editor.Default.AddEvents(EventType.Mute);
+        }
+
+        private void setVolumeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Editor.Default.AddEvents(EventType.SetVolume);
+        }
+
+        private void playToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Editor.Default.AddEvents(EventType.Play);
         }
 
         //---> ToolStrips <---//

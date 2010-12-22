@@ -361,6 +361,12 @@ namespace Silhouette.GameMechs
 
         public override void Initialise() { }
         public override void LoadContent() { }
+        public override string getPrefix() { return "SoundObject_"; }
+        public override LevelObject clone()
+        {
+            SoundObject so = (SoundObject)this.MemberwiseClone();
+            return so;
+        }
     }
 
    
