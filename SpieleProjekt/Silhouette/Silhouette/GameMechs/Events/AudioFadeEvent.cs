@@ -33,15 +33,15 @@ namespace Silhouette.GameMechs.Events
     public class AudioFadeEvent : Event
     {
         public enum Type {FadeUp, FadeDown}
-        public Type fadeType { get { return _fadeType; } set { _fadeType = value; } }
+
         private Type _fadeType;
+        public Type fadeType { get { return _fadeType; } set { _fadeType = value; } }
 
-        public float fadeTime { get { return _fadeTime; } set { _fadeTime = value; } }
         private float _fadeTime;
+        public float fadeTime { get { return _fadeTime; } set { _fadeTime = value; } }
 
-        public float gainOrLoss { get { return _gainOrLoss; } set { _gainOrLoss = value; } }
         private float _gainOrLoss;
-        
+        public float gainOrLoss { get { return _gainOrLoss; } set { _gainOrLoss = value; } }
 
         public AudioFadeEvent(Rectangle rectangle)
         {
@@ -55,12 +55,7 @@ namespace Silhouette.GameMechs.Events
             _fadeType = 0;
             _fadeTime = 0;
             _gainOrLoss = 0;
-            
-
-
         }
-
-       
 
         public bool OnCollision(Fixture a, Fixture b, Contact contact)
         {
@@ -90,7 +85,6 @@ namespace Silhouette.GameMechs.Events
                             so.fadeUp(_fadeTime);
                         }
                     }
-
                 }
                 isActivated = false;
                 return true;
@@ -100,7 +94,6 @@ namespace Silhouette.GameMechs.Events
                 return false;
             }
         }
-
 
         public override void AddLevelObject(LevelObject lo)
         {
@@ -119,7 +112,7 @@ namespace Silhouette.GameMechs.Events
 
         public override LevelObject clone()
         {
-            AudioModifyPlayback result = (AudioModifyPlayback)this.MemberwiseClone();
+            AudioFadeEvent result = (AudioFadeEvent)this.MemberwiseClone();
             result.mouseOn = false;
             return result;
         }
@@ -129,9 +122,7 @@ namespace Silhouette.GameMechs.Events
             fixture = FixtureManager.CreateRectangle(width, height, position, BodyType.Static, 1);
             fixture.OnCollision += this.OnCollision;
             fixture.IsSensor = true;
-        }
-
-       
+        }   
     }
 }
 
