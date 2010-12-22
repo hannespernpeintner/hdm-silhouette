@@ -423,7 +423,7 @@ namespace SilhouetteEditor
                      * Setzt die Startposition des Players an die Mausposition.
                     */
 
-                    if (kstate.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.P) && oldkstate.IsKeyUp(Microsoft.Xna.Framework.Input.Keys.P))
+                    if (kstate.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.P) && oldkstate.IsKeyUp(Microsoft.Xna.Framework.Input.Keys.P) && !(kstate.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.LeftControl)))
                     {
                         if (level.layerList.Contains(level.getLayerByName("Player")))
                         {
@@ -432,11 +432,17 @@ namespace SilhouetteEditor
                         }
                         else
                         {
-                            DialogResult result = MessageBox.Show("You must create a layer with the name \"Player\" to set the start position of player. Do you want to create one?", "Error", MessageBoxButtons.YesNo, System.Windows.Forms.MessageBoxIcon.Error);
-
-                            if (result == DialogResult.Yes)
-                                new AddLayer().ShowDialog();
+                            AddLayer("Player");
+                            selectLayer(level.getLayerByName("Player"));
+                            level.startPosition = MouseWorldPosition;
                         }
+                    }
+
+                    if (kstate.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.LeftControl) && kstate.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.P) && level.layerList.Contains(level.getLayerByName("Player")))
+                    {
+                        Camera.Scale = 1.0f;
+                        Camera.Position = level.startPosition;
+                        MainForm.Default.ZoomStatus.Text = "Zoom: 100%";               
                     }
                 }
             #endregion
@@ -620,14 +626,14 @@ namespace SilhouetteEditor
                     */
                     if (currentObject != null)
                     {
-                        if (kstate.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.Q))
+                        if (kstate.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.E))
                         {
                             Vector2 tempScale = currentObject.getScale();
                             tempScale.X *= 1.1f;
                             tempScale.Y *= 1.1f;
                             currentObject.setScale(tempScale);
                         }
-                        if (kstate.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.E))
+                        if (kstate.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.Q))
                         {
                             Vector2 tempScale = currentObject.getScale();
                             tempScale.X *= 0.9f;
@@ -639,13 +645,13 @@ namespace SilhouetteEditor
                          * UltraBrush-Rotation!
                         */
 
-                        if (kstate.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.Y))
+                        if (kstate.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.X))
                         {
                             float tempRotation = currentObject.getRotation();
                             tempRotation += 0.1f;
                             currentObject.setRotation(tempRotation);
                         }
-                        if (kstate.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.X))
+                        if (kstate.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.Y))
                         {
                             float tempRotation = currentObject.getRotation();
                             tempRotation += -0.1f;
