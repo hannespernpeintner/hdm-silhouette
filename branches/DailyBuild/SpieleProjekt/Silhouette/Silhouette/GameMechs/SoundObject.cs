@@ -30,7 +30,8 @@ using IrrKlang;
  * Lange Rede, kurzer Unsinn: Wenn man play() ein zweites mal aufruft, bevor der Track zuende ist, kann man vom alten Sound Dinge wie Effekte, Lautstärke etc. nicht mehr ändern!
  */
 namespace Silhouette.GameMechs
-{   [Serializable]
+{   
+    [Serializable]
     public class SoundObject : LevelObject
     {
         public String  Trackpath { get; set; }

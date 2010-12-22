@@ -31,12 +31,11 @@ namespace Silhouette.GameMechs.Events
     [Serializable]
     public class AudioMuteEvent : Event
     {
-        public enum Type { mute, unmute }
-        public Type muteType { get{return _muteType;} set{_muteType = value;} }
+        public enum Type { Mute, Unmute }
+
 
         private Type _muteType;
-
-
+        public Type muteType { get{ return _muteType; } set { _muteType = value; } }
 
         public AudioMuteEvent(Rectangle rectangle)
         {
@@ -47,13 +46,8 @@ namespace Silhouette.GameMechs.Events
             list = new List<LevelObject>();
             isActivated = true;
 
-            this.muteType = Type.mute;
-
-
-
+            this.muteType = Type.Mute;
         }
-
-
 
         public bool OnCollision(Fixture a, Fixture b, Contact contact)
         {
@@ -63,14 +57,13 @@ namespace Silhouette.GameMechs.Events
                 {
                     switch (muteType)
                     {
-                        case (Type.mute):
+                        case (Type.Mute):
                             so.mute = true;  
                             break;
-                        case (Type.unmute):
+                        case (Type.Unmute):
                             so.mute = false;
                             break;
                     }
-
                 }
                 isActivated = false;
                 return true;
@@ -81,8 +74,6 @@ namespace Silhouette.GameMechs.Events
             }
         }
 
-
-
         public override string getPrefix()
         {
             return "AudioMuteEvent_";
@@ -90,7 +81,7 @@ namespace Silhouette.GameMechs.Events
 
          public override LevelObject clone()
         {
-            AudioModifyPlayback result = (AudioModifyPlayback)this.MemberwiseClone();
+            AudioMuteEvent result = (AudioMuteEvent)this.MemberwiseClone();
             result.mouseOn = false;
             return result;
         }
@@ -104,7 +95,6 @@ namespace Silhouette.GameMechs.Events
 
         public override void AddLevelObject(LevelObject lo)
         {
-
             if ((this.list != null) && (lo is SoundObject))
             {
                 if (!this.list.Contains(lo))

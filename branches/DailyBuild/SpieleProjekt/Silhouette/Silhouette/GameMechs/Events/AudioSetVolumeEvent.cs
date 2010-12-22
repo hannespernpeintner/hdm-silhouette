@@ -32,13 +32,8 @@ namespace Silhouette.GameMechs.Events
     [Serializable]
     public class AudioSetVolumeEvent : Event
     {
-
-
-        public float Volume { get { return _Volume; } set { _Volume = value; } }
         private float _Volume;
-
-
-
+        public float Volume { get { return _Volume; } set { _Volume = value; } }
 
         public AudioSetVolumeEvent(Rectangle rectangle)
         {
@@ -51,10 +46,8 @@ namespace Silhouette.GameMechs.Events
             _Volume = 1.0f;
         }
 
-
         public override void AddLevelObject(LevelObject lo)
         {
-
             if ((this.list != null) && (lo is SoundObject))
             {
                 if (!this.list.Contains(lo))
@@ -69,8 +62,6 @@ namespace Silhouette.GameMechs.Events
                 foreach (SoundObject so in this.list)
                 {
                     so.volume = _Volume;
-                   
-
                 }
                 isActivated = false;
                 return true;
@@ -81,8 +72,6 @@ namespace Silhouette.GameMechs.Events
             }
         }
 
-
-
         public override string getPrefix()
         {
             return "AudioSetVolumeEvent_";
@@ -90,7 +79,7 @@ namespace Silhouette.GameMechs.Events
 
         public override LevelObject clone()
         {
-            AudioModifyPlayback result = (AudioModifyPlayback)this.MemberwiseClone();
+            AudioSetVolumeEvent result = (AudioSetVolumeEvent)this.MemberwiseClone();
             result.mouseOn = false;
             return result;
         }
@@ -101,7 +90,6 @@ namespace Silhouette.GameMechs.Events
             fixture.OnCollision += this.OnCollision;
             fixture.IsSensor = true;
         }
-
     }
 }
 

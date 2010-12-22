@@ -32,13 +32,14 @@ namespace Silhouette.GameMechs.Events
     [Serializable]
     public class AudioModifyPlayback : Event
     {
-        public enum Type {play, stop, pause }
-        public Type EventType { get { return _EventType; } set { _EventType = value; } }
+        public enum Type {Play, Stop, Pause }
 
         private Type _EventType;
+        public Type EventType { get { return _EventType; } set { _EventType = value; } }
 
-        public Boolean looped { get { return _looped; } set { _looped = value; } }
         private Boolean _looped;
+        public Boolean looped { get { return _looped; } set { _looped = value; } }
+        
         public  AudioModifyPlayback(Rectangle rectangle)
         {
             this.rectangle = rectangle;
@@ -47,7 +48,7 @@ namespace Silhouette.GameMechs.Events
             height = rectangle.Height;
             list = new List<LevelObject>();
             isActivated = true;
-            this.EventType = Type.play;
+            this.EventType = Type.Play;
             this.looped = false;
             
         }
@@ -61,17 +62,16 @@ namespace Silhouette.GameMechs.Events
                    
                     switch (EventType)
                     {
-                        case (Type.play):
+                        case (Type.Play):
                             so.looped = looped;
                             so.Play();
                                 break;
-                        case (Type.pause):
+                        case (Type.Pause):
                                 so.Pause = !so.Pause;
                                 break;
-                        case (Type.stop):
+                        case (Type.Stop):
                                 so.Stop();
                                 break;
-
                     }
                 }
                 isActivated = false;
@@ -83,14 +83,10 @@ namespace Silhouette.GameMechs.Events
             }
         }
 
-        
-
         public override string getPrefix()
         {
             return "AudioModifyPlaybackEvent_";
         }
-
-
 
         public override LevelObject clone()
         {
