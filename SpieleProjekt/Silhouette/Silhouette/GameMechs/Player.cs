@@ -172,6 +172,9 @@ namespace Silhouette.GameMechs
             climbing_left.Load(11, "Sprites/Player/climb_left_", 0.75f, false);
             climbing_right.Load(11, "Sprites/Player/climb_right_", 0.75f, false);
 
+            dying_left.Load(4, "Sprites/Player/die_left_", 0.5f, false);
+            dying_right.Load(4, "Sprites/Player/die_right_", 0.5f, false);
+
             activeAnimation = choseIdleAnimation();
             activeAnimation.start();
             nextAnimation = choseIdleAnimation();
@@ -179,6 +182,8 @@ namespace Silhouette.GameMechs
             charRect = FixtureManager.CreateCircle(80, position, BodyType.Dynamic, 1);
             charRect.Body.FixedRotation = true;
             charRect.Friction = 5;
+
+            charRect.isPlayer = true;
 
             nRect = FixtureManager.CreateRectangle(140, 10, new Vector2(position.X, position.Y - 85), BodyType.Dynamic, 1);
             nRect.Body.FixedRotation = true;
@@ -316,6 +321,11 @@ namespace Silhouette.GameMechs
                 climb();
             }
 
+            if (Keyboard.GetState().IsKeyDown(Keys.P) && !isScriptedMoving)
+            {
+                die();
+            }
+
             if (Keyboard.GetState().IsKeyDown(Keys.Space) && oldState.IsKeyUp(Keys.Space) && (isIdle || isRunning))
             {
                 if (facing == 0)
@@ -371,6 +381,11 @@ namespace Silhouette.GameMechs
             if (actScriptedMove.Equals("climb") && isScriptedMoving)
             {
                 climb();
+            }
+
+            if (actScriptedMove.Equals("die") && isScriptedMoving)
+            {
+                die();
             }
         }
 
@@ -439,6 +454,62 @@ namespace Silhouette.GameMechs
                     isIdle = false;
                     isRunning = false;
                     isFalling = true;
+                    isJumping = false;
+                    isDying = false;
+                }
+                catch (Exception e) { activeAnimation.activeFrameNumber = 0; }
+            }
+
+        }
+
+        private void die()
+        {
+            if (!isScriptedMoving)
+            {
+                actScriptedMove = "die";
+                isScriptedMoving = true;
+                isIdle = false;
+                isRunning = false;
+                isJumping = false;
+                isDying = false;
+                isFalling = false;
+                isSuperMoving = false;
+
+                charRect.Body.BodyType = BodyType.Static;
+                charRect.Body.IgnoreGravity = true;
+
+                if (facing == 0)
+                {
+                    activeAnimation = dying_left;
+                    activeAnimation.activeFrameNumber = 0;
+                    activeAnimation.start();
+                    nextAnimation = dying_left;
+                }
+                else
+                {
+                    activeAnimation = dying_right;
+                    activeAnimation.activeFrameNumber = 0;
+                    activeAnimation.start();
+                    nextAnimation = dying_right;
+                }
+            }
+            // Hier wird noch gebessert
+
+            if (activeAnimation.activeFrameNumber == activeAnimation.amount - 1)
+            {
+                try
+                {
+                    activeAnimation.activeFrameNumber = 0;
+                    activeAnimation = choseIdleAnimation();
+                    activeAnimation.activeFrameNumber = 0;
+                    activeAnimation.start();
+                    actScriptedMove = "";
+                    charRect.Body.BodyType = BodyType.Dynamic;
+                    charRect.Body.IgnoreGravity = false;
+                    isScriptedMoving = false;
+                    isIdle = true;
+                    isRunning = false;
+                    isFalling = false;
                     isJumping = false;
                     isDying = false;
                 }
@@ -714,6 +785,11 @@ namespace Silhouette.GameMechs
             if (fixtureB.isClimbable)
             {
                 this.canClimb = true;
+            }
+
+            if (fixtureB.isDeadly)
+            {
+                die();
             }
 
             return true;
