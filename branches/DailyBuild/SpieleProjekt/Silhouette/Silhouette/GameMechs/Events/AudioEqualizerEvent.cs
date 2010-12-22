@@ -32,19 +32,19 @@ namespace Silhouette.GameMechs.Events
     [Serializable]
     public class AudioEqualizerEvent : Event
     {
-        public enum Type { enable, disable, modify }
-        public Type eqType { get { return _eqType; } set { _eqType = value; } }
+        public enum Type { Enable, Disable, Modify }
+
         private Type _eqType;
+        public Type eqType { get { return _eqType; } set { _eqType = value; } }
 
-        public float fCenter { get { return _fCenter; } set { _fCenter = value; } }
         private float _fCenter;
+        public float fCenter { get { return _fCenter; } set { _fCenter = value; } }
 
-        public float fBandwidth { get { return _fBandwidth; } set { _fBandwidth = value; } }
         private float _fBandwidth;
+        public float fBandwidth { get { return _fBandwidth; } set { _fBandwidth = value; } }
 
-        public float fGain { get { return _fGain; } set { _fGain = value; } }
         private float _fGain;
-
+        public float fGain { get { return _fGain; } set { _fGain = value; } }
 
         public AudioEqualizerEvent(Rectangle rectangle )
         {
@@ -58,12 +58,7 @@ namespace Silhouette.GameMechs.Events
             _fCenter = 0.0f;
             _fBandwidth = 0.0f;
             _fGain = 0.0f;
-
-            
-
-
         }
-
 
         public override void AddLevelObject(LevelObject lo)
         {
@@ -83,17 +78,16 @@ namespace Silhouette.GameMechs.Events
                 {
                     switch (eqType)
                     {
-                        case (Type.enable):
+                        case (Type.Enable):
                             so.EnableEqualizer(_fCenter, _fBandwidth, _fGain);
                             break;
-                        case (Type.modify):
+                        case (Type.Modify):
                             so.EnableEqualizer(_fCenter, _fBandwidth, _fGain);
                             break;
-                        case (Type.disable):
+                        case (Type.Disable):
                             so.DisableEqualizer();
                             break;
                     }
-
                 }
                 isActivated = false;
                 return true;
@@ -104,8 +98,6 @@ namespace Silhouette.GameMechs.Events
             }
         }
 
-
-
         public override string getPrefix()
         {
             return "AudioEqualizerEvent_";
@@ -113,7 +105,7 @@ namespace Silhouette.GameMechs.Events
 
         public override LevelObject clone()
         {
-            AudioModifyPlayback result = (AudioModifyPlayback)this.MemberwiseClone();
+            AudioEqualizerEvent result = (AudioEqualizerEvent)this.MemberwiseClone();
             result.mouseOn = false;
             return result;
         }

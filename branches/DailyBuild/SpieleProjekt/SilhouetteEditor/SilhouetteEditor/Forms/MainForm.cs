@@ -546,7 +546,7 @@ namespace SilhouetteEditor.Forms
         {
             OpenFileDialog files = new OpenFileDialog();
             DialogResult result = files.ShowDialog();
-
+          
             if (result == System.Windows.Forms.DialogResult.OK)
             {
                 if (files.FileNames.Length == 0)
