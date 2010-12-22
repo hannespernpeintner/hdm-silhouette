@@ -29,7 +29,18 @@ namespace SilhouetteEditor
 {
     public enum EventType
     {
-        PHYSIC
+        //Physic
+        ChangeBodyType,
+
+        //Audio
+        Fade,
+        Equalizer,
+        ModifyPlayback,
+        Mute,
+        SetVolume,
+
+        //Video
+        Play
     }
 
     public enum PhysicsType
@@ -904,6 +915,24 @@ namespace SilhouetteEditor
             editorState = EditorState.CREATE_PRIMITIVES;
         }
 
+        public void AddSoundObject(string path)
+        {
+            SoundObject so = new SoundObject(path);
+            Layer l = level.getLayerByName("SoundLayer");
+
+            if (l == null)
+            {
+                AddLayer("SoundLayer");
+                l = level.getLayerByName("SoundLayer");
+            }
+
+            so.name = so.getPrefix() + l.getNextObjectNumber();
+            so.layer = l;
+            l.loList.Add(so);
+
+            MainForm.Default.UpdateTreeView();
+        }
+
         //---> Create Objects <---//
 
         public void createTextureObject(string path)
@@ -998,12 +1027,54 @@ namespace SilhouetteEditor
         {
             switch (currentEvent)
             { 
-                case EventType.PHYSIC:
-                    PhysicEvent e = new PhysicEvent(Extensions.RectangleFromVectors(clickedPoints[0], clickedPoints[1]));
+                case EventType.ChangeBodyType:
+                    PhysicChangeBodyTypeEvent e = new PhysicChangeBodyTypeEvent(Extensions.RectangleFromVectors(clickedPoints[0], clickedPoints[1]));
                     e.name = e.getPrefix() + selectedLayer.getNextObjectNumber();
                     e.layer = selectedLayer;
                     selectedLayer.loList.Add(e);
                     selectLevelObject(e);
+                    break;
+                case EventType.Fade:
+                    AudioFadeEvent e1 = new AudioFadeEvent(Extensions.RectangleFromVectors(clickedPoints[0], clickedPoints[1]));
+                    e1.name = e1.getPrefix() + selectedLayer.getNextObjectNumber();
+                    e1.layer = selectedLayer;
+                    selectedLayer.loList.Add(e1);
+                    selectLevelObject(e1);
+                    break;
+                case EventType.Equalizer:
+                    AudioEqualizerEvent e2 = new AudioEqualizerEvent(Extensions.RectangleFromVectors(clickedPoints[0], clickedPoints[1]));
+                    e2.name = e2.getPrefix() + selectedLayer.getNextObjectNumber();
+                    e2.layer = selectedLayer;
+                    selectedLayer.loList.Add(e2);
+                    selectLevelObject(e2);
+                    break;
+                case EventType.ModifyPlayback:
+                    AudioModifyPlayback e3 = new AudioModifyPlayback(Extensions.RectangleFromVectors(clickedPoints[0], clickedPoints[1]));
+                    e3.name = e3.getPrefix() + selectedLayer.getNextObjectNumber();
+                    e3.layer = selectedLayer;
+                    selectedLayer.loList.Add(e3);
+                    selectLevelObject(e3);
+                    break;
+                case EventType.Mute:
+                    AudioMuteEvent e4 = new AudioMuteEvent(Extensions.RectangleFromVectors(clickedPoints[0], clickedPoints[1]));
+                    e4.name = e4.getPrefix() + selectedLayer.getNextObjectNumber();
+                    e4.layer = selectedLayer;
+                    selectedLayer.loList.Add(e4);
+                    selectLevelObject(e4);
+                    break;
+                case EventType.SetVolume:
+                    AudioSetVolumeEvent e5 = new AudioSetVolumeEvent(Extensions.RectangleFromVectors(clickedPoints[0], clickedPoints[1]));
+                    e5.name = e5.getPrefix() + selectedLayer.getNextObjectNumber();
+                    e5.layer = selectedLayer;
+                    selectedLayer.loList.Add(e5);
+                    selectLevelObject(e5);
+                    break;
+                case EventType.Play:
+                    VideoPlayEvent e6 = new VideoPlayEvent(Extensions.RectangleFromVectors(clickedPoints[0], clickedPoints[1]));
+                    e6.name = e6.getPrefix() + selectedLayer.getNextObjectNumber();
+                    e6.layer = selectedLayer;
+                    selectedLayer.loList.Add(e6);
+                    selectLevelObject(e6);
                     break;
             }
             MainForm.Default.UpdateTreeView();

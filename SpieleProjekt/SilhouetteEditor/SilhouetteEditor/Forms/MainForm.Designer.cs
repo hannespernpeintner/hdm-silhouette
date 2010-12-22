@@ -72,8 +72,22 @@ namespace SilhouetteEditor.Forms
             this.circleCollisionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pathCollisionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.PhysicsButton = new System.Windows.Forms.ToolStripDropDownButton();
+            this.physicObjectsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.jointToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.revoluteJointToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.soundObjectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.videoObjectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.EventButton = new System.Windows.Forms.ToolStripDropDownButton();
             this.physicToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.changeBodyTypeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.audioToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.fadeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.equalizerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.modifyPlaybackToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.muteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.setVolumeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.videoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.playToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.propertyGrid1 = new System.Windows.Forms.PropertyGrid();
@@ -490,18 +504,59 @@ namespace SilhouetteEditor.Forms
             // PhysicsButton
             // 
             this.PhysicsButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.PhysicsButton.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.physicObjectsToolStripMenuItem,
+            this.soundObjectToolStripMenuItem,
+            this.videoObjectToolStripMenuItem});
             this.PhysicsButton.Image = global::SilhouetteEditor.Properties.Resource.Physics;
             this.PhysicsButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.PhysicsButton.Name = "PhysicsButton";
             this.PhysicsButton.Size = new System.Drawing.Size(29, 22);
             this.PhysicsButton.Text = "toolStripDropDownButton3";
-            this.PhysicsButton.ToolTipText = "Add Physics";
+            this.PhysicsButton.ToolTipText = "Add Objects";
+            // 
+            // physicObjectsToolStripMenuItem
+            // 
+            this.physicObjectsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.jointToolStripMenuItem});
+            this.physicObjectsToolStripMenuItem.Name = "physicObjectsToolStripMenuItem";
+            this.physicObjectsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.physicObjectsToolStripMenuItem.Text = "Physic Objects";
+            // 
+            // jointToolStripMenuItem
+            // 
+            this.jointToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.revoluteJointToolStripMenuItem});
+            this.jointToolStripMenuItem.Name = "jointToolStripMenuItem";
+            this.jointToolStripMenuItem.Size = new System.Drawing.Size(99, 22);
+            this.jointToolStripMenuItem.Text = "Joint";
+            // 
+            // revoluteJointToolStripMenuItem
+            // 
+            this.revoluteJointToolStripMenuItem.Name = "revoluteJointToolStripMenuItem";
+            this.revoluteJointToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+            this.revoluteJointToolStripMenuItem.Text = "Revolute Joint";
+            // 
+            // soundObjectToolStripMenuItem
+            // 
+            this.soundObjectToolStripMenuItem.Name = "soundObjectToolStripMenuItem";
+            this.soundObjectToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.soundObjectToolStripMenuItem.Text = "SoundObject";
+            this.soundObjectToolStripMenuItem.Click += new System.EventHandler(this.soundObjectToolStripMenuItem_Click);
+            // 
+            // videoObjectToolStripMenuItem
+            // 
+            this.videoObjectToolStripMenuItem.Name = "videoObjectToolStripMenuItem";
+            this.videoObjectToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.videoObjectToolStripMenuItem.Text = "VideoObject";
             // 
             // EventButton
             // 
             this.EventButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.EventButton.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.physicToolStripMenuItem});
+            this.physicToolStripMenuItem,
+            this.audioToolStripMenuItem,
+            this.videoToolStripMenuItem});
             this.EventButton.Image = global::SilhouetteEditor.Properties.Resource.AddEvent;
             this.EventButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.EventButton.Name = "EventButton";
@@ -511,10 +566,80 @@ namespace SilhouetteEditor.Forms
             // 
             // physicToolStripMenuItem
             // 
+            this.physicToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.changeBodyTypeToolStripMenuItem});
             this.physicToolStripMenuItem.Name = "physicToolStripMenuItem";
             this.physicToolStripMenuItem.Size = new System.Drawing.Size(108, 22);
             this.physicToolStripMenuItem.Text = "Physic";
-            this.physicToolStripMenuItem.Click += new System.EventHandler(this.physicToolStripMenuItem_Click);
+            // 
+            // changeBodyTypeToolStripMenuItem
+            // 
+            this.changeBodyTypeToolStripMenuItem.Name = "changeBodyTypeToolStripMenuItem";
+            this.changeBodyTypeToolStripMenuItem.Size = new System.Drawing.Size(171, 22);
+            this.changeBodyTypeToolStripMenuItem.Text = "Change BodyType";
+            this.changeBodyTypeToolStripMenuItem.Click += new System.EventHandler(this.changeBodyTypeToolStripMenuItem_Click);
+            // 
+            // audioToolStripMenuItem
+            // 
+            this.audioToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.fadeToolStripMenuItem,
+            this.equalizerToolStripMenuItem,
+            this.modifyPlaybackToolStripMenuItem,
+            this.muteToolStripMenuItem,
+            this.setVolumeToolStripMenuItem});
+            this.audioToolStripMenuItem.Name = "audioToolStripMenuItem";
+            this.audioToolStripMenuItem.Size = new System.Drawing.Size(108, 22);
+            this.audioToolStripMenuItem.Text = "Audio";
+            // 
+            // fadeToolStripMenuItem
+            // 
+            this.fadeToolStripMenuItem.Name = "fadeToolStripMenuItem";
+            this.fadeToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
+            this.fadeToolStripMenuItem.Text = "Fade";
+            this.fadeToolStripMenuItem.Click += new System.EventHandler(this.fadeToolStripMenuItem_Click);
+            // 
+            // equalizerToolStripMenuItem
+            // 
+            this.equalizerToolStripMenuItem.Name = "equalizerToolStripMenuItem";
+            this.equalizerToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
+            this.equalizerToolStripMenuItem.Text = "Equalizer";
+            this.equalizerToolStripMenuItem.Click += new System.EventHandler(this.equalizerToolStripMenuItem_Click);
+            // 
+            // modifyPlaybackToolStripMenuItem
+            // 
+            this.modifyPlaybackToolStripMenuItem.Name = "modifyPlaybackToolStripMenuItem";
+            this.modifyPlaybackToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
+            this.modifyPlaybackToolStripMenuItem.Text = "Modify Playback";
+            this.modifyPlaybackToolStripMenuItem.Click += new System.EventHandler(this.modifyPlaybackToolStripMenuItem_Click);
+            // 
+            // muteToolStripMenuItem
+            // 
+            this.muteToolStripMenuItem.Name = "muteToolStripMenuItem";
+            this.muteToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
+            this.muteToolStripMenuItem.Text = "Mute";
+            this.muteToolStripMenuItem.Click += new System.EventHandler(this.muteToolStripMenuItem_Click);
+            // 
+            // setVolumeToolStripMenuItem
+            // 
+            this.setVolumeToolStripMenuItem.Name = "setVolumeToolStripMenuItem";
+            this.setVolumeToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
+            this.setVolumeToolStripMenuItem.Text = "Set Volume";
+            this.setVolumeToolStripMenuItem.Click += new System.EventHandler(this.setVolumeToolStripMenuItem_Click);
+            // 
+            // videoToolStripMenuItem
+            // 
+            this.videoToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.playToolStripMenuItem});
+            this.videoToolStripMenuItem.Name = "videoToolStripMenuItem";
+            this.videoToolStripMenuItem.Size = new System.Drawing.Size(108, 22);
+            this.videoToolStripMenuItem.Text = "Video";
+            // 
+            // playToolStripMenuItem
+            // 
+            this.playToolStripMenuItem.Name = "playToolStripMenuItem";
+            this.playToolStripMenuItem.Size = new System.Drawing.Size(96, 22);
+            this.playToolStripMenuItem.Text = "Play";
+            this.playToolStripMenuItem.Click += new System.EventHandler(this.playToolStripMenuItem_Click);
             // 
             // tabControl1
             // 
@@ -691,38 +816,38 @@ namespace SilhouetteEditor.Forms
             this.moveUpToolStripMenuItem,
             this.moveDownToolStripMenuItem});
             this.LayerContextMenu.Name = "LayerContextMenu";
-            this.LayerContextMenu.Size = new System.Drawing.Size(153, 120);
+            this.LayerContextMenu.Size = new System.Drawing.Size(139, 98);
             // 
             // renameToolStripMenuItem2
             // 
             this.renameToolStripMenuItem2.Name = "renameToolStripMenuItem2";
-            this.renameToolStripMenuItem2.Size = new System.Drawing.Size(152, 22);
+            this.renameToolStripMenuItem2.Size = new System.Drawing.Size(138, 22);
             this.renameToolStripMenuItem2.Text = "Rename";
             this.renameToolStripMenuItem2.Click += new System.EventHandler(this.renameToolStripMenuItem2_Click);
             // 
             // deleteToolStripMenuItem
             // 
             this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
-            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
             this.deleteToolStripMenuItem.Text = "Delete";
             this.deleteToolStripMenuItem.Click += new System.EventHandler(this.deleteToolStripMenuItem_Click);
             // 
             // toolStripSeparator5
             // 
             this.toolStripSeparator5.Name = "toolStripSeparator5";
-            this.toolStripSeparator5.Size = new System.Drawing.Size(149, 6);
+            this.toolStripSeparator5.Size = new System.Drawing.Size(135, 6);
             // 
             // moveUpToolStripMenuItem
             // 
             this.moveUpToolStripMenuItem.Name = "moveUpToolStripMenuItem";
-            this.moveUpToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.moveUpToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
             this.moveUpToolStripMenuItem.Text = "Move Up";
             this.moveUpToolStripMenuItem.Click += new System.EventHandler(this.moveUpToolStripMenuItem_Click);
             // 
             // moveDownToolStripMenuItem
             // 
             this.moveDownToolStripMenuItem.Name = "moveDownToolStripMenuItem";
-            this.moveDownToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.moveDownToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
             this.moveDownToolStripMenuItem.Text = "Move Down";
             this.moveDownToolStripMenuItem.Click += new System.EventHandler(this.moveDownToolStripMenuItem_Click);
             // 
@@ -918,5 +1043,19 @@ namespace SilhouetteEditor.Forms
         private System.Windows.Forms.ToolStripMenuItem moveUpToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem moveDownToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem eventManagerToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem audioToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem fadeToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem equalizerToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem modifyPlaybackToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem muteToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem setVolumeToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem videoToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem playToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem changeBodyTypeToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem physicObjectsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem jointToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem revoluteJointToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem soundObjectToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem videoObjectToolStripMenuItem;
     }
 }
