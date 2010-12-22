@@ -28,9 +28,9 @@ using FarseerPhysics.Dynamics.Contacts;
 namespace Silhouette.GameMechs.Events
 {
     [Serializable]
-    public class PhysicEvent : Event
+    public class PhysicChangeBodyTypeEvent : Event
     {
-        public PhysicEvent(Rectangle rectangle)
+        public PhysicChangeBodyTypeEvent(Rectangle rectangle)
         {
             this.rectangle = rectangle;
             position = rectangle.Location.ToVector2();
@@ -98,7 +98,7 @@ namespace Silhouette.GameMechs.Events
 
         public override LevelObject clone()
         {
-            PhysicEvent result = (PhysicEvent)this.MemberwiseClone();
+            PhysicChangeBodyTypeEvent result = (PhysicChangeBodyTypeEvent)this.MemberwiseClone();
             result.mouseOn = false;
             return result;
         }
