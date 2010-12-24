@@ -14,6 +14,7 @@ using FarseerPhysics;
 using FarseerPhysics.Dynamics;
 using FarseerPhysics.Factories;
 using FarseerPhysics.Collision;
+using FarseerPhysics.Dynamics.Contacts;
 
 namespace Silhouette.GameMechs
 {
@@ -61,7 +62,7 @@ namespace Silhouette.GameMechs
         public BodyType bodyType { get { return _bodyType; } set { _bodyType = value; } }
 
         private bool _isDeadly;
-        [DisplayName("Deadly"), Category("Behavior")]
+        [DisplayName("Deadly"), Category("Physical Behavior")]
         [Description("Defines if the object can kill the player if it hits him with an defined force.")]
         public bool isDeadly { get { return _isDeadly; } set { _isDeadly = value; } }
 
@@ -132,6 +133,8 @@ namespace Silhouette.GameMechs
             {
                 fixture = FixtureManager.CreatePolygon(texture, scale, bodyType, position, density);
                 fixture.isDeadly = isDeadly;
+
+                fixture.OnCollision += this.InteractiveOnCollision;
             }
             catch (Exception e)
             {
@@ -139,6 +142,8 @@ namespace Silhouette.GameMechs
                 fixture.Body.BodyType = bodyType;
                 fixture.Body.Position = FixtureManager.ToMeter(position);
                 fixture.isDeadly = isDeadly;
+
+                fixture.OnCollision += this.InteractiveOnCollision;
             }
         }
 
@@ -264,6 +269,17 @@ namespace Silhouette.GameMechs
                 }
             }
             return false;
+        }
+
+        public bool InteractiveOnCollision(Fixture a, Fixture b, Contact contact)
+        {
+            if (!b.isPlayer)
+            {
+                isDeadly = false;
+                a.isDeadly = false;
+            }
+
+            return true;
         }
     }
 }
