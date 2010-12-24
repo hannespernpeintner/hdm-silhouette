@@ -41,7 +41,7 @@ namespace Silhouette.GameMechs.Events
 
         private Boolean _looped;
         [DisplayName("Loop"), Category("Event Data")]
-        [Description("Defines if the event makes the SoundObjects in the list loopable.")]
+        [Description("Defines if the event makes the SoundObjects is looped. Beware: You can't change this while a Sound is playing!")]
         public Boolean looped { get { return _looped; } set { _looped = value; } }
         
         public  AudioModifyPlayback(Rectangle rectangle)

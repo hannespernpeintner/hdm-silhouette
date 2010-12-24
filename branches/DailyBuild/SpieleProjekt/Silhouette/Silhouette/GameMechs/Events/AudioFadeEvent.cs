@@ -45,8 +45,8 @@ namespace Silhouette.GameMechs.Events
         public float fadeTime { get { return _fadeTime; } set { _fadeTime = value; } }
 
         private float _gainOrLoss;
-        [DisplayName("Gain or Loss"), Category("Event Data")]
-        [Description("")]
+        [DisplayName("Signal Gain / Loss"), Category("Event Data")]
+        [Description("Increases or decreases the volume by a factor of this Value. E.g. : The current volume is 0.5, the selected FadeType is FadeDown. Selecting a loss of 0.5 will fade the volume to 0")]
         public float gainOrLoss { get { return _gainOrLoss; } set { _gainOrLoss = value; } }
 
         public AudioFadeEvent(Rectangle rectangle)
