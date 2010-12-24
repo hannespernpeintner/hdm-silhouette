@@ -196,6 +196,10 @@ namespace SilhouetteEditor
                 }
             #endregion
 
+            /* Sascha:
+             * Editorspezifische Anzeigen werden hier aktiviert/deaktiviert.
+            */
+
             #region EditorVisibles
                 if (kstate.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.F1) && oldkstate.IsKeyUp(Microsoft.Xna.Framework.Input.Keys.F1))
                 {
