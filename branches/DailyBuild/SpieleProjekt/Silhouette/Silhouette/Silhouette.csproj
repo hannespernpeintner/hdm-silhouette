@@ -147,7 +147,7 @@
     <Compile Include="GameMechs\DrawableLevelObject.cs" />
     <Compile Include="GameMechs\Events\AudioEqualizerEvent.cs" />
     <Compile Include="GameMechs\Events\AudioModifyPlayback.cs" />
-    <Compile Include="GameMechs\Events\AudioFadeEvent.cs" />
+    <Compile Include="GameMechs\Events\AudioReverbEvent.cs" />
     <Compile Include="GameMechs\Events\AudioMuteEvent.cs" />
     <Compile Include="GameMechs\Events\AudioSetVolumeEvent.cs" />
     <Compile Include="GameMechs\Events\Event.cs" />
