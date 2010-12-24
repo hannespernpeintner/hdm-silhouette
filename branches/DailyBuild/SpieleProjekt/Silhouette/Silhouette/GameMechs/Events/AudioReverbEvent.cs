@@ -38,8 +38,6 @@ namespace Silhouette.GameMechs.Events
         [Description("Defines what this event should do to the reverb effect")]
         public Type ReverbType { get { return _reverbType; } set { _reverbType = value; } }
 
-
-
         [DisplayName("Reverb input gain"), Category("Event Data")]
         [Description("Input gain of signal, in decibels (dB). Min/Max: [-96.0,0.0]")]
         public float RevInGain { get { return _RevInGain; } set { _RevInGain = value; } }
@@ -104,7 +102,7 @@ namespace Silhouette.GameMechs.Events
 
         public override string getPrefix()
         {
-            return "AudioMuteEvent_";
+            return "AudioReverbEvent_";
         }
 
         public override LevelObject clone()

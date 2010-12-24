@@ -21,11 +21,18 @@ namespace Silhouette.GameMechs
     [Serializable]
     public partial class InteractiveObject: DrawableLevelObject
     {
+        /* Sascha:
+         * InteractiveObjects sind Texturen mit physikalischem Verhalten. Der Spieler kann so mit ihnen direkt interagieren, 
+         * sie z.B. zum Stopfen eines Lochs verwenden oder aber von Ihnen erschlagen werden.
+        */
+
+        //Sascha: Texturen und Fixtures können nicht serialisiert werden, zudem würde das zu viel Speicherplatz fressen.
         [NonSerialized]
         public Texture2D texture;
         [NonSerialized]
         public Fixture fixture;
 
+        //Sascha: AssetNames ist einfach der Name der Datei. Wird verwendet um die Bilddatei aus der ContentPipeline oder dem Content-Ordner zu laden.
         private string _assetName;
         [DisplayName("Filename"), Category("Texture Data")]
         [Description("The filename of the attached texture.")]
@@ -66,11 +73,11 @@ namespace Silhouette.GameMechs
         [Description("Defines if the object can kill the player if it hits him with an defined force.")]
         public bool isDeadly { get { return _isDeadly; } set { _isDeadly = value; } }
 
-        Matrix transform;
-        Rectangle boundingBox;
+        Matrix transform;       //Sascha: Das Objekt hat eine eigene Transformationsmatrix, damit man die Transformation auf das Selection Frame übertragen kann.
+        Rectangle boundingBox;  //Sascha: Bounding Box für das Objekt, benutzt die Methode Contains zur ersten Collisionserkennung im Editor.
         Vector2[] polygon;
         [NonSerialized]
-        Color[] collisionData;
+        Color[] collisionData;  //Sascha: Speichert die Bilddaten der Textur ab, damit man später transparente Pixel nicht selektieren kann.
 
         public InteractiveObject(String path)
         {
