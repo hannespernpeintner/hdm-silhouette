@@ -36,22 +36,22 @@ namespace Silhouette.GameMechs.Events
 
         private Type _eqType;
         [DisplayName("Action"), Category("Event Data")]
-        [Description("")]
+        [Description("Selects the action to Perform on the Equalizer: Enable, Disable or Modify")]
         public Type eqType { get { return _eqType; } set { _eqType = value; } }
 
         private float _fCenter;
         [DisplayName("Center"), Category("Event Data")]
-        [Description("")]
+        [Description("Center frequency, in hertz. Minimal Value:80, Maximal Value:16000.0f ")]
         public float fCenter { get { return _fCenter; } set { _fCenter = value; } }
 
         private float _fBandwidth;
         [DisplayName("Bandwidth"), Category("Event Data")]
-        [Description("")]
+        [Description("Bandwidth, in semitones, The default value is 12. Minimal Value:1.0f, Maximal Value:36.0f ")]
         public float fBandwidth { get { return _fBandwidth; } set { _fBandwidth = value; } }
 
         private float _fGain;
         [DisplayName("Gain"), Category("Event Data")]
-        [Description("")]
+        [Description("Gain. Minimal Value:-15.0f, Maximal Value:15.0f")]
         public float fGain { get { return _fGain; } set { _fGain = value; } }
 
         public AudioEqualizerEvent(Rectangle rectangle )
