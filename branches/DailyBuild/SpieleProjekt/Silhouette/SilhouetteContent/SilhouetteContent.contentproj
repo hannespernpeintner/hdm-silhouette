@@ -57,9 +57,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Audio\" />
     <Folder Include="Cutscenes\" />
     <Folder Include="ParticleEffects\ParticleTextures\" />
-    <Folder Include="Sounds\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Fonts\DebugFont.spritefont">
