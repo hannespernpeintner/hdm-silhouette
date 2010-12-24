@@ -51,9 +51,9 @@ namespace Silhouette.GameMechs
         private Boolean _looped;
         [DisplayName("Looped"), Category("Initial Sound Data")]
         [Description("Decides wether a Sound is played in an endless loop. This is an initial setting")]
-        public Boolean looped { get; set; }
+        public Boolean looped { get { return _looped; } set { _looped = value; } }
 
-        
+        private String pathToFile;
         
         /* Julius: Property für die Pause.
          * ACHTUNG: Funktioniert nur, wenn davor play() aufgerufen worden ist.
@@ -110,9 +110,9 @@ namespace Silhouette.GameMechs
         
         } }
         private Boolean _mute;
-        private float _MuteVolume = -1;
+        private float _MuteVolume = 1;
         //Julius: Zustandsspeicher, falls sound noch nicht erzeugt wurde
-        float _volume;
+        float _volume= 1;
         [NonSerialized]
          IrrKlang.ISound Sound;
         
@@ -168,7 +168,9 @@ namespace Silhouette.GameMechs
         public SoundObject(String path)
         {
             this.fullPath = path;
-            this.assetName = Path.GetFileNameWithoutExtension(path);  
+            this.assetName = Path.GetFileNameWithoutExtension(path);
+
+            
 
             looped = false;
 
@@ -176,8 +178,8 @@ namespace Silhouette.GameMechs
 
             //Julius: Beim Event registrieren...
             Engine.Manager.SoundManager.UpdateFader += new SoundManager.UpdateFaderEventHandler(Update);
-            //Julius: mit -1 initalisieren, um in Play() zu erkennen, ob der Wert verändert wurde
-            _volume = -1;
+           
+            _volume = 1;
         }
 
 
@@ -255,9 +257,20 @@ namespace Silhouette.GameMechs
              This is, where the magic happens: Um dieser verkorksten Architektur aus dem Weg zu gehen, wird jeder Song pausiert gestartet.
              * Auf das beim Starten erzeugte ISound Objekt werden die Effekte angewendet und nachher je nach Bedarf unpaused oder auch nicht.
              */
+
+            if (File.Exists(fullPath))
+            {
+                pathToFile = fullPath;
+
+            }
+            else
+            {
+                pathToFile = Environment.CurrentDirectory + "\\Content\\Audio\\" + _assetName + ".mp3";
+            }
+           
+
             
-            
-            Sound = IrrAudioEngine.play(_fullPath, looped, true);
+            Sound = IrrAudioEngine.play(pathToFile, looped, true);
 
             if (_EQActivated)
             {
@@ -273,10 +286,9 @@ namespace Silhouette.GameMechs
             _MuteVolume = volume;
             if (mute)
                 Sound.Volume = 0;
-            else
-                Sound.Volume = _volume;
-            
-            
+     
+
+            Sound.Paused = false;
             
         }
 
