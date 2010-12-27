@@ -16,7 +16,9 @@ using ProjectMercury.Emitters;
 using ProjectMercury.Modifiers;
 using ProjectMercury.Renderers;
 
-namespace Silhouette.Engine.PartikelEngine
+using Silhouette.GameMechs;
+
+namespace Silhouette.Engine.Manager
 {
 
     public static class ParticleManager
@@ -29,11 +31,24 @@ namespace Silhouette.Engine.PartikelEngine
          * dem gleichen Content auf das selbe Objekt und es kommt zu massiven Darstellungsfehlern.
         */
 
-        public static ParticleEffect waterfall;
+        private static ParticleEffect waterfall;
 
-        public static void initialize()
+        public static void initialize() 
         {
-            waterfall = GameLoop.gameInstance.Content.Load<ParticleEffect>("ParticleEffects/Water");
+            waterfall = GameLoop.gameInstance.Content.Load<ParticleEffect>("ParticleEffects/WaterJet");
+        }
+
+        public static ParticleEffect getParticleEffect(ParticleType particleType) 
+        {
+            switch (particleType)
+            {
+                case ParticleType.None:
+                    return null;
+                case ParticleType.Waterfall:
+                    return waterfall.DeepCopy();
+            }
+
+            return null;
         }
     }
 }

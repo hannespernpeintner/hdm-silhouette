@@ -75,6 +75,7 @@ namespace SilhouetteEditor.Forms
             this.physicObjectsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.jointToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.revoluteJointToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.particleObjectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.soundObjectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.videoObjectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.EventButton = new System.Windows.Forms.ToolStripDropDownButton();
@@ -155,7 +156,7 @@ namespace SilhouetteEditor.Forms
             this.ZoomStatus});
             this.StatusBar.Location = new System.Drawing.Point(0, 708);
             this.StatusBar.Name = "StatusBar";
-            this.StatusBar.Size = new System.Drawing.Size(1264, 22);
+            this.StatusBar.Size = new System.Drawing.Size(1256, 22);
             this.StatusBar.TabIndex = 0;
             this.StatusBar.Text = "StatusBar";
             // 
@@ -221,7 +222,7 @@ namespace SilhouetteEditor.Forms
             this.helpToolStripMenuItem});
             this.MenuBar.Location = new System.Drawing.Point(0, 0);
             this.MenuBar.Name = "MenuBar";
-            this.MenuBar.Size = new System.Drawing.Size(1264, 24);
+            this.MenuBar.Size = new System.Drawing.Size(1256, 24);
             this.MenuBar.TabIndex = 1;
             this.MenuBar.Text = "MenuBar";
             // 
@@ -343,8 +344,8 @@ namespace SilhouetteEditor.Forms
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.GameView);
-            this.splitContainer1.Size = new System.Drawing.Size(1264, 684);
-            this.splitContainer1.SplitterDistance = 251;
+            this.splitContainer1.Size = new System.Drawing.Size(1256, 684);
+            this.splitContainer1.SplitterDistance = 249;
             this.splitContainer1.TabIndex = 2;
             // 
             // splitContainer2
@@ -364,8 +365,8 @@ namespace SilhouetteEditor.Forms
             // splitContainer2.Panel2
             // 
             this.splitContainer2.Panel2.Controls.Add(this.tabControl1);
-            this.splitContainer2.Size = new System.Drawing.Size(251, 684);
-            this.splitContainer2.SplitterDistance = 284;
+            this.splitContainer2.Size = new System.Drawing.Size(249, 684);
+            this.splitContainer2.SplitterDistance = 283;
             this.splitContainer2.TabIndex = 0;
             // 
             // treeView1
@@ -377,7 +378,7 @@ namespace SilhouetteEditor.Forms
             this.treeView1.Location = new System.Drawing.Point(0, 25);
             this.treeView1.Name = "treeView1";
             this.treeView1.ShowLines = false;
-            this.treeView1.Size = new System.Drawing.Size(247, 255);
+            this.treeView1.Size = new System.Drawing.Size(245, 254);
             this.treeView1.TabIndex = 1;
             this.treeView1.AfterLabelEdit += new System.Windows.Forms.NodeLabelEditEventHandler(this.treeView1_AfterLabelEdit);
             this.treeView1.AfterCheck += new System.Windows.Forms.TreeViewEventHandler(this.treeView1_AfterCheck);
@@ -401,7 +402,7 @@ namespace SilhouetteEditor.Forms
             this.ToolBar.Location = new System.Drawing.Point(0, 0);
             this.ToolBar.Name = "ToolBar";
             this.ToolBar.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.ToolBar.Size = new System.Drawing.Size(247, 25);
+            this.ToolBar.Size = new System.Drawing.Size(245, 25);
             this.ToolBar.TabIndex = 0;
             this.ToolBar.Text = "ToolBar";
             // 
@@ -506,6 +507,7 @@ namespace SilhouetteEditor.Forms
             this.PhysicsButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.PhysicsButton.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.physicObjectsToolStripMenuItem,
+            this.particleObjectToolStripMenuItem,
             this.soundObjectToolStripMenuItem,
             this.videoObjectToolStripMenuItem});
             this.PhysicsButton.Image = global::SilhouetteEditor.Properties.Resource.Physics;
@@ -520,7 +522,7 @@ namespace SilhouetteEditor.Forms
             this.physicObjectsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.jointToolStripMenuItem});
             this.physicObjectsToolStripMenuItem.Name = "physicObjectsToolStripMenuItem";
-            this.physicObjectsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.physicObjectsToolStripMenuItem.Size = new System.Drawing.Size(151, 22);
             this.physicObjectsToolStripMenuItem.Text = "Physic Objects";
             // 
             // jointToolStripMenuItem
@@ -537,17 +539,24 @@ namespace SilhouetteEditor.Forms
             this.revoluteJointToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
             this.revoluteJointToolStripMenuItem.Text = "Revolute Joint";
             // 
+            // particleObjectToolStripMenuItem
+            // 
+            this.particleObjectToolStripMenuItem.Name = "particleObjectToolStripMenuItem";
+            this.particleObjectToolStripMenuItem.Size = new System.Drawing.Size(151, 22);
+            this.particleObjectToolStripMenuItem.Text = "ParticleObject";
+            this.particleObjectToolStripMenuItem.Click += new System.EventHandler(this.particleObjectToolStripMenuItem_Click);
+            // 
             // soundObjectToolStripMenuItem
             // 
             this.soundObjectToolStripMenuItem.Name = "soundObjectToolStripMenuItem";
-            this.soundObjectToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.soundObjectToolStripMenuItem.Size = new System.Drawing.Size(151, 22);
             this.soundObjectToolStripMenuItem.Text = "SoundObject";
             this.soundObjectToolStripMenuItem.Click += new System.EventHandler(this.soundObjectToolStripMenuItem_Click);
             // 
             // videoObjectToolStripMenuItem
             // 
             this.videoObjectToolStripMenuItem.Name = "videoObjectToolStripMenuItem";
-            this.videoObjectToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.videoObjectToolStripMenuItem.Size = new System.Drawing.Size(151, 22);
             this.videoObjectToolStripMenuItem.Text = "VideoObject";
             // 
             // EventButton
@@ -651,7 +660,7 @@ namespace SilhouetteEditor.Forms
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(247, 392);
+            this.tabControl1.Size = new System.Drawing.Size(245, 393);
             this.tabControl1.TabIndex = 0;
             // 
             // tabPage1
@@ -659,8 +668,8 @@ namespace SilhouetteEditor.Forms
             this.tabPage1.Controls.Add(this.propertyGrid1);
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(239, 366);
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+            this.tabPage1.Size = new System.Drawing.Size(237, 367);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Attributes";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -673,7 +682,7 @@ namespace SilhouetteEditor.Forms
             this.propertyGrid1.Name = "propertyGrid1";
             this.propertyGrid1.PropertySort = System.Windows.Forms.PropertySort.Categorized;
             this.propertyGrid1.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.propertyGrid1.Size = new System.Drawing.Size(233, 360);
+            this.propertyGrid1.Size = new System.Drawing.Size(231, 361);
             this.propertyGrid1.TabIndex = 0;
             this.propertyGrid1.TabStop = false;
             this.propertyGrid1.ToolbarVisible = false;
@@ -684,8 +693,8 @@ namespace SilhouetteEditor.Forms
             this.tabPage2.Controls.Add(this.BrowseButton);
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(239, 366);
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+            this.tabPage2.Size = new System.Drawing.Size(235, 368);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Textures";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -697,7 +706,7 @@ namespace SilhouetteEditor.Forms
             this.TextureView.LargeImageList = this.ImageList32;
             this.TextureView.Location = new System.Drawing.Point(3, 3);
             this.TextureView.Name = "TextureView";
-            this.TextureView.Size = new System.Drawing.Size(233, 337);
+            this.TextureView.Size = new System.Drawing.Size(235, 346);
             this.TextureView.TabIndex = 1;
             this.TextureView.UseCompatibleStateImageBehavior = false;
             this.TextureView.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(this.TextureView_ItemDrag);
@@ -713,9 +722,9 @@ namespace SilhouetteEditor.Forms
             // BrowseButton
             // 
             this.BrowseButton.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.BrowseButton.Location = new System.Drawing.Point(3, 340);
+            this.BrowseButton.Location = new System.Drawing.Point(3, 349);
             this.BrowseButton.Name = "BrowseButton";
-            this.BrowseButton.Size = new System.Drawing.Size(233, 23);
+            this.BrowseButton.Size = new System.Drawing.Size(234, 23);
             this.BrowseButton.TabIndex = 0;
             this.BrowseButton.Text = "Browse...";
             this.BrowseButton.UseVisualStyleBackColor = true;
@@ -727,8 +736,8 @@ namespace SilhouetteEditor.Forms
             this.tabPage3.Controls.Add(this.InteractiveView);
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(239, 366);
+            this.tabPage3.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+            this.tabPage3.Size = new System.Drawing.Size(235, 368);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Interactive";
             this.tabPage3.UseVisualStyleBackColor = true;
@@ -736,9 +745,9 @@ namespace SilhouetteEditor.Forms
             // BrowseButton2
             // 
             this.BrowseButton2.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.BrowseButton2.Location = new System.Drawing.Point(3, 340);
+            this.BrowseButton2.Location = new System.Drawing.Point(3, 349);
             this.BrowseButton2.Name = "BrowseButton2";
-            this.BrowseButton2.Size = new System.Drawing.Size(233, 23);
+            this.BrowseButton2.Size = new System.Drawing.Size(234, 23);
             this.BrowseButton2.TabIndex = 1;
             this.BrowseButton2.Text = "Browse...";
             this.BrowseButton2.UseVisualStyleBackColor = true;
@@ -751,7 +760,7 @@ namespace SilhouetteEditor.Forms
             this.InteractiveView.LargeImageList = this.ImageListInteractive32;
             this.InteractiveView.Location = new System.Drawing.Point(3, 3);
             this.InteractiveView.Name = "InteractiveView";
-            this.InteractiveView.Size = new System.Drawing.Size(233, 360);
+            this.InteractiveView.Size = new System.Drawing.Size(235, 369);
             this.InteractiveView.TabIndex = 0;
             this.InteractiveView.UseCompatibleStateImageBehavior = false;
             this.InteractiveView.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(this.InteractiveView_ItemDrag);
@@ -771,7 +780,7 @@ namespace SilhouetteEditor.Forms
             this.GameView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.GameView.Location = new System.Drawing.Point(0, 0);
             this.GameView.Name = "GameView";
-            this.GameView.Size = new System.Drawing.Size(1005, 680);
+            this.GameView.Size = new System.Drawing.Size(999, 680);
             this.GameView.TabIndex = 0;
             this.GameView.TabStop = false;
             this.GameView.DragEnter += new System.Windows.Forms.DragEventHandler(this.GameView_DragEnter);
@@ -931,7 +940,7 @@ namespace SilhouetteEditor.Forms
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.GrayText;
-            this.ClientSize = new System.Drawing.Size(1264, 730);
+            this.ClientSize = new System.Drawing.Size(1256, 730);
             this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.StatusBar);
             this.Controls.Add(this.MenuBar);
@@ -1057,5 +1066,6 @@ namespace SilhouetteEditor.Forms
         private System.Windows.Forms.ToolStripMenuItem revoluteJointToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem soundObjectToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem videoObjectToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem particleObjectToolStripMenuItem;
     }
 }

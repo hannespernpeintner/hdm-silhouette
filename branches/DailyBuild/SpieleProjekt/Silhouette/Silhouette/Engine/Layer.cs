@@ -14,6 +14,7 @@ using System.ComponentModel;
 using Microsoft.Xna.Framework.Media;
 
 using Silhouette.GameMechs;
+using Silhouette.Engine.PartikelEngine;
 
 namespace Silhouette.Engine
 {
@@ -51,6 +52,10 @@ namespace Silhouette.Engine
         [Description("The objects of the Layer.")]
         public List<LevelObject> loList { get { return _loList; } }
 
+        [NonSerialized]
+        [Browsable(false)]
+        ParticleRenderer particleRenderer;
+
         public Layer()
         {
             scrollSpeed = Vector2.One;
@@ -63,10 +68,20 @@ namespace Silhouette.Engine
 
         public void loadLayer()
         {
+            particleRenderer = new ParticleRenderer();
+
             foreach (LevelObject lo in loList)
             {
                 lo.LoadContent();
+
+                if (lo is ParticleObject)
+                {
+                    ParticleObject p = (ParticleObject)lo;
+                    particleRenderer.addParticleObjects(p);
+                }
             }
+
+            particleRenderer.initializeParticles();
         }
 
         public void updateLayer(GameTime gameTime)
@@ -75,6 +90,8 @@ namespace Silhouette.Engine
             {
                 lo.Update(gameTime);
             }
+
+            particleRenderer.updateParticles(gameTime);
         }
 
         public void drawLayer(SpriteBatch spriteBatch)
@@ -87,6 +104,8 @@ namespace Silhouette.Engine
                     dlo.Draw(spriteBatch);
                 }
             }
+
+            particleRenderer.drawParticles();
         }
 
         public Effect getShaderByType(ShaderType shaderType)

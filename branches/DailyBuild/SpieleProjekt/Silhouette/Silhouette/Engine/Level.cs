@@ -73,6 +73,8 @@ namespace Silhouette.Engine
             private bool GraphicsEnabled = false;
             [NonSerialized]
             SpriteBatch spriteBatch;
+            [NonSerialized]
+            Texture2D vignette;
 
             private List<Layer> _layerList;
 
@@ -102,6 +104,7 @@ namespace Silhouette.Engine
             debugView = new DebugViewXNA(Level.Physics);
             Camera.initialize(GameSettings.Default.resolutionWidth, GameSettings.Default.resolutionHeight);
             Camera.Position = new Vector2(GameSettings.Default.resolutionWidth / 2, GameSettings.Default.resolutionHeight / 2);
+            ParticleManager.initialize();
 
             this._contentPath = Path.Combine(Directory.GetCurrentDirectory(), "Content");
 
@@ -114,6 +117,9 @@ namespace Silhouette.Engine
         public void LoadContent()
         {
             proj = Matrix.CreateOrthographicOffCenter(0, GameSettings.Default.resolutionWidth / PixelPerMeter, GameSettings.Default.resolutionHeight / PixelPerMeter, 0, 0, 1);
+
+            vignette = GameLoop.gameInstance.Content.Load<Texture2D>("Sprites/OverLays/Vignette");
+            GameLoop.gameInstance.GraphicsDevice.Textures[1] = vignette;
 
             Layer playerLayer = getLayerByName("Player");
             if (playerLayer != null)

@@ -135,6 +135,7 @@
     <Compile Include="Engine\Manager\SoundManager.cs" />
     <Compile Include="Engine\Manager\TextureManager.cs" />
     <Compile Include="Engine\Manager\VideoManager.cs" />
+    <Compile Include="Engine\PartikelEngine\ParticleRenderer.cs" />
     <Compile Include="Engine\Primitives.cs" />
     <Compile Include="Engine\Screens\MainMenuScreen.cs" />
     <Compile Include="Engine\Manager\FontManager.cs" />
@@ -157,6 +158,7 @@
     <Compile Include="GameMechs\Events\VideoPlayEvent.cs" />
     <Compile Include="GameMechs\InteractiveObject.cs" />
     <Compile Include="GameMechs\LevelObject.cs" />
+    <Compile Include="GameMechs\ParticleObject.cs" />
     <Compile Include="GameMechs\Physics\JointObject.cs" />
     <Compile Include="GameMechs\Player.cs" />
     <Compile Include="GameMechs\PrimitiveObject.cs" />
