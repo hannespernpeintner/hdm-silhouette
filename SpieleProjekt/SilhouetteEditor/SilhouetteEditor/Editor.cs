@@ -72,6 +72,7 @@ namespace SilhouetteEditor
         CREATE_ANIMATION,
         CREATE_PHYSICS,
         CREATE_EVENTS,
+        CREATE_PARTICLE,
         ROTATING,
         SCALING,
         POSITIONING,
@@ -665,6 +666,23 @@ namespace SilhouetteEditor
                 }
             #endregion
 
+            #region CREATE_PARTICLE
+                if (editorState == EditorState.CREATE_PARTICLE)
+                {
+                    MainForm.Default.EditorStatus.Text = "Editorstatus: Create Particle";
+                    MainForm.Default.GameView.Cursor = null;
+
+                    if (mstate.LeftButton == Microsoft.Xna.Framework.Input.ButtonState.Pressed && oldmstate.LeftButton == Microsoft.Xna.Framework.Input.ButtonState.Released)
+                    {
+                        createCurrentObject(false);
+                    }
+                    if (mstate.RightButton == Microsoft.Xna.Framework.Input.ButtonState.Pressed && oldmstate.LeftButton == Microsoft.Xna.Framework.Input.ButtonState.Released)
+                    {
+                        editorState = EditorState.IDLE;
+                    }
+                }
+            #endregion
+
             #region POSITIONING
                 if (editorState == EditorState.POSITIONING)
                 {
@@ -961,6 +979,14 @@ namespace SilhouetteEditor
             currentObject = io;
         }
 
+        public void createParticleObject()
+        {
+            editorState = EditorState.CREATE_PARTICLE;
+            ParticleObject p = new ParticleObject();
+            p.particleType = ParticleType.None;
+            currentObject = p;
+        }
+
         //---> Destroy Objects <---//
 
         public void destroyCurrentObject()
@@ -1023,6 +1049,19 @@ namespace SilhouetteEditor
                 selectedLevelObjects.Clear();
                 selectedLevelObjects.Add(io);
             }
+            if (currentObject is ParticleObject)
+            {
+                ParticleObject temp = (ParticleObject)currentObject;
+                ParticleObject po = new ParticleObject();
+                po.particleType = temp.particleType;
+                po.position = MouseWorldPosition;
+                po.name = po.getPrefix() + selectedLayer.getNextObjectNumber();
+                po.layer = selectedLayer;
+                AddLevelObject(po);
+                selectedLevelObjects.Clear();
+                selectedLevelObjects.Add(po);
+            }
+
             MainForm.Default.UpdateTreeView();
 
             if (!continueAfterPaint)
@@ -1370,6 +1409,16 @@ namespace SilhouetteEditor
                                 Primitives.Instance.drawBoxFilled(spriteBatch, e.rectangle, color);
                             }
                         }
+                        if (lo is ParticleObject)
+                        {
+                            ParticleObject p = (ParticleObject)lo;
+                            if (p.isVisible)
+                            {
+                                Microsoft.Xna.Framework.Color color = Constants.ColorParticles;
+                                if (lo.mouseOn) color = Constants.ColorMouseOn;
+                                Primitives.Instance.drawCircleFilled(spriteBatch, p.position, p.radius, color);
+                            }
+                        }
                     }
 
                     if (selectedLevelObjects.Count > 0)
@@ -1429,6 +1478,11 @@ namespace SilhouetteEditor
                     {
                         InteractiveObject io = (InteractiveObject)currentObject;
                         spriteBatch.Draw(io.texture, new Vector2(MouseWorldPosition.X, MouseWorldPosition.Y), null, new Microsoft.Xna.Framework.Color(1f, 1f, 1f, 7f), io.rotation, new Vector2(io.texture.Width / 2, io.texture.Height / 2), io.scale, SpriteEffects.None, 0);
+                    }
+                    if (l == selectedLayer && editorState == EditorState.CREATE_PARTICLE)
+                    {
+                        ParticleObject p = (ParticleObject)currentObject;
+                        Primitives.Instance.drawCircleFilled(spriteBatch, MouseWorldPosition, p.radius, Constants.ColorParticles);
                     }
                     if (l == selectedLayer && editorState == EditorState.SELECTING)
                     {
