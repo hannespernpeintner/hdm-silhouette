@@ -559,6 +559,12 @@ namespace SilhouetteEditor.Forms
             }
         }
 
+
+        private void particleObjectToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Editor.Default.createParticleObject();
+        }
+
         //---> Events
 
 

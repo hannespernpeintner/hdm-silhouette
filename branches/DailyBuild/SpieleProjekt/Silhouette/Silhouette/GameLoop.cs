@@ -32,7 +32,7 @@ namespace Silhouette
 {
     public class GameLoop : Microsoft.Xna.Framework.Game
     {
-        GraphicsDeviceManager graphics;
+        public GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         
 
