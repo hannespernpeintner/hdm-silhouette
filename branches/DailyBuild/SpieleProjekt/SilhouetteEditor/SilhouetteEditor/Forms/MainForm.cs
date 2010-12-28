@@ -10,6 +10,7 @@ using Silhouette.Engine;
 using Silhouette.GameMechs;
 using System.IO;
 using Silhouette.GameMechs.Events;
+using System.Drawing.Design;
 
 //Physik-Engine Klassen
 using FarseerPhysics;
@@ -32,6 +33,7 @@ namespace SilhouetteEditor.Forms
         {
             Default = this;
             InitializeComponent();
+            TypeDescriptor.AddAttributes(typeof(LevelObject), new EditorAttribute(typeof(LevelObjectUITypeEditor), typeof(UITypeEditor)));
         }
  
         public IntPtr getDrawSurface()
