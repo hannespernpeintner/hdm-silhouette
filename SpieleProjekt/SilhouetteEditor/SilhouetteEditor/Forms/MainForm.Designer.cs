@@ -668,7 +668,7 @@ namespace SilhouetteEditor.Forms
             this.tabPage1.Controls.Add(this.propertyGrid1);
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage1.Size = new System.Drawing.Size(237, 367);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Attributes";
@@ -693,8 +693,8 @@ namespace SilhouetteEditor.Forms
             this.tabPage2.Controls.Add(this.BrowseButton);
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
-            this.tabPage2.Size = new System.Drawing.Size(235, 368);
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage2.Size = new System.Drawing.Size(237, 367);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Textures";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -706,7 +706,7 @@ namespace SilhouetteEditor.Forms
             this.TextureView.LargeImageList = this.ImageList32;
             this.TextureView.Location = new System.Drawing.Point(3, 3);
             this.TextureView.Name = "TextureView";
-            this.TextureView.Size = new System.Drawing.Size(235, 346);
+            this.TextureView.Size = new System.Drawing.Size(231, 338);
             this.TextureView.TabIndex = 1;
             this.TextureView.UseCompatibleStateImageBehavior = false;
             this.TextureView.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(this.TextureView_ItemDrag);
@@ -722,9 +722,9 @@ namespace SilhouetteEditor.Forms
             // BrowseButton
             // 
             this.BrowseButton.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.BrowseButton.Location = new System.Drawing.Point(3, 349);
+            this.BrowseButton.Location = new System.Drawing.Point(3, 341);
             this.BrowseButton.Name = "BrowseButton";
-            this.BrowseButton.Size = new System.Drawing.Size(234, 23);
+            this.BrowseButton.Size = new System.Drawing.Size(231, 23);
             this.BrowseButton.TabIndex = 0;
             this.BrowseButton.Text = "Browse...";
             this.BrowseButton.UseVisualStyleBackColor = true;
@@ -736,8 +736,8 @@ namespace SilhouetteEditor.Forms
             this.tabPage3.Controls.Add(this.InteractiveView);
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
-            this.tabPage3.Size = new System.Drawing.Size(235, 368);
+            this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage3.Size = new System.Drawing.Size(237, 367);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Interactive";
             this.tabPage3.UseVisualStyleBackColor = true;
@@ -745,9 +745,9 @@ namespace SilhouetteEditor.Forms
             // BrowseButton2
             // 
             this.BrowseButton2.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.BrowseButton2.Location = new System.Drawing.Point(3, 349);
+            this.BrowseButton2.Location = new System.Drawing.Point(3, 341);
             this.BrowseButton2.Name = "BrowseButton2";
-            this.BrowseButton2.Size = new System.Drawing.Size(234, 23);
+            this.BrowseButton2.Size = new System.Drawing.Size(231, 23);
             this.BrowseButton2.TabIndex = 1;
             this.BrowseButton2.Text = "Browse...";
             this.BrowseButton2.UseVisualStyleBackColor = true;
@@ -760,7 +760,7 @@ namespace SilhouetteEditor.Forms
             this.InteractiveView.LargeImageList = this.ImageListInteractive32;
             this.InteractiveView.Location = new System.Drawing.Point(3, 3);
             this.InteractiveView.Name = "InteractiveView";
-            this.InteractiveView.Size = new System.Drawing.Size(235, 369);
+            this.InteractiveView.Size = new System.Drawing.Size(231, 361);
             this.InteractiveView.TabIndex = 0;
             this.InteractiveView.UseCompatibleStateImageBehavior = false;
             this.InteractiveView.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(this.InteractiveView_ItemDrag);
