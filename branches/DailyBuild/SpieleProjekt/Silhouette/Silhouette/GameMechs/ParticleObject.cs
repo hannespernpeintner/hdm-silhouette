@@ -47,6 +47,16 @@ namespace Silhouette.GameMechs
         [Description("The particle effect you want to display.")]
         public ParticleType particleType { get { return _particleType; } set { _particleType = value; } }
 
+        private LevelObject _levelObject;
+        [DisplayName("LevelObject"), Category("Particle Data")]
+        [Description("The LevelObject the particle effect should be used on. Set to null if not needed.")]
+        public LevelObject levelObject { get { return _levelObject; } set { _levelObject = value; } }
+
+        private Vector2 _anchor;
+        [DisplayName("Anchor"), Category("Particle Data")]
+        [Description("The anchor where the particle effect is attached to the LevelObject.")]
+        public Vector2 anchor { get { return _anchor; } set { _anchor = value; } }
+
         public ParticleObject()
         {
             this.radius = 20;
@@ -59,7 +69,13 @@ namespace Silhouette.GameMechs
             particleEffect = ParticleManager.getParticleEffect(particleType);
         }
 
-        public override void Update(Microsoft.Xna.Framework.GameTime gameTime) { }
+        public override void Update(Microsoft.Xna.Framework.GameTime gameTime) 
+        {
+            if (levelObject != null)
+            {
+                this.position = levelObject.position + anchor;
+            }
+        }
 
         public override string getPrefix()
         {
