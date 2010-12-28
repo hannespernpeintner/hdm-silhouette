@@ -24,6 +24,7 @@ namespace Silhouette.GameMechs
     public class Player : DrawableLevelObject
     {
         public float tempRotation;
+        public float contactTimer;
         public Vector2 centerPosition;      // Hannes: Rectangles für Kollisionserkennung. Muss noch um Kollisionsgruppe erweitert werden.
         public Vector2 camPosition;
         public Fixture charRect;
@@ -45,18 +46,19 @@ namespace Silhouette.GameMechs
         private bool isFalling;
         private bool isIdle;
         private bool isScriptedMoving;
-        private bool isSuperMoving;
         private bool isDying;
+        private bool isRemembering;         // So kommt Tom in den Erinnerungszustand
+        private bool isRecovering;
 
         private int facing;                    // Wo der Chara hinschaut. 0 bedeutet links, 1 bedeutet rechts.
+
+        private float sJTimer;
+        private float sJRecoveryTimer;
 
         private String actScriptedMove;
 
         private bool canClimb;
-        private bool canJummp;
-        private bool canSuperJump;
 
-        private int maxClimbHeight;
         private int actClimbHeight;
 
         private Animation activeAnimation;      // Die aktive Sprite, die in der UpdateMethode auch geupdatet wird.
@@ -136,10 +138,12 @@ namespace Silhouette.GameMechs
             isIdle = true;
             isDying = false;
             isScriptedMoving = false;
-            isSuperMoving = false;
+            isRemembering = false;
+            sJRecoveryTimer = 5000;
+            sJTimer = 10000;
             canClimb = false;
-            maxClimbHeight = 825;
             tempRotation = 0.0f;
+            contactTimer = 0;
 
             facing = 1;
         }
@@ -233,6 +237,7 @@ namespace Silhouette.GameMechs
 
         public override void Update(GameTime gameTime)
         {
+            calcRotation(gameTime);
             if (!isDying && !isScriptedMoving)
             {
                 ObserveMovement();
@@ -252,6 +257,7 @@ namespace Silhouette.GameMechs
             UpdatePositions();
             UpdateTexture(gameTime);
             UpdateCamera();
+            ObserveTimer(gameTime);
         }
 
         public void UpdatePositions()
@@ -272,6 +278,7 @@ namespace Silhouette.GameMechs
 
         private void UpdateControls(GameTime gameTime)
         {
+            // LEFT ARROW
             if (Keyboard.GetState().IsKeyDown(Keys.Left) && !isFalling && !isJumping && movement.X >= -3.5)
             {
                 if (facing == 1)
@@ -294,6 +301,7 @@ namespace Silhouette.GameMechs
                 }
             }
 
+            // RIGHT ARROW
             if (Keyboard.GetState().IsKeyDown(Keys.Right) && !isFalling && !isJumping && movement.X <= 3.5)
             {
                 if (facing == 0)
@@ -316,17 +324,26 @@ namespace Silhouette.GameMechs
                 }
             }
 
+            // UP ARROW
             if (Keyboard.GetState().IsKeyDown(Keys.Up) && !isScriptedMoving && canClimb)
             {
                 climb();
             }
 
+            // P BUTTON
             if (Keyboard.GetState().IsKeyDown(Keys.P) && !isScriptedMoving)
             {
                 die();
             }
 
-            if (Keyboard.GetState().IsKeyDown(Keys.Space) && oldState.IsKeyUp(Keys.Space) && (isIdle || isRunning))
+            // O BUTTON
+            if (Keyboard.GetState().IsKeyDown(Keys.O) && !isRemembering && !isRecovering)
+            {
+                isRemembering = true;
+            }
+
+            // SPACE BUTTON
+            if (Keyboard.GetState().IsKeyDown(Keys.Space) && oldState.IsKeyUp(Keys.Space) && !isRecovering && (isIdle || isRunning))
             {
                 if (facing == 0)
                 {
@@ -337,7 +354,15 @@ namespace Silhouette.GameMechs
                     isIdle = false;
                     isFalling = false;
                     isRunning = false;
-                    charRect.Body.ApplyForce(new Vector2(-300, -800));
+                    // Unterscheiden von Superjump und NormalJump
+                    if (isRemembering)
+                    {
+                        charRect.Body.ApplyForce(new Vector2(-50, -1100));
+                    }
+                    else
+                    {
+                        charRect.Body.ApplyForce(new Vector2(-50, -800));
+                    }
                 }
                 else if (facing == 1)
                 {
@@ -348,10 +373,18 @@ namespace Silhouette.GameMechs
                     isIdle = false;
                     isFalling = false;
                     isRunning = false;
-                    charRect.Body.ApplyForce(new Vector2(300, -800));
+                    if (isRemembering)
+                    {
+                        charRect.Body.ApplyForce(new Vector2(50, -1100));
+                    }
+                    else
+                    {
+                        charRect.Body.ApplyForce(new Vector2(50, -800));
+                    }
                 }
             }
 
+            // Für den Fall, dass man den Lauf abbricht, wird abgebremst
             if (Keyboard.GetState().IsKeyUp(Keys.Left) && isRunning && facing == 0)
             {
                 isRunning = false;
@@ -400,7 +433,6 @@ namespace Silhouette.GameMechs
                 isJumping = false;
                 isDying = false;
                 isFalling = false;
-                isSuperMoving = false;
 
                 charRect.Body.BodyType = BodyType.Static;
                 charRect.Body.IgnoreGravity = true;
@@ -473,7 +505,6 @@ namespace Silhouette.GameMechs
                 isJumping = false;
                 isDying = false;
                 isFalling = false;
-                isSuperMoving = false;
 
                 charRect.Body.BodyType = BodyType.Static;
                 charRect.Body.IgnoreGravity = true;
@@ -520,8 +551,6 @@ namespace Silhouette.GameMechs
 
         private void UpdateTexture(GameTime gameTime)
         {
-            //if (lastNewContact != null) { calcRotation(fixtureBFromContact, lastNewContact); }
-            //activeAnimation.rotation = tempRotation - tempRotation/2;
             activeAnimation.Update(gameTime, position);
         }
 
@@ -735,34 +764,68 @@ namespace Silhouette.GameMechs
             }
         }
 
-        public void calcRotation(Fixture fixB, Contact contact)
-        {
-            Vector2 temp;
-            temp.X = (contact.Manifold.LocalPoint.X - charRect.Body.Position.X) * Level.PixelPerMeter;
-            temp.Y = (contact.Manifold.LocalPoint.Y - charRect.Body.Position.Y) * Level.PixelPerMeter;
-            temp.Normalize();
-            Vector2 temp1 = new Vector2(-2, 1);
-            temp1.Normalize();
-            float temp2 = Vector2.Dot(temp, temp1);
+        private void ObserveTimer(GameTime gameTime) {
+            // Schaut, ob der Player sich gerade erinnert. Wenn ja, wird Timer erniedrigt, Modus beendet nach Ablauf.
+            if (isRemembering)
+            {
+                if (sJTimer <= 0)
+                {
+                    isRemembering = false;
+                    isRecovering = true;
+                }
+                else
+                {
+                    sJTimer -= gameTime.ElapsedGameTime.Milliseconds;
+                }
+            }
+            else if (isRecovering)
+            {
+                if (sJRecoveryTimer <= 0)
+                {
+                    isRecovering = false;
+                    sJRecoveryTimer = 5000;
+                    sJTimer = 10000;
+                }
+                else
+                {
+                    sJRecoveryTimer -= gameTime.ElapsedGameTime.Milliseconds;
+                }
+            }
+        }
 
-            tempRotation = (temp2 / (temp.Length() * temp1.Length()));
+        public void calcRotation(GameTime gameTime)
+        {
+            contactTimer += gameTime.ElapsedGameTime.Milliseconds;
+
+            if (contactTimer >= 100)
+            {
+                contactTimer -= 100;
+                try
+                {
+                    Contact tempContact = charRect.Body.ContactList.Next.Contact;
+                    FarseerPhysics.Collision.WorldManifold tempManifold;
+                    tempContact.GetWorldManifold(out tempManifold);
+
+                    Vector2 temp;
+                    //temp.X = (tempContact.Manifold.LocalPoint.X - charRect.Body.Position.X) * Level.PixelPerMeter;
+                    //temp.Y = (tempContact.Manifold.LocalPoint.Y - charRect.Body.Position.Y) * Level.PixelPerMeter;
+                    temp = (tempManifold.Points[0] - charRect.Body.Position) * Level.PixelPerMeter;
+                    temp.Normalize();
+                    Vector2 temp1 = new Vector2(-2, 1);
+                    temp1.Normalize();
+                    float temp2 = Vector2.Dot(temp, temp1);
+
+                    tempRotation = (temp2 / (temp.Length() * temp1.Length()));
+                }
+                catch (Exception e)
+                {
+                    tempRotation = 0.0f;
+                }
+            }
         }
 
         public bool OnCollision(Fixture fixtureA, Fixture fixtureB, Contact contact)
         {
-            /*this.lastNewContact = contact;
-            this.fixtureBFromContact = fixtureB;
-
-            Vector2 temp;
-            temp.X = (contact.Manifold.LocalPoint.X - charRect.Body.Position.X) * Level.PixelPerMeter;
-            temp.Y = (contact.Manifold.LocalPoint.Y - charRect.Body.Position.Y) * Level.PixelPerMeter;
-            temp.Normalize();
-            Vector2 temp1 = new Vector2(-2, 1);
-            temp1.Normalize();
-            float temp2 = Vector2.Dot(temp, temp1);
-            tempRotation = temp2;
-            activeAnimation.rotation = temp2;*/
-
             if (isFalling)
             {
                 isFalling = false;
@@ -813,7 +876,6 @@ namespace Silhouette.GameMechs
 
         }
 
-
         public bool sOnCollision(Fixture fixtureA, Fixture fixtureB, Contact contact)
         {
             if (isFalling)
@@ -847,7 +909,7 @@ namespace Silhouette.GameMechs
         public override void Draw(SpriteBatch spriteBatch)
         {
             //activeAnimation.Draw(spriteBatch);
-            spriteBatch.Draw(activeAnimation.activeTexture, position, null, Color.White, activeAnimation.rotation, new Vector2(250, 250), 1, SpriteEffects.None, 1);
+            spriteBatch.Draw(activeAnimation.activeTexture, position, null, Color.White, tempRotation, new Vector2(250, 250), 1, SpriteEffects.None, 1);
             //Das auskommentierte hier kann als Debugview dienen.
             /*spriteBatch.DrawString(FontManager.Arial, "Standing: " + isIdle.ToString(), new Vector2(300, 20), Color.Black);
             spriteBatch.DrawString(FontManager.Arial, "Running: " + isRunning.ToString(), new Vector2(300, 45), Color.Black);
@@ -859,7 +921,8 @@ namespace Silhouette.GameMechs
             spriteBatch.DrawString(FontManager.Arial, "X: " + movement.X.ToString() + " Y: " + movement.Y.ToString(), new Vector2(300, 205), Color.Black);
             spriteBatch.DrawString(FontManager.Arial, "CamRectRotation: " + camRect.Body.Rotation.ToString(), new Vector2(300, 230), Color.Black);
             spriteBatch.DrawString(FontManager.Arial, "CamRotation: " + Camera.Rotation.ToString(), new Vector2(300, 255), Color.Black);
-            spriteBatch.DrawString(FontManager.Arial, "tempRotation: " + tempRotation.ToString(), new Vector2(300, 280), Color.Black);*/
+            spriteBatch.DrawString(FontManager.Arial, "tempRotation: " + tempRotation.ToString(), new Vector2(300, 280), Color.Black);
+            spriteBatch.DrawString(FontManager.Arial, "sJTimer: " + sJTimer.ToString() + " sJRecoveryTimer: " + sJRecoveryTimer.ToString(), new Vector2(300, 305), Color.Black);*/
         }
     }
 }
