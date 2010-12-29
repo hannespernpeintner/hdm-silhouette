@@ -146,6 +146,7 @@
     <Compile Include="Engine\SoundEngine\IrrAudioEngine.cs" />
     <Compile Include="GameMechs\AnimatedObject.cs" />
     <Compile Include="GameMechs\DrawableLevelObject.cs" />
+    <Compile Include="GameMechs\Events\AudioCrossfaderEvent.cs" />
     <Compile Include="GameMechs\Events\AudioEqualizerEvent.cs" />
     <Compile Include="GameMechs\Events\AudioFadeEvent.cs" />
     <Compile Include="GameMechs\Events\AudioModifyPlayback.cs" />
