@@ -42,7 +42,7 @@ namespace Silhouette
 
         protected override void LoadContent()
         {
-            sb = new SpriteBatch(Game.GraphicsDevice);
+            sb = new SpriteBatch(GameLoop.gameInstance.GraphicsDevice);
             base.LoadContent();
         }
 
