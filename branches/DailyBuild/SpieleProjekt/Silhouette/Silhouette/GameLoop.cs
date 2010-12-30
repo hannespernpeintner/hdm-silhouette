@@ -38,7 +38,7 @@ namespace Silhouette
 
         public static GameLoop gameInstance;
 
-        DisplayFPS displayFPS;
+        //DisplayFPS displayFPS;
         Level level;
 
         public GameLoop()
@@ -46,8 +46,8 @@ namespace Silhouette
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
 
-            displayFPS = new DisplayFPS(this);
-            Components.Add(displayFPS);
+            //displayFPS = new DisplayFPS(this);
+            //Components.Add(displayFPS);
 
             gameInstance = this;
 
