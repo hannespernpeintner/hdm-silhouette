@@ -38,6 +38,8 @@ namespace SilhouetteEditor
         ModifyPlayback,
         Mute,
         SetVolume,
+        Crossfader,
+        Reverb,
 
         //Video
         Play
@@ -1124,6 +1126,20 @@ namespace SilhouetteEditor
                     e6.layer = selectedLayer;
                     selectedLayer.loList.Add(e6);
                     selectLevelObject(e6);
+                    break;
+                case EventType.Reverb:
+                    AudioReverbEvent e7 = new AudioReverbEvent(Extensions.RectangleFromVectors(clickedPoints[0], clickedPoints[1]));
+                    e7.name = e7.getPrefix() + selectedLayer.getNextObjectNumber();
+                    e7.layer = selectedLayer;
+                    selectedLayer.loList.Add(e7);
+                    selectLevelObject(e7);
+                    break;
+                case EventType.Crossfader:
+                    AudioCrossfaderEvent e8 = new AudioCrossfaderEvent(Extensions.RectangleFromVectors(clickedPoints[0], clickedPoints[1]));
+                    e8.name = e8.getPrefix() + selectedLayer.getNextObjectNumber();
+                    e8.layer = selectedLayer;
+                    selectedLayer.loList.Add(e8);
+                    selectLevelObject(e8);
                     break;
             }
             MainForm.Default.UpdateTreeView();
