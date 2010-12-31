@@ -121,6 +121,8 @@ namespace SilhouetteEditor.Forms
             this.deleteToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.addObjectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.reverbToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.crossfaderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.StatusBar.SuspendLayout();
             this.MenuBar.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -578,7 +580,7 @@ namespace SilhouetteEditor.Forms
             this.physicToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.changeBodyTypeToolStripMenuItem});
             this.physicToolStripMenuItem.Name = "physicToolStripMenuItem";
-            this.physicToolStripMenuItem.Size = new System.Drawing.Size(108, 22);
+            this.physicToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.physicToolStripMenuItem.Text = "Physic";
             // 
             // changeBodyTypeToolStripMenuItem
@@ -592,12 +594,14 @@ namespace SilhouetteEditor.Forms
             // 
             this.audioToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fadeToolStripMenuItem,
+            this.crossfaderToolStripMenuItem,
             this.equalizerToolStripMenuItem,
             this.modifyPlaybackToolStripMenuItem,
             this.muteToolStripMenuItem,
-            this.setVolumeToolStripMenuItem});
+            this.setVolumeToolStripMenuItem,
+            this.reverbToolStripMenuItem});
             this.audioToolStripMenuItem.Name = "audioToolStripMenuItem";
-            this.audioToolStripMenuItem.Size = new System.Drawing.Size(108, 22);
+            this.audioToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.audioToolStripMenuItem.Text = "Audio";
             // 
             // fadeToolStripMenuItem
@@ -640,7 +644,7 @@ namespace SilhouetteEditor.Forms
             this.videoToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.playToolStripMenuItem});
             this.videoToolStripMenuItem.Name = "videoToolStripMenuItem";
-            this.videoToolStripMenuItem.Size = new System.Drawing.Size(108, 22);
+            this.videoToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.videoToolStripMenuItem.Text = "Video";
             // 
             // playToolStripMenuItem
@@ -934,6 +938,20 @@ namespace SilhouetteEditor.Forms
             this.addObjectToolStripMenuItem.Text = "Manage Events";
             this.addObjectToolStripMenuItem.Click += new System.EventHandler(this.addObjectToolStripMenuItem_Click);
             // 
+            // reverbToolStripMenuItem
+            // 
+            this.reverbToolStripMenuItem.Name = "reverbToolStripMenuItem";
+            this.reverbToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
+            this.reverbToolStripMenuItem.Text = "Reverb";
+            this.reverbToolStripMenuItem.Click += new System.EventHandler(this.reverbToolStripMenuItem_Click);
+            // 
+            // crossfaderToolStripMenuItem
+            // 
+            this.crossfaderToolStripMenuItem.Name = "crossfaderToolStripMenuItem";
+            this.crossfaderToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
+            this.crossfaderToolStripMenuItem.Text = "Crossfader";
+            this.crossfaderToolStripMenuItem.Click += new System.EventHandler(this.crossfaderToolStripMenuItem_Click);
+            // 
             // MainForm
             // 
             this.AllowDrop = true;
@@ -1067,5 +1085,7 @@ namespace SilhouetteEditor.Forms
         private System.Windows.Forms.ToolStripMenuItem soundObjectToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem videoObjectToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem particleObjectToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem reverbToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem crossfaderToolStripMenuItem;
     }
 }

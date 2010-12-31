@@ -605,6 +605,16 @@ namespace SilhouetteEditor.Forms
             Editor.Default.AddEvents(EventType.Play);
         }
 
+        private void reverbToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Editor.Default.AddEvents(EventType.Reverb);
+        }
+
+        private void crossfaderToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Editor.Default.AddEvents(EventType.Crossfader);
+        }
+
         //---> ToolStrips <---//
 
         private void deleteToolStripMenuItem_Click(object sender, EventArgs e)
