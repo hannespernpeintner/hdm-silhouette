@@ -32,10 +32,12 @@ namespace Silhouette.Engine.Manager
         */
 
         private static ParticleEffect waterfall;
+        private static ParticleEffect rain;
 
         public static void initialize() 
         {
             waterfall = GameLoop.gameInstance.Content.Load<ParticleEffect>("ParticleEffects/WaterJet");
+            rain = GameLoop.gameInstance.Content.Load<ParticleEffect>("ParticleEffects/Rain");
         }
 
         public static ParticleEffect getParticleEffect(ParticleType particleType) 
@@ -46,6 +48,8 @@ namespace Silhouette.Engine.Manager
                     return null;
                 case ParticleType.Waterfall:
                     return waterfall.DeepCopy();
+                case ParticleType.Rain:
+                    return rain.DeepCopy();
             }
 
             return null;
