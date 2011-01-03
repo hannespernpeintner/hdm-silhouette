@@ -118,8 +118,8 @@ namespace Silhouette.Engine
         {
             proj = Matrix.CreateOrthographicOffCenter(0, GameSettings.Default.resolutionWidth / PixelPerMeter, GameSettings.Default.resolutionHeight / PixelPerMeter, 0, 0, 1);
 
-            vignette = GameLoop.gameInstance.Content.Load<Texture2D>("Sprites/OverLays/Vignette");
-            GameLoop.gameInstance.GraphicsDevice.Textures[1] = vignette;
+            //vignette = GameLoop.gameInstance.Content.Load<Texture2D>("Sprites/OverLays/Vignette");
+            //GameLoop.gameInstance.GraphicsDevice.Textures[1] = vignette;
 
             Layer playerLayer = getLayerByName("Player");
             if (playerLayer != null)
