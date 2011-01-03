@@ -83,10 +83,12 @@ namespace SilhouetteEditor.Forms
             this.changeBodyTypeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.audioToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.fadeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.crossfaderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.equalizerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.modifyPlaybackToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.muteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.setVolumeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.reverbToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.videoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.playToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tabControl1 = new System.Windows.Forms.TabControl();
@@ -121,8 +123,6 @@ namespace SilhouetteEditor.Forms
             this.deleteToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.addObjectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.reverbToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.crossfaderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.StatusBar.SuspendLayout();
             this.MenuBar.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -580,7 +580,7 @@ namespace SilhouetteEditor.Forms
             this.physicToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.changeBodyTypeToolStripMenuItem});
             this.physicToolStripMenuItem.Name = "physicToolStripMenuItem";
-            this.physicToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.physicToolStripMenuItem.Size = new System.Drawing.Size(108, 22);
             this.physicToolStripMenuItem.Text = "Physic";
             // 
             // changeBodyTypeToolStripMenuItem
@@ -601,7 +601,7 @@ namespace SilhouetteEditor.Forms
             this.setVolumeToolStripMenuItem,
             this.reverbToolStripMenuItem});
             this.audioToolStripMenuItem.Name = "audioToolStripMenuItem";
-            this.audioToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.audioToolStripMenuItem.Size = new System.Drawing.Size(108, 22);
             this.audioToolStripMenuItem.Text = "Audio";
             // 
             // fadeToolStripMenuItem
@@ -610,6 +610,13 @@ namespace SilhouetteEditor.Forms
             this.fadeToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
             this.fadeToolStripMenuItem.Text = "Fade";
             this.fadeToolStripMenuItem.Click += new System.EventHandler(this.fadeToolStripMenuItem_Click);
+            // 
+            // crossfaderToolStripMenuItem
+            // 
+            this.crossfaderToolStripMenuItem.Name = "crossfaderToolStripMenuItem";
+            this.crossfaderToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
+            this.crossfaderToolStripMenuItem.Text = "Crossfader";
+            this.crossfaderToolStripMenuItem.Click += new System.EventHandler(this.crossfaderToolStripMenuItem_Click);
             // 
             // equalizerToolStripMenuItem
             // 
@@ -639,12 +646,19 @@ namespace SilhouetteEditor.Forms
             this.setVolumeToolStripMenuItem.Text = "Set Volume";
             this.setVolumeToolStripMenuItem.Click += new System.EventHandler(this.setVolumeToolStripMenuItem_Click);
             // 
+            // reverbToolStripMenuItem
+            // 
+            this.reverbToolStripMenuItem.Name = "reverbToolStripMenuItem";
+            this.reverbToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
+            this.reverbToolStripMenuItem.Text = "Reverb";
+            this.reverbToolStripMenuItem.Click += new System.EventHandler(this.reverbToolStripMenuItem_Click);
+            // 
             // videoToolStripMenuItem
             // 
             this.videoToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.playToolStripMenuItem});
             this.videoToolStripMenuItem.Name = "videoToolStripMenuItem";
-            this.videoToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.videoToolStripMenuItem.Size = new System.Drawing.Size(108, 22);
             this.videoToolStripMenuItem.Text = "Video";
             // 
             // playToolStripMenuItem
@@ -937,20 +951,6 @@ namespace SilhouetteEditor.Forms
             this.addObjectToolStripMenuItem.Size = new System.Drawing.Size(154, 22);
             this.addObjectToolStripMenuItem.Text = "Manage Events";
             this.addObjectToolStripMenuItem.Click += new System.EventHandler(this.addObjectToolStripMenuItem_Click);
-            // 
-            // reverbToolStripMenuItem
-            // 
-            this.reverbToolStripMenuItem.Name = "reverbToolStripMenuItem";
-            this.reverbToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
-            this.reverbToolStripMenuItem.Text = "Reverb";
-            this.reverbToolStripMenuItem.Click += new System.EventHandler(this.reverbToolStripMenuItem_Click);
-            // 
-            // crossfaderToolStripMenuItem
-            // 
-            this.crossfaderToolStripMenuItem.Name = "crossfaderToolStripMenuItem";
-            this.crossfaderToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
-            this.crossfaderToolStripMenuItem.Text = "Crossfader";
-            this.crossfaderToolStripMenuItem.Click += new System.EventHandler(this.crossfaderToolStripMenuItem_Click);
             // 
             // MainForm
             // 

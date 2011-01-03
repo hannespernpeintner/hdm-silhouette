@@ -122,6 +122,7 @@ namespace SilhouetteEditor
         public bool originsVisible;
 
         List<Vector2> clickedPoints, initialPosition, initialScale;
+        List<float> initialRotation;
         Vector2 MouseWorldPosition, GrabbedPoint;
         Microsoft.Xna.Framework.Rectangle selectionRectangle;
 
@@ -137,6 +138,7 @@ namespace SilhouetteEditor
             clickedPoints = new List<Vector2>();
             initialPosition = new List<Vector2>();
             initialScale = new List<Vector2>();
+            initialRotation = new List<float>();
             editorState = EditorState.IDLE;
 
             NewLevel("");
@@ -276,10 +278,10 @@ namespace SilhouetteEditor
                             GrabbedPoint = MouseWorldPosition - selectedLevelObjects[0].position;
 
                             initialScale.Clear();
-                            foreach (LevelObject selLO in selectedLevelObjects)
+                            foreach (LevelObject lo in selectedLevelObjects)
                             {
-                                if (selLO.canScale())
-                                    initialScale.Add(selLO.getScale());
+                                if (lo.canScale())
+                                    initialScale.Add(lo.getScale());
                             }
 
                             editorState = EditorState.SCALING;
@@ -291,6 +293,16 @@ namespace SilhouetteEditor
                         if (selectedLevelObjects.Count > 0)
                         {
                             GrabbedPoint = MouseWorldPosition - selectedLevelObjects[0].position;
+
+                            initialRotation.Clear();
+                            foreach (LevelObject lo in selectedLevelObjects)
+                            {
+                                if (lo.canRotate())
+                                {
+                                    initialRotation.Add(lo.getRotation());
+                                }
+                            }
+
                             editorState = EditorState.ROTATING;
                         }
                     }
@@ -636,15 +648,15 @@ namespace SilhouetteEditor
                         if (kstate.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.E))
                         {
                             Vector2 tempScale = currentObject.getScale();
-                            tempScale.X *= 1.1f;
-                            tempScale.Y *= 1.1f;
+                            tempScale.X *= 1.05f;
+                            tempScale.Y *= 1.05f;
                             currentObject.setScale(tempScale);
                         }
                         if (kstate.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.Q))
                         {
                             Vector2 tempScale = currentObject.getScale();
-                            tempScale.X *= 0.9f;
-                            tempScale.Y *= 0.9f;
+                            tempScale.X *= 0.95f;
+                            tempScale.Y *= 0.95f;
                             currentObject.setScale(tempScale);
                         }
 
@@ -655,13 +667,13 @@ namespace SilhouetteEditor
                         if (kstate.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.X))
                         {
                             float tempRotation = currentObject.getRotation();
-                            tempRotation += 0.1f;
+                            tempRotation += 0.05f;
                             currentObject.setRotation(tempRotation);
                         }
                         if (kstate.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.Y))
                         {
                             float tempRotation = currentObject.getRotation();
-                            tempRotation += -0.1f;
+                            tempRotation += -0.05f;
                             currentObject.setRotation(tempRotation);
                         }
                     }
@@ -785,7 +797,7 @@ namespace SilhouetteEditor
                     {
                         if (selLO.canRotate())
                         {
-                            selLO.setRotation(-deltatheta);
+                            selLO.setRotation(initialRotation[i] - deltatheta);
                             if (kstate.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.LeftControl))
                             {
                                 selLO.setRotation((float)Math.Round(selLO.getRotation() / MathHelper.PiOver4) * MathHelper.PiOver4);

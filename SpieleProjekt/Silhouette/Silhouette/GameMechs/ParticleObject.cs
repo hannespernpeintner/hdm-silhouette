@@ -29,7 +29,8 @@ namespace Silhouette.GameMechs
     public enum ParticleType
     { 
         None,
-        Waterfall
+        Waterfall,
+        Rain
     }
 
     [Serializable]
