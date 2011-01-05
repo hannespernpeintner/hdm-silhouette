@@ -49,6 +49,8 @@ namespace Silhouette.GameMechs
         private bool isDying;
         private bool isRemembering;         // So kommt Tom in den Erinnerungszustand
         private bool isRecovering;
+        private bool sRectTouching;
+        private bool rectTouching;
 
         private int facing;                    // Wo der Chara hinschaut. 0 bedeutet links, 1 bedeutet rechts.
 
@@ -163,8 +165,8 @@ namespace Silhouette.GameMechs
             jumpStarting_right.Load(3, "Sprites/Player/jumpStart_right_", 1.5f, false);
             falling_left.Load(2, "Sprites/Player/falling_left_", 0.5f, true);
             falling_right.Load(2, "Sprites/Player/falling_right_", 0.5f, true);
-            landing_left.Load(4, "Sprites/Player/landing_left_", 1.0f, false);
-            landing_right.Load(4, "Sprites/Player/landing_right_", 1.0f, false);
+            landing_left.Load(4, "Sprites/Player/landing_left_", 0.8f, false);
+            landing_right.Load(4, "Sprites/Player/landing_right_", 0.8f, false);
 
             running_left.Load(5, "Sprites/Player/walk_left_", 2f, true);
             running_right.Load(5, "Sprites/Player/walk_right_", 2f, true);
@@ -183,17 +185,18 @@ namespace Silhouette.GameMechs
             activeAnimation.start();
             nextAnimation = choseIdleAnimation();
 
-            charRect = FixtureManager.CreateCircle(80, position, BodyType.Dynamic, 1);
-            charRect.Body.FixedRotation = true;
-            charRect.Friction = 5;
-
+            //charRect = FixtureManager.CreateCircle(80, position, BodyType.Dynamic, 1);
+            //charRect.Body.FixedRotation = false;
+            //charRect.Friction = 5;
+            charRect = FixtureManager.CreatePolygon(idle_left.pictures[0], new Vector2(0.7f, 0.95f), BodyType.Dynamic, position, 0.5f);
+            charRect.Friction = 1;
             charRect.isPlayer = true;
 
-            nRect = FixtureManager.CreateRectangle(140, 10, new Vector2(position.X, position.Y - 85), BodyType.Dynamic, 1);
+            nRect = FixtureManager.CreateRectangle(140, 10, new Vector2(position.X, position.Y - 85), BodyType.Dynamic, 0.0001f);
             nRect.Body.FixedRotation = true;
             nRect.IsSensor = true;
 
-            sRect = FixtureManager.CreateRectangle(100, 10, new Vector2(position.X, position.Y + 120), BodyType.Dynamic, 1);
+            sRect = FixtureManager.CreateRectangle(100, 10, new Vector2(position.X, position.Y + 120), BodyType.Dynamic, 0.0001f);
             sRect.Body.FixedRotation = true;
             sRect.IsSensor = true;
 
@@ -213,9 +216,8 @@ namespace Silhouette.GameMechs
             joint1 = new RopeJoint(charRect.Body, camRect.Body, new Vector2(-100 / Level.PixelPerMeter, -80 / Level.PixelPerMeter) * 2, new Vector2(-50 / Level.PixelPerMeter, -50 / Level.PixelPerMeter));
             joint2 = new RopeJoint(charRect.Body, camRect.Body, new Vector2(100 / Level.PixelPerMeter, -80 / Level.PixelPerMeter) * 2, new Vector2(50 / Level.PixelPerMeter, -50 / Level.PixelPerMeter));
             joint3 = new RopeJoint(charRect.Body, camRect.Body, new Vector2(-100 / Level.PixelPerMeter, 80 / Level.PixelPerMeter) * 2, new Vector2(-50 / Level.PixelPerMeter, 50 / Level.PixelPerMeter));
-            //joint4 = JointFactory.CreateAngleJoint(Level.Physics, charRect.Body, sRect.Body);
-            //joint4.Softness = 0.999f;
-            //joint4.Softness = 0.99f;
+            joint4 = JointFactory.CreateAngleJoint(Level.Physics, charRect.Body, sRect.Body);
+            joint4.Softness = 0.999f;
 
             joint0.MaxLength = 2.1f;
             joint1.MaxLength = 2.1f;
@@ -227,12 +229,12 @@ namespace Silhouette.GameMechs
             Level.Physics.AddJoint(joint1);
             Level.Physics.AddJoint(joint2);
             Level.Physics.AddJoint(joint3);
-            //Level.Physics.AddJoint(joint4);
 
             charRect.OnCollision += this.OnCollision;
             charRect.OnSeparation += this.OnSeperation;
             nRect.OnCollision += this.nOnCollision;
             sRect.OnCollision += this.sOnCollision;
+            sRect.OnSeparation += this.sOnSeperation;
         }
 
         public override void Update(GameTime gameTime)
@@ -279,7 +281,7 @@ namespace Silhouette.GameMechs
         private void UpdateControls(GameTime gameTime)
         {
             // LEFT ARROW
-            if (Keyboard.GetState().IsKeyDown(Keys.Left) && !isFalling && !isJumping && movement.X >= -3.5)
+            if (Keyboard.GetState().IsKeyDown(Keys.Left) && !isFalling && !isJumping && movement.X >= -2.5f)
             {
                 if (facing == 1)
                 {
@@ -297,12 +299,12 @@ namespace Silhouette.GameMechs
 
                     isIdle = false;
                     isRunning = true;
-                    charRect.Body.ApplyForce(new Vector2(-80, 0));
+                    charRect.Body.ApplyForce(new Vector2(-40, 0));
                 }
             }
 
             // RIGHT ARROW
-            if (Keyboard.GetState().IsKeyDown(Keys.Right) && !isFalling && !isJumping && movement.X <= 3.5)
+            if (Keyboard.GetState().IsKeyDown(Keys.Right) && !isFalling && !isJumping && movement.X <= 2.5f)
             {
                 if (facing == 0)
                 {
@@ -320,7 +322,7 @@ namespace Silhouette.GameMechs
 
                     isIdle = false;
                     isRunning = true;
-                    charRect.Body.ApplyForce(new Vector2(80, 0));
+                    charRect.Body.ApplyForce(new Vector2(40, 0));
                 }
             }
 
@@ -357,11 +359,11 @@ namespace Silhouette.GameMechs
                     // Unterscheiden von Superjump und NormalJump
                     if (isRemembering)
                     {
-                        charRect.Body.ApplyForce(new Vector2(-50, -1100));
+                        charRect.Body.ApplyForce(new Vector2(-50, -550));
                     }
                     else
                     {
-                        charRect.Body.ApplyForce(new Vector2(-50, -800));
+                        charRect.Body.ApplyForce(new Vector2(-50, -400));
                     }
                 }
                 else if (facing == 1)
@@ -375,11 +377,11 @@ namespace Silhouette.GameMechs
                     isRunning = false;
                     if (isRemembering)
                     {
-                        charRect.Body.ApplyForce(new Vector2(50, -1100));
+                        charRect.Body.ApplyForce(new Vector2(50, -550));
                     }
                     else
                     {
-                        charRect.Body.ApplyForce(new Vector2(50, -800));
+                        charRect.Body.ApplyForce(new Vector2(50, -400));
                     }
                 }
             }
@@ -404,6 +406,14 @@ namespace Silhouette.GameMechs
                 activeAnimation.activeFrameNumber = 0;
                 activeAnimation.start();
             }
+
+            // WENN KEIN BUTTON GEDRÜCKT IST
+            if (Keyboard.GetState().GetPressedKeys().Length == 0 && oldState.GetPressedKeys().Length == 0)
+            {
+                charRect.Friction = 2.5f;
+            }
+
+            else { charRect.Friction = 0.1f; }
 
             oldState = Keyboard.GetState();
             oldPosition = charRect.Body.Position;
@@ -655,6 +665,19 @@ namespace Silhouette.GameMechs
                 nextAnimation = choseIdleAnimation();
             }
 
+            if (isRunning && !(activeAnimation == running_left || activeAnimation == running_right || activeAnimation == runStarting_left || activeAnimation == runStarting_right || activeAnimation == runStopping_left || activeAnimation == runStopping_right))
+            {
+                if (facing == 0)
+                {
+                    activeAnimation = running_left;
+                }
+                else
+                {
+                    activeAnimation = running_right;
+                }
+            }
+
+
             if (activeAnimation.activeFrameNumber == activeAnimation.amount - 1 &&
                 (
                 (activeAnimation == idle_left) ||
@@ -691,18 +714,21 @@ namespace Silhouette.GameMechs
 
         public void ObserveMovement()
         {
-            movement = charRect.Body.GetLinearVelocityFromWorldPoint(Vector2.Zero);
+            //movement = charRect.Body.GetLinearVelocityFromWorldPoint(Vector2.Zero);
+            movement = charRect.Body.GetLinearVelocityFromLocalPoint(Vector2.Zero);
 
-            if (Math.Max(oldPosition.X, charRect.Body.Position.X) - Math.Min(oldPosition.X, charRect.Body.Position.X) < 0.001 &&
-                Math.Max(oldPosition.Y, charRect.Body.Position.Y) - Math.Min(oldPosition.Y, charRect.Body.Position.Y) < 0.001)
+            if (Math.Max(oldPosition.X, charRect.Body.Position.X) - Math.Min(oldPosition.X, charRect.Body.Position.X) < 0.0001 &&
+                Math.Max(oldPosition.Y, charRect.Body.Position.Y) - Math.Min(oldPosition.Y, charRect.Body.Position.Y) < 0.0001)
             {
                 isIdle = true;
                 isFalling = false;
                 isRunning = false;
                 isJumping = false;
+
+                charRect.Friction = 1.5f;
             }
 
-            if (movement.Y + Level.Physics.Gravity.Y < 0)
+            else if (movement.Y + Level.Physics.Gravity.Y < 0.1f)
             {
                 isIdle = false;
                 isFalling = false;
@@ -710,7 +736,7 @@ namespace Silhouette.GameMechs
                 isJumping = true;
             }
 
-            else if (isJumping && oldPosition.Y < charRect.Body.Position.Y)
+            else if (isJumping && oldPosition.Y < charRect.Body.Position.Y && !sRectTouching)
             {
                 isIdle = false;
                 isFalling = true;
@@ -718,12 +744,29 @@ namespace Silhouette.GameMechs
                 isJumping = false;
             }
 
-            else if (movement.Y > Level.Physics.Gravity.Y + 0.1f)
+
+
+            else if (movement.Y > 1.5f && !isFalling && !sRectTouching)
             {
                 isIdle = false;
                 isFalling = true;
                 isRunning = false;
                 isJumping = false;
+
+                if (facing == 0)
+                {
+                    activeAnimation = falling_left;
+                    activeAnimation.activeFrameNumber = 0;
+                    activeAnimation.start();
+                    nextAnimation = landing_left;
+                }
+                else
+                {
+                    activeAnimation = falling_right;
+                    activeAnimation.activeFrameNumber = 0;
+                    activeAnimation.start();
+                    nextAnimation = landing_right;
+                }
             }
 
 
@@ -795,7 +838,11 @@ namespace Silhouette.GameMechs
 
         public void calcRotation(GameTime gameTime)
         {
-            contactTimer += gameTime.ElapsedGameTime.Milliseconds;
+            if (charRect.Body.Rotation < 0.5f && charRect.Body.Rotation > -0.5f)
+            { tempRotation = charRect.Body.Rotation; }
+
+
+            /*contactTimer += gameTime.ElapsedGameTime.Milliseconds;
 
             if (contactTimer >= 100)
             {
@@ -821,11 +868,12 @@ namespace Silhouette.GameMechs
                 {
                     tempRotation = 0.0f;
                 }
-            }
+            }*/
         }
 
         public bool OnCollision(Fixture fixtureA, Fixture fixtureB, Contact contact)
         {
+
             if (isFalling)
             {
                 isFalling = false;
@@ -860,6 +908,8 @@ namespace Silhouette.GameMechs
 
         public void OnSeperation(Fixture fixtureA, Fixture fixtureB)
         {
+            rectTouching = false;
+
             if (canClimb)
             {
                 canClimb = false;
@@ -878,6 +928,8 @@ namespace Silhouette.GameMechs
 
         public bool sOnCollision(Fixture fixtureA, Fixture fixtureB, Contact contact)
         {
+            sRectTouching = true;
+
             if (isFalling)
             {
                 isFalling = false;
@@ -906,9 +958,13 @@ namespace Silhouette.GameMechs
             return true;
         }
 
+        public void sOnSeperation(Fixture fixtureA, Fixture fixtureB)
+        {
+            sRectTouching = false;
+        }
+
         public override void Draw(SpriteBatch spriteBatch)
         {
-            //activeAnimation.Draw(spriteBatch);
             spriteBatch.Draw(activeAnimation.activeTexture, position, null, Color.White, tempRotation, new Vector2(250, 250), 1, SpriteEffects.None, 1);
             //Das auskommentierte hier kann als Debugview dienen.
             /*spriteBatch.DrawString(FontManager.Arial, "Standing: " + isIdle.ToString(), new Vector2(300, 20), Color.Black);
