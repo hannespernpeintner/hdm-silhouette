@@ -157,6 +157,7 @@
     <Compile Include="GameMechs\Events\Event.cs" />
     <Compile Include="GameMechs\Events\PhysicChangeBodyTypeEvent.cs" />
     <Compile Include="GameMechs\CollisionObject.cs" />
+    <Compile Include="GameMechs\Events\PhysicMoveEvent.cs" />
     <Compile Include="GameMechs\Events\VideoPlayEvent.cs" />
     <Compile Include="GameMechs\InteractiveObject.cs" />
     <Compile Include="GameMechs\LevelObject.cs" />

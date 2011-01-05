@@ -615,6 +615,16 @@ namespace SilhouetteEditor.Forms
             Editor.Default.AddEvents(EventType.Crossfader);
         }
 
+        private void physicMoveToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Editor.Default.AddEvents(EventType.Move);
+        }
+
+        private void deathToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Editor.Default.AddEvents(EventType.Death);
+        }
+
         //---> ToolStrips <---//
 
         private void deleteToolStripMenuItem_Click(object sender, EventArgs e)

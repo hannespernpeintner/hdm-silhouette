@@ -302,6 +302,17 @@
               </generalsInternal>
             </class>
           </packageHasNamedElement>
+          <packageHasNamedElement>
+            <class Id="18ed4c4c-120d-454b-893c-4cbbb6232827" name="ParticleObject" isAbstract="false" isLeaf="false" isActiveClass="false">
+              <elementDefinition Id="65fb5c35-6895-4696-95d4-627d125446d0" />
+              <generalsInternal>
+                <generalization Id="2e96c085-cf33-4c5f-8286-37ae79297e51" isSubstitutable="false">
+                  <classMoniker Id="301519ed-4fa7-4563-8896-de33c7b26537" LastKnownName="LevelObject" />
+                  <elementDefinition Id="98021e2b-5882-4ecf-aa18-7d345c721e32" />
+                </generalization>
+              </generalsInternal>
+            </class>
+          </packageHasNamedElement>
         </packagedElements>
       </package>
     </logicalClassDesignerModelHasPackages>
