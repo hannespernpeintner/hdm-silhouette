@@ -488,5 +488,24 @@
         </generalsInternal>
       </class>
     </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="65fb5c35-6895-4696-95d4-627d125446d0"
+        name="ParticleObject"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <generalsInternal>
+          <generalization
+            Id="98021e2b-5882-4ecf-aa18-7d345c721e32"
+            isSubstitutable="false">
+            <classMoniker
+              Id="0485cd5e-3e6c-4b8e-8fa9-3793cf19b49f"
+              LastKnownName="LevelObject"
+              LastKnownLocation="Package_2100.uml" />
+          </generalization>
+        </generalsInternal>
+      </class>
+    </packageHasNamedElement>
   </packagedElements>
 </package>
