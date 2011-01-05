@@ -31,6 +31,7 @@ namespace SilhouetteEditor
     {
         //Physic
         ChangeBodyType,
+        Move,
 
         //Audio
         Fade,
@@ -42,7 +43,9 @@ namespace SilhouetteEditor
         Reverb,
 
         //Video
-        Play
+        Play,
+
+        Death
     }
 
     public enum PhysicsType
@@ -1152,6 +1155,20 @@ namespace SilhouetteEditor
                     e8.layer = selectedLayer;
                     selectedLayer.loList.Add(e8);
                     selectLevelObject(e8);
+                    break;
+                case EventType.Death:
+                    DeathEvent e9 = new DeathEvent(Extensions.RectangleFromVectors(clickedPoints[0], clickedPoints[1]));
+                    e9.name = e9.getPrefix() + selectedLayer.getNextObjectNumber();
+                    e9.layer = selectedLayer;
+                    selectedLayer.loList.Add(e9);
+                    selectLevelObject(e9);
+                    break;
+                case EventType.Move:
+                    PhysicMoveEvent e10 = new PhysicMoveEvent(Extensions.RectangleFromVectors(clickedPoints[0], clickedPoints[1]));
+                    e10.name = e10.getPrefix() + selectedLayer.getNextObjectNumber();
+                    e10.layer = selectedLayer;
+                    selectedLayer.loList.Add(e10);
+                    selectLevelObject(e10);
                     break;
             }
             MainForm.Default.UpdateTreeView();

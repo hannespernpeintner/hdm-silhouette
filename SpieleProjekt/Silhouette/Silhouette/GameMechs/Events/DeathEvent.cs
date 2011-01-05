@@ -38,8 +38,6 @@ namespace Silhouette.GameMechs.Events
             height = rectangle.Height;
             list = new List<LevelObject>();
             isActivated = true;
-            fixture.isDeadly = true;
-
         }
 
         public bool OnCollision(Fixture a, Fixture b, Contact contact)
@@ -47,7 +45,6 @@ namespace Silhouette.GameMechs.Events
             if (isActivated)
             {
                 //Julius: Wird direkt in der Playerinstanz gecheckt!
-
                 isActivated = false;
                 return true;
             }
@@ -59,7 +56,7 @@ namespace Silhouette.GameMechs.Events
 
         public override void AddLevelObject(LevelObject lo)
         {
-            if ((this.list != null) && (lo is VideoObject))
+            if (this.list != null)
             {
                 if (!this.list.Contains(lo) && (lo is InteractiveObject || lo is CollisionObject))
                     this.list.Add(lo);
@@ -83,6 +80,7 @@ namespace Silhouette.GameMechs.Events
             fixture = FixtureManager.CreateRectangle(width, height, position, BodyType.Static, 1);
             fixture.OnCollision += this.OnCollision;
             fixture.IsSensor = true;
+            fixture.isDeadly = true;
         }
     }
 }
