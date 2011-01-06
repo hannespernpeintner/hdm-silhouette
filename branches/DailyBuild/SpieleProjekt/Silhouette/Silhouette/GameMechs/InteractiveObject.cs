@@ -18,6 +18,12 @@ using FarseerPhysics.Dynamics.Contacts;
 
 namespace Silhouette.GameMechs
 {
+    public enum PhysicAccuracy
+    { 
+        Low,
+        High
+    }
+
     [Serializable]
     public partial class InteractiveObject: DrawableLevelObject
     {
@@ -31,6 +37,8 @@ namespace Silhouette.GameMechs
         public Texture2D texture;
         [NonSerialized]
         public Fixture fixture;
+        [NonSerialized]
+        public List<Fixture> fixtures;
 
         //Sascha: AssetNames ist einfach der Name der Datei. Wird verwendet um die Bilddatei aus der ContentPipeline oder dem Content-Ordner zu laden.
         private string _assetName;
@@ -68,6 +76,11 @@ namespace Silhouette.GameMechs
         [Description("The BodyType defines the behavior of an object. A static object never changes position or rotation, like the dynamic ones do.")]
         public BodyType bodyType { get { return _bodyType; } set { _bodyType = value; } }
 
+        private PhysicAccuracy _accuracy;
+        [DisplayName("Accuracy"), Category("Physical Behavior")]
+        [Description("The accuracy defines how accurate the collision will be. High cost much more performance then low.")]
+        public PhysicAccuracy accuracy { get { return _accuracy; } set { _accuracy = value; } }
+
         private bool _isDeadly;
         [DisplayName("Deadly"), Category("Physical Behavior")]
         [Description("Defines if the object can kill the player if it hits him with an defined force.")]
@@ -89,6 +102,7 @@ namespace Silhouette.GameMechs
             this.polygon = new Vector2[4];
             density = 1;
             bodyType = BodyType.Dynamic;
+            accuracy = PhysicAccuracy.Low;
         }
 
         public override void Initialise() {}
@@ -118,14 +132,27 @@ namespace Silhouette.GameMechs
 
             if (fixture != null)
                 fixture.Body.Rotation = rotation;
+            if (fixtures != null)
+                fixtures[0].Body.Rotation = rotation;
         }
 
         public override void Update(GameTime gameTime)
         {
             if (fixture != null && bodyType == BodyType.Dynamic)
             {
-                position = FixtureManager.ToPixel(fixture.Body.Position);
-                rotation = fixture.Body.Rotation;
+                if (accuracy == PhysicAccuracy.Low)
+                {
+                    position = FixtureManager.ToPixel(fixture.Body.Position);
+                    rotation = fixture.Body.Rotation;
+                }
+            }
+            if (fixtures != null && bodyType == BodyType.Dynamic)
+            {
+                if (accuracy == PhysicAccuracy.High)
+                {
+                    position = FixtureManager.ToPixel(fixtures[0].Body.Position);
+                    rotation = fixtures[0].Body.Rotation;
+                }
             }
         }
 
@@ -138,10 +165,18 @@ namespace Silhouette.GameMechs
         {
             try
             {
-                fixture = FixtureManager.CreatePolygon(texture, scale, bodyType, position, density);
-                fixture.isDeadly = isDeadly;
-
-                fixture.OnCollision += this.InteractiveOnCollision;
+                if (accuracy == PhysicAccuracy.Low)
+                {
+                    fixture = FixtureManager.CreatePolygon(texture, scale, bodyType, position, density);
+                    fixture.isDeadly = isDeadly;
+                    fixture.OnCollision += this.InteractiveOnCollision;
+                }
+                else if (accuracy == PhysicAccuracy.High)
+                {
+                    fixtures = FixtureManager.TextureToPolygon(texture, scale, bodyType, position, density);
+                    fixtures[0].isDeadly = isDeadly;
+                    fixtures[0].OnCollision += this.InteractiveOnCollision;
+                }
             }
             catch (Exception e)
             {

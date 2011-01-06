@@ -37,15 +37,18 @@ namespace Silhouette.GameMechs
         [Description("The mass of the object to calculate physical interaction.")]
         public float density { get { return _density; } set { _density = value; } }
 
+        /*
         private LevelObject _levelObject;
         [DisplayName("Level Object"), Category("Additional Properties")]
         [Description("The object that is attached to the collision object.")]
         public LevelObject levelObject { get { return _levelObject; } set { _levelObject = value; } }
+        */
 
         public abstract void ToFixture();
 
         public override void Update(GameTime gameTime)
         {
+            /*
             if (levelObject != null)
             {
                 levelObject.position = fixture.Body.Position;
@@ -57,6 +60,7 @@ namespace Silhouette.GameMechs
                     to.position = fixture.Body.Position;
                 }
             }
+            */
         }
     }
 
