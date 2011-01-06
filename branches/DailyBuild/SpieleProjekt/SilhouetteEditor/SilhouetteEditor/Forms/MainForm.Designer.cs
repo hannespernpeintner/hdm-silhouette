@@ -81,6 +81,7 @@ namespace SilhouetteEditor.Forms
             this.EventButton = new System.Windows.Forms.ToolStripDropDownButton();
             this.physicToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.changeBodyTypeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.setRotationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.audioToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.fadeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.crossfaderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -91,6 +92,8 @@ namespace SilhouetteEditor.Forms
             this.reverbToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.videoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.playToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.deathToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.cameraToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.propertyGrid1 = new System.Windows.Forms.PropertyGrid();
@@ -123,9 +126,6 @@ namespace SilhouetteEditor.Forms
             this.deleteToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.addObjectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.setRotationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.cameraToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.deathToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.StatusBar.SuspendLayout();
             this.MenuBar.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -527,7 +527,7 @@ namespace SilhouetteEditor.Forms
             this.physicObjectsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.jointToolStripMenuItem});
             this.physicObjectsToolStripMenuItem.Name = "physicObjectsToolStripMenuItem";
-            this.physicObjectsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.physicObjectsToolStripMenuItem.Size = new System.Drawing.Size(151, 22);
             this.physicObjectsToolStripMenuItem.Text = "Physic Objects";
             // 
             // jointToolStripMenuItem
@@ -535,33 +535,33 @@ namespace SilhouetteEditor.Forms
             this.jointToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.revoluteJointToolStripMenuItem});
             this.jointToolStripMenuItem.Name = "jointToolStripMenuItem";
-            this.jointToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.jointToolStripMenuItem.Size = new System.Drawing.Size(99, 22);
             this.jointToolStripMenuItem.Text = "Joint";
             // 
             // revoluteJointToolStripMenuItem
             // 
             this.revoluteJointToolStripMenuItem.Name = "revoluteJointToolStripMenuItem";
-            this.revoluteJointToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.revoluteJointToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
             this.revoluteJointToolStripMenuItem.Text = "Revolute Joint";
             // 
             // particleObjectToolStripMenuItem
             // 
             this.particleObjectToolStripMenuItem.Name = "particleObjectToolStripMenuItem";
-            this.particleObjectToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.particleObjectToolStripMenuItem.Size = new System.Drawing.Size(151, 22);
             this.particleObjectToolStripMenuItem.Text = "ParticleObject";
             this.particleObjectToolStripMenuItem.Click += new System.EventHandler(this.particleObjectToolStripMenuItem_Click);
             // 
             // soundObjectToolStripMenuItem
             // 
             this.soundObjectToolStripMenuItem.Name = "soundObjectToolStripMenuItem";
-            this.soundObjectToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.soundObjectToolStripMenuItem.Size = new System.Drawing.Size(151, 22);
             this.soundObjectToolStripMenuItem.Text = "SoundObject";
             this.soundObjectToolStripMenuItem.Click += new System.EventHandler(this.soundObjectToolStripMenuItem_Click);
             // 
             // videoObjectToolStripMenuItem
             // 
             this.videoObjectToolStripMenuItem.Name = "videoObjectToolStripMenuItem";
-            this.videoObjectToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.videoObjectToolStripMenuItem.Size = new System.Drawing.Size(151, 22);
             this.videoObjectToolStripMenuItem.Text = "VideoObject";
             // 
             // EventButton
@@ -586,7 +586,7 @@ namespace SilhouetteEditor.Forms
             this.changeBodyTypeToolStripMenuItem,
             this.setRotationToolStripMenuItem});
             this.physicToolStripMenuItem.Name = "physicToolStripMenuItem";
-            this.physicToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.physicToolStripMenuItem.Size = new System.Drawing.Size(115, 22);
             this.physicToolStripMenuItem.Text = "Physic";
             // 
             // changeBodyTypeToolStripMenuItem
@@ -595,6 +595,13 @@ namespace SilhouetteEditor.Forms
             this.changeBodyTypeToolStripMenuItem.Size = new System.Drawing.Size(171, 22);
             this.changeBodyTypeToolStripMenuItem.Text = "Change BodyType";
             this.changeBodyTypeToolStripMenuItem.Click += new System.EventHandler(this.changeBodyTypeToolStripMenuItem_Click);
+            // 
+            // setRotationToolStripMenuItem
+            // 
+            this.setRotationToolStripMenuItem.Name = "setRotationToolStripMenuItem";
+            this.setRotationToolStripMenuItem.Size = new System.Drawing.Size(171, 22);
+            this.setRotationToolStripMenuItem.Text = "Move/Rotate";
+            this.setRotationToolStripMenuItem.Click += new System.EventHandler(this.physicMoveToolStripMenuItem_Click);
             // 
             // audioToolStripMenuItem
             // 
@@ -607,7 +614,7 @@ namespace SilhouetteEditor.Forms
             this.setVolumeToolStripMenuItem,
             this.reverbToolStripMenuItem});
             this.audioToolStripMenuItem.Name = "audioToolStripMenuItem";
-            this.audioToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.audioToolStripMenuItem.Size = new System.Drawing.Size(115, 22);
             this.audioToolStripMenuItem.Text = "Audio";
             // 
             // fadeToolStripMenuItem
@@ -664,15 +671,29 @@ namespace SilhouetteEditor.Forms
             this.videoToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.playToolStripMenuItem});
             this.videoToolStripMenuItem.Name = "videoToolStripMenuItem";
-            this.videoToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.videoToolStripMenuItem.Size = new System.Drawing.Size(115, 22);
             this.videoToolStripMenuItem.Text = "Video";
             // 
             // playToolStripMenuItem
             // 
             this.playToolStripMenuItem.Name = "playToolStripMenuItem";
-            this.playToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.playToolStripMenuItem.Size = new System.Drawing.Size(96, 22);
             this.playToolStripMenuItem.Text = "Play";
             this.playToolStripMenuItem.Click += new System.EventHandler(this.playToolStripMenuItem_Click);
+            // 
+            // deathToolStripMenuItem
+            // 
+            this.deathToolStripMenuItem.Name = "deathToolStripMenuItem";
+            this.deathToolStripMenuItem.Size = new System.Drawing.Size(115, 22);
+            this.deathToolStripMenuItem.Text = "Death";
+            this.deathToolStripMenuItem.Click += new System.EventHandler(this.deathToolStripMenuItem_Click);
+            // 
+            // cameraToolStripMenuItem
+            // 
+            this.cameraToolStripMenuItem.Name = "cameraToolStripMenuItem";
+            this.cameraToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.cameraToolStripMenuItem.Text = "Camera";
+            this.cameraToolStripMenuItem.Click += new System.EventHandler(this.cameraToolStripMenuItem_Click);
             // 
             // tabControl1
             // 
@@ -957,26 +978,6 @@ namespace SilhouetteEditor.Forms
             this.addObjectToolStripMenuItem.Size = new System.Drawing.Size(154, 22);
             this.addObjectToolStripMenuItem.Text = "Manage Events";
             this.addObjectToolStripMenuItem.Click += new System.EventHandler(this.addObjectToolStripMenuItem_Click);
-            // 
-            // setRotationToolStripMenuItem
-            // 
-            this.setRotationToolStripMenuItem.Name = "setRotationToolStripMenuItem";
-            this.setRotationToolStripMenuItem.Size = new System.Drawing.Size(171, 22);
-            this.setRotationToolStripMenuItem.Text = "Move/Rotate";
-            this.setRotationToolStripMenuItem.Click += new System.EventHandler(this.physicMoveToolStripMenuItem_Click);
-            // 
-            // cameraToolStripMenuItem
-            // 
-            this.cameraToolStripMenuItem.Name = "cameraToolStripMenuItem";
-            this.cameraToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.cameraToolStripMenuItem.Text = "Camera";
-            // 
-            // deathToolStripMenuItem
-            // 
-            this.deathToolStripMenuItem.Name = "deathToolStripMenuItem";
-            this.deathToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.deathToolStripMenuItem.Text = "Death";
-            this.deathToolStripMenuItem.Click += new System.EventHandler(this.deathToolStripMenuItem_Click);
             // 
             // MainForm
             // 

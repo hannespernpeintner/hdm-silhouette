@@ -26,6 +26,13 @@ using FarseerPhysics.Collision.Shapes;
 
 namespace Silhouette.GameMechs.Events
 {
+    public enum Attribute
+    {
+        Rotation,
+        Position,
+        Scale
+    }
+
     [Serializable]
     public abstract class Event : LevelObject
     {

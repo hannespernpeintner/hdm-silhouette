@@ -153,6 +153,7 @@
     <Compile Include="GameMechs\Events\AudioReverbEvent.cs" />
     <Compile Include="GameMechs\Events\AudioMuteEvent.cs" />
     <Compile Include="GameMechs\Events\AudioSetVolumeEvent.cs" />
+    <Compile Include="GameMechs\Events\CameraEvent.cs" />
     <Compile Include="GameMechs\Events\DeathEvent.cs" />
     <Compile Include="GameMechs\Events\Event.cs" />
     <Compile Include="GameMechs\Events\PhysicChangeBodyTypeEvent.cs" />
