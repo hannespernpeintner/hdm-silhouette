@@ -93,7 +93,7 @@ namespace Silhouette.GameMechs.Events
 
         public override string getPrefix()
         {
-            return "PhysicEvent_";
+            return "ChangeBodyTypeEvent_";
         }
 
         public override LevelObject clone()

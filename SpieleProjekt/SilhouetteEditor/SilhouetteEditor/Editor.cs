@@ -45,7 +45,8 @@ namespace SilhouetteEditor
         //Video
         Play,
 
-        Death
+        Death,
+        Camera
     }
 
     public enum PhysicsType
@@ -1169,6 +1170,13 @@ namespace SilhouetteEditor
                     e10.layer = selectedLayer;
                     selectedLayer.loList.Add(e10);
                     selectLevelObject(e10);
+                    break;
+                case EventType.Camera:
+                    CameraEvent e11 = new CameraEvent(Extensions.RectangleFromVectors(clickedPoints[0], clickedPoints[1]));
+                    e11.name = e11.getPrefix() + selectedLayer.getNextObjectNumber();
+                    e11.layer = selectedLayer;
+                    selectedLayer.loList.Add(e11);
+                    selectLevelObject(e11);
                     break;
             }
             MainForm.Default.UpdateTreeView();

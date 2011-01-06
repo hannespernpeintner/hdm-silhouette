@@ -28,7 +28,7 @@ using FarseerPhysics.Dynamics.Contacts;
 namespace Silhouette.GameMechs.Events
 {
     [Serializable]
-    public class PhysicMoveEvent : Event
+    public class CameraEvent : Event
     {
         private Attribute _attributeType;
         [DisplayName("Attribute"), Category("Event Data")]
@@ -53,13 +53,12 @@ namespace Silhouette.GameMechs.Events
         [Browsable(false)]
         private bool isUpdate;
 
-        public PhysicMoveEvent(Rectangle rectangle)
+        public CameraEvent(Rectangle rectangle)
         {
             this.rectangle = rectangle;
             position = rectangle.Location.ToVector2();
             width = rectangle.Width;
             height = rectangle.Height;
-            list = new List<LevelObject>();
             isActivated = true;
         }
 
@@ -70,19 +69,13 @@ namespace Silhouette.GameMechs.Events
                 switch (attributeType)
                 { 
                     case Attribute.Rotation:
-                        foreach (LevelObject lo in this.list)
-                        {
-                            if (lo is InteractiveObject)
-                            {
-                                InteractiveObject io = (InteractiveObject)lo;
-                                io.fixture.Body.Rotation += this.step;
-                            }
-                            if (lo is CollisionObject)
-                            {
-                                CollisionObject co = (CollisionObject)lo;
-                                co.fixture.Body.Rotation += this.step;
-                            }
-                        }
+                        Camera.Rotation += this.step;
+                        break;
+                    case Attribute.Position:
+                        Camera.Position += this.stepV;
+                        break;
+                    case Attribute.Scale:
+                        Camera.Scale += this.step;
                         break;
                 }
 
@@ -93,23 +86,16 @@ namespace Silhouette.GameMechs.Events
                 isUpdate = false;
         }
 
-        public override void AddLevelObject(LevelObject lo)
-        {
-            if (this.list != null)
-            {
-                if (!this.list.Contains(lo) && (lo is InteractiveObject || lo is CollisionObject))
-                    this.list.Add(lo);
-            }
-        }
+        public override void AddLevelObject(LevelObject lo) { }
 
         public override string getPrefix()
         {
-            return "MoveEvent_";
+            return "CameraEvent_";
         }
 
         public override LevelObject clone()
         {
-            PhysicMoveEvent result = (PhysicMoveEvent)this.MemberwiseClone();
+            CameraEvent result = (CameraEvent)this.MemberwiseClone();
             result.mouseOn = false;
             return result;
         }
