@@ -625,6 +625,12 @@ namespace SilhouetteEditor.Forms
             Editor.Default.AddEvents(EventType.Death);
         }
 
+
+        private void cameraToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Editor.Default.AddEvents(EventType.Camera);
+        }
+
         //---> ToolStrips <---//
 
         private void deleteToolStripMenuItem_Click(object sender, EventArgs e)
