@@ -10,6 +10,8 @@ using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 using FarseerPhysics.Dynamics;
 using Silhouette.Engine.Manager;
+using System.IO;
+using Silhouette.GameMechs;
 
 namespace Silhouette.Engine
 {
@@ -31,6 +33,7 @@ namespace Silhouette.Engine
         public float rotation;
         public bool looped;
         public bool playedOnce;
+        public String fullpath;
 
         private bool started;
         private float totalElapsed;
@@ -42,6 +45,20 @@ namespace Silhouette.Engine
             totalElapsed = 0;
             this.playedOnce = false;
             this.started = false;
+        }
+
+        public Animation(String fullpath, int amount)
+        {
+            // Der fullpath muss bis zum Unterstrich vor der Zahl angegeben werden!!
+            pictures = new List<Texture2D>();
+            totalElapsed = 0;
+            this.playedOnce = false;
+            this.started = false;
+            this.fullpath = fullpath;
+            this.amount = amount;
+            this.speed = 100;
+            this.looped = false;
+            this.position = Vector2.Zero;
         }
 
         // Wird in der Load des zugehörigen Trägers gerufen
@@ -69,6 +86,56 @@ namespace Silhouette.Engine
             activeFrameNumber = 0;
             activeTexture = pictures[activeFrameNumber];
         }
+
+        public void Load()
+        {
+            //Achtung, Zählung beginnt bei den AMlern mit 01, nicht 00!!!!!
+            for (int i = 1; i <= amount; i++)
+            {
+                try
+                {
+                    if (i < 10)
+                    {
+                        String temp = (fullpath + "0" + i).ToString();
+                        pictures.Add(GameLoop.gameInstance.Content.Load<Texture2D>(temp));
+                    }
+                    else
+                    {
+                        String temp = (fullpath + i).ToString();
+                        pictures.Add(GameLoop.gameInstance.Content.Load<Texture2D>(temp));
+                    }
+                }
+
+                catch (Exception e1)
+                {
+                        if (i < 10)
+                        {
+                           String temp = (fullpath + "0" + i).ToString();
+                           string p = Path.Combine(Path.Combine(Directory.GetCurrentDirectory(), "Content"),Path.GetFileName(temp));
+                           pictures.Add(TextureManager.Instance.LoadFromFile(p));
+                    }
+                        else
+                        {
+                            String temp = (fullpath + i).ToString();
+                            string p = Path.Combine(Path.Combine(Directory.GetCurrentDirectory(), "Content"), Path.GetFileName(temp));
+                            Texture2D tempTex = TextureManager.Instance.LoadFromFile(p);
+
+                            if ( tempTex == null)
+                            {
+                                throw new Exception();
+                            }
+                            else
+                            {
+                                pictures.Add(tempTex);
+                            }
+                        }
+                    }
+                }
+
+
+                activeFrameNumber = 0;
+                activeTexture = pictures[activeFrameNumber];
+            }
 
         //Braucht die position des Trägers!
         public void Update(GameTime gameTime, Vector2 position)
@@ -121,6 +188,16 @@ namespace Silhouette.Engine
         public void start()
         {
             started = true;
+        }
+
+        public void setSpeed(float speed)
+        {
+            this.speed = (1/speed) * 100;
+        }
+
+        public void setLooped()
+        {
+            this.looped = true;
         }
     }
 }
