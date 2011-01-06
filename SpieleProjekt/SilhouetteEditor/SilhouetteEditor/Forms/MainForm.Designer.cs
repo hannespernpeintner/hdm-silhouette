@@ -691,7 +691,7 @@ namespace SilhouetteEditor.Forms
             // cameraToolStripMenuItem
             // 
             this.cameraToolStripMenuItem.Name = "cameraToolStripMenuItem";
-            this.cameraToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.cameraToolStripMenuItem.Size = new System.Drawing.Size(115, 22);
             this.cameraToolStripMenuItem.Text = "Camera";
             this.cameraToolStripMenuItem.Click += new System.EventHandler(this.cameraToolStripMenuItem_Click);
             // 
