@@ -33,8 +33,9 @@ namespace Silhouette
     public class GameLoop : Microsoft.Xna.Framework.Game
     {
         public GraphicsDeviceManager graphics;
+        public GameMechs.Player playerInstance;
         SpriteBatch spriteBatch;
-        
+
 
         public static GameLoop gameInstance;
 
@@ -48,6 +49,8 @@ namespace Silhouette
 
             //displayFPS = new DisplayFPS(this);
             //Components.Add(displayFPS);
+            
+
 
             gameInstance = this;
 
@@ -60,8 +63,13 @@ namespace Silhouette
             Primitives.Instance.Initialize(this.GraphicsDevice);
             SoundManager.Initialize();
             VideoManager.Initialize();
+
+            
             level = Level.LoadLevelFile("12345");
+            
             level.Initialize();
+
+            
             base.Initialize();
         }
 
