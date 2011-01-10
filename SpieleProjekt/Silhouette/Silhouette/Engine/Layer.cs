@@ -20,7 +20,10 @@ namespace Silhouette.Engine
 {
     public enum ShaderType
     { 
-        None
+        None,
+        Blur,
+        VignettenBlur,
+        Bloom
     }
 
     [Serializable]
@@ -38,8 +41,8 @@ namespace Silhouette.Engine
 
         private Vector2 scrollSpeed;
         [DisplayName("ScrollSpeed"), Category("General")]
-        [Description("The Scroll Speed relative to the main camera. The X and Y components are interpreted as factors, " +
-        "so Vector2.One means same scrolling speed as the main camera. To be used for parallax scrolling.")]
+        [Description("The layers scroll speed relative to the camera. A value of 1 represents the same scrolling speed as the camera" + 
+        "(all collision stuff should move with the same speed as the camera!). Used for parallax scrolling.")]
         public Vector2 ScrollSpeed { get { return scrollSpeed; } set { scrollSpeed = value; } }
 
         private ShaderType _shaderType;
