@@ -86,6 +86,11 @@ namespace Silhouette.GameMechs
         [Description("Defines if the object can kill the player if it hits him with an defined force.")]
         public bool isDeadly { get { return _isDeadly; } set { _isDeadly = value; } }
 
+        private bool _isClimbable;
+        [DisplayName("Climbable"), Category("Fixture Data")]
+        [Description("Defines if the player can climb up the collision object.")]
+        public bool isClimbable { get { return _isClimbable; } set { _isClimbable = value; } }
+
         Matrix transform;       //Sascha: Das Objekt hat eine eigene Transformationsmatrix, damit man die Transformation auf das Selection Frame übertragen kann.
         Rectangle boundingBox;  //Sascha: Bounding Box für das Objekt, benutzt die Methode Contains zur ersten Collisionserkennung im Editor.
         Vector2[] polygon;
@@ -187,12 +192,14 @@ namespace Silhouette.GameMechs
                 {
                     fixture = FixtureManager.CreatePolygon(texture, scale, bodyType, position, density);
                     fixture.isDeadly = isDeadly;
+                    fixture.isClimbable = isClimbable;
                     fixture.OnCollision += this.InteractiveOnCollision;
                 }
                 else if (accuracy == PhysicAccuracy.High)
                 {
                     fixtures = FixtureManager.TextureToPolygon(texture, scale, bodyType, position, density);
                     fixtures[0].isDeadly = isDeadly;
+                    fixtures[0].isClimbable = isClimbable;
                     fixtures[0].OnCollision += this.InteractiveOnCollision;
                 }
             }
@@ -202,6 +209,7 @@ namespace Silhouette.GameMechs
                 fixture.Body.BodyType = bodyType;
                 fixture.Body.Position = FixtureManager.ToMeter(position);
                 fixture.isDeadly = isDeadly;
+                fixture.isClimbable = isClimbable;
 
                 fixture.OnCollision += this.InteractiveOnCollision;
             }
