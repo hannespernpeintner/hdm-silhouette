@@ -235,9 +235,7 @@ namespace Silhouette.Engine
             boss.layer = layer;
             
             
-            layer.loList.Add(boss);
-        
-        
+            layer.loList.Add(boss);     
         }
 
         public static Level LoadLevelFile(string levelPath)
