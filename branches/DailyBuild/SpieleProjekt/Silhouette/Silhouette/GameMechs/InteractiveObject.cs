@@ -115,15 +115,33 @@ namespace Silhouette.GameMechs
             }
             catch (Exception e1)
             {
+               
+                  try
+                    {
+                        texture = GameLoop.gameInstance.Content.Load<Texture2D>(fullPath);
+                    }
+                catch (Exception e2)
+                {
+
                 try
                 {
                     string p = Path.Combine(layer.level.contentPath, Path.GetFileName(fullPath));
                     texture = TextureManager.Instance.LoadFromFile(p);
+                    if (texture == null)
+                        throw new Exception();
                 }
-                catch (Exception e2)
+                catch (Exception e3)
                 {
                     texture = TextureManager.Instance.LoadFromFile(fullPath);
                 }
+
+                
+                }
+
+                  
+                
+               
+          
             }
 
             if (texture != null)

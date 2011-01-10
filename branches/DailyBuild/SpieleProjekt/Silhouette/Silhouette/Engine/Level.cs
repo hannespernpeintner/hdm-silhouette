@@ -122,8 +122,11 @@ namespace Silhouette.Engine
             //GameLoop.gameInstance.GraphicsDevice.Textures[1] = vignette;
 
             Layer playerLayer = getLayerByName("Player");
+            Layer bossLayer = getLayerByName("Boss");
             if (playerLayer != null)
                 AddPlayer(playerLayer);
+            if (bossLayer != null)
+                AddBoss(bossLayer);
 
             foreach (Layer l in layerList)
             {
@@ -219,7 +222,22 @@ namespace Silhouette.Engine
             player.Initialise();
             player.position = startPosition;
             player.layer = layer;
+            GameLoop.gameInstance.playerInstance = player;
             layer.loList.Add(player);
+        }
+
+        public void AddBoss(Layer layer)
+        {
+            EndBoss boss = new EndBoss();
+            boss.Initialise();
+        
+            boss.position = new Vector2(900,0);
+            boss.layer = layer;
+            
+            
+            layer.loList.Add(boss);
+        
+        
         }
 
         public static Level LoadLevelFile(string levelPath)

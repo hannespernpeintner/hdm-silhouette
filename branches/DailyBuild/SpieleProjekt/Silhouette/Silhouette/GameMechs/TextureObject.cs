@@ -86,6 +86,10 @@ namespace Silhouette.GameMechs
                 {
                     string p = Path.Combine(layer.level.contentPath, Path.GetFileName(fullPath));
                     texture = TextureManager.Instance.LoadFromFile(p);
+
+                    if (texture == null)
+                        throw new Exception();
+
                 }
                 catch (Exception e2)
                 {
