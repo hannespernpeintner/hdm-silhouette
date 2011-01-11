@@ -80,8 +80,11 @@ namespace Silhouette.GameMechs
         [Description("The Sound's inital Volume. Float Value Min/Max: 0.0 / 1.0")]
         public float volume { get{
             if (Sound != null)
+            {
                 return Sound.Volume;
-            else return 1.0f;
+                
+            }
+            else return _volume;
         }
 
             set
@@ -265,7 +268,7 @@ namespace Silhouette.GameMechs
             }
             else
             {
-                pathToFile = Environment.CurrentDirectory + "\\Content\\Audio\\" + _assetName + ".mp3";
+                pathToFile = Environment.CurrentDirectory + "\\Content\\Audio\\" + _assetName + ".ogg";
             }
            
 
@@ -283,9 +286,11 @@ namespace Silhouette.GameMechs
             }
 
 
-            _MuteVolume = volume;
+
             if (mute)
                 Sound.Volume = 0;
+            else
+                Sound.Volume = _volume;
      
 
             Sound.Paused = false;
