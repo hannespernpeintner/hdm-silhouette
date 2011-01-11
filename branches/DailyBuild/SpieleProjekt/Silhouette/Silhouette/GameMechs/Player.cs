@@ -30,12 +30,15 @@ namespace Silhouette.GameMechs
         public Fixture charRect;
         public Fixture sRect;
         public Fixture nRect;
+        public Fixture eRect;
+        public Fixture wRect;
         public Fixture camRect;             // Camrect ist n Rectangle, dessen Bewegung auf die Camera übertragen wird.
         public RopeJoint joint0;            // Joints nötig, um die Cam am Player zu fixieren
         public RopeJoint joint1;
         public RopeJoint joint2;
         public RopeJoint joint3;
         public AngleJoint joint4;           // Joint, der die Camera nicht zu weit rotieren lässt
+        public Contact contact;
 
         public KeyboardState oldState;
         public Vector2 oldPosition;
@@ -200,6 +203,14 @@ namespace Silhouette.GameMechs
             sRect.Body.FixedRotation = true;
             sRect.IsSensor = true;
 
+            eRect = FixtureManager.CreateRectangle(15, 100, new Vector2(position.X + 90, position.Y), BodyType.Static, 0);
+            sRect.Body.FixedRotation = true;
+            sRect.IsSensor = true;
+
+            wRect = FixtureManager.CreateRectangle(15, 100, new Vector2(position.X - 95, position.Y), BodyType.Static, 0);
+            sRect.Body.FixedRotation = true;
+            sRect.IsSensor = true;
+
             camRect = FixtureManager.CreateRectangle(100, 100, position, BodyType.Dynamic, 0.1f);
             camRect.Body.IgnoreGravity = true;
             camRect.Body.FixedRotation = true;
@@ -209,8 +220,14 @@ namespace Silhouette.GameMechs
             nRect.IgnoreCollisionWith(charRect);
             nRect.IgnoreCollisionWith(camRect);
             nRect.IgnoreCollisionWith(sRect);
+            eRect.IgnoreCollisionWith(charRect);
+            eRect.IgnoreCollisionWith(camRect);
+            wRect.IgnoreCollisionWith(charRect);
+            wRect.IgnoreCollisionWith(camRect);
             charRect.IgnoreCollisionWith(sRect);
             charRect.IgnoreCollisionWith(nRect);
+            charRect.IgnoreCollisionWith(eRect);
+            charRect.IgnoreCollisionWith(wRect);
 
             joint0 = new RopeJoint(charRect.Body, camRect.Body, new Vector2(100 / Level.PixelPerMeter, 80 / Level.PixelPerMeter) * 2, new Vector2(50 / Level.PixelPerMeter, 50 / Level.PixelPerMeter));
             joint1 = new RopeJoint(charRect.Body, camRect.Body, new Vector2(-100 / Level.PixelPerMeter, -80 / Level.PixelPerMeter) * 2, new Vector2(-50 / Level.PixelPerMeter, -50 / Level.PixelPerMeter));
@@ -219,10 +236,15 @@ namespace Silhouette.GameMechs
             joint4 = JointFactory.CreateAngleJoint(Level.Physics, charRect.Body, sRect.Body);
             joint4.Softness = 0.999f;
 
-            joint0.MaxLength = 2.1f;
+            /*joint0.MaxLength = 2.1f;
             joint1.MaxLength = 2.1f;
             joint2.MaxLength = 2.1f;
-            joint3.MaxLength = 2.1f;
+            joint3.MaxLength = 2.1f;*/
+
+            joint0.MaxLength = 2.15f;
+            joint1.MaxLength = 2.15f;
+            joint2.MaxLength = 2.15f;
+            joint3.MaxLength = 2.15f;
 
 
             Level.Physics.AddJoint(joint0);
@@ -235,6 +257,10 @@ namespace Silhouette.GameMechs
             nRect.OnCollision += this.nOnCollision;
             sRect.OnCollision += this.sOnCollision;
             sRect.OnSeparation += this.sOnSeperation;
+            wRect.OnCollision += this.wOnCollision;
+            wRect.OnSeparation += this.wOnSeparation;
+            eRect.OnCollision += this.eOnCollision;
+            eRect.OnSeparation += this.eOnSeparation;
         }
 
         public override void Update(GameTime gameTime)
@@ -268,6 +294,8 @@ namespace Silhouette.GameMechs
             position = new Vector2(centerPosition.X, centerPosition.Y);
             sRect.Body.Position = charRect.Body.Position + new Vector2(0, 120 / Level.PixelPerMeter);
             nRect.Body.Position = charRect.Body.Position + new Vector2(0, -85 / Level.PixelPerMeter);
+            wRect.Body.Position = charRect.Body.Position + new Vector2(-95 / Level.PixelPerMeter, 0);
+            eRect.Body.Position = charRect.Body.Position + new Vector2(90 / Level.PixelPerMeter, 0);
             camPosition = new Vector2(camRect.Body.Position.X * Level.PixelPerMeter, camRect.Body.Position.Y * Level.PixelPerMeter);
         }
 
@@ -275,7 +303,7 @@ namespace Silhouette.GameMechs
         {
             Camera.Position = camPosition;
             // Die Camera wird nur rotiert, wenn die Rotation unter einem bestimmten Winkel bleibt. Damit das nicht ausartet.
-            if (camRect.Body.Rotation >= -0.1f && camRect.Body.Rotation <= 0.1f) { Camera.Rotation = camRect.Body.Rotation; }
+            //if (camRect.Body.Rotation >= -0.1f && camRect.Body.Rotation <= 0.1f) { Camera.Rotation = camRect.Body.Rotation; }
         }
 
         private void UpdateControls(GameTime gameTime)
@@ -728,7 +756,7 @@ namespace Silhouette.GameMechs
                 charRect.Friction = 1.5f;
             }
 
-            else if (movement.Y + Level.Physics.Gravity.Y < 0.1f)
+            else if (movement.Y + Level.Physics.Gravity.Y < 0.05f && !rectTouching)
             {
                 isIdle = false;
                 isFalling = false;
@@ -736,7 +764,7 @@ namespace Silhouette.GameMechs
                 isJumping = true;
             }
 
-            else if (isJumping && oldPosition.Y < charRect.Body.Position.Y && !sRectTouching)
+            else if (isJumping && oldPosition.Y < charRect.Body.Position.Y)
             {
                 isIdle = false;
                 isFalling = true;
@@ -746,7 +774,7 @@ namespace Silhouette.GameMechs
 
 
 
-            else if (movement.Y > 1.5f && !isFalling && !sRectTouching)
+            else if (movement.Y > 1.5f && !isFalling && !sRectTouching && !rectTouching)
             {
                 isIdle = false;
                 isFalling = true;
@@ -873,6 +901,8 @@ namespace Silhouette.GameMechs
 
         public bool OnCollision(Fixture fixtureA, Fixture fixtureB, Contact contact)
         {
+            this.contact = contact;
+            rectTouching = true;
 
             if (isFalling)
             {
@@ -893,11 +923,6 @@ namespace Silhouette.GameMechs
                 }
             }
 
-            if (fixtureB.isClimbable)
-            {
-                this.canClimb = true;
-            }
-
             if (fixtureB.isDeadly)
             {
                 die();
@@ -908,11 +933,19 @@ namespace Silhouette.GameMechs
 
         public void OnSeperation(Fixture fixtureA, Fixture fixtureB)
         {
-            rectTouching = false;
-
             if (canClimb)
             {
                 canClimb = false;
+            }
+
+            if (this.contact != null && this.contact.IsTouching())
+            {
+                rectTouching = true;
+            }
+
+            else if (this.contact != null && !this.contact.IsTouching())
+            {
+                rectTouching = false;
             }
         }
 
@@ -960,7 +993,43 @@ namespace Silhouette.GameMechs
 
         public void sOnSeperation(Fixture fixtureA, Fixture fixtureB)
         {
-            sRectTouching = false;
+                sRectTouching = false;
+        }
+
+        public bool eOnCollision(Fixture fixtureA, Fixture fixtureB, Contact contact)
+        {
+            if (fixtureB.isClimbable)
+            {
+                this.canClimb = true;
+            }
+
+            return true;
+        }
+
+        public void eOnSeparation(Fixture fixtureA, Fixture fixtureB)
+        {
+            if (canClimb)
+            {
+                canClimb = false;
+            }
+        }
+
+        public bool wOnCollision(Fixture fixtureA, Fixture fixtureB, Contact contact)
+        {
+            if (fixtureB.isClimbable)
+            {
+                this.canClimb = true;
+            }
+
+            return true;
+        }
+
+        public void wOnSeparation(Fixture fixtureA, Fixture fixtureB)
+        {
+            if (canClimb)
+            {
+                canClimb = false;
+            }
         }
 
         public override void Draw(SpriteBatch spriteBatch)
