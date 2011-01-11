@@ -76,7 +76,13 @@ namespace Silhouette.GameMechs.Events
                 foreach (SoundObject so in this.list)
                 {
                     if (Sound2 is SoundObject)
-                         so.Crossfade((SoundObject) _Sound2, _Channel2Gain, _Channel1Loss, _fadeTime);
+                    { 
+                        SoundObject so2 = (SoundObject) Sound2;
+                        if ( so2.volume < so.volume)
+                            so.Crossfade(so2, _Channel2Gain, _Channel1Loss, _fadeTime);
+                        else
+                            so2.Crossfade(so, _Channel2Gain, _Channel1Loss, _fadeTime);
+                    }
                 }
                 isActivated = false;
                 return true;
