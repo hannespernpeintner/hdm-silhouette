@@ -191,7 +191,7 @@ namespace Silhouette.GameMechs
             //charRect = FixtureManager.CreateCircle(80, position, BodyType.Dynamic, 1);
             //charRect.Body.FixedRotation = false;
             //charRect.Friction = 5;
-            charRect = FixtureManager.CreatePolygon(idle_left.pictures[0], new Vector2(0.7f, 0.95f), BodyType.Dynamic, position, 0.5f);
+            charRect = FixtureManager.CreatePolygon(idle_left.pictures[0], new Vector2(0.85f, 0.95f), BodyType.Dynamic, position, 0.5f);
             charRect.Friction = 1;
             charRect.isPlayer = true;
 
@@ -203,11 +203,11 @@ namespace Silhouette.GameMechs
             sRect.Body.FixedRotation = true;
             sRect.IsSensor = true;
 
-            eRect = FixtureManager.CreateRectangle(15, 100, new Vector2(position.X + 90, position.Y), BodyType.Static, 0);
+            eRect = FixtureManager.CreateRectangle(15, 100, new Vector2(position.X + 105, position.Y), BodyType.Static, 0);
             sRect.Body.FixedRotation = true;
             sRect.IsSensor = true;
 
-            wRect = FixtureManager.CreateRectangle(15, 100, new Vector2(position.X - 95, position.Y), BodyType.Static, 0);
+            wRect = FixtureManager.CreateRectangle(15, 100, new Vector2(position.X - 110, position.Y), BodyType.Static, 0);
             sRect.Body.FixedRotation = true;
             sRect.IsSensor = true;
 
@@ -294,8 +294,8 @@ namespace Silhouette.GameMechs
             position = new Vector2(centerPosition.X, centerPosition.Y);
             sRect.Body.Position = charRect.Body.Position + new Vector2(0, 120 / Level.PixelPerMeter);
             nRect.Body.Position = charRect.Body.Position + new Vector2(0, -85 / Level.PixelPerMeter);
-            wRect.Body.Position = charRect.Body.Position + new Vector2(-95 / Level.PixelPerMeter, 0);
-            eRect.Body.Position = charRect.Body.Position + new Vector2(90 / Level.PixelPerMeter, 0);
+            wRect.Body.Position = charRect.Body.Position + new Vector2(-110 / Level.PixelPerMeter, 0);
+            eRect.Body.Position = charRect.Body.Position + new Vector2(105 / Level.PixelPerMeter, 0);
             camPosition = new Vector2(camRect.Body.Position.X * Level.PixelPerMeter, camRect.Body.Position.Y * Level.PixelPerMeter);
         }
 
