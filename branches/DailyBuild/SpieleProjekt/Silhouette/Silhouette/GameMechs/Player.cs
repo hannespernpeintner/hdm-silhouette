@@ -331,6 +331,18 @@ namespace Silhouette.GameMechs
                 }
             }
 
+            if (Keyboard.GetState().IsKeyDown(Keys.Left) && (isFalling || isJumping) && movement.X >= -2.5f)
+            {
+                if (facing == 1)
+                {
+                    facing = 0;
+                }
+                else
+                {
+                    charRect.Body.ApplyForce(new Vector2(-15, 0));
+                }
+            }
+
             // RIGHT ARROW
             if (Keyboard.GetState().IsKeyDown(Keys.Right) && !isFalling && !isJumping && movement.X <= 2.5f)
             {
@@ -351,6 +363,18 @@ namespace Silhouette.GameMechs
                     isIdle = false;
                     isRunning = true;
                     charRect.Body.ApplyForce(new Vector2(40, 0));
+                }
+            }
+
+            if (Keyboard.GetState().IsKeyDown(Keys.Right) && (isFalling || isJumping) && movement.X <= 2.5f)
+            {
+                if (facing == 0)
+                {
+                    facing = 1;
+                }
+                else
+                {
+                    charRect.Body.ApplyForce(new Vector2(15, 0));
                 }
             }
 
@@ -814,6 +838,16 @@ namespace Silhouette.GameMechs
                 {
                     activeAnimation = idlec_left;
                 }
+
+                if (activeAnimation == jumpStarting_right)
+                {
+                    activeAnimation = jumpStarting_left;
+                }
+
+                if (activeAnimation == falling_right)
+                {
+                    activeAnimation = falling_left;
+                }
             }
 
             if (facing == 1)
@@ -831,6 +865,16 @@ namespace Silhouette.GameMechs
                 if (activeAnimation == idlec_left)
                 {
                     activeAnimation = idlec_right;
+                }
+
+                if (activeAnimation == jumpStarting_left)
+                {
+                    activeAnimation = jumpStarting_right;
+                }
+
+                if (activeAnimation == falling_left)
+                {
+                    activeAnimation = falling_right;
                 }
             }
         }
