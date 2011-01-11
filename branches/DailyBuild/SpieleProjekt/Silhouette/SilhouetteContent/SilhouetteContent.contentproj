@@ -1024,10 +1024,79 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Sprites\Boss\idleA_left_01.png">
+      <Name>idleA_left_01</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Sprites\Boss\idleA_left_06.png">
+      <Name>idleA_left_06</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Sprites\Boss\idleA_left_02.png">
+      <Name>idleA_left_02</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Sprites\Boss\idleA_left_03.png">
+      <Name>idleA_left_03</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Sprites\Boss\idleA_left_04.png">
+      <Name>idleA_left_04</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Sprites\Boss\idleA_left_05.png">
+      <Name>idleA_left_05</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
     <Compile Include="Effects\VignettenBlur.fx">
       <Name>VignettenBlur</Name>
       <Importer>EffectImporter</Importer>
       <Processor>EffectProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Sprites\Boss\02_wohnstube.png">
+      <Name>02_wohnstube</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Sprites\Boss\04_wohnstube_mitfaeden.png">
+      <Name>04_wohnstube_mitfaeden</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Sprites\Boss\04_wohnstube_ohnefaeden.png">
+      <Name>04_wohnstube_ohnefaeden</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Sprites\Boss\05_wohnstube.png">
+      <Name>05_wohnstube</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Sprites\Boss\arm_vorlaeufig_01.png">
+      <Name>arm_vorlaeufig_01</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\$(XnaFrameworkVersion)\Microsoft.Xna.GameStudio.ContentPipeline.targets" />
