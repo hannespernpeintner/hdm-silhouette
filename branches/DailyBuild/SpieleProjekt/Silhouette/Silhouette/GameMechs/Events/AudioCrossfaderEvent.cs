@@ -71,11 +71,11 @@ namespace Silhouette.GameMechs.Events
 
         public bool OnCollision(Fixture a, Fixture b, Contact contact)
         {
-            if (isActivated)
+            if (isActivated && b.isPlayer == true)
             {
                 foreach (SoundObject so in this.list)
                 {
-                    if (Sound2 is SoundObject)
+                    if ((Sound2 is SoundObject)  )
                     { 
                         SoundObject so2 = (SoundObject) Sound2;
                         if ( so2.volume < so.volume)
@@ -84,7 +84,7 @@ namespace Silhouette.GameMechs.Events
                             so2.Crossfade(so, _Channel2Gain, _Channel1Loss, _fadeTime);
                     }
                 }
-                isActivated = false;
+                //isActivated = false;
                 return true;
             }
             else

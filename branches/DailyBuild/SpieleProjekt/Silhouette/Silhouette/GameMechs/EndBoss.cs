@@ -43,8 +43,13 @@ namespace Silhouette.GameMechs
         private Boolean isJitterMoving;
         public Vector2 movement;
         private Boolean goingDown;
-        private Boolean didBackup;
-        private Boolean justFallingDown;
+        private Boolean mayBackup;
+
+        private float backupCooldown;
+        private float backupCooldownRemaining;
+
+        private float xPositionBoss;
+        private float xPositionPlayer;
 
       
 
@@ -77,7 +82,8 @@ namespace Silhouette.GameMechs
             this.position = new Vector2(0,0);
             activeAnimation = new Animation();
             random = new Random();
-           
+
+            backupCooldown = 0.2f;
 
             facing = 1;
             Camera.Scale = 0.5f;
@@ -95,16 +101,17 @@ namespace Silhouette.GameMechs
             this.fixture.Body.Mass = 0;
             this.fixture.Body.Inertia = 0;
 
-           
+            
             
            
 
             // Hier müssen alle Sprites geladen werden.
             activeAnimation.Load(1, "Sprites/Boss/arm_vorlaeufig_", 1.0f, true);
-  
-            
+                
+                      
            
             activeAnimation.start();
+            
             
 
            
@@ -138,8 +145,10 @@ namespace Silhouette.GameMechs
                 doScriptedMove();
             }
             * */
-            UpdateAttackMovement(gameTime);
+            UpdateBackupTimer(gameTime);
             UpdateJitterMovement();
+            UpdateAttackMovement(gameTime);
+           
             UpdateTexture(gameTime);
             
             ObserveTimer(gameTime);
@@ -154,6 +163,24 @@ namespace Silhouette.GameMechs
             }
             else
                 jitterVector = Vector2.One;
+
+        }
+
+        public void UpdateBackupTimer(GameTime gameTime)
+        {
+            if (mayBackup == false)
+
+            {
+               backupCooldownRemaining -= (float)gameTime.ElapsedGameTime.TotalSeconds;
+
+               if (backupCooldownRemaining <= 0)
+               {
+                   mayBackup = true;
+                   backupCooldownRemaining = backupCooldown;
+               }
+            
+            }
+
 
         }
 
@@ -176,60 +203,65 @@ namespace Silhouette.GameMechs
 
          //    movement *= 0.9f * jitterVector;
 
+            xPositionPlayer = GameLoop.gameInstance.playerInstance.position.X / Level.PixelPerMeter;
+            xPositionBoss = this.fixture.Body.Position.X;
             
 
-            if ((distance < 5) && (distance > 4) || justFallingDown)  //Too close
-           // if ((this.fixture.Body.Position.X <= GameLoop.gameInstance.playerInstance.position.X / Level.PixelPerMeter + 5)&&(this.fixture.Body.Position.X > GameLoop.gameInstance.playerInstance.position.X / Level.PixelPerMeter + 4))
+          //  if ((distance < 9) && (distance > 6))  //Too close
+            if ((xPositionBoss < xPositionPlayer + 8) && (xPositionBoss > xPositionPlayer + 6))
             {
                 isJitterMoving = false;
-                if (goingDown == false && didBackup == true )
+                mayBackup = false;
+
+                if (!goingDown)
                 {
                     this.fixture.Body.ResetDynamics();
-                    this.fixture.Body.ApplyForce(new Vector2(5.0f, 0));
-
+                    goingDown = true;
                 }
+                    
+                
 
 
                 this.fixture.Body.LinearDamping = 2.0f;
-                this.fixture.Body.ApplyForce(new Vector2(0.0f, 5.0f));  //Going down
+                this.fixture.Body.ApplyForce(new Vector2(4.0f, 10.0f));  //Going down
                 goingDown = true;
 
-                if ((distance < 3.5) || (justFallingDown && this.fixture.Body.LinearVelocity.Y < 0.5f) )
-                {
-                    justFallingDown = false;
-                }
-                else
-                    justFallingDown = true;
+      
 
                
             }
             else
             {
- 
 
+                this.fixture.Body.IgnoreGravity = true;
                 movement *= 4.0f;
 
                if (isJitterMoving) 
                 movement *= (0.5f * jitterVector);
                 
 
-                goingDown = false;
+                
                  isJitterMoving = true;
 
 
                 this.fixture.Body.LinearDamping = 1.5f;
-                if (distance <= 4)
+                if ((xPositionBoss < xPositionPlayer + 6))
                 {
-                    
-                       this.fixture.Body.ApplyForce(((-movement * 2.0f) - new Vector2(0, 1.5f)));  //Backup, Going Up
-                        didBackup = true;
-                    
+                    if (mayBackup)
+                    {
+                        if (distance < 4)
+                            this.fixture.Body.ApplyForce(((-movement) - new Vector2(0, 1.5f)));  //Backup, Going Up
+                        else
+                            this.fixture.Body.ApplyForce(-movement);
+                        goingDown = false;
+                    }
                 }
                 else
                 {
-                    justFallingDown = false;
+                    
                     this.fixture.Body.ApplyForce(movement); //Head towards
-                    didBackup = false;
+                    goingDown = false;
+                         
                 }
             }
 
@@ -385,10 +417,11 @@ namespace Silhouette.GameMechs
             spriteBatch.DrawString(FontManager.Arial, "Distance Player-Boss: " + distance, new Vector2(300, 95), Color.Black);
             spriteBatch.DrawString(FontManager.Arial, "isJitterMoving: " + isJitterMoving, new Vector2(300, 120), Color.Black);
 
-            spriteBatch.DrawString(FontManager.Arial, "FallingDown: " + justFallingDown, new Vector2(300, 155), Color.Black);
+            spriteBatch.DrawString(FontManager.Arial, "GoingDown: " + goingDown, new Vector2(300, 155), Color.Black);
+           
+            spriteBatch.DrawString(FontManager.Arial, "X-Position Boss: " + xPositionBoss,  new Vector2(300, 180), Color.Black);
+            spriteBatch.DrawString(FontManager.Arial, "X-Position Player: " + xPositionPlayer, new Vector2(300, 205), Color.Black);
            /*
-            spriteBatch.DrawString(FontManager.Arial, actClimbHeight.ToString(), new Vector2(300, 180), Color.Black);
-            spriteBatch.DrawString(FontManager.Arial, "X: " + movement.X.ToString() + " Y: " + movement.Y.ToString(), new Vector2(300, 205), Color.Black);
             spriteBatch.DrawString(FontManager.Arial, "CamRectRotation: " + camRect.Body.Rotation.ToString(), new Vector2(300, 230), Color.Black);
             spriteBatch.DrawString(FontManager.Arial, "CamRotation: " + Camera.Rotation.ToString(), new Vector2(300, 255), Color.Black);
             spriteBatch.DrawString(FontManager.Arial, "tempRotation: " + tempRotation.ToString(), new Vector2(300, 280), Color.Black);
