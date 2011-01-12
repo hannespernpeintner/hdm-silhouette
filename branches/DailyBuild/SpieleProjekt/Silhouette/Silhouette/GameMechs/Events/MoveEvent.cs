@@ -28,7 +28,7 @@ using FarseerPhysics.Dynamics.Contacts;
 namespace Silhouette.GameMechs.Events
 {
     [Serializable]
-    public class PhysicMoveEvent : Event
+    public class MoveEvent : Event
     {
         private Attribute _attributeType;
         [DisplayName("Attribute"), Category("Event Data")]
@@ -41,7 +41,7 @@ namespace Silhouette.GameMechs.Events
         public int endValue { get { return _endValue; } set { _endValue = value; } }
 
         private float _step;
-        [DisplayName("Step (Rotation/Scale)"), Category("Event Data")]
+        [DisplayName("Step (Rotation)"), Category("Event Data")]
         [Description("The steps in which it changes. Caution: Use only if attribute is rotation or scale!")]
         public float step { get { return _step; } set { _step = value; } }
 
@@ -53,7 +53,7 @@ namespace Silhouette.GameMechs.Events
         [Browsable(false)]
         private bool isUpdate;
 
-        public PhysicMoveEvent(Rectangle rectangle)
+        public MoveEvent(Rectangle rectangle)
         {
             this.rectangle = rectangle;
             position = rectangle.Location.ToVector2();
@@ -82,6 +82,31 @@ namespace Silhouette.GameMechs.Events
                                 CollisionObject co = (CollisionObject)lo;
                                 co.fixture.Body.Rotation += this.step;
                             }
+                            if (lo is TextureObject)
+                            {
+                                TextureObject to = (TextureObject)lo;
+                                to.rotation += this.step;
+                            }
+                        }
+                        break;
+                    case Attribute.Position:
+                        foreach (LevelObject lo in this.list)
+                        {
+                            if (lo is InteractiveObject)
+                            {
+                                InteractiveObject io = (InteractiveObject)lo;
+                                io.fixture.Body.Position += this.stepV;
+                            }
+                            if (lo is CollisionObject)
+                            {
+                                CollisionObject co = (CollisionObject)lo;
+                                co.fixture.Body.Position += this.stepV;
+                            }
+                            if (lo is TextureObject)
+                            {
+                                TextureObject to = (TextureObject)lo;
+                                to.position += this.stepV;
+                            }
                         }
                         break;
                 }
@@ -97,7 +122,7 @@ namespace Silhouette.GameMechs.Events
         {
             if (this.list != null)
             {
-                if (!this.list.Contains(lo) && (lo is InteractiveObject || lo is CollisionObject))
+                if (!this.list.Contains(lo) && (lo is InteractiveObject || lo is CollisionObject || lo is TextureObject))
                     this.list.Add(lo);
             }
         }
@@ -109,7 +134,7 @@ namespace Silhouette.GameMechs.Events
 
         public override LevelObject clone()
         {
-            PhysicMoveEvent result = (PhysicMoveEvent)this.MemberwiseClone();
+            MoveEvent result = (MoveEvent)this.MemberwiseClone();
             result.mouseOn = false;
             return result;
         }

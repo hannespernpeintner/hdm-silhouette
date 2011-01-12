@@ -39,7 +39,7 @@ namespace Silhouette
 
         public static GameLoop gameInstance;
 
-        //DisplayFPS displayFPS;
+        DisplayFPS displayFPS;
         Level level;
 
         public GameLoop()
@@ -47,10 +47,8 @@ namespace Silhouette
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
 
-            //displayFPS = new DisplayFPS(this);
-            //Components.Add(displayFPS);
-            
-
+            displayFPS = new DisplayFPS(this);
+            Components.Add(displayFPS);
 
             gameInstance = this;
 
@@ -75,16 +73,14 @@ namespace Silhouette
 
         protected override void LoadContent()
         {
-            VideoManager.LoadContent();
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            
-            
             DebugViewXNA.LoadContent(GameLoop.gameInstance.GraphicsDevice, GameLoop.gameInstance.Content);
-            FontManager.loadFonts();
 
-           
-            
-            level.LoadContent();        //Provisorisch
+            VideoManager.LoadContent();
+            FontManager.loadFonts();
+            EffectManager.loadEffects();
+
+            level.LoadContent();
         }
 
         protected override void UnloadContent(){}
@@ -93,7 +89,7 @@ namespace Silhouette
         {
             VideoManager.Update(gameTime);
             SoundManager.Update(gameTime);
-            level.Update(gameTime);     //Provisorisch
+            level.Update(gameTime);
             base.Update(gameTime);
         }
 
@@ -104,8 +100,7 @@ namespace Silhouette
 
             if (!VideoManager.IsPlaying)
             {
-                level.Draw();       //Provisorisch
-
+                level.Draw();
             }
             else
             {
