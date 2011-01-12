@@ -86,7 +86,7 @@
             this.DeleteButton.Dock = System.Windows.Forms.DockStyle.Top;
             this.DeleteButton.Location = new System.Drawing.Point(0, 0);
             this.DeleteButton.Name = "DeleteButton";
-            this.DeleteButton.Size = new System.Drawing.Size(89, 23);
+            this.DeleteButton.Size = new System.Drawing.Size(102, 23);
             this.DeleteButton.TabIndex = 3;
             this.DeleteButton.Text = ">>";
             this.DeleteButton.UseVisualStyleBackColor = true;
@@ -97,7 +97,7 @@
             this.AddButton.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.AddButton.Location = new System.Drawing.Point(0, 185);
             this.AddButton.Name = "AddButton";
-            this.AddButton.Size = new System.Drawing.Size(89, 23);
+            this.AddButton.Size = new System.Drawing.Size(102, 23);
             this.AddButton.TabIndex = 4;
             this.AddButton.Text = "<<";
             this.AddButton.UseVisualStyleBackColor = true;
@@ -108,7 +108,7 @@
             this.propertyGrid1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.propertyGrid1.Location = new System.Drawing.Point(0, 0);
             this.propertyGrid1.Name = "propertyGrid1";
-            this.propertyGrid1.Size = new System.Drawing.Size(221, 455);
+            this.propertyGrid1.Size = new System.Drawing.Size(255, 455);
             this.propertyGrid1.TabIndex = 5;
             this.propertyGrid1.ToolbarVisible = false;
             // 
@@ -118,7 +118,7 @@
             this.ObjectView.Location = new System.Drawing.Point(0, 0);
             this.ObjectView.Name = "ObjectView";
             this.ObjectView.ShowLines = false;
-            this.ObjectView.Size = new System.Drawing.Size(232, 455);
+            this.ObjectView.Size = new System.Drawing.Size(264, 455);
             this.ObjectView.TabIndex = 6;
             this.ObjectView.MouseDown += new System.Windows.Forms.MouseEventHandler(this.ObjectView_MouseDown);
             // 
@@ -128,7 +128,7 @@
             this.EventView.Location = new System.Drawing.Point(0, 0);
             this.EventView.Name = "EventView";
             this.EventView.ShowLines = false;
-            this.EventView.Size = new System.Drawing.Size(241, 455);
+            this.EventView.Size = new System.Drawing.Size(273, 455);
             this.EventView.TabIndex = 0;
             this.EventView.MouseDown += new System.Windows.Forms.MouseEventHandler(this.EventView_MouseDown);
             // 
@@ -148,14 +148,14 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.splitContainer2);
-            this.splitContainer1.Size = new System.Drawing.Size(883, 514);
+            this.splitContainer1.Size = new System.Drawing.Size(1006, 514);
             this.splitContainer1.SplitterDistance = 25;
             this.splitContainer1.TabIndex = 7;
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(630, 9);
+            this.label3.Location = new System.Drawing.Point(713, 9);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(51, 13);
             this.label3.TabIndex = 2;
@@ -164,7 +164,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(367, 10);
+            this.label2.Location = new System.Drawing.Point(412, 9);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(43, 13);
             this.label2.TabIndex = 1;
@@ -173,7 +173,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(26, 9);
+            this.label1.Location = new System.Drawing.Point(29, 9);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(40, 13);
             this.label1.TabIndex = 0;
@@ -189,7 +189,7 @@
             // splitContainer2.Panel1
             // 
             this.splitContainer2.Panel1.Controls.Add(this.splitContainer3);
-            this.splitContainer2.Size = new System.Drawing.Size(883, 485);
+            this.splitContainer2.Size = new System.Drawing.Size(1006, 485);
             this.splitContainer2.SplitterDistance = 455;
             this.splitContainer2.TabIndex = 8;
             // 
@@ -202,8 +202,8 @@
             // splitContainer3.Panel2
             // 
             this.splitContainer3.Panel2.Controls.Add(this.splitContainer4);
-            this.splitContainer3.Size = new System.Drawing.Size(883, 455);
-            this.splitContainer3.SplitterDistance = 25;
+            this.splitContainer3.Size = new System.Drawing.Size(1006, 455);
+            this.splitContainer3.SplitterDistance = 28;
             this.splitContainer3.TabIndex = 0;
             // 
             // splitContainer4
@@ -215,8 +215,8 @@
             // splitContainer4.Panel1
             // 
             this.splitContainer4.Panel1.Controls.Add(this.splitContainer7);
-            this.splitContainer4.Size = new System.Drawing.Size(854, 455);
-            this.splitContainer4.SplitterDistance = 825;
+            this.splitContainer4.Size = new System.Drawing.Size(974, 455);
+            this.splitContainer4.SplitterDistance = 939;
             this.splitContainer4.TabIndex = 0;
             // 
             // splitContainer7
@@ -232,8 +232,8 @@
             // splitContainer7.Panel2
             // 
             this.splitContainer7.Panel2.Controls.Add(this.splitContainer8);
-            this.splitContainer7.Size = new System.Drawing.Size(825, 455);
-            this.splitContainer7.SplitterDistance = 334;
+            this.splitContainer7.Size = new System.Drawing.Size(939, 455);
+            this.splitContainer7.SplitterDistance = 379;
             this.splitContainer7.TabIndex = 9;
             // 
             // panel1
@@ -242,7 +242,7 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(334, 455);
+            this.panel1.Size = new System.Drawing.Size(379, 455);
             this.panel1.TabIndex = 8;
             // 
             // splitContainer5
@@ -258,8 +258,8 @@
             // splitContainer5.Panel2
             // 
             this.splitContainer5.Panel2.Controls.Add(this.splitContainer6);
-            this.splitContainer5.Size = new System.Drawing.Size(334, 455);
-            this.splitContainer5.SplitterDistance = 241;
+            this.splitContainer5.Size = new System.Drawing.Size(379, 455);
+            this.splitContainer5.SplitterDistance = 273;
             this.splitContainer5.TabIndex = 0;
             // 
             // splitContainer6
@@ -276,7 +276,7 @@
             // splitContainer6.Panel2
             // 
             this.splitContainer6.Panel2.Controls.Add(this.DeleteButton);
-            this.splitContainer6.Size = new System.Drawing.Size(89, 455);
+            this.splitContainer6.Size = new System.Drawing.Size(102, 455);
             this.splitContainer6.SplitterDistance = 208;
             this.splitContainer6.TabIndex = 0;
             // 
@@ -293,8 +293,8 @@
             // splitContainer8.Panel2
             // 
             this.splitContainer8.Panel2.Controls.Add(this.splitContainer9);
-            this.splitContainer8.Size = new System.Drawing.Size(487, 455);
-            this.splitContainer8.SplitterDistance = 232;
+            this.splitContainer8.Size = new System.Drawing.Size(556, 455);
+            this.splitContainer8.SplitterDistance = 264;
             this.splitContainer8.TabIndex = 0;
             // 
             // splitContainer9
@@ -306,15 +306,15 @@
             // splitContainer9.Panel2
             // 
             this.splitContainer9.Panel2.Controls.Add(this.propertyGrid1);
-            this.splitContainer9.Size = new System.Drawing.Size(251, 455);
-            this.splitContainer9.SplitterDistance = 26;
+            this.splitContainer9.Size = new System.Drawing.Size(288, 455);
+            this.splitContainer9.SplitterDistance = 29;
             this.splitContainer9.TabIndex = 0;
             // 
             // ManageEvents
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(883, 514);
+            this.ClientSize = new System.Drawing.Size(1006, 514);
             this.Controls.Add(this.splitContainer1);
             this.Name = "ManageEvents";
             this.Text = "Manage Events";
