@@ -76,14 +76,14 @@ namespace Silhouette.Engine
             SpriteBatch spriteBatch;
 
             private List<Layer> _layerList;
-
             [DisplayName("Layers"), Category("Layer")]
             [Description("The Layers of the Level.")]
             public List<Layer> layerList { get { return _layerList; } }
 
             [NonSerialized]
             private Matrix proj;
-
+            [NonSerialized]
+            public RenderTarget2D[] renderTargets;
             [NonSerialized]
             private KeyboardState keyboardState;
             [NonSerialized]
