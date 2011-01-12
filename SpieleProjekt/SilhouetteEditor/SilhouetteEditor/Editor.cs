@@ -29,9 +29,14 @@ namespace SilhouetteEditor
 {
     public enum EventType
     {
+        //Object
+        Move,
+        ChangeVisibility,
+
         //Physic
         ChangeBodyType,
-        Move,
+        ApplyForce,
+        
 
         //Audio
         Fade,
@@ -430,7 +435,6 @@ namespace SilhouetteEditor
                                 PathPrimitiveObject p = (PathPrimitiveObject)lo;
 
                                 PathCollisionObject pf = new PathCollisionObject((Vector2[])p.WorldPoints.Clone());
-                                pf.isPolygon = p.isPolygon;
                                 pf.name = pf.getPrefix() + p.layer.getNextObjectNumber();
                                 pf.layer = p.layer;
                                 p.layer.loList.Add(pf);
@@ -1165,7 +1169,7 @@ namespace SilhouetteEditor
                     selectLevelObject(e9);
                     break;
                 case EventType.Move:
-                    PhysicMoveEvent e10 = new PhysicMoveEvent(Extensions.RectangleFromVectors(clickedPoints[0], clickedPoints[1]));
+                    MoveEvent e10 = new MoveEvent(Extensions.RectangleFromVectors(clickedPoints[0], clickedPoints[1]));
                     e10.name = e10.getPrefix() + selectedLayer.getNextObjectNumber();
                     e10.layer = selectedLayer;
                     selectedLayer.loList.Add(e10);
@@ -1177,6 +1181,20 @@ namespace SilhouetteEditor
                     e11.layer = selectedLayer;
                     selectedLayer.loList.Add(e11);
                     selectLevelObject(e11);
+                    break;
+                case EventType.ApplyForce:
+                    PhysicApplyForceEvent e12 = new PhysicApplyForceEvent(Extensions.RectangleFromVectors(clickedPoints[0], clickedPoints[1]));
+                    e12.name = e12.getPrefix() + selectedLayer.getNextObjectNumber();
+                    e12.layer = selectedLayer;
+                    selectedLayer.loList.Add(e12);
+                    selectLevelObject(e12);
+                    break;
+                case EventType.ChangeVisibility:
+                    ChangeVisibilityEvent e13 = new ChangeVisibilityEvent(Extensions.RectangleFromVectors(clickedPoints[0], clickedPoints[1]));
+                    e13.name = e13.getPrefix() + selectedLayer.getNextObjectNumber();
+                    e13.layer = selectedLayer;
+                    selectedLayer.loList.Add(e13);
+                    selectLevelObject(e13);
                     break;
             }
             MainForm.Default.UpdateTreeView();
@@ -1446,10 +1464,7 @@ namespace SilhouetteEditor
                             {
                                 Microsoft.Xna.Framework.Color color = Constants.ColorFixtures;
                                 if (p.mouseOn) color = Constants.ColorMouseOn;
-                                if (p.isPolygon)
-                                    Primitives.Instance.drawPolygon(spriteBatch, p.WorldPoints, color, p.lineWidth);
-                                else
-                                    Primitives.Instance.drawPath(spriteBatch, p.WorldPoints, color, p.lineWidth);
+                                Primitives.Instance.drawPolygon(spriteBatch, p.WorldPoints, color, p.lineWidth);
                             }
                         }
                         if (lo is Event)
