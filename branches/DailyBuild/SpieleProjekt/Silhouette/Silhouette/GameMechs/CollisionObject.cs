@@ -32,36 +32,24 @@ namespace Silhouette.GameMechs
         [NonSerialized]
         public Fixture fixture;
 
+        private bool _isPervious;
+        [DisplayName("Pervious"), Category("Fixture Data")]
+        [Description("Defines if the player can jump through the collision object, but stand on it.")]
+        public bool isPervious { get { return _isPervious; } set { _isPervious = value; } }
+
         private float _density;
         [DisplayName("Mass"), Category("Physical Behavior")]
         [Description("The mass of the object to calculate physical interaction.")]
         public float density { get { return _density; } set { _density = value; } }
 
-        /*
-        private LevelObject _levelObject;
-        [DisplayName("Level Object"), Category("Additional Properties")]
-        [Description("The object that is attached to the collision object.")]
-        public LevelObject levelObject { get { return _levelObject; } set { _levelObject = value; } }
-        */
+        private BodyType _bodyType;
+        [DisplayName("BodyType"), Category("Physical Behavior")]
+        [Description("The BodyType defines the behavior of an object. A static object never changes position or rotation, like the dynamic ones do.")]
+        public BodyType bodyType { get { return _bodyType; } set { _bodyType = value; } }
 
         public abstract void ToFixture();
 
-        public override void Update(GameTime gameTime)
-        {
-            /*
-            if (levelObject != null)
-            {
-                levelObject.position = fixture.Body.Position;
-
-                if (levelObject is TextureObject)
-                {
-                    TextureObject to = (TextureObject)levelObject;
-                    to.rotation = fixture.Body.Rotation;
-                    to.position = fixture.Body.Position;
-                }
-            }
-            */
-        }
+        public override void Update(GameTime gameTime) { }
     }
 
     #region Rectangle
@@ -83,16 +71,6 @@ namespace Silhouette.GameMechs
             [DisplayName("Climbable"), Category("Fixture Data")]
             [Description("Defines if the player can climb up the collision object.")]
             public bool isClimbable { get { return _isClimbable; } set { _isClimbable = value; } }
-
-            private bool _isPervious;
-            [DisplayName("Pervious"), Category("Fixture Data")]
-            [Description("Defines if the player can jump through the collision object, but stand on it.")]
-            public bool isPervious { get { return _isPervious; } set { _isPervious = value; } }
-
-            private BodyType _bodyType;
-            [DisplayName("BodyType"), Category("Physical Behavior")]
-            [Description("The BodyType defines the behavior of an object. A static object never changes position or rotation, like the dynamic ones do.")]
-            public BodyType bodyType { get { return _bodyType; } set { _bodyType = value; } }
 
             public RectangleCollisionObject(Microsoft.Xna.Framework.Rectangle rectangle)
             {
@@ -177,16 +155,6 @@ namespace Silhouette.GameMechs
             [Description("Defines if the player can climb up the collision object.")]
             public bool isClimbable { get { return _isClimbable; } set { _isClimbable = value; } }
 
-            private bool _isPervious;
-            [DisplayName("Pervious"), Category("Fixture Data")]
-            [Description("Defines if the player can jump through the collision object, but stand on it.")]
-            public bool isPervious { get { return _isPervious; } set { _isPervious = value; } }
-
-            private BodyType _bodyType;
-            [DisplayName("BodyType"), Category("Physical Behavior")]
-            [Description("The BodyType defines the behavior of an object. A static object never changes position or rotation, like the dynamic ones do.")]
-            public BodyType bodyType { get { return _bodyType; } set { _bodyType = value; } }
-
             public CircleCollisionObject(Vector2 position, float radius)
             {
                 this.position = position;
@@ -253,15 +221,7 @@ namespace Silhouette.GameMechs
         [Serializable]
         public class PathCollisionObject : CollisionObject
         {
-            private bool _isPolygon;
-            [DisplayName("Polygon"), Category("Fixture Data")]
-            [Description("Defines wether or not the path should be treated like a polygon. If the value is true the start and end of the path will be connected.")]
-            public bool isPolygon { get { return _isPolygon; } set { _isPolygon = value; } }
-
-            private int _lineWidth;
-            [DisplayName("Line Width"), Category("Fixture Data")]
-            [Description("The line width of this path. Can be used for rendering.")]
-            public int lineWidth { get { return _lineWidth; } set { _lineWidth = value; } }
+            public int lineWidth;
 
             public Vector2[] LocalPoints;
             public Vector2[] WorldPoints;
@@ -285,8 +245,9 @@ namespace Silhouette.GameMechs
                 {
                     if (worldPosition.DistanceToLineSegment(WorldPoints[i], WorldPoints[i - 1]) <= lineWidth) return true;
                 }
-                if (isPolygon)
-                    if (worldPosition.DistanceToLineSegment(WorldPoints[0], WorldPoints[WorldPoints.Length - 1]) <= lineWidth) return true;
+
+                if (worldPosition.DistanceToLineSegment(WorldPoints[0], WorldPoints[WorldPoints.Length - 1]) <= lineWidth) return true;
+
                 return false;
             }
 
@@ -332,10 +293,7 @@ namespace Silhouette.GameMechs
 
             public override void drawSelectionFrame(SpriteBatch spriteBatch, Matrix matrix)
             {
-                if (isPolygon)
-                    Primitives.Instance.drawPolygon(spriteBatch, WorldPoints, Color.Yellow, 2);
-                else
-                    Primitives.Instance.drawPath(spriteBatch, WorldPoints, Color.Yellow, 2);
+                Primitives.Instance.drawPolygon(spriteBatch, WorldPoints, Color.Yellow, 2);
 
                 foreach (Vector2 p in WorldPoints)
                 {
@@ -345,28 +303,15 @@ namespace Silhouette.GameMechs
 
             public override void ToFixture()
             {
-                if (isPolygon)
-                {
-                    FarseerPhysics.Common.Path path = new FarseerPhysics.Common.Path();
-                    foreach (Vector2 v in WorldPoints)
-                    {
-                        path.Add(FixtureManager.ToMeter(v));
-                    }
-                    path.Closed = true;
-
-                    PathManager.ConvertPathToPolygon(path, new Body(Level.Physics), density, WorldPoints.Length);
+                Vertices vertices = new Vertices();
+                foreach (Vector2 v in WorldPoints)
+                { 
+                    vertices.Add(FixtureManager.ToMeter(v));
                 }
-                else
-                {
-                    FarseerPhysics.Common.Path path = new FarseerPhysics.Common.Path();
-                    foreach (Vector2 v in WorldPoints)
-                    {
-                        path.Add(FixtureManager.ToMeter(v));
-                    }
-                    path.Closed = false;
 
-                    PathManager.ConvertPathToEdges(path, new Body(Level.Physics), WorldPoints.Length * 3);
-                }
+                fixture = FixtureFactory.CreateLoopShape(Level.Physics, vertices, this.density);
+                fixture.Body.BodyType = this.bodyType;
+                fixture.isHalfTransparent = this.isPervious;
             }
         }
     #endregion

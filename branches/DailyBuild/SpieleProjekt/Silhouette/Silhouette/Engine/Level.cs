@@ -65,6 +65,7 @@ namespace Silhouette.Engine
             public Vector2 startPosition { get { return _startPosition; } set { _startPosition = value; } }
 
             public bool isVisible = true;
+
             [NonSerialized]
             private DebugViewXNA debugView;
             [NonSerialized]
@@ -73,8 +74,6 @@ namespace Silhouette.Engine
             private bool GraphicsEnabled = false;
             [NonSerialized]
             SpriteBatch spriteBatch;
-            [NonSerialized]
-            Texture2D vignette;
 
             private List<Layer> _layerList;
 
@@ -118,11 +117,9 @@ namespace Silhouette.Engine
         {
             proj = Matrix.CreateOrthographicOffCenter(0, GameSettings.Default.resolutionWidth / PixelPerMeter, GameSettings.Default.resolutionHeight / PixelPerMeter, 0, 0, 1);
 
-            //vignette = GameLoop.gameInstance.Content.Load<Texture2D>("Sprites/OverLays/Vignette");
-            //GameLoop.gameInstance.GraphicsDevice.Textures[1] = vignette;
-
             Layer playerLayer = getLayerByName("Player");
             Layer bossLayer = getLayerByName("Boss");
+
             if (playerLayer != null)
                 AddPlayer(playerLayer);
             if (bossLayer != null)
@@ -145,25 +142,6 @@ namespace Silhouette.Engine
 
             #region DebugView
                 keyboardState = Keyboard.GetState();
-
-               
-                if (keyboardState.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.A))
-                {
-                    Camera.PositionX -= 100;
-                }
-                if (keyboardState.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.D))
-                {
-                    Camera.PositionX += 100;
-                }
-                if (keyboardState.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.S))
-                {
-                    Camera.PositionY += 100;
-                }
-                if (keyboardState.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.W))
-                {
-                    Camera.PositionY -= 100;
-                }
-                
 
                 if (keyboardState.IsKeyDown(Keys.F1) && oldKeyboardState.IsKeyUp(Keys.F1))
                     DebugViewEnabled = !DebugViewEnabled;

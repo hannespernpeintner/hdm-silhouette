@@ -28,14 +28,14 @@ using FarseerPhysics.Dynamics.Contacts;
 namespace Silhouette.GameMechs.Events
 {
     [Serializable]
-    public class PhysicChangeBodyTypeEvent : Event
+    public class PhysicApplyForceEvent : Event
     {
-        private BodyType _bodyType;
-        [DisplayName("BodyType"), Category("Event Data")]
-        [Description("All objects in list will change their BodyType property to this value.")]
-        public BodyType bodyType { get { return _bodyType; } set { _bodyType = value; } }
+        private Vector2 _force;
+        [DisplayName("Force"), Category("Event Data")]
+        [Description("The force will be applied to all objects in the list.")]
+        public Vector2 force { get { return _force; } set { _force = value; } }
 
-        public PhysicChangeBodyTypeEvent(Rectangle rectangle)
+        public PhysicApplyForceEvent(Rectangle rectangle)
         {
             this.rectangle = rectangle;
             position = rectangle.Location.ToVector2();
@@ -55,20 +55,19 @@ namespace Silhouette.GameMechs.Events
                     {
                         InteractiveObject io = (InteractiveObject)lo;
 
-                        io.bodyType = this.bodyType;
-
-                        if(io.fixture != null)
-                            io.fixture.Body.BodyType = this.bodyType;
+                        if (io.fixture != null)
+                        {
+                            io.fixture.Body.ApplyForce(force);
+                        }
                         if (io.fixtures != null)
-                            io.fixtures[0].Body.BodyType = this.bodyType;
-
+                        {
+                            io.fixtures[0].Body.ApplyForce(force); 
+                        }
                     }
-
                     if (lo is CollisionObject)
                     {
-                        CollisionObject fi = (CollisionObject)lo;
-                        fi.bodyType = this.bodyType;
-                        fi.fixture.Body.BodyType = this.bodyType;
+                        CollisionObject co = (CollisionObject)lo;
+                        co.fixture.Body.ApplyForce(force);
                     }
                 }
 
@@ -92,12 +91,12 @@ namespace Silhouette.GameMechs.Events
 
         public override string getPrefix()
         {
-            return "ChangeBodyTypeEvent_";
+            return "PhysicApplyForce_";
         }
 
         public override LevelObject clone()
         {
-            PhysicChangeBodyTypeEvent result = (PhysicChangeBodyTypeEvent)this.MemberwiseClone();
+            PhysicApplyForceEvent result = (PhysicApplyForceEvent)this.MemberwiseClone();
             result.mouseOn = false;
             return result;
         }

@@ -615,11 +615,6 @@ namespace SilhouetteEditor.Forms
             Editor.Default.AddEvents(EventType.Crossfader);
         }
 
-        private void physicMoveToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            Editor.Default.AddEvents(EventType.Move);
-        }
-
         private void deathToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Editor.Default.AddEvents(EventType.Death);
@@ -629,6 +624,21 @@ namespace SilhouetteEditor.Forms
         private void cameraToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Editor.Default.AddEvents(EventType.Camera);
+        }
+
+        private void moveRotateToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Editor.Default.AddEvents(EventType.Move);
+        }
+
+        private void changeVisibilityToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Editor.Default.AddEvents(EventType.ChangeVisibility);
+        }
+
+        private void applyForceToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Editor.Default.AddEvents(EventType.ApplyForce);
         }
 
         //---> ToolStrips <---//

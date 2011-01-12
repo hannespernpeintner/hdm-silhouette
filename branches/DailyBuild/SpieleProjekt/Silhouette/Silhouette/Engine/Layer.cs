@@ -21,9 +21,12 @@ namespace Silhouette.Engine
     public enum ShaderType
     { 
         None,
+        WeakBlur,
         Blur,
-        VignettenBlur,
-        Bloom
+        StrongBlur,
+        WeakBleach,
+        Bleach,
+        StrongBleach
     }
 
     [Serializable]
@@ -33,11 +36,6 @@ namespace Silhouette.Engine
         [DisplayName("Name"), Category("General")]
         [Description("The name of the layer.")]
         public string name { get { return _name; } set { _name = value; } }
-
-        private bool _isVisible;
-        [DisplayName("Visible"), Category("General")]
-        [Description("Defines wether or not the layer is visible.")]
-        public bool isVisible { get { return _isVisible; } set { _isVisible = value; } }
 
         private Vector2 scrollSpeed;
         [DisplayName("ScrollSpeed"), Category("General")]
@@ -55,6 +53,8 @@ namespace Silhouette.Engine
         [Description("The objects of the Layer.")]
         public List<LevelObject> loList { get { return _loList; } }
 
+        public bool isVisible = true;
+
         [NonSerialized]
         [Browsable(false)]
         ParticleRenderer particleRenderer;
@@ -62,7 +62,6 @@ namespace Silhouette.Engine
         public Layer()
         {
             scrollSpeed = Vector2.One;
-            isVisible = true;
             _loList = new List<LevelObject>();
             shaderType = ShaderType.None;
         }
@@ -104,7 +103,9 @@ namespace Silhouette.Engine
                 if (lo is DrawableLevelObject)
                 {
                     DrawableLevelObject dlo = (DrawableLevelObject)lo;
-                    dlo.Draw(spriteBatch);
+
+                    if(dlo.isVisible)
+                        dlo.Draw(spriteBatch);
                 }
             }
 

@@ -113,6 +113,16 @@ namespace SilhouetteEditor.Forms
                     selectedEvent = ev;
                     propertyGrid1.SelectedObject = so;
                 }
+
+                if (EventView.SelectedNode.Tag is TextureObject)
+                {
+                    TextureObject to = (TextureObject)EventView.SelectedNode.Tag;
+                    Editor.Default.selectLevelObject(to);
+                    selectedLevelObject2 = to;
+                    Event ev = (Event)EventView.SelectedNode.Parent.Tag;
+                    selectedEvent = ev;
+                    propertyGrid1.SelectedObject = to;
+                }
             }
         }
 
@@ -129,7 +139,7 @@ namespace SilhouetteEditor.Forms
 
                 foreach (LevelObject lo in l.loList)
                 {
-                    if (lo is InteractiveObject || lo is CollisionObject || lo is SoundObject)
+                    if (lo is InteractiveObject || lo is CollisionObject || lo is SoundObject || lo is TextureObject)
                     {
                         TreeNode levelObjectTreeNode = layerTreeNode.Nodes.Add(lo.name);
                         levelObjectTreeNode.Tag = lo;
