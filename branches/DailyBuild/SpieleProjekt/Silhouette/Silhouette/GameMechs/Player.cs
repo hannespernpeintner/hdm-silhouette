@@ -198,25 +198,31 @@ namespace Silhouette.GameMechs
             nRect = FixtureManager.CreateRectangle(140, 10, new Vector2(position.X, position.Y - 85), BodyType.Dynamic, 0.0001f);
             nRect.Body.FixedRotation = true;
             nRect.IsSensor = true;
+            nRect.isPlayer = true;
 
             sRect = FixtureManager.CreateRectangle(100, 10, new Vector2(position.X, position.Y + 120), BodyType.Dynamic, 0.0001f);
             sRect.Body.FixedRotation = true;
             sRect.IsSensor = true;
+            sRect.isPlayer = true;
 
             eRect = FixtureManager.CreateRectangle(15, 100, new Vector2(position.X + 105, position.Y), BodyType.Static, 0);
-            sRect.Body.FixedRotation = true;
-            sRect.IsSensor = true;
+            eRect.Body.FixedRotation = true;
+            eRect.IsSensor = true;
+            eRect.isPlayer = true;
 
             wRect = FixtureManager.CreateRectangle(15, 100, new Vector2(position.X - 110, position.Y), BodyType.Static, 0);
-            sRect.Body.FixedRotation = true;
-            sRect.IsSensor = true;
+            wRect.Body.FixedRotation = true;
+            wRect.IsSensor = true;
+            wRect.isPlayer = true;
 
             camRect = FixtureManager.CreateRectangle(100, 100, position, BodyType.Dynamic, 0.1f);
             camRect.Body.IgnoreGravity = true;
             camRect.Body.FixedRotation = true;
             camRect.IsSensor = true;
+            camRect.isPlayer = true;
 
             sRect.IgnoreCollisionWith(charRect);
+            sRect.IgnoreCollisionWith(camRect);
             nRect.IgnoreCollisionWith(charRect);
             nRect.IgnoreCollisionWith(camRect);
             nRect.IgnoreCollisionWith(sRect);
@@ -228,6 +234,7 @@ namespace Silhouette.GameMechs
             charRect.IgnoreCollisionWith(nRect);
             charRect.IgnoreCollisionWith(eRect);
             charRect.IgnoreCollisionWith(wRect);
+            charRect.IgnoreCollisionWith(camRect);
 
             joint0 = new RopeJoint(charRect.Body, camRect.Body, new Vector2(100 / Level.PixelPerMeter, 80 / Level.PixelPerMeter) * 2, new Vector2(50 / Level.PixelPerMeter, 50 / Level.PixelPerMeter));
             joint1 = new RopeJoint(charRect.Body, camRect.Body, new Vector2(-100 / Level.PixelPerMeter, -80 / Level.PixelPerMeter) * 2, new Vector2(-50 / Level.PixelPerMeter, -50 / Level.PixelPerMeter));
