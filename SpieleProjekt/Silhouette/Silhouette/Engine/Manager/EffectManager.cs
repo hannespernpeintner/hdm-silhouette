@@ -19,6 +19,9 @@ namespace Silhouette.Engine.Manager
         private static Effect blurrer;
         private static Effect weakBlurrer;
         private static Effect strongBlurrer;
+        private static Effect bleach;
+        private static Effect weakBleach;
+        private static Effect strongBleach;
         private static Effect bloomer;
         private static Effect vignettenBlur;
         private static Effect colorFader;
@@ -26,11 +29,21 @@ namespace Silhouette.Engine.Manager
         public static void loadEffects() 
         {
             blender = GameLoop.gameInstance.Content.Load<Effect>("Effects/blender");
+
             blurrer = GameLoop.gameInstance.Content.Load<Effect>("Effects/blurrer");
             weakBlurrer = GameLoop.gameInstance.Content.Load<Effect>("Effects/blurrer");
             strongBlurrer = GameLoop.gameInstance.Content.Load<Effect>("Effects/blurrer");
+
             weakBlurrer.Parameters["BlurDistance"].SetValue(0.001f);
             strongBlurrer.Parameters["BlurDistance"].SetValue(0.005f);
+
+            bleach = GameLoop.gameInstance.Content.Load<Effect>("Effects/bleach");
+            weakBleach = GameLoop.gameInstance.Content.Load<Effect>("Effects/bleach");
+            strongBleach = GameLoop.gameInstance.Content.Load<Effect>("Effects/bleach");
+
+            weakBleach.Parameters["amount"].SetValue(0.3f);
+            strongBleach.Parameters["amount"].SetValue(0.7f);
+
             bloomer = GameLoop.gameInstance.Content.Load<Effect>("Effects/bloom");
             vignettenBlur = GameLoop.gameInstance.Content.Load<Effect>("Effects/VignettenBlur");
         }
@@ -56,6 +69,23 @@ namespace Silhouette.Engine.Manager
         {
             strongBlurrer.Parameters["BlurDistance"].SetValue(0.004f);
             return strongBlurrer;
+        }
+
+        public static Effect Bleach()
+        {
+            return bleach;
+        }
+
+        public static Effect WeakBleach()
+        {
+            weakBleach.Parameters["amount"].SetValue(0.3f);
+            return weakBleach;
+        }
+
+        public static Effect StrongBleach()
+        {
+            strongBleach.Parameters["amount"].SetValue(0.7f);
+            return strongBleach;
         }
 
         public static Effect Bloom()
