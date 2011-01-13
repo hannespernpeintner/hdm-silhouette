@@ -73,6 +73,7 @@ namespace Silhouette.Engine.Manager
 
         public static Effect Bleach()
         {
+            bleach.Parameters["amount"].SetValue(0.5f);
             return bleach;
         }
 
