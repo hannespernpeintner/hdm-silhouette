@@ -4,7 +4,6 @@
 // This will use the texture bound to the object( like from the sprite batch ).
 sampler ColorMapSampler : register(s0);
 sampler MaskSampler : register(s1);
-sampler MaskSampler2 : register(s2);
  
 float4 PS(float2 Tex: TEXCOORD0) : COLOR
 {
@@ -21,7 +20,7 @@ Color += tex2D( ColorMapSampler, float2(Tex.x-BlurDistance, Tex.y+BlurDistance))
 // We need to devide the color with the amount of times we added
 // a color to it, in this case 4, to get the avg. color
 Color = Color / 4;
-
+Color *= Vignette;
  
 // returned the blurred color
 return Color;

@@ -59,6 +59,7 @@
   <ItemGroup>
     <Folder Include="Audio\" />
     <Folder Include="Cutscenes\" />
+    <Folder Include="Sprites\OverLays\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Fonts\DebugFont.spritefont">
@@ -1005,13 +1006,6 @@
     </Compile>
     <Compile Include="ParticleEffects\ParticleTextures\Weeds.png">
       <Name>Weeds</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Sprites\OverLays\Vignette.png">
-      <Name>Vignette</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
