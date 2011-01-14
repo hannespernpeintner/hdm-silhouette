@@ -15,6 +15,8 @@ namespace Silhouette.Engine
     public static class Camera
     {
         static Vector2 _Position;
+        public Boolean fixedOnPlayer { get { return _fixedOnPlayer; } set { _fixedOnPlayer = value; } }
+        private Boolean _fixedOnPlayer = true;
         public static Vector2 Position
         {
             get
