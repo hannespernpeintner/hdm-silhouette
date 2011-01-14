@@ -114,6 +114,7 @@ namespace Silhouette.Engine.Manager
 
             if (player.isRemembering)
             {
+                colorChange.Parameters["bla"].SetValue(true);
                 colorChange.Parameters["targetRed"].SetValue(1);
                 colorChange.Parameters["targetGreen"].SetValue(0.6f);
                 colorChange.Parameters["targetBlue"].SetValue(0.3f);
@@ -121,13 +122,14 @@ namespace Silhouette.Engine.Manager
 
             else if (player.isRecovering)
             {
-
+                colorChange.Parameters["bla"].SetValue(true);
                 colorChange.Parameters["targetRed"].SetValue(0.3f);
                 colorChange.Parameters["targetGreen"].SetValue(0.4f);
                 colorChange.Parameters["targetBlue"].SetValue(0.7f);
             }
             else
             {
+                colorChange.Parameters["bla"].SetValue(false);
                 colorChange.Parameters["targetRed"].SetValue(0);
                 colorChange.Parameters["targetGreen"].SetValue(0);
                 colorChange.Parameters["targetBlue"].SetValue(0);
