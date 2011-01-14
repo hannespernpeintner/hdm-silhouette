@@ -97,6 +97,8 @@ namespace Silhouette.Engine
 
         public void Initialize()
         {
+            renderTargets = new RenderTarget2D[2];
+            renderTargets[1] = new RenderTarget2D(GameLoop.gameInstance.GraphicsDevice, GameSettings.Default.resolutionWidth, GameSettings.Default.resolutionHeight);
             this.spriteBatch = new SpriteBatch(GameLoop.gameInstance.GraphicsDevice);
             _Gravitation = new Vector2(0.0f, 9.8f);
             Physics = new World(_Gravitation);
@@ -178,6 +180,8 @@ namespace Silhouette.Engine
 
             if (!GraphicsEnabled)
             {
+                GameLoop.gameInstance.GraphicsDevice.SetRenderTarget(renderTargets[1]);
+
                 foreach (Layer l in layerList)
                 {
                     Vector2 oldCameraPosition = Camera.Position;
@@ -187,6 +191,13 @@ namespace Silhouette.Engine
                     spriteBatch.End();
                     Camera.Position = oldCameraPosition;
                 }
+
+                GameLoop.gameInstance.GraphicsDevice.SetRenderTarget(null);
+
+                spriteBatch.Begin(SpriteSortMode.Deferred, null, null, null, null, EffectManager.VignettenBlur());
+                spriteBatch.Draw(renderTargets[1], Vector2.Zero, Color.White);
+                spriteBatch.End();
+
             }
             if (!DebugViewEnabled)
             {
