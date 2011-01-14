@@ -139,5 +139,21 @@ namespace Silhouette.Engine
                     return null;
             }
         }
+
+        public BlendState getBlendStateByEffect(ShaderType shaderType) 
+        {
+            switch (shaderType)
+            {
+                case ShaderType.WeakBleach:
+                    return BlendState.NonPremultiplied;
+                case ShaderType.Bleach:
+                    return BlendState.NonPremultiplied;
+                case ShaderType.StrongBleach:
+                    return BlendState.NonPremultiplied;
+
+                default:
+                    return null;
+            }
+        }
     }
 }
