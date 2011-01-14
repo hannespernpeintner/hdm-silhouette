@@ -50,8 +50,8 @@ namespace Silhouette.GameMechs
         private bool isIdle;
         private bool isScriptedMoving;
         private bool isDying;
-        private bool isRemembering;         // So kommt Tom in den Erinnerungszustand
-        private bool isRecovering;
+        public bool isRemembering;         // So kommt Tom in den Erinnerungszustand
+        public bool isRecovering;
         private bool sRectTouching;
         private bool rectTouching;
 
