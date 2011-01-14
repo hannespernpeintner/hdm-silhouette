@@ -88,6 +88,8 @@ namespace Silhouette.GameMechs
             facing = 1;
             Camera.Scale = 0.5f;
 
+            Camera.fixedOnPlayer = false;
+
         }
 
         public override void LoadContent()
@@ -222,7 +224,7 @@ namespace Silhouette.GameMechs
 
 
                 this.fixture.Body.LinearDamping = 2.0f;
-                this.fixture.Body.ApplyForce(new Vector2(4.0f, 10.0f));  //Going down
+                this.fixture.Body.ApplyForce(new Vector2(2.0f, 6.0f));  //Going down
                 goingDown = true;
 
 
@@ -235,8 +237,8 @@ namespace Silhouette.GameMechs
                 this.fixture.Body.IgnoreGravity = true;
                 movement *= 4.0f;
 
-                if (isJitterMoving)
-                    movement *= (0.5f * jitterVector);
+            //    if (isJitterMoving)
+            //        movement *= (0.5f * jitterVector);
 
 
 
@@ -248,10 +250,10 @@ namespace Silhouette.GameMechs
                 {
                     if (mayBackup)
                     {
-                        if (distance < 4)
-                            this.fixture.Body.ApplyForce(((-movement) - new Vector2(0, 1.5f)));  //Backup, Going Up
+                        if (distance < 5.5)
+                            this.fixture.Body.ApplyForce(((-movement * 2) - new Vector2(0, 1.0f)));  //Backup, Going Up
                         else
-                            this.fixture.Body.ApplyForce(-movement);
+                            this.fixture.Body.ApplyForce(new Vector2(-movement.X, 0));
                         goingDown = false;
                     }
                 }
