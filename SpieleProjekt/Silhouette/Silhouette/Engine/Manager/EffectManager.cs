@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
+using Silhouette.GameMechs;
 
 namespace Silhouette.Engine.Manager
 {
@@ -15,6 +16,8 @@ namespace Silhouette.Engine.Manager
     // Achja: "This software contains source code provided by NVIDIA Corporation." nicht vergessen :D
     public static class EffectManager
     {
+        private static Texture2D vignette;
+
         private static Effect blender;
         private static Effect blurrer;
         private static Effect weakBlurrer;
@@ -24,11 +27,16 @@ namespace Silhouette.Engine.Manager
         private static Effect strongBleach;
         private static Effect bloomer;
         private static Effect vignettenBlur;
-        private static Effect colorFader;
+        private static Effect colorChange;
 
         public static void loadEffects() 
         {
+            vignette = GameLoop.gameInstance.Content.Load<Texture2D>("Sprites/Overlays/Vignette");
+            GameLoop.gameInstance.GraphicsDevice.Textures[1] = vignette;
+
             blender = GameLoop.gameInstance.Content.Load<Effect>("Effects/blender");
+
+            colorChange = GameLoop.gameInstance.Content.Load<Effect>("Effects/ColorChange");
 
             blurrer = GameLoop.gameInstance.Content.Load<Effect>("Effects/blurrer");
             weakBlurrer = GameLoop.gameInstance.Content.Load<Effect>("Effects/blurrer");
@@ -47,6 +55,7 @@ namespace Silhouette.Engine.Manager
             bloomer = GameLoop.gameInstance.Content.Load<Effect>("Effects/bloom");
             vignettenBlur = GameLoop.gameInstance.Content.Load<Effect>("Effects/VignettenBlur");
         }
+
 
         public static Effect Blender()
         {
@@ -99,9 +108,32 @@ namespace Silhouette.Engine.Manager
             return vignettenBlur;
         }
 
-        public static Effect ColorFader()
+        public static Effect ColorChange()
         {
-            return colorFader;
+            Player player = GameLoop.gameInstance.playerInstance;
+
+            if (player.isRemembering)
+            {
+                colorChange.Parameters["targetRed"].SetValue(1);
+                colorChange.Parameters["targetGreen"].SetValue(0.6f);
+                colorChange.Parameters["targetBlue"].SetValue(0.3f);
+            }
+
+            else if (player.isRecovering)
+            {
+
+                colorChange.Parameters["targetRed"].SetValue(0.3f);
+                colorChange.Parameters["targetGreen"].SetValue(0.4f);
+                colorChange.Parameters["targetBlue"].SetValue(0.7f);
+            }
+            else
+            {
+                colorChange.Parameters["targetRed"].SetValue(0);
+                colorChange.Parameters["targetGreen"].SetValue(0);
+                colorChange.Parameters["targetBlue"].SetValue(0);
+            }
+
+            return colorChange;
         }
 
     }
