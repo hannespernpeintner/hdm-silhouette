@@ -186,7 +186,7 @@ namespace Silhouette.Engine
                 {
                     Vector2 oldCameraPosition = Camera.Position;
                     Camera.Position *= l.ScrollSpeed;
-                    spriteBatch.Begin(SpriteSortMode.Deferred, null, null, null, null, l.getShaderByType(l.shaderType), Camera.matrix);
+                    spriteBatch.Begin(SpriteSortMode.Deferred, l.getBlendStateByEffect(l.shaderType), null, null, null, l.getShaderByType(l.shaderType), Camera.matrix);
                     l.drawLayer(spriteBatch);
                     spriteBatch.End();
                     Camera.Position = oldCameraPosition;
