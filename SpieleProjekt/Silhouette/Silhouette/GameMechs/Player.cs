@@ -532,12 +532,12 @@ namespace Silhouette.GameMechs
                 if (facing == 1)
                 {
                     charRect.Body.Position += new Vector2(1.5f / Level.PixelPerMeter, -2 / Level.PixelPerMeter);
-                    camRect.Body.Position += new Vector2(1.5f / Level.PixelPerMeter, -2 / Level.PixelPerMeter);
+                    if (Camera.fixedOnPlayer) { camRect.Body.Position += new Vector2(1.5f / Level.PixelPerMeter, -2 / Level.PixelPerMeter); }
                 }
                 else
                 {
                     charRect.Body.Position += new Vector2(-1.5f / Level.PixelPerMeter, -2 / Level.PixelPerMeter);
-                    camRect.Body.Position += new Vector2(-1.5f / Level.PixelPerMeter, -2 / Level.PixelPerMeter);
+                    if (Camera.fixedOnPlayer) { camRect.Body.Position += new Vector2(-1.5f / Level.PixelPerMeter, -2 / Level.PixelPerMeter); }
                 }
             }
 
