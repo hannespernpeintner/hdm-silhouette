@@ -15,12 +15,14 @@ using Microsoft.Xna.Framework.Media;
 
 using Silhouette.GameMechs;
 using Silhouette.Engine.PartikelEngine;
+using Silhouette.Engine.Manager;
 
 namespace Silhouette.Engine
 {
     public enum ShaderType
     { 
         None,
+        ColorChange,
         WeakBlur,
         Blur,
         StrongBlur,
@@ -118,6 +120,21 @@ namespace Silhouette.Engine
             {
                 case ShaderType.None:
                     return null;
+                case ShaderType.ColorChange:
+                    return EffectManager.ColorChange();
+                case ShaderType.WeakBleach:
+                    return EffectManager.WeakBleach();
+                case ShaderType.Bleach:
+                    return EffectManager.Bleach();
+                case ShaderType.StrongBleach:
+                    return EffectManager.StrongBleach();
+                case ShaderType.WeakBlur:
+                    return EffectManager.WeakBlurrer();
+                case ShaderType.Blur:
+                    return EffectManager.Blurrer();
+                case ShaderType.StrongBlur:
+                    return EffectManager.StrongBlurrer();
+                
                 default:
                     return null;
             }
