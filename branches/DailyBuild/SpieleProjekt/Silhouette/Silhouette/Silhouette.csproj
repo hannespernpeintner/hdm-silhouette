@@ -166,7 +166,6 @@
     <Compile Include="GameMechs\InteractiveObject.cs" />
     <Compile Include="GameMechs\LevelObject.cs" />
     <Compile Include="GameMechs\ParticleObject.cs" />
-    <Compile Include="GameMechs\Physics\JointObject.cs" />
     <Compile Include="GameMechs\Player.cs" />
     <Compile Include="GameMechs\PrimitiveObject.cs" />
     <Compile Include="GameMechs\SoundObject.cs" />

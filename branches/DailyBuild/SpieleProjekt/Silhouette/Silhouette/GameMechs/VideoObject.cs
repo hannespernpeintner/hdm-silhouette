@@ -11,7 +11,8 @@ using Silhouette.Engine.Manager;
 
 namespace Silhouette.GameMechs
 {
-    class VideoObject : LevelObject
+    [Serializable]
+    public class VideoObject : LevelObject
     {
          Video vid;
          VideoPlayer player;
@@ -46,10 +47,7 @@ namespace Silhouette.GameMechs
             VideoManager.IsPlaying = false;
         }
 
-        public override void Initialise()
-        {
-            throw new NotImplementedException();
-        }
+        public override void Initialise() { }
 
         public override void LoadContent()
         {
