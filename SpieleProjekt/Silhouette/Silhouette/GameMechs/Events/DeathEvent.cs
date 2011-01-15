@@ -27,7 +27,7 @@ using FarseerPhysics.Dynamics.Contacts;
 
 namespace Silhouette.GameMechs.Events
 {
-
+    [Serializable]
     public class DeathEvent : Event
     {
         public DeathEvent(Rectangle rectangle)
