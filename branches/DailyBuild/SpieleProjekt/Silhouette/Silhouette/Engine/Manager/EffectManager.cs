@@ -17,6 +17,7 @@ namespace Silhouette.Engine.Manager
     public static class EffectManager
     {
         private static Texture2D vignette;
+        private static Texture2D cbbVignette;
 
         private static Effect blender;
         private static Effect blurrer;
@@ -32,7 +33,9 @@ namespace Silhouette.Engine.Manager
         public static void loadEffects() 
         {
             vignette = GameLoop.gameInstance.Content.Load<Texture2D>("Sprites/Overlays/Vignette");
+            cbbVignette = GameLoop.gameInstance.Content.Load<Texture2D>("Sprites/Overlays/CenterBleachBlurMask");
             GameLoop.gameInstance.GraphicsDevice.Textures[1] = vignette;
+            GameLoop.gameInstance.GraphicsDevice.Textures[2] = cbbVignette;
 
             blender = GameLoop.gameInstance.Content.Load<Effect>("Effects/blender");
 
@@ -82,19 +85,98 @@ namespace Silhouette.Engine.Manager
 
         public static Effect Bleach()
         {
-            bleach.Parameters["amount"].SetValue(0.5f);
+            Player player = GameLoop.gameInstance.playerInstance;
+
+            if (player.isRemembering)
+            {
+                bleach.Parameters["amount"].SetValue(0.5f);
+                bleach.Parameters["bla"].SetValue(true);
+                bleach.Parameters["targetRed"].SetValue(0.6f);
+                bleach.Parameters["targetGreen"].SetValue(0.3f);
+                bleach.Parameters["targetBlue"].SetValue(0.2f);
+            }
+
+            else if (player.isRecovering)
+            {
+                bleach.Parameters["amount"].SetValue(0.5f);
+                bleach.Parameters["bla"].SetValue(true);
+                bleach.Parameters["targetRed"].SetValue(0.1f);
+                bleach.Parameters["targetGreen"].SetValue(0.2f);
+                bleach.Parameters["targetBlue"].SetValue(0.4f);
+            }
+            else
+            {
+                bleach.Parameters["amount"].SetValue(0.5f);
+                bleach.Parameters["bla"].SetValue(false);
+                bleach.Parameters["targetRed"].SetValue(0);
+                bleach.Parameters["targetGreen"].SetValue(0);
+                bleach.Parameters["targetBlue"].SetValue(0);
+            }
+
             return bleach;
         }
 
         public static Effect WeakBleach()
         {
-            weakBleach.Parameters["amount"].SetValue(0.3f);
+            Player player = GameLoop.gameInstance.playerInstance;
+
+            if (player.isRemembering)
+            {
+                bleach.Parameters["amount"].SetValue(0.3f);
+                bleach.Parameters["bla"].SetValue(true);
+                bleach.Parameters["targetRed"].SetValue(0.6f);
+                bleach.Parameters["targetGreen"].SetValue(0.3f);
+                bleach.Parameters["targetBlue"].SetValue(0.2f);
+            }
+
+            else if (player.isRecovering)
+            {
+                bleach.Parameters["amount"].SetValue(0.3f);
+                bleach.Parameters["bla"].SetValue(true);
+                bleach.Parameters["targetRed"].SetValue(0.1f);
+                bleach.Parameters["targetGreen"].SetValue(0.2f);
+                bleach.Parameters["targetBlue"].SetValue(0.4f);
+            }
+            else
+            {
+                bleach.Parameters["amount"].SetValue(0.3f);
+                bleach.Parameters["bla"].SetValue(false);
+                bleach.Parameters["targetRed"].SetValue(0);
+                bleach.Parameters["targetGreen"].SetValue(0);
+                bleach.Parameters["targetBlue"].SetValue(0);
+            }
             return weakBleach;
         }
 
         public static Effect StrongBleach()
         {
-            strongBleach.Parameters["amount"].SetValue(0.7f);
+            Player player = GameLoop.gameInstance.playerInstance;
+
+            if (player.isRemembering)
+            {
+                bleach.Parameters["amount"].SetValue(0.7f);
+                bleach.Parameters["bla"].SetValue(true);
+                bleach.Parameters["targetRed"].SetValue(0.6f);
+                bleach.Parameters["targetGreen"].SetValue(0.3f);
+                bleach.Parameters["targetBlue"].SetValue(0.2f);
+            }
+
+            else if (player.isRecovering)
+            {
+                bleach.Parameters["amount"].SetValue(0.7f);
+                bleach.Parameters["bla"].SetValue(true);
+                bleach.Parameters["targetRed"].SetValue(0.1f);
+                bleach.Parameters["targetGreen"].SetValue(0.2f);
+                bleach.Parameters["targetBlue"].SetValue(0.4f);
+            }
+            else
+            {
+                bleach.Parameters["amount"].SetValue(0.7f);
+                bleach.Parameters["bla"].SetValue(false);
+                bleach.Parameters["targetRed"].SetValue(0);
+                bleach.Parameters["targetGreen"].SetValue(0);
+                bleach.Parameters["targetBlue"].SetValue(0);
+            }
             return strongBleach;
         }
 

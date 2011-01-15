@@ -14,6 +14,9 @@ float4 PS_CC(float2 texCoord: TEXCOORD0): COLOR
 	{
 		color *= targetColor;
 	}
+	else if (!bla)
+	{
+	}
 
 	return color;
 }
