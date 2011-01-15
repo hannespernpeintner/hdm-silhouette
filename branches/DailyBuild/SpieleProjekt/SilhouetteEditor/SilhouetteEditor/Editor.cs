@@ -214,10 +214,24 @@ namespace SilhouetteEditor
              * Editorspezifische Anzeigen werden hier aktiviert/deaktiviert.
             */
 
-            #region EditorVisibles
+            #region EditorShortcuts
                 if (kstate.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.F1) && oldkstate.IsKeyUp(Microsoft.Xna.Framework.Input.Keys.F1))
                 {
                     originsVisible = !originsVisible;
+                }
+                if (kstate.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.LeftControl) && kstate.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.S) && oldkstate.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.S))
+                {
+                    if (this.levelFileName != null)
+                        this.SaveLevel(this.levelFileName);
+                    else
+                    {
+                        SaveFileDialog dialog = new SaveFileDialog();
+                        if (dialog.ShowDialog() == DialogResult.OK)
+                        {
+                            this.levelFileName = dialog.FileName;
+                            this.SaveLevel(dialog.FileName);
+                        }
+                    }
                 }
             #endregion
 
@@ -871,14 +885,27 @@ namespace SilhouetteEditor
 
         public void LoadLevel(string filename)
         {
-            Editor.Default.levelFileName = filename;
-            Editor.Default.level = Level.LoadLevelFile(filename);
-            level.InitializeInEditor(spriteBatch, MainForm.Default.GameView.Width, MainForm.Default.GameView.Height);
-            level.LoadContentInEditor(EditorLoop.EditorLoopInstance.GraphicsDevice);
-            editorState = EditorState.IDLE;
-            selectLayer(level.layerList.First());
-            selectLevelObject(selectedLayer.loList.First());
-            MainForm.Default.UpdateTreeView();
+            try
+            {
+                MainForm.Default.Cursor = Cursors.WaitCursor;
+                Editor.Default.levelFileName = filename;
+                Editor.Default.level = Level.LoadLevelFile(filename);
+                level.InitializeInEditor(spriteBatch, MainForm.Default.GameView.Width, MainForm.Default.GameView.Height);
+                level.LoadContentInEditor(EditorLoop.EditorLoopInstance.GraphicsDevice);
+                editorState = EditorState.IDLE;
+                selectLayer(level.layerList.First());
+                selectLevelObject(selectedLayer.loList.First());
+                MainForm.Default.UpdateTreeView();
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show("The level could not be loaded!", "Error", MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
+                return;
+            }
+            finally
+            {
+                MainForm.Default.Cursor = Cursors.Default;
+            }
         }
 
         public void SaveLevel(string fullPath)

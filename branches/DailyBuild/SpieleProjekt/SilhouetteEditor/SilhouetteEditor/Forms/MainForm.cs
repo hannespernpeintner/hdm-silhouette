@@ -45,7 +45,7 @@ namespace SilhouetteEditor.Forms
 
         private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
         {
-            DialogResult result = MessageBox.Show("Do you want to save the current level beforce closing?", "Question", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+            DialogResult result = MessageBox.Show("Do you want to save the current level beforce closing?", "Question", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (result == DialogResult.Yes)
             {
                 FileSave(sender, e);
@@ -53,8 +53,6 @@ namespace SilhouetteEditor.Forms
             }
             else if (result == DialogResult.No)
                 EditorLoop.EditorLoopInstance.Exit();
-            else
-                return;
         }
 
         //---> MenuBar-Steuerung <---//
