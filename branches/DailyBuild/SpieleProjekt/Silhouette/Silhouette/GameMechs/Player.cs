@@ -309,7 +309,8 @@ namespace Silhouette.GameMechs
         public void UpdateCamera()
         {
             if (Camera.fixedOnPlayer)
-            {    
+            {
+                camPosition.Y -= 150;
                 Camera.Position = camPosition;
             }
             // Die Camera wird nur rotiert, wenn die Rotation unter einem bestimmten Winkel bleibt. Damit das nicht ausartet.
