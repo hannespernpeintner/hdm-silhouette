@@ -54,11 +54,6 @@ namespace SilhouetteEditor
         Camera
     }
 
-    public enum PhysicsType
-    {
-
-    }
-
     public enum PrimitiveType
     {
         Rectangle,
@@ -121,7 +116,6 @@ namespace SilhouetteEditor
 
         public FixtureType currentFixture;
         public PrimitiveType currentPrimitive;
-        public PhysicsType currentPhysics;
         public EventType currentEvent;
 
         public bool fixtureStarted;
