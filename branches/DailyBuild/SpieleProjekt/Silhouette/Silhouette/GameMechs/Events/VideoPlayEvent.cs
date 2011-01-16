@@ -30,8 +30,6 @@ namespace Silhouette.GameMechs.Events
     [Serializable]
     public class VideoPlayEvent : Event
     {
-
-
         [DisplayName("Video name"), Category("Video Data")]
         [Description("Defines which video shall be played on this Event")]
         public VideoManager.Videoname VideoName { get { return _VideoName; } set { _VideoName = value; } }
@@ -63,14 +61,7 @@ namespace Silhouette.GameMechs.Events
             }
         }
 
-        public override void AddLevelObject(LevelObject lo)
-        {
-            if ((this.list != null) && (lo is VideoObject))
-            {
-                if (!this.list.Contains(lo) && (lo is InteractiveObject || lo is CollisionObject))
-                    this.list.Add(lo);
-            }
-        }
+        public override void AddLevelObject(LevelObject lo) { }
 
         public override string getPrefix()
         {
