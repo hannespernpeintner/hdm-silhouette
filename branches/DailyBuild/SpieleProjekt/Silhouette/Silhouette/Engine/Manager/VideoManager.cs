@@ -17,7 +17,7 @@ using Microsoft.Xna.Framework.Media;
 
 namespace Silhouette.Engine.Manager
 {
-    [Serializable]
+   [Serializable]
    static class VideoManager
 
     {

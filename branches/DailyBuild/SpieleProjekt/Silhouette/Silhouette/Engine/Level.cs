@@ -105,6 +105,7 @@ namespace Silhouette.Engine
             debugView = new DebugViewXNA(Level.Physics);
             Camera.initialize(GameSettings.Default.resolutionWidth, GameSettings.Default.resolutionHeight);
             Camera.Position = new Vector2(GameSettings.Default.resolutionWidth / 2, GameSettings.Default.resolutionHeight / 2);
+            Camera.Scale = 0.4f;
             ParticleManager.initialize();
 
             this._contentPath = Path.Combine(Directory.GetCurrentDirectory(), "Content");

@@ -33,9 +33,7 @@ namespace Silhouette.Engine.Manager
         public static void loadEffects() 
         {
             vignette = GameLoop.gameInstance.Content.Load<Texture2D>("Sprites/Overlays/Vignette");
-            cbbVignette = GameLoop.gameInstance.Content.Load<Texture2D>("Sprites/Overlays/CenterBleachBlurMask");
             GameLoop.gameInstance.GraphicsDevice.Textures[1] = vignette;
-            GameLoop.gameInstance.GraphicsDevice.Textures[2] = cbbVignette;
 
             blender = GameLoop.gameInstance.Content.Load<Effect>("Effects/blender");
 
