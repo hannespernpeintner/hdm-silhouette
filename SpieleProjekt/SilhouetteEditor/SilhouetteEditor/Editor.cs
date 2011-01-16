@@ -175,15 +175,15 @@ namespace SilhouetteEditor
                 {
                     Camera.PositionX -= Constants.CameraMovingSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
                 }
-                if (kstate.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.D))
+                if (kstate.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.D) && !kstate.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.LeftControl))
                 {
                     Camera.PositionX += Constants.CameraMovingSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
                 }
-                if (kstate.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.S))
+                if (kstate.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.S) && !kstate.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.LeftControl))
                 {
                     Camera.PositionY += Constants.CameraMovingSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
                 }
-                if (kstate.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.W))
+                if (kstate.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.W) && !kstate.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.LeftControl))
                 {
                     Camera.PositionY -= Constants.CameraMovingSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
                 }
@@ -213,7 +213,7 @@ namespace SilhouetteEditor
                 {
                     originsVisible = !originsVisible;
                 }
-                if (kstate.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.LeftControl) && kstate.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.S) && oldkstate.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.S))
+                if (kstate.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.LeftControl) && kstate.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.S) && oldkstate.IsKeyUp(Microsoft.Xna.Framework.Input.Keys.S))
                 {
                     if (this.levelFileName != null)
                         this.SaveLevel(this.levelFileName);
@@ -473,11 +473,11 @@ namespace SilhouetteEditor
                         }
                     }
 
-                    if (kstate.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.LeftControl) && kstate.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.P) && level.layerList.Contains(level.getLayerByName("Player")))
+                    if (kstate.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.LeftControl) && kstate.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.P) && oldkstate.IsKeyUp(Microsoft.Xna.Framework.Input.Keys.P) && level.layerList.Contains(level.getLayerByName("Player")))
                     {
-                        Camera.Scale = 1.0f;
+                        Camera.Scale = 0.4f;
                         Camera.Position = level.startPosition;
-                        MainForm.Default.ZoomStatus.Text = "Zoom: 100%";               
+                        MainForm.Default.ZoomStatus.Text = "Zoom: 40%";               
                     }
                 }
             #endregion
