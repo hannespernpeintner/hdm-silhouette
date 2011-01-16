@@ -30,6 +30,13 @@ namespace Silhouette.GameMechs.Events
     [Serializable]
     public class VideoPlayEvent : Event
     {
+
+
+        [DisplayName("Video name"), Category("Video Data")]
+        [Description("Defines which video shall be played on this Event")]
+        public VideoManager.Videoname VideoName { get { return _VideoName; } set { _VideoName = value; } }
+        private VideoManager.Videoname _VideoName;
+
         public VideoPlayEvent(Rectangle rectangle)
         {
             this.rectangle = rectangle;
@@ -38,16 +45,14 @@ namespace Silhouette.GameMechs.Events
             height = rectangle.Height;
             list = new List<LevelObject>();
             isActivated = true;
+
         }
 
         public bool OnCollision(Fixture a, Fixture b, Contact contact)
         {
             if (isActivated)
             {
-                foreach (VideoObject lo in this.list)
-                {
-                    lo.play();
-                }
+                VideoManager.play(_VideoName);
 
                 isActivated = false;
                 return true;
@@ -60,9 +65,9 @@ namespace Silhouette.GameMechs.Events
 
         public override void AddLevelObject(LevelObject lo)
         {
-            if ((this.list != null))
+            if ((this.list != null) && (lo is VideoObject))
             {
-                if (!this.list.Contains(lo) && lo is VideoObject)
+                if (!this.list.Contains(lo) && (lo is InteractiveObject || lo is CollisionObject))
                     this.list.Add(lo);
             }
         }
