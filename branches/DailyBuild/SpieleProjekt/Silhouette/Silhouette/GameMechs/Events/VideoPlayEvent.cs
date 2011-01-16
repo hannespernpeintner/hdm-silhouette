@@ -60,9 +60,9 @@ namespace Silhouette.GameMechs.Events
 
         public override void AddLevelObject(LevelObject lo)
         {
-            if ((this.list != null) && (lo is VideoObject) )
+            if ((this.list != null))
             {
-                if (!this.list.Contains(lo) && (lo is InteractiveObject || lo is CollisionObject))
+                if (!this.list.Contains(lo) && lo is VideoObject)
                     this.list.Add(lo);
             }
         }
