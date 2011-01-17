@@ -342,7 +342,7 @@ namespace Silhouette.GameMechs
 
                     isIdle = false;
                     isRunning = true;
-                    charRect.Body.ApplyForce(new Vector2(-40, 0));
+                    charRect.Body.ApplyForce(new Vector2(-35, 0));
                 }
             }
 
@@ -377,7 +377,7 @@ namespace Silhouette.GameMechs
 
                     isIdle = false;
                     isRunning = true;
-                    charRect.Body.ApplyForce(new Vector2(40, 0));
+                    charRect.Body.ApplyForce(new Vector2(35, 0));
                 }
             }
 
@@ -426,11 +426,11 @@ namespace Silhouette.GameMechs
                     // Unterscheiden von Superjump und NormalJump
                     if (isRemembering)
                     {
-                        charRect.Body.ApplyForce(new Vector2(-50, -550));
+                        charRect.Body.ApplyForce(new Vector2(-50, -800));
                     }
                     else
                     {
-                        charRect.Body.ApplyForce(new Vector2(-50, -400));
+                        charRect.Body.ApplyForce(new Vector2(-50, -650));
                     }
                 }
                 else if (facing == 1)
@@ -444,11 +444,11 @@ namespace Silhouette.GameMechs
                     isRunning = false;
                     if (isRemembering)
                     {
-                        charRect.Body.ApplyForce(new Vector2(50, -550));
+                        charRect.Body.ApplyForce(new Vector2(50, -800));
                     }
                     else
                     {
-                        charRect.Body.ApplyForce(new Vector2(50, -400));
+                        charRect.Body.ApplyForce(new Vector2(50, -650));
                     }
                 }
             }
@@ -477,7 +477,7 @@ namespace Silhouette.GameMechs
             // WENN KEIN BUTTON GEDRÜCKT IST
             if (Keyboard.GetState().GetPressedKeys().Length == 0 && oldState.GetPressedKeys().Length == 0)
             {
-                charRect.Friction = 2.5f;
+                charRect.Friction = 5;
             }
 
             else { charRect.Friction = 0.1f; }
