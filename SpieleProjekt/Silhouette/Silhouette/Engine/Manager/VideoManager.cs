@@ -101,10 +101,12 @@ namespace Silhouette.Engine.Manager
                     
                     case VideoName.None:
                         return;
+                    /*
                     case VideoName.Prolog:
                         Container["Prolog"].play();
                         currentlyPlaying = "Prolog";
                         break;
+                    */
                 }
             }
         }
