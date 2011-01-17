@@ -19,6 +19,7 @@ namespace Silhouette.Engine.Manager
 {
     public enum VideoName 
     { 
+        None,
         Prolog
     }
 
@@ -98,7 +99,9 @@ namespace Silhouette.Engine.Manager
                          */
                     //Container["Testvideo"].play();
                     //currentlyPlaying = "Testvideo";
-
+                    
+                    case VideoName.None:
+                        return;
                     case VideoName.Prolog:
                         Container["Prolog"].play();
                         currentlyPlaying = "Prolog";
