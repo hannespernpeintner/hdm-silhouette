@@ -127,9 +127,6 @@ namespace Silhouette.Engine
             return circle;
         }
 
-
-
-
         public void drawPixel(SpriteBatch sb, int x, int y, Color c)
         {
             sb.Draw(pixel, new Vector2(x, y), c);
@@ -171,7 +168,6 @@ namespace Silhouette.Engine
             sb.Draw(circle, position, null, c, 0, new Vector2(circleTextureRadius, circleTextureRadius), radius / circleTextureRadius, SpriteEffects.None, 0);
         }
 
-
         public void drawLine(SpriteBatch sb, float x1, float y1, float x2, float y2, Color c, int linewidth)
         {
             Vector2 v = new Vector2(x2 - x1, y2 - y1);
@@ -183,7 +179,6 @@ namespace Silhouette.Engine
         {
             drawLine(sb, startpos.X, startpos.Y, endpos.X, endpos.Y, c, linewidth);
         }
-
 
         public void drawPath(SpriteBatch sb, Vector2[] points, Color c, int linewidth)
         {

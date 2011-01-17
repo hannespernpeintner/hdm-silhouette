@@ -17,7 +17,11 @@ using Microsoft.Xna.Framework.Media;
 
 namespace Silhouette.Engine.Manager
 {
-    [Serializable]
+    public enum VideoName 
+    { 
+        Prolog
+    }
+
     static public class VideoManager
     {
         //Julius: Deklarieren des Delegates für Frame Update
@@ -34,11 +38,6 @@ namespace Silhouette.Engine.Manager
 
         private static KeyboardState keyState;
         private static KeyboardState oldKeyState;
-
-        //Julius: Enum Gedöns für die einfache Videowiedergae
-        public enum Videoname { testvideo };
-
-
 
         //Der Container
 
@@ -58,6 +57,7 @@ namespace Silhouette.Engine.Manager
              */
             //Container.Add("Testvideo", new VideoObject("Cutscenes/Wildlife"));
 
+            //Container.Add("Prolog", new VideoObject("Cutscenes/Prolog"));
         }
 
         public static void LoadContent()
@@ -68,7 +68,6 @@ namespace Silhouette.Engine.Manager
             }
 
         }
-
 
         public static void Update(GameTime gameTime)
         {
@@ -88,24 +87,22 @@ namespace Silhouette.Engine.Manager
         }
 
 
-        public static void play(Videoname name)
+        public static void play(VideoName name)
         {
             if (!IsPlaying)
             {  //Julius: enum für jedes verfügbare video anpassen!
                 switch (name)
                 {
-                    case Videoname.testvideo:
-
-                        /*Julius: BEISPIEL:
+                    /*Julius: BEISPIEL:
                          *"Testvideo" ist in diesem Beispiel der interne assetName (wie oben vergeben)
                          */
-                        //Container["Testvideo"].play();
-                        //currentlyPlaying = "Testvideo";
+                    //Container["Testvideo"].play();
+                    //currentlyPlaying = "Testvideo";
 
+                    case VideoName.Prolog:
+                        Container["Prolog"].play();
+                        currentlyPlaying = "Prolog";
                         break;
-
-
-
                 }
             }
         }

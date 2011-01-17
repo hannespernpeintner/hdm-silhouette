@@ -32,8 +32,8 @@ namespace Silhouette.GameMechs.Events
     {
         [DisplayName("Video name"), Category("Event Data")]
         [Description("Defines which video shall be played on this Event")]
-        public VideoManager.Videoname VideoName { get { return _VideoName; } set { _VideoName = value; } }
-        private VideoManager.Videoname _VideoName;
+        public VideoName VideoName { get { return _VideoName; } set { _VideoName = value; } }
+        private VideoName _VideoName;
 
         public VideoPlayEvent(Rectangle rectangle)
         {

@@ -12,16 +12,11 @@ using System.ComponentModel;
 using System.IO;
 namespace Silhouette.GameMechs
 {
-    [Serializable]
     public class VideoObject : LevelObject
     {
         Video vid;
         VideoPlayer player;
         String _AssetName;
-
-
-
-
 
         //Julius: Konstruktor
         public VideoObject(String AssetName)
@@ -42,9 +37,6 @@ namespace Silhouette.GameMechs
                 VideoManager.VideoWidth = vid.Width;
                 player.Play(vid);
             }
-
-
-
         }
         public void stop()
         {
@@ -86,16 +78,5 @@ namespace Silhouette.GameMechs
         {
             return "VideoObject_";
         }
-
-
-
-
-        public override LevelObject clone()
-        {
-            VideoObject vo = (VideoObject)this.MemberwiseClone();
-            return vo;
-        }
-
-
     }
 }
