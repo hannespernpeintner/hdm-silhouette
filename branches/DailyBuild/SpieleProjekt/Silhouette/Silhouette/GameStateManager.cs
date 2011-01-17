@@ -83,6 +83,11 @@ namespace Silhouette
             {
                 menuScreen.updateScreen(gameTime);
             }
+
+            if (VideoManager.IsPlaying)
+                currentGameState = GameState.PlayingCutscene;
+            else
+                currentGameState = GameState.InGame;
         }
 
         public void Draw(GameTime gameTime) 
@@ -102,7 +107,8 @@ namespace Silhouette
             if (currentGameState == GameState.PlayingCutscene)
             {
                 spriteBatch.Begin();
-                spriteBatch.Draw(VideoManager.VideoFrame, new Rectangle(0, 0, (int)GameSettings.Default.resolutionWidth, (int)GameSettings.Default.resolutionHeight), Color.White);
+                if(VideoManager.VideoFrame != null)
+                    spriteBatch.Draw(VideoManager.VideoFrame, new Rectangle(0, 0, (int)GameSettings.Default.resolutionWidth, (int)GameSettings.Default.resolutionHeight), Color.White);
                 spriteBatch.End();  
             }
         }
