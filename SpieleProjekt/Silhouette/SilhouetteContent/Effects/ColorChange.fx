@@ -4,19 +4,15 @@ bool bla;
 float targetRed;
 float targetGreen;
 float targetBlue;
+float alpha;
 
 float4 PS_CC(float2 texCoord: TEXCOORD0): COLOR
 {
 	float4 color = tex2D(firstSampler, texCoord);
-	float4 targetColor = float4(targetRed, targetGreen, targetBlue, 1);
+	// Hier kann ich targetColor von color abhängig machen!!
+	float4 targetColor = float4(targetRed* color.r, targetGreen*color.g, targetBlue*color.b, alpha);
 
-	if (bla)
-	{
-		color *= targetColor;
-	}
-	else if (!bla)
-	{
-	}
+		color = color + targetColor;
 
 	return color;
 }
