@@ -162,22 +162,16 @@ namespace Silhouette.GameMechs
         [Browsable(false)]
         public float _fFadeTime { get; set; }
 
-
         float _fFadeStep;
         enum FadeType {FadeUp, FadeDown }
         FadeType _eFadeType; 
-        
-        
+          
         public SoundObject(String path)
         {
             this.fullPath = path;
             this.assetName = Path.GetFileNameWithoutExtension(path);
 
-            
-
-            looped = false;
-
-           
+            looped = false;        
 
             //Julius: Beim Event registrieren...
             Engine.Manager.SoundManager.UpdateFader += new SoundManager.UpdateFaderEventHandler(Update);
@@ -233,7 +227,6 @@ namespace Silhouette.GameMechs
             else
             _fFadeStep = (float)(1.0f / (double)FadeTimeInSeconds);
 
-
             _fFadeTime = FadeTimeInSeconds;
             _eFadeType = FadeType.FadeDown;
             _FaderActivated = true;
@@ -251,7 +244,6 @@ namespace Silhouette.GameMechs
         {
             SilentSound.fadeUp(FadeTimeInSeconds, GainSilentSound);
             this.fadeDown(FadeTimeInSeconds, LossCurrentSound);
-
         }
 
         public void Play()
@@ -270,8 +262,6 @@ namespace Silhouette.GameMechs
             {
                 pathToFile = Environment.CurrentDirectory + "\\Content\\Audio\\" + _assetName + ".ogg";
             }
-           
-
             
             Sound = IrrAudioEngine.play(pathToFile, looped, true);
 
@@ -284,8 +274,6 @@ namespace Silhouette.GameMechs
             {
                 Sound.SoundEffectControl.EnableWavesReverbSoundEffect(_RevInGain, _RevfReverbMix, _RevfReverbTime, _RevfHighFreqRTRatio);
             }
-
-
 
             if (mute)
                 Sound.Volume = 0;
@@ -314,14 +302,9 @@ namespace Silhouette.GameMechs
                 _EQBandwith = fBandwidth;
                 _EQCenter = fCenter;
                 _EQGain = fGain;
-
-                
-
-
-            }
-
-                
+            }          
         }
+
         public void DisableEqualizer()
         {
             if (Sound != null)
@@ -333,7 +316,6 @@ namespace Silhouette.GameMechs
                 _EQActivated = false;
         }
 
-
         public void EnableReverb(float fInGain, float fReverbMix, float fReverbTime, float fHighFreqRTRatio)
         {
             //Julius: Reverb direkt aktiveren, oder Parameter zwischenspeichern. So einfach ist das.
@@ -344,9 +326,7 @@ namespace Silhouette.GameMechs
                 _RevInGain = fInGain;
                 _RevfReverbMix = fReverbMix;
                 _RevfReverbTime = fReverbTime;
-                _RevfHighFreqRTRatio = fHighFreqRTRatio;
-
-                
+                _RevfHighFreqRTRatio = fHighFreqRTRatio;    
             }
             else
             {
@@ -357,6 +337,7 @@ namespace Silhouette.GameMechs
                 _RevfHighFreqRTRatio = fHighFreqRTRatio;
             }
         }
+
         public void DisableReverb()
         {
             if (Sound != null)
@@ -367,6 +348,7 @@ namespace Silhouette.GameMechs
             else
                 _ReverbActivated = false;
         }
+
         public void DisableAllFX()
         {
             if (Sound != null)
@@ -374,23 +356,20 @@ namespace Silhouette.GameMechs
                 Sound.SoundEffectControl.DisableAllEffects();
                 _EQActivated = false;
                 _ReverbActivated = false;
-
             }
             else
             {
                 _EQActivated = false;
                 _ReverbActivated = false;
             }
-
-        
         }
+
         public void Stop()
         {
             if (Sound != null)
             {
                 Sound.Stop();
             }
-        
         }
 
         public override void Update(GameTime gameTime)
@@ -398,7 +377,6 @@ namespace Silhouette.GameMechs
             //Julius: Wir updaten den Fader...
             if ((Sound != null) && (_FaderActivated))
             {
-
                 //Julius: leiser faden
                 if (_eFadeType == FadeType.FadeDown)
                 {   //Julius: Lautstärke anpassen
@@ -425,7 +403,9 @@ namespace Silhouette.GameMechs
 
         public override void Initialise() { }
         public override void LoadContent() { }
+
         public override string getPrefix() { return "SoundObject_"; }
+
         public override LevelObject clone()
         {
             SoundObject so = (SoundObject)this.MemberwiseClone();

@@ -30,7 +30,7 @@ namespace Silhouette.GameMechs.Events
     [Serializable]
     public class VideoPlayEvent : Event
     {
-        [DisplayName("Video name"), Category("Video Data")]
+        [DisplayName("Video name"), Category("Event Data")]
         [Description("Defines which video shall be played on this Event")]
         public VideoManager.Videoname VideoName { get { return _VideoName; } set { _VideoName = value; } }
         private VideoManager.Videoname _VideoName;
@@ -43,7 +43,6 @@ namespace Silhouette.GameMechs.Events
             height = rectangle.Height;
             list = new List<LevelObject>();
             isActivated = true;
-
         }
 
         public bool OnCollision(Fixture a, Fixture b, Contact contact)

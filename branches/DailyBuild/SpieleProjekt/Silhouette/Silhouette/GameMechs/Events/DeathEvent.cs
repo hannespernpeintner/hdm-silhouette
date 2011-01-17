@@ -54,14 +54,7 @@ namespace Silhouette.GameMechs.Events
             }
         }
 
-        public override void AddLevelObject(LevelObject lo)
-        {
-            if (this.list != null)
-            {
-                if (!this.list.Contains(lo) && (lo is InteractiveObject || lo is CollisionObject))
-                    this.list.Add(lo);
-            }
-        }
+        public override void AddLevelObject(LevelObject lo) { }
 
         public override string getPrefix()
         {
