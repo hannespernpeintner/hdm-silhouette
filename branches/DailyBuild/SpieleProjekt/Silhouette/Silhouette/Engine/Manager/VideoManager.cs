@@ -19,8 +19,7 @@ namespace Silhouette.Engine.Manager
 {
     public enum VideoName 
     { 
-        None,
-        Prolog
+        None
     }
 
     static public class VideoManager
