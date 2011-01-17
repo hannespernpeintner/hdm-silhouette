@@ -34,21 +34,19 @@ namespace Silhouette
     {
         public GraphicsDeviceManager graphics;
         public GameMechs.Player playerInstance;
-        SpriteBatch spriteBatch;
-
 
         public static GameLoop gameInstance;
 
-        DisplayFPS displayFPS;
-        Level level;
+        //DisplayFPS displayFPS;
+        GameStateManager gameStateManager;
 
         public GameLoop()
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
 
-            displayFPS = new DisplayFPS(this);
-            Components.Add(displayFPS);
+            //displayFPS = new DisplayFPS(this);
+            //Components.Add(displayFPS);
 
             gameInstance = this;
 
@@ -62,25 +60,21 @@ namespace Silhouette
             SoundManager.Initialize();
             VideoManager.Initialize();
 
-            
-            level = Level.LoadLevelFile("12345");
-            
-            level.Initialize();
+            gameStateManager = new GameStateManager();
+            gameStateManager.Initialize();
 
-            
             base.Initialize();
         }
 
         protected override void LoadContent()
         {
-            spriteBatch = new SpriteBatch(GraphicsDevice);
             DebugViewXNA.LoadContent(GameLoop.gameInstance.GraphicsDevice, GameLoop.gameInstance.Content);
 
             VideoManager.LoadContent();
             FontManager.loadFonts();
             EffectManager.loadEffects();
 
-            level.LoadContent();
+            gameStateManager.LoadContent();
         }
 
         protected override void UnloadContent(){}
@@ -89,26 +83,18 @@ namespace Silhouette
         {
             VideoManager.Update(gameTime);
             SoundManager.Update(gameTime);
-            level.Update(gameTime);
+
+            gameStateManager.Update(gameTime);
+
             base.Update(gameTime);
         }
 
         protected override void Draw(GameTime gameTime)
-        {
-           
+        {         
             GraphicsDevice.Clear(Color.White);
 
-            if (!VideoManager.IsPlaying)
-            {
-                level.Draw();
-            }
-            else
-            {
-                spriteBatch.Begin();
-                spriteBatch.Draw(VideoManager.VideoFrame,  new Rectangle(0, 0, (int) GameSettings.Default.resolutionWidth, (int) GameSettings.Default.resolutionHeight), Color.White);
-                spriteBatch.End();
-                
-            }
+            gameStateManager.Draw(gameTime);
+
             base.Draw(gameTime);
         }
     }

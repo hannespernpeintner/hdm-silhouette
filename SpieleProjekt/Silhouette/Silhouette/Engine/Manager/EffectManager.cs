@@ -14,6 +14,7 @@ namespace Silhouette.Engine.Manager
 {
     // HANNES: Erste Version des EffectManagers. Selbsterklärend.
     // Achja: "This software contains source code provided by NVIDIA Corporation." nicht vergessen :D
+
     public static class EffectManager
     {
         private static Texture2D vignette;
