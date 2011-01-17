@@ -194,6 +194,7 @@ namespace Silhouette.Engine
                 }
 
                 GameLoop.gameInstance.GraphicsDevice.SetRenderTarget(null);
+                GameLoop.gameInstance.GraphicsDevice.Clear(Color.Black);
 
                 spriteBatch.Begin(SpriteSortMode.Deferred, null, null, null, null, EffectManager.VignettenBlur());
                 spriteBatch.Draw(renderTargets[1], Vector2.Zero, Color.White);
