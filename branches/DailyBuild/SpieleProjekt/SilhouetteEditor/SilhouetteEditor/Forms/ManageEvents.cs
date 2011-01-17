@@ -185,6 +185,9 @@ namespace SilhouetteEditor.Forms
                 return;
 
             selectedEvent.list.Remove(selectedLevelObject2);
+
+            this.UpdateEventView();
+            this.UpdateObjectView();
         }
 
         private void AddButton_Click(object sender, EventArgs e)
