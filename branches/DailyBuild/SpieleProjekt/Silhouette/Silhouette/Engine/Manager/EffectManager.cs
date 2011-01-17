@@ -18,7 +18,6 @@ namespace Silhouette.Engine.Manager
     public static class EffectManager
     {
         private static Texture2D vignette;
-        private static Texture2D cbbVignette;
 
         private static Effect blender;
         private static Effect blurrer;
@@ -58,7 +57,6 @@ namespace Silhouette.Engine.Manager
             vignettenBlur = GameLoop.gameInstance.Content.Load<Effect>("Effects/VignettenBlur");
         }
 
-
         public static Effect Blender()
         {
             return blender;
@@ -85,98 +83,64 @@ namespace Silhouette.Engine.Manager
         public static Effect Bleach()
         {
             Player player = GameLoop.gameInstance.playerInstance;
+            float fadeOrange = player.fadeOrange / 1000; // zählen beide von 0 bis 1
+            float fadeBlue = player.fadeBlue / 1000;
 
-            if (player.isRemembering)
-            {
-                bleach.Parameters["amount"].SetValue(0.5f);
-                bleach.Parameters["bla"].SetValue(true);
-                bleach.Parameters["targetRed"].SetValue(0.6f);
-                bleach.Parameters["targetGreen"].SetValue(0.3f);
-                bleach.Parameters["targetBlue"].SetValue(0.2f);
-            }
+            float orangeTargetRed = 0f;
+            float orangeTargetGreen = -0.32f;
+            float orangeTargetBlue = -0.45f;
+            float blueTargetRed = -0.47f;
+            float blueTargetGreen = -0.41f;
+            float blueTargetBlue = -0.31f;
 
-            else if (player.isRecovering)
-            {
                 bleach.Parameters["amount"].SetValue(0.5f);
-                bleach.Parameters["bla"].SetValue(true);
-                bleach.Parameters["targetRed"].SetValue(0.1f);
-                bleach.Parameters["targetGreen"].SetValue(0.2f);
-                bleach.Parameters["targetBlue"].SetValue(0.4f);
-            }
-            else
-            {
-                bleach.Parameters["amount"].SetValue(0.5f);
-                bleach.Parameters["bla"].SetValue(false);
-                bleach.Parameters["targetRed"].SetValue(0);
-                bleach.Parameters["targetGreen"].SetValue(0);
-                bleach.Parameters["targetBlue"].SetValue(0);
-            }
-
+                bleach.Parameters["targetRed"].SetValue(fadeOrange * orangeTargetRed + fadeBlue * blueTargetRed);
+                bleach.Parameters["targetGreen"].SetValue(fadeOrange * orangeTargetGreen + fadeBlue * blueTargetGreen);
+                bleach.Parameters["targetBlue"].SetValue(fadeOrange * orangeTargetBlue + fadeBlue * blueTargetBlue);
+            
             return bleach;
         }
 
         public static Effect WeakBleach()
         {
             Player player = GameLoop.gameInstance.playerInstance;
+            float fadeOrange = player.fadeOrange / 1000; // zählen beide von 0 bis 1
+            float fadeBlue = player.fadeBlue / 1000;
 
-            if (player.isRemembering)
-            {
-                bleach.Parameters["amount"].SetValue(0.3f);
-                bleach.Parameters["bla"].SetValue(true);
-                bleach.Parameters["targetRed"].SetValue(0.6f);
-                bleach.Parameters["targetGreen"].SetValue(0.3f);
-                bleach.Parameters["targetBlue"].SetValue(0.2f);
-            }
+            float orangeTargetRed = 0f;
+            float orangeTargetGreen = -0.32f;
+            float orangeTargetBlue = -0.45f;
+            float blueTargetRed = -0.47f;
+            float blueTargetGreen = -0.41f;
+            float blueTargetBlue = -0.31f;
 
-            else if (player.isRecovering)
-            {
-                bleach.Parameters["amount"].SetValue(0.3f);
-                bleach.Parameters["bla"].SetValue(true);
-                bleach.Parameters["targetRed"].SetValue(0.1f);
-                bleach.Parameters["targetGreen"].SetValue(0.2f);
-                bleach.Parameters["targetBlue"].SetValue(0.4f);
-            }
-            else
-            {
-                bleach.Parameters["amount"].SetValue(0.3f);
-                bleach.Parameters["bla"].SetValue(false);
-                bleach.Parameters["targetRed"].SetValue(0);
-                bleach.Parameters["targetGreen"].SetValue(0);
-                bleach.Parameters["targetBlue"].SetValue(0);
-            }
+            bleach.Parameters["amount"].SetValue(0.3f);
+            bleach.Parameters["targetRed"].SetValue(fadeOrange * orangeTargetRed + fadeBlue * blueTargetRed);
+            bleach.Parameters["targetGreen"].SetValue(fadeOrange * orangeTargetGreen + fadeBlue * blueTargetGreen);
+            bleach.Parameters["targetBlue"].SetValue(fadeOrange * orangeTargetBlue + fadeBlue * blueTargetBlue);
+
             return weakBleach;
         }
 
         public static Effect StrongBleach()
         {
             Player player = GameLoop.gameInstance.playerInstance;
+            float fadeOrange = player.fadeOrange / 1000; // zählen beide von 0 bis 1
+            float fadeBlue = player.fadeBlue / 1000;
 
-            if (player.isRemembering)
-            {
-                bleach.Parameters["amount"].SetValue(0.7f);
-                bleach.Parameters["bla"].SetValue(true);
-                bleach.Parameters["targetRed"].SetValue(0.6f);
-                bleach.Parameters["targetGreen"].SetValue(0.3f);
-                bleach.Parameters["targetBlue"].SetValue(0.2f);
-            }
+            float orangeTargetRed = 0f;
+            float orangeTargetGreen = -0.32f;
+            float orangeTargetBlue = -0.45f;
+            float blueTargetRed = -0.47f;
+            float blueTargetGreen = -0.41f;
+            float blueTargetBlue = -0.31f;
 
-            else if (player.isRecovering)
-            {
-                bleach.Parameters["amount"].SetValue(0.7f);
-                bleach.Parameters["bla"].SetValue(true);
-                bleach.Parameters["targetRed"].SetValue(0.1f);
-                bleach.Parameters["targetGreen"].SetValue(0.2f);
-                bleach.Parameters["targetBlue"].SetValue(0.4f);
-            }
-            else
-            {
-                bleach.Parameters["amount"].SetValue(0.7f);
-                bleach.Parameters["bla"].SetValue(false);
-                bleach.Parameters["targetRed"].SetValue(0);
-                bleach.Parameters["targetGreen"].SetValue(0);
-                bleach.Parameters["targetBlue"].SetValue(0);
-            }
-            return strongBleach;
+            bleach.Parameters["amount"].SetValue(0.7f);
+            bleach.Parameters["targetRed"].SetValue(fadeOrange * orangeTargetRed + fadeBlue * blueTargetRed);
+            bleach.Parameters["targetGreen"].SetValue(fadeOrange * orangeTargetGreen + fadeBlue * blueTargetGreen);
+            bleach.Parameters["targetBlue"].SetValue(fadeOrange * orangeTargetBlue + fadeBlue * blueTargetBlue);
+
+            return weakBleach;
         }
 
         public static Effect Bloom()
@@ -192,29 +156,37 @@ namespace Silhouette.Engine.Manager
         public static Effect ColorChange()
         {
             Player player = GameLoop.gameInstance.playerInstance;
+            float fadeOrange = player.fadeOrange / 1000; // zählen beide von 0 bis 1
+            float fadeBlue = player.fadeBlue / 1000;
 
-            if (player.isRemembering)
+            float orangeTargetRed = 0f;
+            float orangeTargetGreen = -0.32f;
+            float orangeTargetBlue = -0.45f;
+            float blueTargetRed = -0.47f;
+            float blueTargetGreen = -0.41f;
+            float blueTargetBlue = -0.31f;
+
             {
-                colorChange.Parameters["bla"].SetValue(true);
-                colorChange.Parameters["targetRed"].SetValue(1);
-                colorChange.Parameters["targetGreen"].SetValue(0.6f);
-                colorChange.Parameters["targetBlue"].SetValue(0.3f);
+                //if (player.isRemembering || player.isRecovering)
+                {
+                    colorChange.Parameters["bla"].SetValue(true);
+                    colorChange.Parameters["alpha"].SetValue(0);
+                    colorChange.Parameters["targetRed"].SetValue(fadeOrange * orangeTargetRed + fadeBlue * blueTargetRed);
+                    colorChange.Parameters["targetGreen"].SetValue(fadeOrange * orangeTargetGreen + fadeBlue * blueTargetGreen);
+                    colorChange.Parameters["targetBlue"].SetValue(fadeOrange * orangeTargetBlue + fadeBlue * blueTargetBlue);
+                }
+                /*
+                else 
+                {
+                    colorChange.Parameters["bla"].SetValue(false);
+                    colorChange.Parameters["alpha"].SetValue(0);
+                    colorChange.Parameters["targetRed"].SetValue(0);
+                    colorChange.Parameters["targetGreen"].SetValue(0);
+                    colorChange.Parameters["targetBlue"].SetValue(0);
+                }
+                */
             }
 
-            else if (player.isRecovering)
-            {
-                colorChange.Parameters["bla"].SetValue(true);
-                colorChange.Parameters["targetRed"].SetValue(0.3f);
-                colorChange.Parameters["targetGreen"].SetValue(0.4f);
-                colorChange.Parameters["targetBlue"].SetValue(0.7f);
-            }
-            else
-            {
-                colorChange.Parameters["bla"].SetValue(false);
-                colorChange.Parameters["targetRed"].SetValue(0);
-                colorChange.Parameters["targetGreen"].SetValue(0);
-                colorChange.Parameters["targetBlue"].SetValue(0);
-            }
 
             return colorChange;
         }
