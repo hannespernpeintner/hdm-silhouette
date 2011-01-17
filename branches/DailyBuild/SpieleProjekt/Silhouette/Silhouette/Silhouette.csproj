@@ -172,6 +172,7 @@
     <Compile Include="GameMechs\TextureObject.cs" />
     <Compile Include="GameMechs\VideoObject.cs" />
     <Compile Include="GameSettings.cs" />
+    <Compile Include="GameStateManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="GameLoop.cs" />

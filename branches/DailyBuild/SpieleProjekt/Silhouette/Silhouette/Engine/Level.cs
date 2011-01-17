@@ -199,6 +199,10 @@ namespace Silhouette.Engine
                 spriteBatch.Draw(renderTargets[1], Vector2.Zero, Color.White);
                 spriteBatch.End();
 
+                spriteBatch.Begin();
+                Primitives.Instance.drawBoxFilled(spriteBatch, new Rectangle(0, 0, GameSettings.Default.resolutionWidth, 96), Color.Black);
+                Primitives.Instance.drawBoxFilled(spriteBatch, new Rectangle(0, GameSettings.Default.resolutionHeight - 96, GameSettings.Default.resolutionWidth, 96), Color.Black);
+                spriteBatch.End();
             }
             if (!DebugViewEnabled)
             {
