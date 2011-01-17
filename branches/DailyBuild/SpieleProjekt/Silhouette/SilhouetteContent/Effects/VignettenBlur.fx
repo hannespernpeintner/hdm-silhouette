@@ -9,6 +9,7 @@ float4 PS(float2 Tex: TEXCOORD0) : COLOR
 {
 float4 Color;
 float4 Vignette = tex2D(MaskSampler, Tex);
+// Vignette ist schwarz-weiﬂ. Abh. vom blau-Wert wird Blurst‰rke ausgew‰hlt
 float BlurDistance = 0.005 * (1-Vignette.b);
  
 // Get the texel from ColorMapSampler using a modified texture coordinate. This

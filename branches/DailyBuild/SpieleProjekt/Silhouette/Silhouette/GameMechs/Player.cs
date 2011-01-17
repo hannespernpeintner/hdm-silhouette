@@ -57,8 +57,10 @@ namespace Silhouette.GameMechs
 
         private int facing;                    // Wo der Chara hinschaut. 0 bedeutet links, 1 bedeutet rechts.
 
-        private float sJTimer;
-        private float sJRecoveryTimer;
+        public float sJTimer;
+        public float sJRecoveryTimer;
+        public float fadeBlue;
+        public float fadeOrange;
 
         private String actScriptedMove;
 
@@ -146,6 +148,8 @@ namespace Silhouette.GameMechs
             isRemembering = false;
             sJRecoveryTimer = 5000;
             sJTimer = 10000;
+            fadeBlue = 0;
+            fadeOrange = 0;
             canClimb = false;
             tempRotation = 0.0f;
             contactTimer = 0;
@@ -195,22 +199,22 @@ namespace Silhouette.GameMechs
             charRect.Friction = 1;
             charRect.isPlayer = true;
 
-            nRect = FixtureManager.CreateRectangle(140, 10, new Vector2(position.X, position.Y - 85), BodyType.Dynamic, 0.0001f);
+            nRect = FixtureManager.CreateRectangle(140, 10, new Vector2(position.X, position.Y - 85), BodyType.Dynamic, 0);
             nRect.Body.FixedRotation = true;
             nRect.IsSensor = true;
             nRect.isPlayer = true;
 
-            sRect = FixtureManager.CreateRectangle(100, 10, new Vector2(position.X, position.Y + 120), BodyType.Dynamic, 0.0001f);
+            sRect = FixtureManager.CreateRectangle(100, 10, new Vector2(position.X, position.Y + 120), BodyType.Dynamic, 0);
             sRect.Body.FixedRotation = true;
             sRect.IsSensor = true;
             sRect.isPlayer = true;
 
-            eRect = FixtureManager.CreateRectangle(15, 100, new Vector2(position.X + 105, position.Y), BodyType.Static, 0);
+            eRect = FixtureManager.CreateRectangle(15, 100, new Vector2(position.X + 105, position.Y), BodyType.Dynamic, 0);
             eRect.Body.FixedRotation = true;
             eRect.IsSensor = true;
             eRect.isPlayer = true;
 
-            wRect = FixtureManager.CreateRectangle(15, 100, new Vector2(position.X - 110, position.Y), BodyType.Static, 0);
+            wRect = FixtureManager.CreateRectangle(15, 100, new Vector2(position.X - 110, position.Y), BodyType.Dynamic, 0);
             wRect.Body.FixedRotation = true;
             wRect.IsSensor = true;
             wRect.isPlayer = true;
@@ -310,7 +314,7 @@ namespace Silhouette.GameMechs
         {
             if (Camera.fixedOnPlayer)
             {
-                camPosition.Y -= 150;
+                camPosition.Y -= 400;
                 Camera.Position = camPosition;
             }
             // Die Camera wird nur rotiert, wenn die Rotation unter einem bestimmten Winkel bleibt. Damit das nicht ausartet.
@@ -896,25 +900,54 @@ namespace Silhouette.GameMechs
             {
                 if (sJTimer <= 0)
                 {
+                    // Wenn Tom erinnert, aber der sJTimer abgelaufen ist, fängt er an zu recovern
                     isRemembering = false;
                     isRecovering = true;
                 }
                 else
                 {
+                    // Ansonsten wird der sJTimer runtergezählt
                     sJTimer -= gameTime.ElapsedGameTime.Milliseconds;
+                }
+
+                if (fadeOrange <= 1000 && sJTimer >= 500)
+                {
+                    fadeOrange += gameTime.ElapsedGameTime.Milliseconds;
+                }
+                if (sJTimer <= 500)
+                {
+                    fadeOrange -= gameTime.ElapsedGameTime.Milliseconds;
                 }
             }
             else if (isRecovering)
             {
                 if (sJRecoveryTimer <= 0)
                 {
+                    // Wenn Tom recovered, aber der Timer abgelaufen ist, isser wieder normal. Werte zurücksetzen net vergessen
                     isRecovering = false;
                     sJRecoveryTimer = 5000;
                     sJTimer = 10000;
+                    fadeOrange = 0;
+                    fadeBlue = 0;
                 }
                 else
                 {
+                    // Ansonsten wird der sJRecoveryTimer runtergezählt
                     sJRecoveryTimer -= gameTime.ElapsedGameTime.Milliseconds;
+                }
+
+                if (fadeBlue <= 1000 && sJRecoveryTimer >= 1000)
+                { 
+                    fadeBlue += gameTime.ElapsedGameTime.Milliseconds;
+
+                    if (fadeOrange >= 0)
+                    {
+                        fadeOrange -= gameTime.ElapsedGameTime.Milliseconds;
+                    }
+                }
+                if (fadeBlue >= 0 && sJRecoveryTimer <= 1000)
+                {
+                    fadeBlue -= gameTime.ElapsedGameTime.Milliseconds;
                 }
             }
         }
@@ -1091,7 +1124,8 @@ namespace Silhouette.GameMechs
         {
             spriteBatch.Draw(activeAnimation.activeTexture, position, null, Color.White, tempRotation, new Vector2(250, 250), 1, SpriteEffects.None, 1);
             //Das auskommentierte hier kann als Debugview dienen.
-            /*spriteBatch.DrawString(FontManager.Arial, "Standing: " + isIdle.ToString(), new Vector2(300, 20), Color.Black);
+
+            spriteBatch.DrawString(FontManager.Arial, "Standing: " + isIdle.ToString(), new Vector2(300, 20), Color.Black);
             spriteBatch.DrawString(FontManager.Arial, "Running: " + isRunning.ToString(), new Vector2(300, 45), Color.Black);
             spriteBatch.DrawString(FontManager.Arial, "Jumping: " + isJumping.ToString(), new Vector2(300, 70), Color.Black);
             spriteBatch.DrawString(FontManager.Arial, "Falling: " + isFalling.ToString(), new Vector2(300, 95), Color.Black);
@@ -1102,7 +1136,9 @@ namespace Silhouette.GameMechs
             spriteBatch.DrawString(FontManager.Arial, "CamRectRotation: " + camRect.Body.Rotation.ToString(), new Vector2(300, 230), Color.Black);
             spriteBatch.DrawString(FontManager.Arial, "CamRotation: " + Camera.Rotation.ToString(), new Vector2(300, 255), Color.Black);
             spriteBatch.DrawString(FontManager.Arial, "tempRotation: " + tempRotation.ToString(), new Vector2(300, 280), Color.Black);
-            spriteBatch.DrawString(FontManager.Arial, "sJTimer: " + sJTimer.ToString() + " sJRecoveryTimer: " + sJRecoveryTimer.ToString(), new Vector2(300, 305), Color.Black);*/
+            spriteBatch.DrawString(FontManager.Arial, "sJTimer: " + sJTimer.ToString() + " sJRecoveryTimer: " + sJRecoveryTimer.ToString(), new Vector2(300, 305), Color.Black);
+            spriteBatch.DrawString(FontManager.Arial, "canClimb: " + canClimb, new Vector2(300, 320), Color.Black);
+
         }
     }
 }
