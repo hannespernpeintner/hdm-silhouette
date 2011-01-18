@@ -215,17 +215,17 @@ namespace Silhouette.GameMechs
             sRect = FixtureManager.CreateRectangle(100, 10, new Vector2(position.X, position.Y + 120), BodyType.Dynamic, 0);
             sRect.Body.FixedRotation = true;
             sRect.IsSensor = true;
-            charRect.isPlayer = true;
+            sRect.isPlayer = true;
 
             eRect = FixtureManager.CreateRectangle(15, 100, new Vector2(position.X + 105, position.Y), BodyType.Dynamic, 0);
             eRect.Body.FixedRotation = true;
             eRect.IsSensor = true;
-            charRect.isPlayer = true;
+            eRect.isPlayer = true;
 
             wRect = FixtureManager.CreateRectangle(15, 100, new Vector2(position.X - 110, position.Y), BodyType.Dynamic, 0);
             wRect.Body.FixedRotation = true;
             wRect.IsSensor = true;
-            charRect.isPlayer = true;
+            wRect.isPlayer = true;
 
             camRect = FixtureManager.CreateRectangle(100, 100, position, BodyType.Dynamic, 0.1f);
             camRect.Body.IgnoreGravity = true;
