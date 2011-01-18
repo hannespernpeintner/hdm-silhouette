@@ -111,6 +111,9 @@ namespace FarseerPhysics.Dynamics
         public Boolean isPlayer { get { return _isPlayer; } set { _isPlayer = value; } }
         private Boolean _isPlayer;
 
+        public Boolean isEvent { get { return _isEvent; } set { _isEvent = value; } }
+        private Boolean _isEvent;
+
         /// <summary>
         /// Fires when two shapes collide and a contact is created between them.
         /// Note that the first fixture argument is always the fixture that the delegate is subscribed to.
