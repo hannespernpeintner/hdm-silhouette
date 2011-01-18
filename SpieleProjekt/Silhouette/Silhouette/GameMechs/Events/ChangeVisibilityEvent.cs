@@ -68,20 +68,29 @@ namespace Silhouette.GameMechs.Events
 
         public bool OnCollision(Fixture a, Fixture b, Contact contact)
         {
-            if (isActivated)
+            if (b.isEvent)
             {
-                foreach (LevelObject lo in this.list)
+                if (isActivated)
                 {
-                    lo.isVisible = this.visibility;
-                }
+                    foreach (LevelObject lo in this.list)
+                    {
+                        lo.isVisible = this.visibility;
+                    }
 
-                isActivated = false;
-                return true;
+                    isActivated = false;
+                }
+                else
+                {
+                    foreach (LevelObject lo in this.list)
+                    {
+                        lo.isVisible = !lo.isVisible;
+                    }
+
+                    isActivated = true;
+                }
             }
-            else
-            {
-                return false;
-            }
+
+            return true;
         }
 
         public override void ToFixture()

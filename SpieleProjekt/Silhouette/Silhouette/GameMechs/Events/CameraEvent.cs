@@ -52,6 +52,8 @@ namespace Silhouette.GameMechs.Events
 
         [Browsable(false)]
         private bool isUpdate;
+        [NonSerialized]
+        int counter;
 
         public CameraEvent(Rectangle rectangle)
         {
@@ -64,26 +66,58 @@ namespace Silhouette.GameMechs.Events
 
         public override void Update(GameTime gameTime)
         {
-            if (isUpdate)
+            if (isActivated)
             {
-                switch (attributeType)
-                { 
-                    case Attribute.Rotation:
-                        Camera.Rotation += this.step;
-                        break;
-                    case Attribute.Position:
-                        Camera.Position += this.stepV;
-                        break;
-                    case Attribute.Scale:
-                        Camera.Scale += this.step;
-                        break;
+                if (isUpdate)
+                {
+                    switch (attributeType)
+                    {
+                        case Attribute.Rotation:
+                            Camera.Rotation += this.step;
+                            break;
+                        case Attribute.Position:
+                            Camera.Position += this.stepV;
+                            break;
+                        case Attribute.Scale:
+                            Camera.Scale += this.step;
+                            break;
+                    }
+
+                    counter--;
+
+                    if (counter <= 0)
+                    {
+                        isUpdate = false;
+                        isActivated = false;
+                    }
                 }
-
-                endValue--;
             }
+            else
+            {
+                if (isUpdate)
+                {
+                    switch (attributeType)
+                    {
+                        case Attribute.Rotation:
+                            Camera.Rotation -= this.step;
+                            break;
+                        case Attribute.Position:
+                            Camera.Position -= this.stepV;
+                            break;
+                        case Attribute.Scale:
+                            Camera.Scale -= this.step;
+                            break;
+                    }
 
-            if (endValue <= 0)
-                isUpdate = false;
+                    counter--;
+
+                    if (counter <= 0)
+                    {
+                        isUpdate = false;
+                        isActivated = true;
+                    }
+                }
+            }
         }
 
         public override void AddLevelObject(LevelObject lo) { }
@@ -109,16 +143,9 @@ namespace Silhouette.GameMechs.Events
 
         public bool OnCollision(Fixture a, Fixture b, Contact contact)
         {
-            if (isActivated)
-            {
-                isUpdate = true;
-                isActivated = false;
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            counter = endValue;
+            isUpdate = true;
+            return true;
         }
     }
 }
