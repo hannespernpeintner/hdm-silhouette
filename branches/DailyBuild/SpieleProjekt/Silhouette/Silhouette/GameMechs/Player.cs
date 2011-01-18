@@ -99,6 +99,8 @@ namespace Silhouette.GameMechs
 
         private Animation dying_left;
         private Animation dying_right;
+        private Animation dying2_left;
+        private Animation dying2_right;
 
         public override void Initialise()
         {
@@ -137,6 +139,9 @@ namespace Silhouette.GameMechs
             dying_left = new Animation();
             dying_right = new Animation();
 
+            dying2_left = new Animation();
+            dying2_right = new Animation();
+
             movement = Vector2.Zero;
 
             isRunning = false;
@@ -159,24 +164,24 @@ namespace Silhouette.GameMechs
 
         public override void LoadContent()
         {
-
             // Hier müssen alle Sprites geladen werden.
-            idle_left.Load(6, "Sprites/Player/idleA_left_", 1.0f, true);
-            idle_right.Load(6, "Sprites/Player/idleA_right_", 1.0f, true);
-            idleb_left.Load(6, "Sprites/Player/idleB_left_", 1.0f, true);
-            idleb_right.Load(6, "Sprites/Player/idleB_right_", 1.0f, true);
-            idlec_left.Load(6, "Sprites/Player/idleC_left_", 1.0f, true);
-            idlec_right.Load(6, "Sprites/Player/idleC_right_", 1.0f, true);
+            idle_left.Load(6, "Sprites/Player/idleA_left_", 0.5f, true);
+            idle_right.Load(6, "Sprites/Player/idleA_right_", 0.5f, true);
+            idleb_left.Load(6, "Sprites/Player/idleB_left_", 0.5f, true);
+            idleb_right.Load(6, "Sprites/Player/idleB_right_", 0.5f, true);
+            idlec_left.Load(6, "Sprites/Player/idleC_left_", 0.5f, true);
+            idlec_right.Load(6, "Sprites/Player/idleC_right_", 0.5f, true);
 
-            jumpStarting_left.Load(3, "Sprites/Player/jumpStart_left_", 1.5f, false);
-            jumpStarting_right.Load(3, "Sprites/Player/jumpStart_right_", 1.5f, false);
+            // 1.5,1.5,0.5,0.5,0.8,0.8
+            jumpStarting_left.Load(3, "Sprites/Player/jumpStart_left_", 0.8f, false);
+            jumpStarting_right.Load(3, "Sprites/Player/jumpStart_right_", 0.8f, false);
             falling_left.Load(2, "Sprites/Player/falling_left_", 0.5f, true);
             falling_right.Load(2, "Sprites/Player/falling_right_", 0.5f, true);
-            landing_left.Load(4, "Sprites/Player/landing_left_", 0.8f, false);
-            landing_right.Load(4, "Sprites/Player/landing_right_", 0.8f, false);
+            landing_left.Load(4, "Sprites/Player/landing_left_", 1.2f, false);
+            landing_right.Load(4, "Sprites/Player/landing_right_", 1.2f, false);
 
-            running_left.Load(5, "Sprites/Player/walk_left_", 2f, true);
-            running_right.Load(5, "Sprites/Player/walk_right_", 2f, true);
+            running_left.Load(5, "Sprites/Player/walk_left_", 1.5f, true);
+            running_right.Load(5, "Sprites/Player/walk_right_", 1.5f, true);
             runStarting_left.Load(2, "Sprites/Player/walkStart_left_", 1.0f, false);
             runStarting_right.Load(2, "Sprites/Player/walkStart_right_", 1.0f, false);
             runStopping_left.Load(2, "Sprites/Player/walkStop_left_", 1.0f, false);
@@ -187,6 +192,8 @@ namespace Silhouette.GameMechs
 
             dying_left.Load(4, "Sprites/Player/die_left_", 0.5f, false);
             dying_right.Load(4, "Sprites/Player/die_right_", 0.5f, false);
+            dying2_left.Load(1, "Sprites/Player/die2_left_", 0.1f, false);
+            dying2_right.Load(1, "Sprites/Player/die2_right_", 0.1f, false);
 
             activeAnimation = choseIdleAnimation();
             activeAnimation.start();
@@ -195,7 +202,8 @@ namespace Silhouette.GameMechs
             //charRect = FixtureManager.CreateCircle(80, position, BodyType.Dynamic, 1);
             //charRect.Body.FixedRotation = false;
             //charRect.Friction = 5;
-            charRect = FixtureManager.CreatePolygon(idle_left.pictures[0], new Vector2(0.85f, 0.95f), BodyType.Dynamic, position, 0.5f);
+            //charRect = FixtureManager.CreatePolygon(idle_left.pictures[0], new Vector2(0.85f, 0.95f), BodyType.Dynamic, position, 0.5f);
+            charRect = FixtureManager.CreatePolygon(idle_left.pictures[0], new Vector2(0.85f, 0.95f), BodyType.Dynamic, position, 1);
             charRect.Friction = 1;
             charRect.isPlayer = true;
 
@@ -342,7 +350,7 @@ namespace Silhouette.GameMechs
 
                     isIdle = false;
                     isRunning = true;
-                    charRect.Body.ApplyForce(new Vector2(-35, 0));
+                    charRect.Body.ApplyForce(new Vector2(-40, 0));
                 }
             }
 
@@ -377,7 +385,7 @@ namespace Silhouette.GameMechs
 
                     isIdle = false;
                     isRunning = true;
-                    charRect.Body.ApplyForce(new Vector2(35, 0));
+                    charRect.Body.ApplyForce(new Vector2(40, 0));
                 }
             }
 
@@ -426,11 +434,11 @@ namespace Silhouette.GameMechs
                     // Unterscheiden von Superjump und NormalJump
                     if (isRemembering)
                     {
-                        charRect.Body.ApplyForce(new Vector2(-50, -800));
+                        charRect.Body.ApplyForce(new Vector2(-50, -1650));
                     }
                     else
                     {
-                        charRect.Body.ApplyForce(new Vector2(-50, -650));
+                        charRect.Body.ApplyForce(new Vector2(-50, -1400));
                     }
                 }
                 else if (facing == 1)
@@ -444,11 +452,11 @@ namespace Silhouette.GameMechs
                     isRunning = false;
                     if (isRemembering)
                     {
-                        charRect.Body.ApplyForce(new Vector2(50, -800));
+                        charRect.Body.ApplyForce(new Vector2(50, -1650));
                     }
                     else
                     {
-                        charRect.Body.ApplyForce(new Vector2(50, -650));
+                        charRect.Body.ApplyForce(new Vector2(50, -1400));
                     }
                 }
             }
@@ -477,7 +485,7 @@ namespace Silhouette.GameMechs
             // WENN KEIN BUTTON GEDRÜCKT IST
             if (Keyboard.GetState().GetPressedKeys().Length == 0 && oldState.GetPressedKeys().Length == 0)
             {
-                charRect.Friction = 5;
+                charRect.Friction = 4;
             }
 
             else { charRect.Friction = 0.1f; }
@@ -607,6 +615,11 @@ namespace Silhouette.GameMechs
             {
                 try
                 {
+                    /*if (facing == 0) { activeAnimation = dying2_left; }
+                    else { activeAnimation = dying2_right; }
+                    activeAnimation.activeFrameNumber = 0;
+                    activeAnimation.start();*/
+
                     activeAnimation.activeFrameNumber = 0;
                     activeAnimation = choseIdleAnimation();
                     activeAnimation.activeFrameNumber = 0;
@@ -620,6 +633,7 @@ namespace Silhouette.GameMechs
                     isFalling = false;
                     isJumping = false;
                     isDying = false;
+                    
                 }
                 catch (Exception e) { activeAnimation.activeFrameNumber = 0; }
             }
@@ -744,6 +758,19 @@ namespace Silhouette.GameMechs
                 }
             }
 
+            // STERBEN
+
+            if (activeAnimation == dying_left)
+            {
+                nextAnimation = dying2_left;
+            }
+
+            if (activeAnimation == dying_right)
+            {
+                nextAnimation = dying2_right;
+            }
+
+
 
             if (activeAnimation.activeFrameNumber == activeAnimation.amount - 1 &&
                 (
@@ -792,7 +819,7 @@ namespace Silhouette.GameMechs
                 isRunning = false;
                 isJumping = false;
 
-                charRect.Friction = 1.5f;
+                charRect.Friction = 4;
             }
 
             else if (movement.Y + Level.Physics.Gravity.Y < 0.05f && !rectTouching)
@@ -813,7 +840,7 @@ namespace Silhouette.GameMechs
 
 
 
-            else if (movement.Y > 1.5f && !isFalling && !sRectTouching && !rectTouching)
+            else if (movement.Y > 1.5f && !isFalling && !sRectTouching && !rectTouching && (activeAnimation != jumpStarting_left || activeAnimation != jumpStarting_right))
             {
                 isIdle = false;
                 isFalling = true;
