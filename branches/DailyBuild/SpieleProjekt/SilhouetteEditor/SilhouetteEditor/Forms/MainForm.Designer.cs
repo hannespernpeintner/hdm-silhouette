@@ -33,6 +33,7 @@ namespace SilhouetteEditor.Forms
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.StatusBar = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.Selection = new System.Windows.Forms.ToolStripStatusLabel();
@@ -990,6 +991,7 @@ namespace SilhouetteEditor.Forms
             this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.StatusBar);
             this.Controls.Add(this.MenuBar);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.MenuBar;
             this.Name = "MainForm";
             this.Text = "Bound Editor";
