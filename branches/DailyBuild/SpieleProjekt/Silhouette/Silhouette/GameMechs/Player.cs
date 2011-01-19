@@ -174,22 +174,28 @@ namespace Silhouette.GameMechs
             idlec_right.Load(6, "Sprites/Player/idleC_right_", 0.5f, true);
 
             // 1.5,1.5,0.5,0.5,1.2,1.2
-            jumpStarting_left.Load(3, "Sprites/Player/jumpStart_left_", 0.8f, false);
-            jumpStarting_right.Load(3, "Sprites/Player/jumpStart_right_", 0.8f, false);
+            jumpStarting_left.Load(5, "Sprites/Player/jumpStart_left_", 1.0f, false);
+            jumpStarting_right.Load(5, "Sprites/Player/jumpStart_right_", 1.0f, false);
             falling_left.Load(2, "Sprites/Player/falling_left_", 0.5f, true);
             falling_right.Load(2, "Sprites/Player/falling_right_", 0.5f, true);
-            landing_left.Load(4, "Sprites/Player/landing_left_", 1.0f, false);
-            landing_right.Load(4, "Sprites/Player/landing_right_", 1.0f, false);
+            landing_left.Load(8, "Sprites/Player/landing_left_", 1.25f, false);
+            landing_right.Load(8, "Sprites/Player/landing_right_", 1.25f, false);
 
-            running_left.Load(5, "Sprites/Player/walk_left_", 1.5f, true);
+            /*running_left.Load(5, "Sprites/Player/walk_left_", 1.5f, true);
             running_right.Load(5, "Sprites/Player/walk_right_", 1.5f, true);
             runStarting_left.Load(2, "Sprites/Player/walkStart_left_", 1.0f, false);
             runStarting_right.Load(2, "Sprites/Player/walkStart_right_", 1.0f, false);
             runStopping_left.Load(2, "Sprites/Player/walkStop_left_", 1.0f, false);
-            runStopping_right.Load(2, "Sprites/Player/walkStop_right_", 1.0f, false);
+            runStopping_right.Load(2, "Sprites/Player/walkStop_right_", 1.0f, false);*/
+            running_left.Load(8, "Sprites/Player/walk_left_", 1.75f, true);
+            running_right.Load(8, "Sprites/Player/walk_right_", 1.75f, true);
+            runStarting_left.Load(8, "Sprites/Player/walkStart_left_", 2f, false);
+            runStarting_right.Load(8, "Sprites/Player/walkStart_right_", 2f, false);
+            runStopping_left.Load(8, "Sprites/Player/walkStop_left_", 1.0f, false);
+            runStopping_right.Load(8, "Sprites/Player/walkStop_right_", 1.0f, false);
 
-            climbing_left.Load(11, "Sprites/Player/climb_left_", 0.75f, false);
-            climbing_right.Load(11, "Sprites/Player/climb_right_", 0.75f, false);
+            climbing_left.Load(21, "Sprites/Player/climb_left_", 0.75f, false);
+            climbing_right.Load(21, "Sprites/Player/climb_right_", 0.75f, false);
 
             dying_left.Load(4, "Sprites/Player/die_left_", 0.5f, false);
             dying_right.Load(4, "Sprites/Player/die_right_", 0.5f, false);
@@ -553,13 +559,29 @@ namespace Silhouette.GameMechs
                 actClimbHeight = temp;
                 if (facing == 1)
                 {
-                    charRect.Body.Position += new Vector2(1.5f / Level.PixelPerMeter, -2 / Level.PixelPerMeter);
-                    if (Camera.fixedOnPlayer) { camRect.Body.Position += new Vector2(1.5f / Level.PixelPerMeter, -2 / Level.PixelPerMeter); }
+                    if (activeAnimation.activeFrameNumber <= 6 || activeAnimation.activeFrameNumber >= 14)
+                    {
+                        charRect.Body.Position += new Vector2(1.35f / Level.PixelPerMeter, 0);
+                        if (Camera.fixedOnPlayer) { camRect.Body.Position += new Vector2(1.35f / Level.PixelPerMeter, 0); }
+                    }
+                    if (activeAnimation.activeFrameNumber > 6 && activeAnimation.activeFrameNumber < 14)
+                    {
+                        charRect.Body.Position += new Vector2(0, -2.2f / Level.PixelPerMeter);
+                        if (Camera.fixedOnPlayer) { camRect.Body.Position += new Vector2(0, -2.2f / Level.PixelPerMeter); }
+                    }
                 }
                 else
                 {
-                    charRect.Body.Position += new Vector2(-1.5f / Level.PixelPerMeter, -2 / Level.PixelPerMeter);
-                    if (Camera.fixedOnPlayer) { camRect.Body.Position += new Vector2(-1.5f / Level.PixelPerMeter, -2 / Level.PixelPerMeter); }
+                    if (activeAnimation.activeFrameNumber <= 6 || activeAnimation.activeFrameNumber >= 14)
+                    {
+                        charRect.Body.Position += new Vector2(-1.35f / Level.PixelPerMeter, 0);
+                        if (Camera.fixedOnPlayer) { camRect.Body.Position += new Vector2(-1.35f / Level.PixelPerMeter, 0); }
+                    }
+                    if (activeAnimation.activeFrameNumber > 6 && activeAnimation.activeFrameNumber < 14)
+                    {
+                        charRect.Body.Position += new Vector2(0, -2.2f / Level.PixelPerMeter);
+                        if (Camera.fixedOnPlayer) { camRect.Body.Position += new Vector2(0, -2.2f / Level.PixelPerMeter); }
+                    }
                 }
             }
 
@@ -577,9 +599,9 @@ namespace Silhouette.GameMechs
                     charRect.Body.BodyType = BodyType.Dynamic;
                     charRect.Body.IgnoreGravity = false;
                     isScriptedMoving = false;
-                    isIdle = false;
+                    isIdle = true;
                     isRunning = false;
-                    isFalling = true;
+                    isFalling = false;
                     isJumping = false;
                     isDying = false;
                 }
@@ -993,35 +1015,6 @@ namespace Silhouette.GameMechs
         {
             if (charRect.Body.Rotation < 0.5f && charRect.Body.Rotation > -0.5f)
             { tempRotation = charRect.Body.Rotation; }
-
-
-            /*contactTimer += gameTime.ElapsedGameTime.Milliseconds;
-
-            if (contactTimer >= 100)
-            {
-                contactTimer -= 100;
-                try
-                {
-                    Contact tempContact = charRect.Body.ContactList.Next.Contact;
-                    FarseerPhysics.Collision.WorldManifold tempManifold;
-                    tempContact.GetWorldManifold(out tempManifold);
-
-                    Vector2 temp;
-                    //temp.X = (tempContact.Manifold.LocalPoint.X - charRect.Body.Position.X) * Level.PixelPerMeter;
-                    //temp.Y = (tempContact.Manifold.LocalPoint.Y - charRect.Body.Position.Y) * Level.PixelPerMeter;
-                    temp = (tempManifold.Points[0] - charRect.Body.Position) * Level.PixelPerMeter;
-                    temp.Normalize();
-                    Vector2 temp1 = new Vector2(-2, 1);
-                    temp1.Normalize();
-                    float temp2 = Vector2.Dot(temp, temp1);
-
-                    tempRotation = (temp2 / (temp.Length() * temp1.Length()));
-                }
-                catch (Exception e)
-                {
-                    tempRotation = 0.0f;
-                }
-            }*/
         }
 
         public bool OnCollision(Fixture fixtureA, Fixture fixtureB, Contact contact)
