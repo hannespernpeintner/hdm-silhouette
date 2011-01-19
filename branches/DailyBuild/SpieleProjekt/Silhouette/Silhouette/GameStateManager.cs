@@ -33,6 +33,7 @@ namespace Silhouette
 {
     public enum GameState
     { 
+        LoadNewGame,
         MainMenu,
         InGame,
         PlayingCutscene,
@@ -43,34 +44,46 @@ namespace Silhouette
     {
         SpriteBatch spriteBatch;
 
-        GameState currentGameState;
+        public GameState currentGameState;
 
         MainMenuScreen mainMenuScreen;
         MenuScreen menuScreen;
         Level currentLevel;
 
+        public static GameStateManager Default;
+
         public GameStateManager()
         {
             spriteBatch = new SpriteBatch(GameLoop.gameInstance.GraphicsDevice);
 
-            currentGameState = GameState.InGame;
+            currentGameState = GameState.MainMenu;
             mainMenuScreen = new MainMenuScreen();
             menuScreen = new MenuScreen();
+
+            Default = this;
         }
 
         public void Initialize() 
         {
-            currentLevel = Level.LoadLevelFile("12345");
-            currentLevel.Initialize();
+            mainMenuScreen.initializeScreen();
+            menuScreen.initializeScreen();
         }
 
         public void LoadContent() 
         {
-            currentLevel.LoadContent();  
+            mainMenuScreen.loadScreen();
+            menuScreen.loadScreen();
         }
 
         public void Update(GameTime gameTime) 
         {
+            if (currentGameState == GameState.LoadNewGame)
+            {
+                Initialize();
+                LoadContent();
+                currentGameState = GameState.InGame;
+            }
+
             if (currentGameState == GameState.InGame)
             {
                 currentLevel.Update(gameTime);
@@ -86,8 +99,6 @@ namespace Silhouette
 
             if (VideoManager.IsPlaying)
                 currentGameState = GameState.PlayingCutscene;
-            else
-                currentGameState = GameState.InGame;
         }
 
         public void Draw(GameTime gameTime) 
