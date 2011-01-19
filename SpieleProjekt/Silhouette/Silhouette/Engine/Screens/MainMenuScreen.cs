@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.IO;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
@@ -8,6 +9,8 @@ using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
+
+using Silhouette.GameMechs;
 
 
 namespace Silhouette.Engine.Screens
@@ -27,6 +30,8 @@ namespace Silhouette.Engine.Screens
 
         Texture2D[] textures;
         Vector2[] positions;
+
+        public SoundObject mainMenuTheme;
 
         KeyboardState kstate;
         KeyboardState oldkstate;
@@ -63,13 +68,17 @@ namespace Silhouette.Engine.Screens
             positions[4] = new Vector2(textures[0].Width, textures[1].Height);
             positions[5] = new Vector2(textures[0].Width, textures[1].Height + textures[3].Height);
             positions[6] = new Vector2(textures[0].Width, textures[1].Height + textures[3].Height);
-            positions[7] = new Vector2(textures[0].Width, textures[1].Height + (2 * textures[3].Height));
-            positions[8] = new Vector2(textures[0].Width, textures[1].Height + (2 * textures[3].Height));
-            positions[9] = new Vector2(textures[0].Width, textures[1].Height + (3 * textures[3].Height));
-            positions[10] = new Vector2(textures[0].Width, textures[1].Height + (3 * textures[3].Height));
-            positions[11] = new Vector2(textures[0].Width, textures[1].Height + (4 * textures[3].Height));
-            positions[12] = new Vector2(textures[0].Width, textures[1].Height + (4 * textures[3].Height));
-            positions[13] = new Vector2(textures[0].Width, textures[1].Height + (5 * textures[3].Height));
+            positions[7] = new Vector2(textures[0].Width, textures[1].Height + textures[3].Height + textures[5].Height);
+            positions[8] = new Vector2(textures[0].Width, textures[1].Height + textures[3].Height + textures[5].Height);
+            positions[9] = new Vector2(textures[0].Width, textures[1].Height + textures[3].Height + textures[5].Height + textures[7].Height);
+            positions[10] = new Vector2(textures[0].Width, textures[1].Height + textures[3].Height + textures[5].Height + textures[7].Height);
+            positions[11] = new Vector2(textures[0].Width, textures[1].Height + textures[3].Height + textures[5].Height + textures[7].Height + textures[9].Height);
+            positions[12] = new Vector2(textures[0].Width, textures[1].Height + textures[3].Height + textures[5].Height + textures[7].Height + textures[9].Height);
+            positions[13] = new Vector2(textures[0].Width, textures[1].Height + textures[3].Height + textures[5].Height + textures[7].Height + textures[9].Height + textures[11].Height);
+
+            mainMenuTheme = new SoundObject(Path.Combine(Directory.GetCurrentDirectory(), "Content", "Audio", "Menu_ForAllThat.ogg"));
+            mainMenuTheme.looped = true;
+            mainMenuTheme.Play();
         }
 
         public void updateScreen(GameTime gameTime) 
