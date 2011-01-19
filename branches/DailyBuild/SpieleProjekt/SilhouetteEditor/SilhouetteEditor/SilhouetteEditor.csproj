@@ -8,7 +8,7 @@
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>SilhouetteEditor</RootNamespace>
-    <AssemblyName>SilhouetteEditor</AssemblyName>
+    <AssemblyName>Bound Editor</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <TargetFrameworkProfile>Client</TargetFrameworkProfile>
     <XnaFrameworkVersion>v4.0</XnaFrameworkVersion>
@@ -16,8 +16,8 @@
     <XnaProfile>Reach</XnaProfile>
     <XnaCrossPlatformGroupID>53868e86-e4a2-463b-8bc2-a1f5add0f56f</XnaCrossPlatformGroupID>
     <XnaOutputType>Game</XnaOutputType>
-    <ApplicationIcon>Game.ico</ApplicationIcon>
-    <Thumbnail>GameThumbnail.png</Thumbnail>
+    <ApplicationIcon>EditorThumbNail.ico</ApplicationIcon>
+    <Thumbnail>EditorThumbNail.png</Thumbnail>
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <SccProjectName>Svn</SccProjectName>
     <SccLocalPath>Svn</SccLocalPath>
@@ -172,8 +172,8 @@
     <Compile Include="EditorTextureManager.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Game.ico" />
-    <Content Include="GameThumbnail.png" />
+    <Content Include="EditorThumbNail.ico" />
+    <Content Include="EditorThumbNail.png" />
     <Content Include="Resources\AddEvent.gif" />
     <Content Include="Resources\AddFixture.gif" />
     <Content Include="Resources\AddPrimitive.gif" />
