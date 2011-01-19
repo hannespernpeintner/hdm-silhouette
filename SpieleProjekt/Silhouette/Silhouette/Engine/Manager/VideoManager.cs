@@ -59,8 +59,8 @@ namespace Silhouette.Engine.Manager
              */
             //Container.Add("Testvideo", new VideoObject("Cutscenes/Wildlife"));
 
-            Container.Add("Cutscene 1", new VideoObject("Cutscenes/Cutscene_1"));
-            Container.Add("Cutscene 2", new VideoObject("Cutscenes/Cutscene_2"));
+            //Container.Add("Cutscene 1", new VideoObject("Cutscenes/Cutscene_1"));
+            //Container.Add("Cutscene 2", new VideoObject("Cutscenes/Cutscene_2"));
         }
 
         public static void LoadContent()
