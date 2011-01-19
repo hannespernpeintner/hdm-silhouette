@@ -28,7 +28,8 @@ namespace Silhouette.Engine
         StrongBlur,
         WeakBleach,
         Bleach,
-        StrongBleach
+        StrongBleach,
+        BleachBlur
     }
 
     [Serializable]
@@ -134,6 +135,8 @@ namespace Silhouette.Engine
                     return EffectManager.Blurrer();
                 case ShaderType.StrongBlur:
                     return EffectManager.StrongBlurrer();
+                case ShaderType.BleachBlur:
+                    return EffectManager.BleachBlur();
                 
                 default:
                     return null;
@@ -149,6 +152,8 @@ namespace Silhouette.Engine
                 case ShaderType.Bleach:
                     return BlendState.NonPremultiplied;
                 case ShaderType.StrongBleach:
+                    return BlendState.NonPremultiplied;
+                case ShaderType.BleachBlur:
                     return BlendState.NonPremultiplied;
 
                 default:

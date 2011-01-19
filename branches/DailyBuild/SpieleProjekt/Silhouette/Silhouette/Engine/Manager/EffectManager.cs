@@ -23,6 +23,7 @@ namespace Silhouette.Engine.Manager
         private static Effect blurrer;
         private static Effect weakBlurrer;
         private static Effect strongBlurrer;
+        private static Effect bleachBlur;
         private static Effect bleach;
         private static Effect weakBleach;
         private static Effect strongBleach;
@@ -42,9 +43,11 @@ namespace Silhouette.Engine.Manager
             blurrer = GameLoop.gameInstance.Content.Load<Effect>("Effects/blurrer");
             weakBlurrer = GameLoop.gameInstance.Content.Load<Effect>("Effects/blurrer");
             strongBlurrer = GameLoop.gameInstance.Content.Load<Effect>("Effects/blurrer");
-
             weakBlurrer.Parameters["BlurDistance"].SetValue(0.001f);
             strongBlurrer.Parameters["BlurDistance"].SetValue(0.005f);
+
+            bleachBlur = GameLoop.gameInstance.Content.Load<Effect>("Effects/BleachBlur");
+            bleachBlur.Parameters["BlurDistance"].SetValue(0.002f);
 
             bleach = GameLoop.gameInstance.Content.Load<Effect>("Effects/bleach");
             weakBleach = GameLoop.gameInstance.Content.Load<Effect>("Effects/bleach");
@@ -76,7 +79,8 @@ namespace Silhouette.Engine.Manager
 
         public static Effect StrongBlurrer()
         {
-            strongBlurrer.Parameters["BlurDistance"].SetValue(0.004f);
+            //strongBlurrer.Parameters["BlurDistance"].SetValue(0.004f);
+            strongBlurrer.Parameters["BlurDistance"].SetValue(0.006f);
             return strongBlurrer;
         }
 
@@ -143,6 +147,12 @@ namespace Silhouette.Engine.Manager
             return weakBleach;
         }
 
+        public static Effect BleachBlur()
+        {
+            bleachBlur.Parameters["BlurDistance"].SetValue(0.004f);
+            return bleachBlur;
+        }
+
         public static Effect Bloom()
         {
             return bloomer;
@@ -167,7 +177,6 @@ namespace Silhouette.Engine.Manager
             float blueTargetBlue = -0.31f;
 
             {
-                //if (player.isRemembering || player.isRecovering)
                 {
                     colorChange.Parameters["bla"].SetValue(true);
                     colorChange.Parameters["alpha"].SetValue(0);
@@ -175,21 +184,8 @@ namespace Silhouette.Engine.Manager
                     colorChange.Parameters["targetGreen"].SetValue(fadeOrange * orangeTargetGreen + fadeBlue * blueTargetGreen);
                     colorChange.Parameters["targetBlue"].SetValue(fadeOrange * orangeTargetBlue + fadeBlue * blueTargetBlue);
                 }
-                /*
-                else 
-                {
-                    colorChange.Parameters["bla"].SetValue(false);
-                    colorChange.Parameters["alpha"].SetValue(0);
-                    colorChange.Parameters["targetRed"].SetValue(0);
-                    colorChange.Parameters["targetGreen"].SetValue(0);
-                    colorChange.Parameters["targetBlue"].SetValue(0);
-                }
-                */
             }
-
-
             return colorChange;
         }
-
     }
 }
