@@ -33,7 +33,6 @@ namespace Silhouette
 {
     public enum GameState
     { 
-        LoadNewGame,
         MainMenu,
         InGame,
         PlayingCutscene,
@@ -77,13 +76,6 @@ namespace Silhouette
 
         public void Update(GameTime gameTime) 
         {
-            if (currentGameState == GameState.LoadNewGame)
-            {
-                Initialize();
-                LoadContent();
-                currentGameState = GameState.InGame;
-            }
-
             if (currentGameState == GameState.InGame)
             {
                 currentLevel.Update(gameTime);
