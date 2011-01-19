@@ -120,5 +120,13 @@ namespace Silhouette
                 spriteBatch.End();  
             }
         }
+
+        public void NewGame()
+        {
+            currentLevel = Level.LoadLevelFile("12345");
+            currentLevel.Initialize();
+            currentLevel.LoadContent();
+            currentGameState = GameState.InGame;
+        }
     }
 }
