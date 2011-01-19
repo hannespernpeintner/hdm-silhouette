@@ -19,7 +19,9 @@ namespace Silhouette.Engine.Manager
 {
     public enum VideoName 
     { 
-        None
+        None,
+        Cutscene_1,
+        Cutscene_2
     }
 
     static public class VideoManager
@@ -57,7 +59,8 @@ namespace Silhouette.Engine.Manager
              */
             //Container.Add("Testvideo", new VideoObject("Cutscenes/Wildlife"));
 
-            //Container.Add("Prolog", new VideoObject("Cutscenes/Prolog"));
+            Container.Add("Cutscene 1", new VideoObject("Cutscenes/Cutscene_1"));
+            Container.Add("Cutscene 2", new VideoObject("Cutscenes/Cutscene_2"));
         }
 
         public static void LoadContent()
@@ -101,12 +104,16 @@ namespace Silhouette.Engine.Manager
                     
                     case VideoName.None:
                         return;
-                    /*
-                    case VideoName.Prolog:
-                        Container["Prolog"].play();
-                        currentlyPlaying = "Prolog";
+                    
+                    case VideoName.Cutscene_1:
+                        Container["Cutscene 1"].play();
+                        currentlyPlaying = "Cutscene 1";
                         break;
-                    */
+
+                    case VideoName.Cutscene_2:
+                        Container["Cutscene 2"].play();
+                        currentlyPlaying = "Cutscene 2";
+                        break; 
                 }
             }
         }
