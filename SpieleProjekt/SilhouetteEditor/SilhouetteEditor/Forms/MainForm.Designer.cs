@@ -524,21 +524,21 @@ namespace SilhouetteEditor.Forms
             // particleObjectToolStripMenuItem
             // 
             this.particleObjectToolStripMenuItem.Name = "particleObjectToolStripMenuItem";
-            this.particleObjectToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.particleObjectToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
             this.particleObjectToolStripMenuItem.Text = "ParticleObject";
             this.particleObjectToolStripMenuItem.Click += new System.EventHandler(this.particleObjectToolStripMenuItem_Click);
             // 
             // soundObjectToolStripMenuItem
             // 
             this.soundObjectToolStripMenuItem.Name = "soundObjectToolStripMenuItem";
-            this.soundObjectToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.soundObjectToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
             this.soundObjectToolStripMenuItem.Text = "SoundObject";
             this.soundObjectToolStripMenuItem.Click += new System.EventHandler(this.soundObjectToolStripMenuItem_Click);
             // 
             // videoObjectToolStripMenuItem
             // 
             this.videoObjectToolStripMenuItem.Name = "videoObjectToolStripMenuItem";
-            this.videoObjectToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.videoObjectToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
             this.videoObjectToolStripMenuItem.Text = "VideoObject";
             // 
             // EventButton
@@ -564,7 +564,7 @@ namespace SilhouetteEditor.Forms
             this.moveRotateToolStripMenuItem,
             this.changeVisibilityToolStripMenuItem});
             this.objectToolStripMenuItem.Name = "objectToolStripMenuItem";
-            this.objectToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.objectToolStripMenuItem.Size = new System.Drawing.Size(115, 22);
             this.objectToolStripMenuItem.Text = "Object";
             // 
             // moveRotateToolStripMenuItem
@@ -587,7 +587,7 @@ namespace SilhouetteEditor.Forms
             this.changeBodyTypeToolStripMenuItem,
             this.applyForceToolStripMenuItem});
             this.physicToolStripMenuItem.Name = "physicToolStripMenuItem";
-            this.physicToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.physicToolStripMenuItem.Size = new System.Drawing.Size(115, 22);
             this.physicToolStripMenuItem.Text = "Physic";
             // 
             // changeBodyTypeToolStripMenuItem
@@ -615,7 +615,7 @@ namespace SilhouetteEditor.Forms
             this.setVolumeToolStripMenuItem,
             this.reverbToolStripMenuItem});
             this.audioToolStripMenuItem.Name = "audioToolStripMenuItem";
-            this.audioToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.audioToolStripMenuItem.Size = new System.Drawing.Size(115, 22);
             this.audioToolStripMenuItem.Text = "Audio";
             // 
             // fadeToolStripMenuItem
@@ -672,27 +672,27 @@ namespace SilhouetteEditor.Forms
             this.videoToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.playToolStripMenuItem});
             this.videoToolStripMenuItem.Name = "videoToolStripMenuItem";
-            this.videoToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.videoToolStripMenuItem.Size = new System.Drawing.Size(115, 22);
             this.videoToolStripMenuItem.Text = "Video";
             // 
             // playToolStripMenuItem
             // 
             this.playToolStripMenuItem.Name = "playToolStripMenuItem";
-            this.playToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.playToolStripMenuItem.Size = new System.Drawing.Size(96, 22);
             this.playToolStripMenuItem.Text = "Play";
             this.playToolStripMenuItem.Click += new System.EventHandler(this.playToolStripMenuItem_Click);
             // 
             // deathToolStripMenuItem
             // 
             this.deathToolStripMenuItem.Name = "deathToolStripMenuItem";
-            this.deathToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.deathToolStripMenuItem.Size = new System.Drawing.Size(115, 22);
             this.deathToolStripMenuItem.Text = "Death";
             this.deathToolStripMenuItem.Click += new System.EventHandler(this.deathToolStripMenuItem_Click);
             // 
             // cameraToolStripMenuItem
             // 
             this.cameraToolStripMenuItem.Name = "cameraToolStripMenuItem";
-            this.cameraToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.cameraToolStripMenuItem.Size = new System.Drawing.Size(115, 22);
             this.cameraToolStripMenuItem.Text = "Camera";
             this.cameraToolStripMenuItem.Click += new System.EventHandler(this.cameraToolStripMenuItem_Click);
             // 
@@ -992,7 +992,7 @@ namespace SilhouetteEditor.Forms
             this.Controls.Add(this.MenuBar);
             this.MainMenuStrip = this.MenuBar;
             this.Name = "MainForm";
-            this.Text = "SilhouetteEditor";
+            this.Text = "Bound Editor";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MainForm_FormClosed);
             this.StatusBar.ResumeLayout(false);
             this.StatusBar.PerformLayout();

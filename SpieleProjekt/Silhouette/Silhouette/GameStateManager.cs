@@ -49,6 +49,9 @@ namespace Silhouette
         MenuScreen menuScreen;
         Level currentLevel;
 
+        String[] levelPaths;
+        int currentLevelNumber;
+
         public static GameStateManager Default;
 
         public GameStateManager()
