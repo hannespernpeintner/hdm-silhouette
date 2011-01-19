@@ -88,6 +88,11 @@ namespace Silhouette
             {
                 menuScreen.updateScreen(gameTime);
             }
+            if (currentGameState == GameState.PlayingCutscene)
+            {
+                if (!VideoManager.IsPlaying)
+                    currentGameState = GameState.InGame;
+            }
 
             if (VideoManager.IsPlaying)
                 currentGameState = GameState.PlayingCutscene;
