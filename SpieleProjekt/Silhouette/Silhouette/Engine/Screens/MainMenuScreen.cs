@@ -108,8 +108,9 @@ namespace Silhouette.Engine.Screens
             if (kstate.IsKeyDown(Keys.Enter) && oldkstate.IsKeyUp(Keys.Enter))
             {
                 if (menuState == MenuState.NewGame)
-                { 
-                
+                {
+                    mainMenuTheme.Stop();
+                    GameStateManager.Default.NewGame();
                 }
                 if (menuState == MenuState.Exit)
                     GameLoop.gameInstance.Exit();

@@ -58,6 +58,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Cutscenes\" />
+    <Folder Include="Level\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Fonts\DebugFont.spritefont">
