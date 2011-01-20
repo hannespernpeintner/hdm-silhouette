@@ -476,7 +476,7 @@ namespace SilhouetteEditor
                     if (kstate.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.LeftControl) && kstate.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.P) && oldkstate.IsKeyUp(Microsoft.Xna.Framework.Input.Keys.P) && level.layerList.Contains(level.getLayerByName("Player")))
                     {
                         Camera.Scale = 0.4f;
-                        Camera.Position = new Vector2(level.startPosition.X, level.startPosition.Y - level.startPosition.Y/2 - 150);
+                        Camera.Position = new Vector2(level.startPosition.X, level.startPosition.Y - (MainForm.Default.GameView.Height / 2) - 50);
                         MainForm.Default.ZoomStatus.Text = "Zoom: 40%";               
                     }
                 }

@@ -37,15 +37,14 @@ namespace Silhouette.Engine.Manager
         public static float VideoWidth;
         public static Boolean IsPlaying { get; set; }
 
-
         private static KeyboardState keyState;
         private static KeyboardState oldKeyState;
 
         //Der Container
 
-        private static String currentlyPlaying;
+        public static String currentlyPlaying;
 
-        static Dictionary<String, VideoObject> Container;
+        public static Dictionary<String, VideoObject> Container;
 
         public static void Initialize()
         {
@@ -74,19 +73,9 @@ namespace Silhouette.Engine.Manager
 
         public static void Update(GameTime gameTime)
         {
-            keyState = Keyboard.GetState();
-
             //Julius: Falls sich ein Objekt beim Event registriert hat: Schmeiß das Event!
             if (UpdateFrame != null)
                 UpdateFrame(gameTime);
-            //Julius: Jemand während der Wiedergabe ESC drückt: stop()
-            if (IsPlaying)
-            {
-                if (keyState.IsKeyDown(Keys.Escape) && oldKeyState.IsKeyUp(Keys.Escape))
-                    Container[currentlyPlaying].stop();
-            }
-
-            oldKeyState = keyState;
         }
 
 
@@ -108,11 +97,13 @@ namespace Silhouette.Engine.Manager
                     case VideoName.Cutscene_1:
                         Container["Cutscene 1"].play();
                         currentlyPlaying = "Cutscene 1";
+                        GameStateManager.Default.currentGameState = GameState.PlayingCutscene;
                         break;
 
                     case VideoName.Cutscene_2:
                         Container["Cutscene 2"].play();
                         currentlyPlaying = "Cutscene 2";
+                        GameStateManager.Default.currentGameState = GameState.PlayingCutscene;
                         break; 
                 }
             }

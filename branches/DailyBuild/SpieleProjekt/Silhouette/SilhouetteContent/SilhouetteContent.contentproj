@@ -1204,13 +1204,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Sprites\OverLays\Vignette.png">
-      <Name>Vignette</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="Sprites\Player\walkStart_left_03.png">
       <Name>walkStart_left_03</Name>
       <Importer>TextureImporter</Importer>
@@ -1552,6 +1545,13 @@
     </Compile>
     <Compile Include="Sprites\Player\climb_right_21.png">
       <Name>climb_right_21</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Sprites\OverLays\Vignette.png">
+      <Name>Vignette</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
