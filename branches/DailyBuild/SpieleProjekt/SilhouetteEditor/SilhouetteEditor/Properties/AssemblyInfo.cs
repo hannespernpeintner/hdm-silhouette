@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("SilhouetteEditor")]
-[assembly: AssemblyProduct("SilhouetteEditor")]
+[assembly: AssemblyTitle("BoundEditor")]
+[assembly: AssemblyProduct("BoundEditor")]
 [assembly: AssemblyDescription("")]
-[assembly: AssemblyCompany("Microsoft")]
-[assembly: AssemblyCopyright("Copyright © Microsoft 2010")]
+[assembly: AssemblyCompany("HdM Stuttgart")]
+[assembly: AssemblyCopyright("HdM Stuttgart")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
