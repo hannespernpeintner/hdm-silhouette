@@ -52,6 +52,9 @@ namespace Silhouette
         String[] levelPaths;
         int currentLevelNumber;
 
+        KeyboardState kstate;
+        KeyboardState oldkstate;
+
         public static GameStateManager Default;
 
         public GameStateManager()
@@ -79,6 +82,8 @@ namespace Silhouette
 
         public void Update(GameTime gameTime) 
         {
+            kstate = Keyboard.GetState();
+
             if (currentGameState == GameState.InGame)
             {
                 currentLevel.Update(gameTime);
@@ -93,12 +98,11 @@ namespace Silhouette
             }
             if (currentGameState == GameState.PlayingCutscene)
             {
-                if (!VideoManager.IsPlaying)
-                    currentGameState = GameState.InGame;
+                if (kstate.IsKeyDown(Keys.Escape) && oldkstate.IsKeyUp(Keys.Escape))
+                    VideoManager.Container[VideoManager.currentlyPlaying].stop();
             }
 
-            if (VideoManager.IsPlaying)
-                currentGameState = GameState.PlayingCutscene;
+            oldkstate = kstate;
         }
 
         public void Draw(GameTime gameTime) 
@@ -120,7 +124,7 @@ namespace Silhouette
                 spriteBatch.Begin();
                 if(VideoManager.VideoFrame != null)
                     spriteBatch.Draw(VideoManager.VideoFrame, new Rectangle(0, 0, (int)GameSettings.Default.resolutionWidth, (int)GameSettings.Default.resolutionHeight), Color.White);
-                spriteBatch.End();  
+                spriteBatch.End();
             }
         }
 

@@ -18,6 +18,8 @@ namespace Silhouette.GameMechs
         VideoPlayer player;
         String _AssetName;
 
+        bool playedOnce;
+
         //Julius: Konstruktor
         public VideoObject(String AssetName)
         {
@@ -33,6 +35,7 @@ namespace Silhouette.GameMechs
             if (!VideoManager.IsPlaying)
             {
                 VideoManager.IsPlaying = true;
+                playedOnce = true;
                 VideoManager.VideoHeight = vid.Height;
                 VideoManager.VideoWidth = vid.Width;
                 player.Play(vid);
@@ -69,6 +72,11 @@ namespace Silhouette.GameMechs
                 if (player.State == MediaState.Stopped)
                 {
                     VideoManager.IsPlaying = false;
+                    if (playedOnce)
+                    {
+                        GameStateManager.Default.currentGameState = GameState.InGame;
+                        playedOnce = false;
+                    }
                 }
             }
 
