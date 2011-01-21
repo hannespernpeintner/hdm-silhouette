@@ -50,7 +50,6 @@ namespace SilhouetteEditor.Forms
             this.saveAsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.bearbeitenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ansichtToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.eventManagerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.runToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -75,7 +74,6 @@ namespace SilhouetteEditor.Forms
             this.PhysicsButton = new System.Windows.Forms.ToolStripDropDownButton();
             this.particleObjectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.soundObjectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.videoObjectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.EventButton = new System.Windows.Forms.ToolStripDropDownButton();
             this.objectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.moveRotateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -222,7 +220,6 @@ namespace SilhouetteEditor.Forms
             this.MenuBar.BackColor = System.Drawing.SystemColors.Window;
             this.MenuBar.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.dateiToolStripMenuItem,
-            this.bearbeitenToolStripMenuItem,
             this.ansichtToolStripMenuItem,
             this.runToolStripMenuItem,
             this.helpToolStripMenuItem});
@@ -248,48 +245,42 @@ namespace SilhouetteEditor.Forms
             // newToolStripMenuItem
             // 
             this.newToolStripMenuItem.Name = "newToolStripMenuItem";
-            this.newToolStripMenuItem.Size = new System.Drawing.Size(121, 22);
+            this.newToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.newToolStripMenuItem.Text = "New";
             this.newToolStripMenuItem.Click += new System.EventHandler(this.FileNew);
             // 
             // openToolStripMenuItem
             // 
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(121, 22);
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.openToolStripMenuItem.Text = "Open";
             this.openToolStripMenuItem.Click += new System.EventHandler(this.FileOpen);
             // 
             // saveToolStripMenuItem
             // 
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(121, 22);
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.saveToolStripMenuItem.Text = "Save";
             this.saveToolStripMenuItem.Click += new System.EventHandler(this.FileSave);
             // 
             // saveAsToolStripMenuItem
             // 
             this.saveAsToolStripMenuItem.Name = "saveAsToolStripMenuItem";
-            this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(121, 22);
+            this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.saveAsToolStripMenuItem.Text = "Save as...";
             this.saveAsToolStripMenuItem.Click += new System.EventHandler(this.FileSaveAs);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(118, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(149, 6);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(121, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.FileExit);
-            // 
-            // bearbeitenToolStripMenuItem
-            // 
-            this.bearbeitenToolStripMenuItem.Name = "bearbeitenToolStripMenuItem";
-            this.bearbeitenToolStripMenuItem.Size = new System.Drawing.Size(39, 20);
-            this.bearbeitenToolStripMenuItem.Text = "Edit";
             // 
             // ansichtToolStripMenuItem
             // 
@@ -324,14 +315,14 @@ namespace SilhouetteEditor.Forms
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.aboutToolStripMenuItem.Text = "About";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.HelpAbout);
             // 
             // helpToolStripMenuItem1
             // 
             this.helpToolStripMenuItem1.Name = "helpToolStripMenuItem1";
-            this.helpToolStripMenuItem1.Size = new System.Drawing.Size(107, 22);
+            this.helpToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
             this.helpToolStripMenuItem1.Text = "Help";
             this.helpToolStripMenuItem1.Click += new System.EventHandler(this.HelpHelp);
             // 
@@ -513,8 +504,7 @@ namespace SilhouetteEditor.Forms
             this.PhysicsButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.PhysicsButton.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.particleObjectToolStripMenuItem,
-            this.soundObjectToolStripMenuItem,
-            this.videoObjectToolStripMenuItem});
+            this.soundObjectToolStripMenuItem});
             this.PhysicsButton.Image = global::SilhouetteEditor.Properties.Resource.Physics;
             this.PhysicsButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.PhysicsButton.Name = "PhysicsButton";
@@ -525,22 +515,16 @@ namespace SilhouetteEditor.Forms
             // particleObjectToolStripMenuItem
             // 
             this.particleObjectToolStripMenuItem.Name = "particleObjectToolStripMenuItem";
-            this.particleObjectToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+            this.particleObjectToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.particleObjectToolStripMenuItem.Text = "ParticleObject";
             this.particleObjectToolStripMenuItem.Click += new System.EventHandler(this.particleObjectToolStripMenuItem_Click);
             // 
             // soundObjectToolStripMenuItem
             // 
             this.soundObjectToolStripMenuItem.Name = "soundObjectToolStripMenuItem";
-            this.soundObjectToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+            this.soundObjectToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.soundObjectToolStripMenuItem.Text = "SoundObject";
             this.soundObjectToolStripMenuItem.Click += new System.EventHandler(this.soundObjectToolStripMenuItem_Click);
-            // 
-            // videoObjectToolStripMenuItem
-            // 
-            this.videoObjectToolStripMenuItem.Name = "videoObjectToolStripMenuItem";
-            this.videoObjectToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
-            this.videoObjectToolStripMenuItem.Text = "VideoObject";
             // 
             // EventButton
             // 
@@ -1030,7 +1014,6 @@ namespace SilhouetteEditor.Forms
         private System.Windows.Forms.StatusStrip StatusBar;
         private System.Windows.Forms.MenuStrip MenuBar;
         private System.Windows.Forms.ToolStripMenuItem dateiToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem bearbeitenToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem ansichtToolStripMenuItem;
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.SplitContainer splitContainer2;
@@ -1110,7 +1093,6 @@ namespace SilhouetteEditor.Forms
         private System.Windows.Forms.ToolStripMenuItem playToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem changeBodyTypeToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem soundObjectToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem videoObjectToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem particleObjectToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem reverbToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem crossfaderToolStripMenuItem;
