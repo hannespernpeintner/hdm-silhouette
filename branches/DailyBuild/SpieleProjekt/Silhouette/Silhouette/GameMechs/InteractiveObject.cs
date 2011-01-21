@@ -121,32 +121,24 @@ namespace Silhouette.GameMechs
             catch (Exception e1)
             {
                
-                  try
-                    {
-                        texture = GameLoop.gameInstance.Content.Load<Texture2D>(fullPath);
-                    }
-                catch (Exception e2)
-                {
-
                 try
                 {
-                    string p = Path.Combine(layer.level.contentPath, Path.GetFileName(fullPath));
-                    texture = TextureManager.Instance.LoadFromFile(p);
-                    if (texture == null)
-                        throw new Exception();
+                    texture = GameLoop.gameInstance.Content.Load<Texture2D>(fullPath);
                 }
-                catch (Exception e3)
+                catch (Exception e2)
                 {
-                    texture = TextureManager.Instance.LoadFromFile(fullPath);
+                    try
+                    {
+                        string p = Path.Combine(layer.level.contentPath, Path.GetFileName(fullPath));
+                        texture = TextureManager.Instance.LoadFromFile(p);
+                        if (texture == null)
+                            throw new Exception();
+                    }
+                    catch (Exception e3)
+                    {
+                        texture = TextureManager.Instance.LoadFromFile(fullPath);
+                    }
                 }
-
-                
-                }
-
-                  
-                
-               
-          
             }
 
             if (texture != null)
@@ -219,8 +211,11 @@ namespace Silhouette.GameMechs
         {
             Color color = Color.White;
             if (mouseOn) color = Constants.onHover;
-            origin = new Vector2((float)(texture.Width / 2), (float)(texture.Height / 2));
-            spriteBatch.Draw(texture, position, null, color, rotation, origin, scale, SpriteEffects.None, 1);
+            if (texture != null)
+            {
+                origin = new Vector2((float)(texture.Width / 2), (float)(texture.Height / 2));
+                spriteBatch.Draw(texture, position, null, color, rotation, origin, scale, SpriteEffects.None, 1);
+            }
         }
 
         public override void loadContentInEditor(GraphicsDevice graphics)
@@ -243,8 +238,11 @@ namespace Silhouette.GameMechs
                 }
             }
 
-            collisionData = new Color[texture.Width * texture.Height];
-            texture.GetData(collisionData);
+            if (texture.Width != 1280 && texture.Height != 768)
+            {
+                collisionData = new Color[texture.Width * texture.Height];
+                texture.GetData(collisionData);
+            }
             transformed();
         }
 
@@ -307,7 +305,10 @@ namespace Silhouette.GameMechs
         {
             if (boundingBox.Contains(new Point((int)worldPosition.X, (int)worldPosition.Y)))
             {
-                return intersectPixels(worldPosition);
+                if (collisionData != null)
+                    return intersectPixels(worldPosition);
+                else
+                    return true;
             }
 
             return false;
