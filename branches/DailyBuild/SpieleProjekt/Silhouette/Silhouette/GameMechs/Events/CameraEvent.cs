@@ -143,8 +143,12 @@ namespace Silhouette.GameMechs.Events
 
         public bool OnCollision(Fixture a, Fixture b, Contact contact)
         {
-            counter = endValue;
-            isUpdate = true;
+            if (b.isEvent)
+            {
+                counter = endValue;
+                isUpdate = true;
+            }
+
             return true;
         }
     }

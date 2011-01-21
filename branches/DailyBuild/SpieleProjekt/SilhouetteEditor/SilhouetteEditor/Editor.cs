@@ -884,12 +884,16 @@ namespace SilhouetteEditor
                 MainForm.Default.Cursor = Cursors.WaitCursor;
                 Editor.Default.levelFileName = filename;
                 Editor.Default.level = Level.LoadLevelFile(filename);
-                level.InitializeInEditor(spriteBatch, MainForm.Default.GameView.Width, MainForm.Default.GameView.Height);
-                level.LoadContentInEditor(EditorLoop.EditorLoopInstance.GraphicsDevice);
-                editorState = EditorState.IDLE;
-                selectLayer(level.layerList.First());
-                selectLevelObject(selectedLayer.loList.First());
-                MainForm.Default.UpdateTreeView();
+
+                if (level != null)
+                {
+                    level.InitializeInEditor(spriteBatch, MainForm.Default.GameView.Width, MainForm.Default.GameView.Height);
+                    level.LoadContentInEditor(EditorLoop.EditorLoopInstance.GraphicsDevice);
+                    editorState = EditorState.IDLE;
+                    selectLayer(level.layerList.First());
+                    selectLevelObject(selectedLayer.loList.First());
+                    MainForm.Default.UpdateTreeView();
+                }
             }
             catch (Exception e)
             {
