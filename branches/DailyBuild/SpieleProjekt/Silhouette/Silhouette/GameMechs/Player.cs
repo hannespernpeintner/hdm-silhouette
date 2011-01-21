@@ -188,8 +188,9 @@ namespace Silhouette.GameMechs
             jumpStarting_right.Load(5, "Sprites/Player/jumpStart_right_", 1.5f, false);
             falling_left.Load(2, "Sprites/Player/falling_left_", 0.5f, true);
             falling_right.Load(2, "Sprites/Player/falling_right_", 0.5f, true);
-            landing_left.Load(8, "Sprites/Player/landing_left_", 1.5f, false);
-            landing_right.Load(8, "Sprites/Player/landing_right_", 1.5f, false);
+            landing_left.Load(8, "Sprites/Player/landing_left_", 1f, false);
+            landing_right.Load(8, "Sprites/Player/landing_right_", 1f, false);
+            //1,5
 
             running_left.Load(8, "Sprites/Player/walk_left_", 1.75f, true);
             running_right.Load(8, "Sprites/Player/walk_right_", 1.75f, true);
@@ -228,7 +229,7 @@ namespace Silhouette.GameMechs
             sRect.IsSensor = true;
             sRect.isPlayer = true;
 
-            landRect = FixtureManager.CreateRectangle(100, 10, new Vector2(position.X, position.Y + 200), BodyType.Dynamic, 0);
+            landRect = FixtureManager.CreateRectangle(100, 10, new Vector2(position.X, position.Y + 300), BodyType.Dynamic, 0);
             landRect.Body.FixedRotation = true;
             landRect.IsSensor = true;
             landRect.isPlayer = true;
@@ -327,7 +328,7 @@ namespace Silhouette.GameMechs
             nRect.Body.Position = charRect.Body.Position + new Vector2(0, -85 / Level.PixelPerMeter);
             wRect.Body.Position = charRect.Body.Position + new Vector2(-110 / Level.PixelPerMeter, 0);
             eRect.Body.Position = charRect.Body.Position + new Vector2(105 / Level.PixelPerMeter, 0);
-            landRect.Body.Position = charRect.Body.Position + new Vector2(0, 200 / Level.PixelPerMeter);
+            landRect.Body.Position = charRect.Body.Position + new Vector2(0, 300 / Level.PixelPerMeter);
             camPosition = new Vector2(camRect.Body.Position.X * Level.PixelPerMeter, camRect.Body.Position.Y * Level.PixelPerMeter);
         }
 
@@ -345,7 +346,7 @@ namespace Silhouette.GameMechs
         private void UpdateControls(GameTime gameTime)
         {
             // LEFT ARROW
-            if (Keyboard.GetState().IsKeyDown(Keys.Left) && !isFalling && !isJumping && movement.X >= -2.5f)
+            if (Keyboard.GetState().IsKeyDown(Keys.Left) && !isFalling && !isJumping && movement.X >= -3.3f)
             {
                 if (facing == 1)
                 {
@@ -367,7 +368,7 @@ namespace Silhouette.GameMechs
                 }
             }
 
-            if (Keyboard.GetState().IsKeyDown(Keys.Left) && (isFalling || isJumping) && movement.X >= -2.5f)
+            if (Keyboard.GetState().IsKeyDown(Keys.Left) && (isFalling || isJumping) && movement.X >= -2.5f && !rectTouching)
             {
                 if (facing == 1)
                 {
@@ -380,7 +381,7 @@ namespace Silhouette.GameMechs
             }
 
             // RIGHT ARROW
-            if (Keyboard.GetState().IsKeyDown(Keys.Right) && !isFalling && !isJumping && movement.X <= 2.5f)
+            if (Keyboard.GetState().IsKeyDown(Keys.Right) && !isFalling && !isJumping && movement.X <= 3.3f)
             {
                 if (facing == 0)
                 {
@@ -402,7 +403,7 @@ namespace Silhouette.GameMechs
                 }
             }
 
-            if (Keyboard.GetState().IsKeyDown(Keys.Right) && (isFalling || isJumping) && movement.X <= 2.5f)
+            if (Keyboard.GetState().IsKeyDown(Keys.Right) && (isFalling || isJumping) && movement.X <= 2.5f && !rectTouching)
             {
                 if (facing == 0)
                 {
@@ -821,7 +822,13 @@ namespace Silhouette.GameMechs
                                 activeAnimation == runStopping_left ||
                                 activeAnimation == runStopping_right ||
                                 activeAnimation == noJumpRunning_left ||
-                                activeAnimation == noJumpRunning_right))
+                                activeAnimation == noJumpRunning_right ||
+                                activeAnimation != idle_left ||
+                                activeAnimation != idle_right ||
+                                activeAnimation != idleb_left ||
+                                activeAnimation != idleb_right||
+                                activeAnimation != idlec_left ||
+                                activeAnimation != idlec_right))
             {
                 if (facing == 0)
                 {
@@ -1066,7 +1073,7 @@ namespace Silhouette.GameMechs
             this.contact = contact;
             rectTouching = true;
 
-            if (isFalling)
+            if (isFalling && (activeAnimation != landing_right && activeAnimation != landing_right))
             {
                 isFalling = false;
                 isJumping = false;
