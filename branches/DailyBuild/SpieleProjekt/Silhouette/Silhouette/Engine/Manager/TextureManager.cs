@@ -10,7 +10,7 @@ using Microsoft.Xna.Framework;
 
 namespace Silhouette.Engine.Manager
 {
-    class TextureManager
+    public class TextureManager
     {
         /* Sascha:
          * Diese Klasse ist zuständig das Laden und Speichern der Texturen. Sie stellt zum einen Funktionen zum Laden bereit und prüft gleichzeitig ob
@@ -63,7 +63,7 @@ namespace Silhouette.Engine.Manager
                     if (file != null)
                     {
                         textures[filename] = Texture2D.FromStream(graphics, file);
-                        if (!cData.ContainsKey(filename))
+                        if (!cData.ContainsKey(filename) && textures[filename].Width != 1280 && textures[filename].Height != 768)
                         {
                             cData[filename] = new Color[textures[filename].Width * textures[filename].Height];
                             textures[filename].GetData(cData[filename]);
