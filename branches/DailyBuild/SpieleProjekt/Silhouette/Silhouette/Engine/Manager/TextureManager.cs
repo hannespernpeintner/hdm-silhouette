@@ -6,6 +6,7 @@ using System.IO;
 using Microsoft.Xna.Framework.Graphics;
 using Silhouette.Engine.Manager;
 using System.ComponentModel;
+using Microsoft.Xna.Framework;
 
 namespace Silhouette.Engine.Manager
 {
@@ -27,8 +28,7 @@ namespace Silhouette.Engine.Manager
         }
 
         Dictionary<string, Texture2D> textures = new Dictionary<string, Texture2D>();
-
-
+        Dictionary<string, Color[]> cData = new Dictionary<string, Color[]>();
 
         public Texture2D LoadFromFile(string filename)
         {
@@ -51,6 +51,42 @@ namespace Silhouette.Engine.Manager
                 }
             }
             return textures[filename];
+        }
+
+        public Texture2D LoadFromFile(string filename, GraphicsDevice graphics)
+        {
+            if (!textures.ContainsKey(filename))
+            {
+                try
+                {
+                    FileStream file = FileManager.LoadConfigFile(filename);
+                    if (file != null)
+                    {
+                        textures[filename] = Texture2D.FromStream(graphics, file);
+                        if (!cData.ContainsKey(filename))
+                        {
+                            cData[filename] = new Color[textures[filename].Width * textures[filename].Height];
+                            textures[filename].GetData(cData[filename]);
+                        }
+                        file.Close();
+                    }
+                    else
+                        return null;
+                }
+                catch (IOException e)
+                {
+                    return null;
+                }
+            }
+            return textures[filename];
+        }
+
+        public Color[] GetCollisionData(string filename)
+        { 
+            if (cData.ContainsKey(filename))
+                return cData[filename];
+            else
+                return null;
         }
 
         public void Clear()

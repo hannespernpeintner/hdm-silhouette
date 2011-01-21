@@ -139,14 +139,18 @@ namespace Silhouette.GameMechs
                     FileStream file = FileManager.LoadConfigFile(fullPath);
 
                     if (file != null)
+                    {
                         texture = Texture2D.FromStream(graphics, file);
-
-                    file.Close();
+                        file.Close();
+                    }
                 }
             }
 
-            collisionData = new Color[texture.Width * texture.Height];
-            texture.GetData(collisionData);
+            if (texture.Width != 1280 && texture.Height != 768)
+            {
+                collisionData = new Color[texture.Width * texture.Height];
+                texture.GetData(collisionData);
+            }
             transformed();
         }
 
@@ -209,7 +213,10 @@ namespace Silhouette.GameMechs
         {
             if (boundingBox.Contains(new Point((int)worldPosition.X, (int)worldPosition.Y)))
             {
-                return intersectPixels(worldPosition);
+                if (collisionData != null)
+                    return intersectPixels(worldPosition);
+                else
+                    return true;
             }
 
             return false;

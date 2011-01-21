@@ -145,8 +145,8 @@ namespace SilhouetteEditor
             editorState = EditorState.IDLE;
 
             NewLevel("");
-            MainForm.Default.loadFolder(level.contentPath);
-            MainForm.Default.loadFolderInteractive(level.contentPath);
+            //MainForm.Default.loadFolder(level.contentPath);
+            //MainForm.Default.loadFolderInteractive(level.contentPath);
             MainForm.Default.EditorStatus.Text = "Editorstatus: IDLE";
             MainForm.Default.ZoomStatus.Text = "Zoom: 100%";
         }
@@ -897,7 +897,7 @@ namespace SilhouetteEditor
             }
             catch (Exception e)
             {
-                MessageBox.Show("The level could not be loaded!", "Error", MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
+                MessageBox.Show("The level could not be loaded!\n" + e.Message, "Error", MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
                 return;
             }
             finally
