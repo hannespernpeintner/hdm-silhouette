@@ -169,7 +169,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resource.resx</DependentUpon>
     </Compile>
-    <Compile Include="EditorTextureManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="EditorThumbNail.ico" />

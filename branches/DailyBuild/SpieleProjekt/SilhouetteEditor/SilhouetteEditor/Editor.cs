@@ -145,8 +145,6 @@ namespace SilhouetteEditor
             editorState = EditorState.IDLE;
 
             NewLevel("");
-            //MainForm.Default.loadFolder(level.contentPath);
-            //MainForm.Default.loadFolderInteractive(level.contentPath);
             MainForm.Default.EditorStatus.Text = "Editorstatus: IDLE";
             MainForm.Default.ZoomStatus.Text = "Zoom: 100%";
         }
@@ -1014,7 +1012,7 @@ namespace SilhouetteEditor
         {
             editorState = EditorState.CREATE_TEXTURES;
             TextureObject to = new TextureObject(path);
-            to.texture = EditorTextureManager.Instance.LoadFromFile(path);
+            to.texture = TextureManager.Instance.LoadFromFile(path, EditorLoop.EditorLoopInstance.GraphicsDevice);
             currentObject = to;
         }
 
@@ -1022,7 +1020,7 @@ namespace SilhouetteEditor
         {
             editorState = EditorState.CREATE_INTERACTIVE;
             InteractiveObject io = new InteractiveObject(path);
-            io.texture = EditorTextureManager.Instance.LoadFromFile(path);
+            io.texture = TextureManager.Instance.LoadFromFile(path, EditorLoop.EditorLoopInstance.GraphicsDevice);
             currentObject = io;
         }
 
