@@ -78,6 +78,8 @@ namespace Silhouette.GameMechs
         private Animation runStarting_right;
         private Animation runStopping_left;
         private Animation runStopping_right;
+        private Animation noJumpRunning_left;
+        private Animation noJumpRunning_right;
 
         private Animation jumpStarting_left;
         private Animation jumpStarting_right;
@@ -94,6 +96,8 @@ namespace Silhouette.GameMechs
         private Animation idleb_right;
         private Animation idlec_left;
         private Animation idlec_right;
+        private Animation noJumpIdle_left;
+        private Animation noJumpIdle_right;
 
         private Animation climbing_left;
         private Animation climbing_right;
@@ -117,6 +121,8 @@ namespace Silhouette.GameMechs
             idleb_right = new Animation();
             idlec_left = new Animation();
             idlec_right = new Animation();
+            noJumpIdle_left = new Animation();
+            noJumpIdle_right = new Animation();
 
             jumpStarting_left = new Animation();
             jumpStarting_right = new Animation();
@@ -133,6 +139,8 @@ namespace Silhouette.GameMechs
             running_right = new Animation();
             runStopping_left = new Animation();
             runStopping_right = new Animation();
+            noJumpRunning_left = new Animation();
+            noJumpRunning_right = new Animation();
 
             climbing_left = new Animation();
             climbing_right = new Animation();
@@ -152,8 +160,8 @@ namespace Silhouette.GameMechs
             isDying = false;
             isScriptedMoving = false;
             isRemembering = false;
-            sJRecoveryTimer = 5000;
-            sJTimer = 10000;
+            sJRecoveryTimer = 17000;
+            sJTimer = 6000;
             fadeBlue = 0;
             fadeOrange = 0;
             canClimb = false;
@@ -173,26 +181,25 @@ namespace Silhouette.GameMechs
             idlec_left.Load(6, "Sprites/Player/idleC_left_", 0.5f, true);
             idlec_right.Load(6, "Sprites/Player/idleC_right_", 0.5f, true);
 
-            // 1.5,1.5,0.5,0.5,1.2,1.2
-            jumpStarting_left.Load(5, "Sprites/Player/jumpStart_left_", 1.0f, false);
-            jumpStarting_right.Load(5, "Sprites/Player/jumpStart_right_", 1.0f, false);
+            noJumpIdle_left.Load(2, "Sprites/Player/nojumpI_left_", 0.5f, false);
+            noJumpIdle_right.Load(2, "Sprites/Player/nojumpI_right_", 0.5f, false);
+
+            jumpStarting_left.Load(5, "Sprites/Player/jumpStart_left_", 1.5f, false);
+            jumpStarting_right.Load(5, "Sprites/Player/jumpStart_right_", 1.5f, false);
             falling_left.Load(2, "Sprites/Player/falling_left_", 0.5f, true);
             falling_right.Load(2, "Sprites/Player/falling_right_", 0.5f, true);
-            landing_left.Load(8, "Sprites/Player/landing_left_", 1.25f, false);
-            landing_right.Load(8, "Sprites/Player/landing_right_", 1.25f, false);
+            landing_left.Load(8, "Sprites/Player/landing_left_", 1.5f, false);
+            landing_right.Load(8, "Sprites/Player/landing_right_", 1.5f, false);
 
-            /*running_left.Load(5, "Sprites/Player/walk_left_", 1.5f, true);
-            running_right.Load(5, "Sprites/Player/walk_right_", 1.5f, true);
-            runStarting_left.Load(2, "Sprites/Player/walkStart_left_", 1.0f, false);
-            runStarting_right.Load(2, "Sprites/Player/walkStart_right_", 1.0f, false);
-            runStopping_left.Load(2, "Sprites/Player/walkStop_left_", 1.0f, false);
-            runStopping_right.Load(2, "Sprites/Player/walkStop_right_", 1.0f, false);*/
             running_left.Load(8, "Sprites/Player/walk_left_", 1.75f, true);
             running_right.Load(8, "Sprites/Player/walk_right_", 1.75f, true);
             runStarting_left.Load(8, "Sprites/Player/walkStart_left_", 2f, false);
             runStarting_right.Load(8, "Sprites/Player/walkStart_right_", 2f, false);
             runStopping_left.Load(8, "Sprites/Player/walkStop_left_", 1.0f, false);
             runStopping_right.Load(8, "Sprites/Player/walkStop_right_", 1.0f, false);
+
+            noJumpRunning_left.Load(2, "Sprites/Player/nojumpW_left_", 0.5f, false);
+            noJumpRunning_right.Load(2, "Sprites/Player/nojumpW_right_", 0.5f, false);
 
             climbing_left.Load(21, "Sprites/Player/climb_left_", 0.75f, false);
             climbing_right.Load(21, "Sprites/Player/climb_right_", 0.75f, false);
@@ -206,10 +213,6 @@ namespace Silhouette.GameMechs
             activeAnimation.start();
             nextAnimation = choseIdleAnimation();
 
-            //charRect = FixtureManager.CreateCircle(80, position, BodyType.Dynamic, 1);
-            //charRect.Body.FixedRotation = false;
-            //charRect.Friction = 5;
-            //charRect = FixtureManager.CreatePolygon(idle_left.pictures[0], new Vector2(0.85f, 0.95f), BodyType.Dynamic, position, 0.5f);
             charRect = FixtureManager.CreatePolygon(idle_left.pictures[0], new Vector2(0.85f, 0.95f), BodyType.Dynamic, position, 1);
             charRect.Friction = 1;
             charRect.isPlayer = true;
@@ -267,11 +270,6 @@ namespace Silhouette.GameMechs
             joint3 = new RopeJoint(charRect.Body, camRect.Body, new Vector2(-100 / Level.PixelPerMeter, 80 / Level.PixelPerMeter) * 2, new Vector2(-50 / Level.PixelPerMeter, 50 / Level.PixelPerMeter));
             joint4 = JointFactory.CreateAngleJoint(Level.Physics, charRect.Body, sRect.Body);
             joint4.Softness = 0.999f;
-
-            /*joint0.MaxLength = 2.1f;
-            joint1.MaxLength = 2.1f;
-            joint2.MaxLength = 2.1f;
-            joint3.MaxLength = 2.1f;*/
 
             joint0.MaxLength = 2.15f;
             joint1.MaxLength = 2.15f;
@@ -435,9 +433,9 @@ namespace Silhouette.GameMechs
             }
 
             // SPACE BUTTON
-            if (Keyboard.GetState().IsKeyDown(Keys.Space) && oldState.IsKeyUp(Keys.Space) && !isRecovering && (isIdle || isRunning))
+            if (Keyboard.GetState().IsKeyDown(Keys.Space) && oldState.IsKeyUp(Keys.Space)  && (isIdle || isRunning))
             {
-                if (facing == 0)
+                if (facing == 0 && !isRecovering)
                 {
                     activeAnimation = jumpStarting_left;
                     activeAnimation.activeFrameNumber = 0;
@@ -456,7 +454,7 @@ namespace Silhouette.GameMechs
                         charRect.Body.ApplyForce(new Vector2(-50, -1400));
                     }
                 }
-                else if (facing == 1)
+                else if (facing == 1 && !isRecovering)
                 {
                     activeAnimation = jumpStarting_right;
                     activeAnimation.activeFrameNumber = 0;
@@ -472,6 +470,45 @@ namespace Silhouette.GameMechs
                     else
                     {
                         charRect.Body.ApplyForce(new Vector2(50, -1400));
+                    }
+                }
+                else if (isRecovering)
+                {
+                    if (isRunning)
+                    {
+                        if (facing == 0)
+                        {
+                            activeAnimation = noJumpRunning_left;
+                            activeAnimation.activeFrameNumber = 0;
+                            activeAnimation.start();
+                            nextAnimation = running_left;
+                        }
+                        else if (facing == 1)
+                        {
+                            activeAnimation = noJumpRunning_right;
+                            activeAnimation.activeFrameNumber = 0;
+                            activeAnimation.start();
+                            nextAnimation = running_right;
+                        }
+                    }
+                    else if (isIdle)
+                    {
+                        if (facing == 0)
+                        {
+                            activeAnimation = noJumpIdle_left;
+                            activeAnimation.activeFrameNumber = 0;
+                            activeAnimation.start();
+                            nextAnimation = choseIdleAnimation();
+                            nextAnimation.activeFrameNumber = 0;
+                        }
+                        else if (facing == 1)
+                        {
+                            activeAnimation = noJumpIdle_right;
+                            activeAnimation.activeFrameNumber = 0;
+                            activeAnimation.start();
+                            nextAnimation = choseIdleAnimation();
+                            nextAnimation.activeFrameNumber = 0;
+                        }
                     }
                 }
             }
@@ -777,7 +814,14 @@ namespace Silhouette.GameMechs
                 nextAnimation = choseIdleAnimation();
             }
 
-            if (isRunning && !(activeAnimation == running_left || activeAnimation == running_right || activeAnimation == runStarting_left || activeAnimation == runStarting_right || activeAnimation == runStopping_left || activeAnimation == runStopping_right))
+            if (isRunning && !(activeAnimation == running_left ||
+                                activeAnimation == running_right ||
+                                activeAnimation == runStarting_left ||
+                                activeAnimation == runStarting_right ||
+                                activeAnimation == runStopping_left ||
+                                activeAnimation == runStopping_right ||
+                                activeAnimation == noJumpRunning_left ||
+                                activeAnimation == noJumpRunning_right))
             {
                 if (facing == 0)
                 {
@@ -814,7 +858,7 @@ namespace Silhouette.GameMechs
                 )
             {
                 nextAnimation = choseIdleAnimation();
-                activeAnimation = nextAnimation;
+                activeAnimation = choseIdleAnimation();
                 activeAnimation.activeFrameNumber = 0;
                 activeAnimation.start();
                 nextAnimation = null;
@@ -984,8 +1028,8 @@ namespace Silhouette.GameMechs
                 {
                     // Wenn Tom recovered, aber der Timer abgelaufen ist, isser wieder normal. Werte zurücksetzen net vergessen
                     isRecovering = false;
-                    sJRecoveryTimer = 5000;
-                    sJTimer = 10000;
+                    sJRecoveryTimer = 17000;
+                    sJTimer = 6000;
                     fadeOrange = 0;
                     fadeBlue = 0;
                 }

@@ -30,9 +30,14 @@ namespace Silhouette.Engine.Manager
         private static Effect bloomer;
         private static Effect vignettenBlur;
         private static Effect colorChange;
+        private static bool overallBlur;
+        private static bool overallVignette;
 
         public static void loadEffects() 
         {
+            overallBlur = true;
+            overallVignette = true;
+
             vignette = GameLoop.gameInstance.Content.Load<Texture2D>("Sprites/Overlays/Vignette");
             GameLoop.gameInstance.GraphicsDevice.Textures[1] = vignette;
 
@@ -43,8 +48,6 @@ namespace Silhouette.Engine.Manager
             blurrer = GameLoop.gameInstance.Content.Load<Effect>("Effects/blurrer");
             weakBlurrer = GameLoop.gameInstance.Content.Load<Effect>("Effects/blurrer");
             strongBlurrer = GameLoop.gameInstance.Content.Load<Effect>("Effects/blurrer");
-            weakBlurrer.Parameters["BlurDistance"].SetValue(0.001f);
-            strongBlurrer.Parameters["BlurDistance"].SetValue(0.005f);
 
             bleachBlur = GameLoop.gameInstance.Content.Load<Effect>("Effects/BleachBlur");
             bleachBlur.Parameters["BlurDistance"].SetValue(0.002f);
@@ -52,9 +55,6 @@ namespace Silhouette.Engine.Manager
             bleach = GameLoop.gameInstance.Content.Load<Effect>("Effects/bleach");
             weakBleach = GameLoop.gameInstance.Content.Load<Effect>("Effects/bleach");
             strongBleach = GameLoop.gameInstance.Content.Load<Effect>("Effects/bleach");
-
-            weakBleach.Parameters["amount"].SetValue(0.3f);
-            strongBleach.Parameters["amount"].SetValue(0.7f);
 
             bloomer = GameLoop.gameInstance.Content.Load<Effect>("Effects/bloom");
             vignettenBlur = GameLoop.gameInstance.Content.Load<Effect>("Effects/VignettenBlur");
@@ -79,7 +79,6 @@ namespace Silhouette.Engine.Manager
 
         public static Effect StrongBlurrer()
         {
-            //strongBlurrer.Parameters["BlurDistance"].SetValue(0.004f);
             strongBlurrer.Parameters["BlurDistance"].SetValue(0.006f);
             return strongBlurrer;
         }
@@ -90,18 +89,10 @@ namespace Silhouette.Engine.Manager
             float fadeOrange = player.fadeOrange / 1000; // zählen beide von 0 bis 1
             float fadeBlue = player.fadeBlue / 1000;
 
-            float orangeTargetRed = 0f;
-            float orangeTargetGreen = -0.32f;
-            float orangeTargetBlue = -0.45f;
-            float blueTargetRed = -0.47f;
-            float blueTargetGreen = -0.41f;
-            float blueTargetBlue = -0.31f;
+            bleach.Parameters["fadeOrange"].SetValue(fadeOrange);
+            bleach.Parameters["fadeBlue"].SetValue(fadeBlue);
+            bleach.Parameters["amount"].SetValue(0.5f);
 
-                bleach.Parameters["amount"].SetValue(0.5f);
-                bleach.Parameters["targetRed"].SetValue(fadeOrange * orangeTargetRed + fadeBlue * blueTargetRed);
-                bleach.Parameters["targetGreen"].SetValue(fadeOrange * orangeTargetGreen + fadeBlue * blueTargetGreen);
-                bleach.Parameters["targetBlue"].SetValue(fadeOrange * orangeTargetBlue + fadeBlue * blueTargetBlue);
-            
             return bleach;
         }
 
@@ -111,17 +102,9 @@ namespace Silhouette.Engine.Manager
             float fadeOrange = player.fadeOrange / 1000; // zählen beide von 0 bis 1
             float fadeBlue = player.fadeBlue / 1000;
 
-            float orangeTargetRed = 0f;
-            float orangeTargetGreen = -0.32f;
-            float orangeTargetBlue = -0.45f;
-            float blueTargetRed = -0.47f;
-            float blueTargetGreen = -0.41f;
-            float blueTargetBlue = -0.31f;
-
+            bleach.Parameters["fadeOrange"].SetValue(fadeOrange);
+            bleach.Parameters["fadeBlue"].SetValue(fadeBlue);
             bleach.Parameters["amount"].SetValue(0.3f);
-            bleach.Parameters["targetRed"].SetValue(fadeOrange * orangeTargetRed + fadeBlue * blueTargetRed);
-            bleach.Parameters["targetGreen"].SetValue(fadeOrange * orangeTargetGreen + fadeBlue * blueTargetGreen);
-            bleach.Parameters["targetBlue"].SetValue(fadeOrange * orangeTargetBlue + fadeBlue * blueTargetBlue);
 
             return weakBleach;
         }
@@ -132,17 +115,9 @@ namespace Silhouette.Engine.Manager
             float fadeOrange = player.fadeOrange / 1000; // zählen beide von 0 bis 1
             float fadeBlue = player.fadeBlue / 1000;
 
-            float orangeTargetRed = 0f;
-            float orangeTargetGreen = -0.32f;
-            float orangeTargetBlue = -0.45f;
-            float blueTargetRed = -0.47f;
-            float blueTargetGreen = -0.41f;
-            float blueTargetBlue = -0.31f;
-
-            bleach.Parameters["amount"].SetValue(0.7f);
-            bleach.Parameters["targetRed"].SetValue(fadeOrange * orangeTargetRed + fadeBlue * blueTargetRed);
-            bleach.Parameters["targetGreen"].SetValue(fadeOrange * orangeTargetGreen + fadeBlue * blueTargetGreen);
-            bleach.Parameters["targetBlue"].SetValue(fadeOrange * orangeTargetBlue + fadeBlue * blueTargetBlue);
+            bleach.Parameters["fadeOrange"].SetValue(fadeOrange);
+            bleach.Parameters["fadeBlue"].SetValue(fadeBlue);
+            bleach.Parameters["amount"].SetValue(0.6f);
 
             return weakBleach;
         }
@@ -160,6 +135,8 @@ namespace Silhouette.Engine.Manager
 
         public static Effect VignettenBlur()
         {
+            vignettenBlur.Parameters["bBlur"].SetValue(overallBlur);
+            vignettenBlur.Parameters["bVignette"].SetValue(overallVignette);
             return vignettenBlur;
         }
 
@@ -186,6 +163,16 @@ namespace Silhouette.Engine.Manager
                 }
             }
             return colorChange;
+        }
+
+        public static void setOverallBlur(bool b)
+        {
+            overallBlur = b;
+        }
+
+        public static void setVignette(bool b)
+        {
+            overallVignette = b;
         }
     }
 }
