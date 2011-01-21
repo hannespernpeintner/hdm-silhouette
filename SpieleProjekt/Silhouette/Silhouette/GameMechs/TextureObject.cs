@@ -114,8 +114,12 @@ namespace Silhouette.GameMechs
         {
             Color color = Color.White;
             if (mouseOn) color = Constants.onHover;
-            origin = new Vector2((float)(texture.Width / 2), (float)(texture.Height / 2));
-            spriteBatch.Draw(texture, position, null, color, rotation, origin, scale, SpriteEffects.None, 1);
+
+            if (texture != null)
+            {
+                origin = new Vector2((float)(texture.Width / 2), (float)(texture.Height / 2));
+                spriteBatch.Draw(texture, position, null, color, rotation, origin, scale, SpriteEffects.None, 1);
+            }
         }
 
         public override void loadContentInEditor(GraphicsDevice graphics)
@@ -133,7 +137,10 @@ namespace Silhouette.GameMechs
                 catch (Exception e)
                 {
                     FileStream file = FileManager.LoadConfigFile(fullPath);
-                    texture = Texture2D.FromStream(graphics, file);
+
+                    if (file != null)
+                        texture = Texture2D.FromStream(graphics, file);
+
                     file.Close();
                 }
             }
