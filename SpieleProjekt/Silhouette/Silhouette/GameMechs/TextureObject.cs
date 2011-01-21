@@ -129,27 +129,18 @@ namespace Silhouette.GameMechs
                 try
                 {
                     string p = Path.Combine(layer.level.contentPath, Path.GetFileName(fullPath));
-                    FileStream file = FileManager.LoadConfigFile(p);
-                    texture = Texture2D.FromStream(graphics, file);
+                    texture = TextureManager.Instance.LoadFromFile(p, graphics);
                     this.fullPath = p;
-                    file.Close();
                 }
                 catch (Exception e)
                 {
-                    FileStream file = FileManager.LoadConfigFile(fullPath);
-
-                    if (file != null)
-                    {
-                        texture = Texture2D.FromStream(graphics, file);
-                        file.Close();
-                    }
+                    texture = TextureManager.Instance.LoadFromFile(fullPath, graphics);
                 }
             }
 
             if (texture.Width != 1280 && texture.Height != 768)
             {
-                collisionData = new Color[texture.Width * texture.Height];
-                texture.GetData(collisionData);
+                collisionData = TextureManager.Instance.GetCollisionData(fullPath);
             }
             transformed();
         }
