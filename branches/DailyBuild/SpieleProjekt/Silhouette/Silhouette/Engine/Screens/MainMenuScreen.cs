@@ -123,7 +123,7 @@ namespace Silhouette.Engine.Screens
                 {
                     if (menuState == MenuState.NewGame)
                     {
-                        mainMenuTheme.Stop();
+                        mainMenuTheme.fadeDown(3);
                         GameStateManager.Default.NewGame();
                     }
                     if (menuState == MenuState.Continue)
