@@ -51,6 +51,7 @@ namespace SilhouetteEditor
         Play,
 
         Death,
+        SaveState,
         Camera
     }
 
@@ -1216,6 +1217,13 @@ namespace SilhouetteEditor
                     e13.layer = selectedLayer;
                     selectedLayer.loList.Add(e13);
                     selectLevelObject(e13);
+                    break;
+                case EventType.SaveState:
+                    SaveStateEvent e14 = new SaveStateEvent(Extensions.RectangleFromVectors(clickedPoints[0], clickedPoints[1]));
+                    e14.name = e14.getPrefix() + selectedLayer.getNextObjectNumber();
+                    e14.layer = selectedLayer;
+                    selectedLayer.loList.Add(e14);
+                    selectLevelObject(e14);
                     break;
             }
             MainForm.Default.UpdateTreeView();

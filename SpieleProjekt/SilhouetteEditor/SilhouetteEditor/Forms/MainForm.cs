@@ -559,12 +559,6 @@ namespace SilhouetteEditor.Forms
             }
         }
 
-
-        private void particleObjectToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            Editor.Default.createParticleObject();
-        }
-
         //---> Events
 
 
@@ -639,6 +633,11 @@ namespace SilhouetteEditor.Forms
             Editor.Default.AddEvents(EventType.ApplyForce);
         }
 
+        private void saveStateToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Editor.Default.AddEvents(EventType.SaveState);
+        }
+
         //---> ToolStrips <---//
 
         private void deleteToolStripMenuItem_Click(object sender, EventArgs e)
@@ -708,6 +707,11 @@ namespace SilhouetteEditor.Forms
                 Layer l = (Layer)treeView1.SelectedNode.Tag;
                 Editor.Default.moveLayerDown(Editor.Default.selectedLayer);
             }
+        }
+
+        private void particleObjectToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Editor.Default.createParticleObject();
         }
 
         //---> Actions <---//

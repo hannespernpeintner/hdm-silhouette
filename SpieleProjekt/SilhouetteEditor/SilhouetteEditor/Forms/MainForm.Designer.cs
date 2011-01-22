@@ -125,6 +125,7 @@ namespace SilhouetteEditor.Forms
             this.deleteToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.addObjectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveStateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.StatusBar.SuspendLayout();
             this.MenuBar.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -245,40 +246,40 @@ namespace SilhouetteEditor.Forms
             // newToolStripMenuItem
             // 
             this.newToolStripMenuItem.Name = "newToolStripMenuItem";
-            this.newToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.newToolStripMenuItem.Size = new System.Drawing.Size(121, 22);
             this.newToolStripMenuItem.Text = "New";
             this.newToolStripMenuItem.Click += new System.EventHandler(this.FileNew);
             // 
             // openToolStripMenuItem
             // 
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(121, 22);
             this.openToolStripMenuItem.Text = "Open";
             this.openToolStripMenuItem.Click += new System.EventHandler(this.FileOpen);
             // 
             // saveToolStripMenuItem
             // 
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(121, 22);
             this.saveToolStripMenuItem.Text = "Save";
             this.saveToolStripMenuItem.Click += new System.EventHandler(this.FileSave);
             // 
             // saveAsToolStripMenuItem
             // 
             this.saveAsToolStripMenuItem.Name = "saveAsToolStripMenuItem";
-            this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(121, 22);
             this.saveAsToolStripMenuItem.Text = "Save as...";
             this.saveAsToolStripMenuItem.Click += new System.EventHandler(this.FileSaveAs);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(149, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(118, 6);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(121, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.FileExit);
             // 
@@ -315,14 +316,14 @@ namespace SilhouetteEditor.Forms
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
             this.aboutToolStripMenuItem.Text = "About";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.HelpAbout);
             // 
             // helpToolStripMenuItem1
             // 
             this.helpToolStripMenuItem1.Name = "helpToolStripMenuItem1";
-            this.helpToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
+            this.helpToolStripMenuItem1.Size = new System.Drawing.Size(107, 22);
             this.helpToolStripMenuItem1.Text = "Help";
             this.helpToolStripMenuItem1.Click += new System.EventHandler(this.HelpHelp);
             // 
@@ -503,6 +504,7 @@ namespace SilhouetteEditor.Forms
             // 
             this.PhysicsButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.PhysicsButton.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.saveStateToolStripMenuItem,
             this.particleObjectToolStripMenuItem,
             this.soundObjectToolStripMenuItem});
             this.PhysicsButton.Image = global::SilhouetteEditor.Properties.Resource.Physics;
@@ -965,6 +967,13 @@ namespace SilhouetteEditor.Forms
             this.addObjectToolStripMenuItem.Text = "Manage Events";
             this.addObjectToolStripMenuItem.Click += new System.EventHandler(this.addObjectToolStripMenuItem_Click);
             // 
+            // saveStateToolStripMenuItem
+            // 
+            this.saveStateToolStripMenuItem.Name = "saveStateToolStripMenuItem";
+            this.saveStateToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.saveStateToolStripMenuItem.Text = "SaveState";
+            this.saveStateToolStripMenuItem.Click += new System.EventHandler(this.saveStateToolStripMenuItem_Click);
+            // 
             // MainForm
             // 
             this.AllowDrop = true;
@@ -1102,5 +1111,6 @@ namespace SilhouetteEditor.Forms
         private System.Windows.Forms.ToolStripMenuItem moveRotateToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem changeVisibilityToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem applyForceToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem saveStateToolStripMenuItem;
     }
 }
