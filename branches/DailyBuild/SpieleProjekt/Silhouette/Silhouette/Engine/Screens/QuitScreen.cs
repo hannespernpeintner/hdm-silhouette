@@ -81,9 +81,9 @@ namespace Silhouette.Engine.Screens
             {
                 if (wantToQuitChoice == Choice.Yes)
                 {
-                    GameStateManager.Default.mainMenuScreen.initializeScreen();
-                    GameStateManager.Default.mainMenuScreen.loadScreen();
+                    GameStateManager.Default.mainMenuScreen.mainMenuTheme.fadeUp(3);
                     GameStateManager.Default.currentGameState = GameState.MainMenu;
+                    GameStateManager.Default.reallyWantToQuit = false;
                 }
                 else
                 {
