@@ -143,6 +143,7 @@
     <Compile Include="DisplayFPS.cs" />
     <Compile Include="Engine\Screens\MenuScreen.cs" />
     <Compile Include="Engine\Animation.cs" />
+    <Compile Include="Engine\Screens\QuitScreen.cs" />
     <Compile Include="Engine\SoundEngine\IrrAudioEngine.cs" />
     <Compile Include="GameMechs\AnimatedObject.cs" />
     <Compile Include="GameMechs\DrawableLevelObject.cs" />

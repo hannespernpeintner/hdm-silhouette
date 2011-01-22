@@ -45,12 +45,15 @@ namespace Silhouette
 
         public GameState currentGameState;
 
-        MainMenuScreen mainMenuScreen;
-        MenuScreen menuScreen;
-        Level currentLevel;
+        public MainMenuScreen mainMenuScreen;
+        public MenuScreen menuScreen;
+        public QuitScreen quitScreen;
+        public Level currentLevel;
 
         String[] levelPaths;
         int currentLevelNumber;
+
+        public bool reallyWantToQuit = false;
 
         KeyboardState kstate;
         KeyboardState oldkstate;
@@ -64,6 +67,7 @@ namespace Silhouette
             currentGameState = GameState.MainMenu;
             mainMenuScreen = new MainMenuScreen();
             menuScreen = new MenuScreen();
+            quitScreen = new QuitScreen();
 
             Default = this;
         }
@@ -72,12 +76,14 @@ namespace Silhouette
         {
             mainMenuScreen.initializeScreen();
             menuScreen.initializeScreen();
+            quitScreen.initializeScreen();
         }
 
         public void LoadContent() 
         {
             mainMenuScreen.loadScreen();
             menuScreen.loadScreen();
+            quitScreen.loadScreen();
         }
 
         public void Update(GameTime gameTime) 
@@ -86,7 +92,15 @@ namespace Silhouette
 
             if (currentGameState == GameState.InGame)
             {
-                currentLevel.Update(gameTime);
+                if (!reallyWantToQuit)
+                    currentLevel.Update(gameTime);
+                else
+                    quitScreen.updateScreen(gameTime);
+
+                if (kstate.IsKeyDown(Keys.Escape) && oldkstate.IsKeyUp(Keys.Escape))
+                {
+                    reallyWantToQuit = true;
+                }
             }
             if (currentGameState == GameState.MainMenu)
             {
@@ -114,6 +128,11 @@ namespace Silhouette
             if (currentGameState == GameState.InGame)
             {
                 currentLevel.Draw();
+
+                if (reallyWantToQuit)
+                {
+                    quitScreen.drawScreen(spriteBatch);
+                }
             }
             if (currentGameState == GameState.Menu)
             {
