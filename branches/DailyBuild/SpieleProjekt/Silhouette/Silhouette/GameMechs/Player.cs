@@ -217,7 +217,6 @@ namespace Silhouette.GameMechs
             charRect = FixtureManager.CreatePolygon(idle_left.pictures[0], new Vector2(0.85f, 0.95f), BodyType.Dynamic, position, 1);
             charRect.Friction = 1;
             charRect.isPlayer = true;
-            charRect.isEvent = true;
 
             nRect = FixtureManager.CreateRectangle(140, 10, new Vector2(position.X, position.Y - 85), BodyType.Dynamic, 0);
             nRect.Body.FixedRotation = true;
@@ -238,6 +237,7 @@ namespace Silhouette.GameMechs
             eRect.Body.FixedRotation = true;
             eRect.IsSensor = true;
             eRect.isPlayer = true;
+            eRect.isEvent = true;
 
             wRect = FixtureManager.CreateRectangle(15, 100, new Vector2(position.X - 110, position.Y), BodyType.Dynamic, 0);
             wRect.Body.FixedRotation = true;

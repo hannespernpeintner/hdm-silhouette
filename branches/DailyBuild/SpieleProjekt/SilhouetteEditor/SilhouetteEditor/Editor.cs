@@ -888,8 +888,6 @@ namespace SilhouetteEditor
                     level.InitializeInEditor(spriteBatch, MainForm.Default.GameView.Width, MainForm.Default.GameView.Height);
                     level.LoadContentInEditor(EditorLoop.EditorLoopInstance.GraphicsDevice);
                     editorState = EditorState.IDLE;
-                    selectLayer(level.layerList.First());
-                    selectLevelObject(selectedLayer.loList.First());
                     MainForm.Default.UpdateTreeView();
                 }
             }
