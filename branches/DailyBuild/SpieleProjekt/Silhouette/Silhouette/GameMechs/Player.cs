@@ -1223,6 +1223,13 @@ namespace Silhouette.GameMechs
                 charRect.Body.BodyType = BodyType.Dynamic;
                 charRect.Body.IgnoreGravity = false;
                 camRect.Body.Position = GameStateManager.Default.currentLevel.startPosition / Level.PixelPerMeter;
+
+                    isRecovering = false;
+                    isRemembering = false;
+                    sJRecoveryTimer = 17000;
+                    sJTimer = 6000;
+                    fadeOrange = 0;
+                    fadeBlue = 0;
             }
             catch (Exception e)
             {
@@ -1238,6 +1245,13 @@ namespace Silhouette.GameMechs
                 charRect.Body.BodyType = BodyType.Dynamic;
                 charRect.Body.IgnoreGravity = false;
                 camRect.Body.Position = Vector2.Zero;
+
+                    isRecovering = false;
+                    isRemembering = false;
+                    sJRecoveryTimer = 17000;
+                    sJTimer = 6000;
+                    fadeOrange = 0;
+                    fadeBlue = 0;
             }
         
         }
