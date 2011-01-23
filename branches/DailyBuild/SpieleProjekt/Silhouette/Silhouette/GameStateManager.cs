@@ -154,5 +154,18 @@ namespace Silhouette
             currentLevel.LoadContent();
             currentGameState = GameState.InGame;
         }
+
+        public void ContinueGame()
+        {
+            SaveGame.LoadSaveGame();
+
+            if (SaveGame.Default.levelToContinue.Length > 0)
+            {
+                currentLevel = Level.LoadLevelFile(SaveGame.Default.levelToContinue);
+                currentLevel.Initialize();
+                currentLevel.LoadContent();
+                currentGameState = GameState.InGame;
+            }
+        }
     }
 }
