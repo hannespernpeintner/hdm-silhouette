@@ -14,7 +14,7 @@ using Silhouette.Engine;
 using Silhouette.Engine.Manager;
 using Silhouette.GameMechs;
 using Silhouette.Engine.SoundEngine;
-using System.IO;
+using System.IO;    
 
 using System.ComponentModel;
 
@@ -177,7 +177,7 @@ namespace Silhouette.GameMechs
             Engine.Manager.SoundManager.UpdateFader += new SoundManager.UpdateFaderEventHandler(Update);
            
             _volume = 1;
-            SoundManager.addSoundToList(this);
+            
         }
 
 
@@ -402,7 +402,7 @@ namespace Silhouette.GameMechs
             }
         }
 
-        public override void Initialise() { }
+        public override void Initialise() { SoundManager.addSoundToList(this); }
         public override void LoadContent() { }
 
         public override string getPrefix() { return "SoundObject_"; }
