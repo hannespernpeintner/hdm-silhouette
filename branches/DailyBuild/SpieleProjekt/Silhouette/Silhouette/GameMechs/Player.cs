@@ -25,6 +25,7 @@ namespace Silhouette.GameMechs
     {
         public float tempRotation;
         public float contactTimer;
+        public int resetTimer;
         public Vector2 centerPosition;      // Hannes: Rectangles für Kollisionserkennung. Muss noch um Kollisionsgruppe erweitert werden.
         public Vector2 camPosition;
         public Fixture charRect;
@@ -179,6 +180,7 @@ namespace Silhouette.GameMechs
             canClimb = false;
             tempRotation = 0.0f;
             contactTimer = 0;
+            resetTimer = 2000;
 
             facing = 1;
         }
@@ -373,7 +375,7 @@ namespace Silhouette.GameMechs
 
                 else
                 {
-                    if (isIdle)
+                    if (isIdle || activeAnimation == running_right || activeAnimation == runStarting_right || activeAnimation == runStopping_right)
                     {
                         activeAnimation = runStarting_left;
                         activeAnimation.activeFrameNumber = 0;
@@ -408,7 +410,7 @@ namespace Silhouette.GameMechs
 
                 else
                 {
-                    if (isIdle)
+                    if (isIdle || activeAnimation == running_left || activeAnimation == runStarting_left || activeAnimation == runStopping_left)
                     {
                         activeAnimation = runStarting_right;
                         activeAnimation.activeFrameNumber = 0;
@@ -802,12 +804,12 @@ namespace Silhouette.GameMechs
             {
                 try
                 {
-                    /*if (facing == 0) { activeAnimation = dying2_left; }
+                    if (facing == 0) { activeAnimation = dying2_left; }
                     else { activeAnimation = dying2_right; }
                     activeAnimation.activeFrameNumber = 0;
-                    activeAnimation.start();*/
+                    activeAnimation.start();
 
-                    activeAnimation.activeFrameNumber = 0;
+                    /*activeAnimation.activeFrameNumber = 0;
                     activeAnimation = choseIdleAnimation();
                     activeAnimation.activeFrameNumber = 0;
                     activeAnimation.start();
@@ -819,7 +821,9 @@ namespace Silhouette.GameMechs
                     isRunning = false;
                     isFalling = false;
                     isJumping = false;
-                    isDying = false;
+                    isDying = false;*/
+
+
 
                 }
                 catch (Exception e) { activeAnimation.activeFrameNumber = 0; }
@@ -1123,6 +1127,17 @@ namespace Silhouette.GameMechs
 
         private void ObserveTimer(GameTime gameTime)
         {
+            if (isDying)
+            {
+                resetTimer -= gameTime.ElapsedGameTime.Milliseconds;
+
+                if (resetTimer < 0)
+                {
+                    resetTimer = 2000;
+                    reset();
+                }
+            }
+
             // Schaut, ob der Player sich gerade erinnert. Wenn ja, wird Timer erniedrigt, Modus beendet nach Ablauf.
             if (isRemembering)
             {
@@ -1186,12 +1201,28 @@ namespace Silhouette.GameMechs
             { tempRotation = charRect.Body.Rotation; }
         }
 
+        public void reset()
+        {
+            isScriptedMoving = false;
+            actScriptedMove = "";
+            isIdle = true;
+            isDying = false;
+            isFalling = false;
+            isRecovering = false;
+            isRemembering = false;
+            isJumping = false;
+            position = GameStateManager.Default.currentLevel.startPosition;
+            charRect.Body.BodyType = BodyType.Dynamic;
+            camPosition = GameStateManager.Default.currentLevel.startPosition;
+        
+        }
+
         public bool OnCollision(Fixture fixtureA, Fixture fixtureB, Contact contact)
         {
             this.contact = contact;
             rectTouching = true;
 
-            if (isFalling && (activeAnimation != landing_right && activeAnimation != landing_right))
+            if (isFalling && (activeAnimation != landing_right && activeAnimation != landing_left))
             {
                 isFalling = false;
                 isJumping = false;
@@ -1250,7 +1281,7 @@ namespace Silhouette.GameMechs
         {
             sRectTouching = true;
 
-            if (isFalling && (activeAnimation != landing_right && activeAnimation != landing_right))
+            if (isFalling && (activeAnimation != landing_right && activeAnimation != landing_left))
             {
                 isFalling = false;
                 isIdle = true;
