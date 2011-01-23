@@ -442,9 +442,9 @@ namespace Silhouette.GameMechs
             }
 
             // P BUTTON
-            //if (Keyboard.GetState().IsKeyDown(Keys.P) && !isScriptedMoving)
+            if (Keyboard.GetState().IsKeyDown(Keys.P) && !isScriptedMoving)
             {
-                //die();
+                die();
             }
 
             // L BUTTON
@@ -777,7 +777,7 @@ namespace Silhouette.GameMechs
                 isIdle = false;
                 isRunning = false;
                 isJumping = false;
-                isDying = false;
+                isDying = true;
                 isFalling = false;
 
                 charRect.Body.BodyType = BodyType.Static;
@@ -788,14 +788,14 @@ namespace Silhouette.GameMechs
                     activeAnimation = dying_left;
                     activeAnimation.activeFrameNumber = 0;
                     activeAnimation.start();
-                    nextAnimation = dying_left;
+                    nextAnimation = dying2_left;
                 }
                 else
                 {
                     activeAnimation = dying_right;
                     activeAnimation.activeFrameNumber = 0;
                     activeAnimation.start();
-                    nextAnimation = dying_right;
+                    nextAnimation = dying2_right;
                 }
             }
             // Hier wird noch gebessert
@@ -808,6 +808,7 @@ namespace Silhouette.GameMechs
                     else { activeAnimation = dying2_right; }
                     activeAnimation.activeFrameNumber = 0;
                     activeAnimation.start();
+                    nextAnimation = choseIdleAnimation();
 
                     /*activeAnimation.activeFrameNumber = 0;
                     activeAnimation = choseIdleAnimation();
@@ -1203,17 +1204,36 @@ namespace Silhouette.GameMechs
 
         public void reset()
         {
-            isScriptedMoving = false;
-            actScriptedMove = "";
-            isIdle = true;
-            isDying = false;
-            isFalling = false;
-            isRecovering = false;
-            isRemembering = false;
-            isJumping = false;
-            position = GameStateManager.Default.currentLevel.startPosition;
-            charRect.Body.BodyType = BodyType.Dynamic;
-            camPosition = GameStateManager.Default.currentLevel.startPosition;
+            try
+            {
+                isScriptedMoving = false;
+                actScriptedMove = "";
+                isIdle = true;
+                isDying = false;
+                isFalling = false;
+                isRecovering = false;
+                isRemembering = false;
+                isJumping = false;
+                charRect.Body.Position = GameStateManager.Default.currentLevel.startPosition/Level.PixelPerMeter;
+                charRect.Body.BodyType = BodyType.Dynamic;
+                charRect.Body.IgnoreGravity = false;
+                camRect.Body.Position = GameStateManager.Default.currentLevel.startPosition / Level.PixelPerMeter;
+            }
+            catch (Exception e)
+            {
+                isScriptedMoving = false;
+                actScriptedMove = "";
+                isIdle = true;
+                isDying = false;
+                isFalling = false;
+                isRecovering = false;
+                isRemembering = false;
+                isJumping = false;
+                charRect.Body.Position = Vector2.Zero;
+                charRect.Body.BodyType = BodyType.Dynamic;
+                charRect.Body.IgnoreGravity = false;
+                camRect.Body.Position = Vector2.Zero;
+            }
         
         }
 
