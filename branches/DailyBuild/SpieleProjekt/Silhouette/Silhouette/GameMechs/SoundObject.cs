@@ -177,6 +177,7 @@ namespace Silhouette.GameMechs
             Engine.Manager.SoundManager.UpdateFader += new SoundManager.UpdateFaderEventHandler(Update);
            
             _volume = 1;
+            SoundManager.addSoundToList(this);
         }
 
 
