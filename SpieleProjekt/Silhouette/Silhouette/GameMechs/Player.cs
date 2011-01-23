@@ -102,6 +102,12 @@ namespace Silhouette.GameMechs
         private Animation climbing_left;
         private Animation climbing_right;
 
+        private Animation hang_left;
+        private Animation hang_right;
+        private Animation hang2_left;
+        private Animation hang2_right;
+        private Animation pullup;
+
         private Animation dying_left;
         private Animation dying_right;
         private Animation dying2_left;
@@ -144,6 +150,12 @@ namespace Silhouette.GameMechs
 
             climbing_left = new Animation();
             climbing_right = new Animation();
+
+            hang_left = new Animation();
+            hang_right = new Animation();
+            hang2_left = new Animation();
+            hang2_right = new Animation();
+            pullup = new Animation();
 
             dying_left = new Animation();
             dying_right = new Animation();
@@ -204,6 +216,12 @@ namespace Silhouette.GameMechs
 
             climbing_left.Load(21, "Sprites/Player/climb_left_", 0.75f, false);
             climbing_right.Load(21, "Sprites/Player/climb_right_", 0.75f, false);
+
+            hang_left.Load(5, "Sprites/Player/hang_left_", 0.5f, false);
+            hang_right.Load(5, "Sprites/Player/hang_right_", 0.5f, false);
+            hang2_left.Load(1, "Sprites/Player/hang2_left_", 1f, false);
+            hang2_right.Load(1, "Sprites/Player/hang2_right_", 1f, false);
+            pullup.Load(13, "Sprites/Player/pullup_left_", 1f, false);
 
             dying_left.Load(4, "Sprites/Player/die_left_", 0.5f, false);
             dying_right.Load(4, "Sprites/Player/die_right_", 0.5f, false);
@@ -433,6 +451,11 @@ namespace Silhouette.GameMechs
                 isRemembering = true;
             }
 
+            /*if (Keyboard.GetState().IsKeyDown(Keys.H))
+            {
+                hang();
+            }*/
+
             // SPACE BUTTON
             if (Keyboard.GetState().IsKeyDown(Keys.Space) && oldState.IsKeyUp(Keys.Space)  && (isIdle || isRunning))
             {
@@ -558,6 +581,11 @@ namespace Silhouette.GameMechs
             {
                 die();
             }
+
+            if (actScriptedMove.Equals("hang") && isScriptedMoving)
+            {
+                hang();
+            }
         }
 
         private void climb()
@@ -646,6 +674,96 @@ namespace Silhouette.GameMechs
                 catch (Exception e) { activeAnimation.activeFrameNumber = 0; }
             }
 
+        }
+
+        private void hang()
+        {
+            if (!isScriptedMoving)
+            {
+                actScriptedMove = "hang";
+                isScriptedMoving = true;
+                isIdle = false;
+                isRunning = false;
+                isJumping = false;
+                isDying = false;
+                isFalling = false;
+
+                charRect.Body.BodyType = BodyType.Static;
+                charRect.Body.IgnoreGravity = true;
+
+                if (facing == 0)
+                {
+                    activeAnimation = hang_left;
+                    activeAnimation.activeFrameNumber = 0;
+                    activeAnimation.start();
+                    nextAnimation = hang2_left;
+                }
+                else
+                {
+                    activeAnimation = hang_right;
+                    activeAnimation.activeFrameNumber = 0;
+                    activeAnimation.start();
+                    nextAnimation = hang2_right;
+                }
+            }
+
+            if ((activeAnimation == hang_right || activeAnimation == hang_left) && activeAnimation.activeFrameNumber < activeAnimation.amount - 1)
+            {
+                float maxHeight = 700/ Level.PixelPerMeter;
+                if (charRect.Body.Position.Y < maxHeight)
+                {
+                    charRect.Body.Position += new Vector2(0, -10 / Level.PixelPerMeter);
+                    if (Camera.fixedOnPlayer) { camRect.Body.Position += new Vector2(1.35f / Level.PixelPerMeter, 0); }
+                }
+            }
+
+            if ((activeAnimation == hang_right || activeAnimation == hang_left) &&activeAnimation.activeFrameNumber == activeAnimation.amount - 1)
+            {
+                activeAnimation = hang2_left;
+                activeAnimation.start();
+            }
+
+            if (activeAnimation == hang2_left)
+            { 
+                if (Keyboard.GetState().IsKeyDown(Keys.Space))
+                {
+                    activeAnimation = pullup;
+                    activeAnimation.activeFrameNumber = 0;
+                    activeAnimation.start();
+                }
+            }
+
+            if (activeAnimation == pullup)
+            {
+                if (activeAnimation.activeFrameNumber >=8 && activeAnimation.activeFrameNumber < activeAnimation.amount - 1)
+                {
+                    charRect.Body.Position += new Vector2(-10f / Level.PixelPerMeter, -5f / Level.PixelPerMeter);
+                    if (Camera.fixedOnPlayer) { camRect.Body.Position += new Vector2(-10f / Level.PixelPerMeter, -5f / Level.PixelPerMeter); }
+                }
+
+                else if (activeAnimation.activeFrameNumber == activeAnimation.amount - 1)
+                {
+                    try
+                    {
+                        activeAnimation = falling_left;
+                        activeAnimation.activeFrameNumber = 0;
+                        activeAnimation.start();
+                        actScriptedMove = "";
+                        charRect.Body.BodyType = BodyType.Dynamic;
+                        charRect.Body.IgnoreGravity = false;
+                        isScriptedMoving = false;
+                        isFalling = true;
+                    }
+                    catch (Exception e)
+                    {
+                        charRect.Body.Position = Vector2.Zero;
+                        charRect.Body.BodyType = BodyType.Dynamic;
+                        charRect.Body.IgnoreGravity = false;
+                        isScriptedMoving = false;
+                        isIdle = true;
+                    }
+                }
+            }
         }
 
         private void die()
@@ -1092,7 +1210,7 @@ namespace Silhouette.GameMechs
                 }
             }
 
-            if (fixtureB.isDeadly)
+            if (fixtureB.isDeadly && fixtureB.Body.Active)
             {
                 die();
             }
@@ -1220,6 +1338,11 @@ namespace Silhouette.GameMechs
             {
                 canClimb = false;
             }
+        }
+
+        public void makeMeHang()
+        {
+            hang();
         }
 
         public override void Draw(SpriteBatch spriteBatch)
