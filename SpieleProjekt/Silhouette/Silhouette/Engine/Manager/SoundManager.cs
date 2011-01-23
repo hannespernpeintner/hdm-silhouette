@@ -29,6 +29,8 @@ namespace Silhouette.Engine.Manager
         static float _fvolume = 1.0f;
         static Dictionary<String, Silhouette.GameMechs.SoundObject> Container;
 
+        static List<Silhouette.GameMechs.SoundObject> List;
+
         public static void Initialize() 
         {
             IrrAudioEngine.initialize();
@@ -72,6 +74,16 @@ namespace Silhouette.Engine.Manager
         public static void addSound(String AssetName, String PathToFile)
         {
             Container.Add(AssetName, new GameMechs.SoundObject(PathToFile));
+        }
+
+        public static void addSoundToList(Silhouette.GameMechs.SoundObject so)
+        {
+            List.Add(so);
+        }
+
+        public static List<Silhouette.GameMechs.SoundObject> getAllSoundsFromLevel()
+        {
+            return List;
         }
 
         public static void playSound(String AssetName)
