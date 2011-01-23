@@ -1016,6 +1016,11 @@ namespace Silhouette.GameMechs
             //movement = charRect.Body.GetLinearVelocityFromWorldPoint(Vector2.Zero);
             movement = charRect.Body.GetLinearVelocityFromLocalPoint(Vector2.Zero);
 
+            if (isFalling || isJumping)
+            {
+                charRect.Friction = 3;
+            }
+
             if (Math.Max(oldPosition.X, charRect.Body.Position.X) - Math.Min(oldPosition.X, charRect.Body.Position.X) < 0.0001 &&
                 Math.Max(oldPosition.Y, charRect.Body.Position.Y) - Math.Min(oldPosition.Y, charRect.Body.Position.Y) < 0.0001)
             {
@@ -1261,6 +1266,29 @@ namespace Silhouette.GameMechs
                 }
             }
 
+            if (isFalling && Keyboard.GetState().IsKeyDown(Keys.Left))
+            {
+                isFalling = false;
+                isJumping = false;
+                isIdle = false;
+                isRunning = true;
+                    activeAnimation = running_left;
+                    activeAnimation.activeFrameNumber = 0;
+                    activeAnimation.start();
+            }
+
+            if (isFalling && Keyboard.GetState().IsKeyDown(Keys.Right))
+            {
+                isFalling = false;
+                isJumping = false;
+                isIdle = false;
+                isRunning = true;
+                    activeAnimation = running_right;
+                    activeAnimation.activeFrameNumber = 0;
+                    activeAnimation.start();
+            }
+
+
             if (fixtureB.isDeadly && fixtureB.Body.Active)
             {
                 die();
@@ -1274,6 +1302,11 @@ namespace Silhouette.GameMechs
             if (canClimb)
             {
                 canClimb = false;
+            }
+
+            if (charRect.IsSensor)
+            {
+                charRect.IsSensor = false;
             }
 
             if (this.contact != null && this.contact.IsTouching())
@@ -1322,8 +1355,7 @@ namespace Silhouette.GameMechs
 
             if (charRect.IsSensor == true)
             {
-                try { charRect.IsSensor = false; }
-                catch (Exception e) { }
+                charRect.IsSensor = false;
             }
 
             return true;
@@ -1346,6 +1378,11 @@ namespace Silhouette.GameMechs
                     activeAnimation.activeFrameNumber = 0;
                     activeAnimation.start();
                 }
+            }
+
+            if (charRect.IsSensor)
+            {
+                charRect.IsSensor = false;
             }
             return true;
         }
