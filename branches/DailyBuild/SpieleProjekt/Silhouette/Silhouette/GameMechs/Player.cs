@@ -442,13 +442,13 @@ namespace Silhouette.GameMechs
             }
 
             // P BUTTON
-            if (Keyboard.GetState().IsKeyDown(Keys.P) && !isScriptedMoving)
+            //if (Keyboard.GetState().IsKeyDown(Keys.P) && !isScriptedMoving)
             {
-                die();
+                //die();
             }
 
-            // O BUTTON
-            if (Keyboard.GetState().IsKeyDown(Keys.O) && !isRemembering && !isRecovering)
+            // L BUTTON
+            if (Keyboard.GetState().IsKeyDown(Keys.L) && !isRemembering && !isRecovering)
             {
                 isRemembering = true;
             }
