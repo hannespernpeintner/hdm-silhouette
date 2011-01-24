@@ -57,6 +57,8 @@ namespace Silhouette.GameMechs
         private bool sRectTouching;
         private bool rectTouching;
 
+        private bool controlsEnabled;
+
         private int facing;                    // Wo der Chara hinschaut. 0 bedeutet links, 1 bedeutet rechts.
 
         public float sJTimer;
@@ -322,7 +324,7 @@ namespace Silhouette.GameMechs
             {
                 ObserveMovement();
             }
-            if (!isDying && !isScriptedMoving)
+            if (!isDying && !isScriptedMoving && !controlsEnabled)
             {
                 UpdateControls(gameTime);
             }
@@ -809,23 +811,6 @@ namespace Silhouette.GameMechs
                     activeAnimation.activeFrameNumber = 0;
                     activeAnimation.start();
                     nextAnimation = choseIdleAnimation();
-
-                    /*activeAnimation.activeFrameNumber = 0;
-                    activeAnimation = choseIdleAnimation();
-                    activeAnimation.activeFrameNumber = 0;
-                    activeAnimation.start();
-                    actScriptedMove = "";
-                    charRect.Body.BodyType = BodyType.Dynamic;
-                    charRect.Body.IgnoreGravity = false;
-                    isScriptedMoving = false;
-                    isIdle = true;
-                    isRunning = false;
-                    isFalling = false;
-                    isJumping = false;
-                    isDying = false;*/
-
-
-
                 }
                 catch (Exception e) { activeAnimation.activeFrameNumber = 0; }
             }
@@ -1261,7 +1246,7 @@ namespace Silhouette.GameMechs
             this.contact = contact;
             rectTouching = true;
 
-            if (isFalling && (activeAnimation != landing_right && activeAnimation != landing_left))
+            if (isFalling && (activeAnimation != landing_right && activeAnimation != landing_left) && !fixtureB.IsSensor)
             {
                 isFalling = false;
                 isJumping = false;
@@ -1280,7 +1265,7 @@ namespace Silhouette.GameMechs
                 }
             }
 
-            if (isFalling && Keyboard.GetState().IsKeyDown(Keys.Left))
+            if (isFalling && Keyboard.GetState().IsKeyDown(Keys.Left) && !fixtureB.IsSensor)
             {
                 isFalling = false;
                 isJumping = false;
@@ -1291,7 +1276,7 @@ namespace Silhouette.GameMechs
                     activeAnimation.start();
             }
 
-            if (isFalling && Keyboard.GetState().IsKeyDown(Keys.Right))
+            if (isFalling && Keyboard.GetState().IsKeyDown(Keys.Right) && !fixtureB.IsSensor)
             {
                 isFalling = false;
                 isJumping = false;
@@ -1318,7 +1303,7 @@ namespace Silhouette.GameMechs
                 canClimb = false;
             }
 
-            if (charRect.IsSensor)
+            if (fixtureB.isHalfTransparent && charRect.IsSensor)
             {
                 charRect.IsSensor = false;
             }
@@ -1348,7 +1333,7 @@ namespace Silhouette.GameMechs
         {
             sRectTouching = true;
 
-            if (isFalling && (activeAnimation != landing_right && activeAnimation != landing_left))
+            if (isFalling && (activeAnimation != landing_right && activeAnimation != landing_left) && !fixtureB.IsSensor)
             {
                 isFalling = false;
                 isIdle = true;
@@ -1367,9 +1352,13 @@ namespace Silhouette.GameMechs
                 }
             }
 
-            if (charRect.IsSensor == true)
+            if (charRect.IsSensor == true && !fixtureB.IsSensor && fixtureB.isHalfTransparent)
             {
-                charRect.IsSensor = false;
+                try
+                {
+                    charRect.IsSensor = false;
+                }
+                catch (Exception e) { }
             }
 
             return true;
@@ -1377,7 +1366,7 @@ namespace Silhouette.GameMechs
 
         public bool landOnCollision(Fixture fixtureA, Fixture fixtureB, Contact contact)
         {
-            if (isFalling)
+            if (isFalling && !fixtureB.IsSensor)
             {
 
                 if (facing == 0)
@@ -1392,11 +1381,6 @@ namespace Silhouette.GameMechs
                     activeAnimation.activeFrameNumber = 0;
                     activeAnimation.start();
                 }
-            }
-
-            if (charRect.IsSensor)
-            {
-                charRect.IsSensor = false;
             }
             return true;
         }
@@ -1445,6 +1429,11 @@ namespace Silhouette.GameMechs
         public void makeMeHang()
         {
             hang();
+        }
+
+        public void enableControls(bool b)
+        {
+            controlsEnabled = b;
         }
 
         public override void Draw(SpriteBatch spriteBatch)
