@@ -27,6 +27,7 @@ using FarseerPhysics.Dynamics.Contacts;
 
 namespace Silhouette.GameMechs.Events
 {
+    [Serializable]
     public class SaveStateEvent : Event
     {
         public SaveStateEvent(Rectangle rectangle)
