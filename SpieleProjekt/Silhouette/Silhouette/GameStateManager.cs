@@ -36,7 +36,17 @@ namespace Silhouette
         MainMenu,
         InGame,
         PlayingCutscene,
-        Menu
+        Menu,
+        Loading
+    }
+
+    public enum LevelState
+    { 
+        Level_1,
+        Level_2,
+        Level_3,
+        Level_4,
+        Level_5
     }
 
     public class GameStateManager
@@ -50,8 +60,7 @@ namespace Silhouette
         public QuitScreen quitScreen;
         public Level currentLevel;
 
-        String[] levelPaths;
-        int currentLevelNumber;
+        string levelPath;
 
         public bool reallyWantToQuit = false;
 
@@ -149,7 +158,9 @@ namespace Silhouette
 
         public void NewGame()
         {
-            currentLevel = Level.LoadLevelFile("12345");
+            string temp = "12345";
+            this.levelPath = temp;
+            currentLevel = Level.LoadLevelFile(temp);
             currentLevel.Initialize();
             currentLevel.LoadContent();
             currentGameState = GameState.InGame;
@@ -164,7 +175,6 @@ namespace Silhouette
                 currentLevel = Level.LoadLevelFile(SaveGame.Default.levelToContinue);
                 currentLevel.Initialize();
                 currentLevel.LoadContent();
-                currentGameState = GameState.InGame;
             }
         }
     }
