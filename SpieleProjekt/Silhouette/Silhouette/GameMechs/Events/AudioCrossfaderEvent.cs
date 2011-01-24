@@ -63,15 +63,20 @@ namespace Silhouette.GameMechs.Events
             height = rectangle.Height;
             list = new List<LevelObject>();
             isActivated = true;
-
+          
            
             _fadeTime = 0;
             _Channel1Loss = 0;
         }
+        public void OnSeparation(Fixture A, Fixture B)
+        {
+            if (B.isPlayer && !B.IsSensor)
+            this.isActivated = true;
+        }
 
         public bool OnCollision(Fixture a, Fixture b, Contact contact)
         {
-            if (isActivated && b.isPlayer == true)
+            if (isActivated && b.isPlayer == true && !b.IsSensor)
             {
                 foreach (SoundObject so in this.list)
                 {
@@ -84,9 +89,14 @@ namespace Silhouette.GameMechs.Events
                             so2.Crossfade(so, _Channel2Gain, _Channel1Loss, _fadeTime);
                     }
                 }
-                //isActivated = false;
+                isActivated = false;
                 return true;
-            }
+
+
+
+             }
+                
+            
             else
             {
                 return false;
@@ -113,6 +123,17 @@ namespace Silhouette.GameMechs.Events
             AudioCrossfaderEvent result = (AudioCrossfaderEvent)this.MemberwiseClone();
             result.mouseOn = false;
             return result;
+        }
+        public override void Initialise()
+        {
+          
+            base.Initialise();
+        }
+        public override void LoadContent()
+        {
+            base.LoadContent();
+            this.fixture.OnSeparation += this.OnSeparation;
+            
         }
 
         public override void ToFixture()
