@@ -124,7 +124,7 @@ namespace Silhouette.Engine.Manager
 
         public static Effect BleachBlur()
         {
-            bleachBlur.Parameters["BlurDistance"].SetValue(0.004f);
+            bleachBlur.Parameters["BlurDistance"].SetValue(0.003f);
             return bleachBlur;
         }
 
