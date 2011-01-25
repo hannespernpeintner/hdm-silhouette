@@ -140,43 +140,46 @@ namespace Silhouette.Engine
         //Braucht die position des Trägers!
         public void Update(GameTime gameTime, Vector2 position)
         {
-            float elapsed = gameTime.ElapsedGameTime.Milliseconds;
-            totalElapsed += elapsed;
-            this.position = position;
-
-            if (looped && started)
+            if (started)
             {
-                if (totalElapsed > speed)
+                float elapsed = gameTime.ElapsedGameTime.Milliseconds;
+                totalElapsed += elapsed;
+                this.position = position;
+
+                if (looped && started)
                 {
-                    totalElapsed -= speed;
-                    if (activeFrameNumber < amount - 1)
+                    if (totalElapsed > speed)
                     {
-                        activeFrameNumber++;
-                    }
-                    else if (activeFrameNumber == amount - 1)
-                    {
-                        activeFrameNumber = 0;
+                        totalElapsed -= speed;
+                        if (activeFrameNumber < amount - 1)
+                        {
+                            activeFrameNumber++;
+                        }
+                        else if (activeFrameNumber == amount - 1)
+                        {
+                            activeFrameNumber = 0;
+                        }
                     }
                 }
-            }
 
-            if (!looped && !playedOnce && started)
-            {
-                if (totalElapsed > speed)
+                if (!looped && !playedOnce && started)
                 {
-                    totalElapsed -= speed;
-                    if (activeFrameNumber < amount - 1)
+                    if (totalElapsed > speed)
                     {
-                        activeFrameNumber++;
-                    }
-                    else if (activeFrameNumber == amount - 1)
-                    {
-                        activeFrameNumber = 0;
-                        playedOnce = true;
+                        totalElapsed -= speed;
+                        if (activeFrameNumber < amount - 1)
+                        {
+                            activeFrameNumber++;
+                        }
+                        else if (activeFrameNumber == amount - 1)
+                        {
+                            activeFrameNumber = 0;
+                            playedOnce = true;
+                        }
                     }
                 }
+                activeTexture = pictures[activeFrameNumber];
             }
-            activeTexture = pictures[activeFrameNumber];
         }
 
         // Wird in der Draw des Trägers gerufen
