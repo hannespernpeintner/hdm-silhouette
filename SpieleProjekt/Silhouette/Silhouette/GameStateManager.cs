@@ -54,6 +54,7 @@ namespace Silhouette
         SpriteBatch spriteBatch;
 
         public GameState currentGameState;
+        public LevelState currentLevelState;
 
         public MainMenuScreen mainMenuScreen;
         public MenuScreen menuScreen;
@@ -176,6 +177,11 @@ namespace Silhouette
                 currentLevel.Initialize();
                 currentLevel.LoadContent();
             }
+        }
+
+        public void GoToNextLevel()
+        { 
+        
         }
     }
 }
