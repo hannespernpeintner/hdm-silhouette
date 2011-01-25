@@ -1,4 +1,4 @@
-float BlurDistance = 0.004f;
+float BlurDistance = 0.003f;
 float amount = 0.6f;
 float targetRed;
 float targetGreen;
