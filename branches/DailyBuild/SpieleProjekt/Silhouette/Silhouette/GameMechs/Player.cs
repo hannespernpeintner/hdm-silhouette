@@ -24,7 +24,6 @@ namespace Silhouette.GameMechs
     public class Player : DrawableLevelObject
     {
         public float tempRotation;
-        public float contactTimer;
         public int resetTimer;
         public Vector2 centerPosition;      // Hannes: Rectangles für Kollisionserkennung. Muss noch um Kollisionsgruppe erweitert werden.
         public Vector2 camPosition;
@@ -40,9 +39,9 @@ namespace Silhouette.GameMechs
         public RopeJoint joint2;
         public RopeJoint joint3;
         public AngleJoint joint4;           // Joint, der die Camera nicht zu weit rotieren lässt
-        public Contact contact;
 
         public KeyboardState oldState;
+        public KeyboardState kState;
         public Vector2 oldPosition;
         public Vector2 movement;            // Bewegung des Characters. Wichtig zur Statusveränderungserkennung.
 
@@ -54,6 +53,8 @@ namespace Silhouette.GameMechs
         private bool isDying;
         public bool isRemembering;         // So kommt Tom in den Erinnerungszustand
         public bool isRecovering;
+        public bool isLanding;
+
         private bool sRectTouching;
         private bool rectTouching;
 
@@ -69,7 +70,6 @@ namespace Silhouette.GameMechs
         private String actScriptedMove;
 
         private bool canClimb;
-
         private int actClimbHeight;
 
         private Animation activeAnimation;      // Die aktive Sprite, die in der UpdateMethode auch geupdatet wird.
@@ -173,15 +173,16 @@ namespace Silhouette.GameMechs
             isFalling = false;
             isIdle = true;
             isDying = false;
+            isLanding = false;
             isScriptedMoving = false;
             isRemembering = false;
+            isRecovering = false;
             sJRecoveryTimer = 17000;
             sJTimer = 6000;
             fadeBlue = 0;
             fadeOrange = 0;
             canClimb = false;
             tempRotation = 0.0f;
-            contactTimer = 0;
             resetTimer = 2000;
 
             facing = 1;
@@ -218,8 +219,8 @@ namespace Silhouette.GameMechs
             noJumpRunning_left.Load(2, "Sprites/Player/nojumpW_left_", 0.5f, false);
             noJumpRunning_right.Load(2, "Sprites/Player/nojumpW_right_", 0.5f, false);
 
-            climbing_left.Load(21, "Sprites/Player/climb_left_", 0.75f, false);
-            climbing_right.Load(21, "Sprites/Player/climb_right_", 0.75f, false);
+            climbing_left.Load(21, "Sprites/Player/climb_left_", 1.6f, false);
+            climbing_right.Load(21, "Sprites/Player/climb_right_", 1.6f, false);
 
             hang_left.Load(5, "Sprites/Player/hang_left_", 0.5f, false);
             hang_right.Load(5, "Sprites/Player/hang_right_", 0.5f, false);
@@ -255,13 +256,13 @@ namespace Silhouette.GameMechs
             landRect.IsSensor = true;
             landRect.isPlayer = true;
 
-            eRect = FixtureManager.CreateRectangle(15, 100, new Vector2(position.X + 105, position.Y), BodyType.Dynamic, 0);
+            eRect = FixtureManager.CreateRectangle(25, 100, new Vector2(position.X + 105, position.Y), BodyType.Dynamic, 0);
             eRect.Body.FixedRotation = true;
             eRect.IsSensor = true;
             eRect.isPlayer = true;
             eRect.isEvent = true;
 
-            wRect = FixtureManager.CreateRectangle(15, 100, new Vector2(position.X - 110, position.Y), BodyType.Dynamic, 0);
+            wRect = FixtureManager.CreateRectangle(25, 100, new Vector2(position.X - 110, position.Y), BodyType.Dynamic, 0);
             wRect.Body.FixedRotation = true;
             wRect.IsSensor = true;
             wRect.isPlayer = true;
@@ -361,14 +362,13 @@ namespace Silhouette.GameMechs
                 camPosition.Y -= 400;
                 Camera.Position = camPosition;
             }
-            // Die Camera wird nur rotiert, wenn die Rotation unter einem bestimmten Winkel bleibt. Damit das nicht ausartet.
-            //if (camRect.Body.Rotation >= -0.1f && camRect.Body.Rotation <= 0.1f) { Camera.Rotation = camRect.Body.Rotation; }
         }
 
         private void UpdateControls(GameTime gameTime)
         {
+            kState = Keyboard.GetState();
             // LEFT ARROW
-            if (Keyboard.GetState().IsKeyDown(Keys.Left) && !isFalling && !isJumping && movement.X >= -3.3f)
+            if (kState.IsKeyDown(Keys.Left) && (isRunning || isIdle) && movement.X >= -3.3f)
             {
                 if (facing == 1)
                 {
@@ -390,7 +390,7 @@ namespace Silhouette.GameMechs
                 }
             }
 
-            if (Keyboard.GetState().IsKeyDown(Keys.Left) && (isFalling || isJumping) && movement.X >= -2.5f && !rectTouching)
+            if (kState.IsKeyDown(Keys.Left) && (isFalling || isJumping || isLanding) && movement.X >= -2.5f && !rectTouching)
             {
                 if (facing == 1)
                 {
@@ -403,7 +403,7 @@ namespace Silhouette.GameMechs
             }
 
             // RIGHT ARROW
-            if (Keyboard.GetState().IsKeyDown(Keys.Right) && !isFalling && !isJumping && movement.X <= 3.3f)
+            if (kState.IsKeyDown(Keys.Right) && (isRunning || isIdle) && movement.X <= 3.3f)
             {
                 if (facing == 0)
                 {
@@ -425,7 +425,7 @@ namespace Silhouette.GameMechs
                 }
             }
 
-            if (Keyboard.GetState().IsKeyDown(Keys.Right) && (isFalling || isJumping) && movement.X <= 2.5f && !rectTouching)
+            if (kState.IsKeyDown(Keys.Right) && (isFalling || isJumping || isLanding) && movement.X <= 2.5f && !rectTouching)
             {
                 if (facing == 0)
                 {
@@ -438,30 +438,30 @@ namespace Silhouette.GameMechs
             }
 
             // UP ARROW
-            if (Keyboard.GetState().IsKeyDown(Keys.Up) && !isScriptedMoving && canClimb)
+            if (kState.IsKeyDown(Keys.Up) && !isScriptedMoving && canClimb)
             {
                 climb();
             }
 
             // P BUTTON
-            if (Keyboard.GetState().IsKeyDown(Keys.P) && !isScriptedMoving)
+            if (kState.IsKeyDown(Keys.P) && !isScriptedMoving)
             {
                 die();
             }
 
             // L BUTTON
-            if (Keyboard.GetState().IsKeyDown(Keys.L) && !isRemembering && !isRecovering)
+            if (kState.IsKeyDown(Keys.L) && !isRemembering && !isRecovering)
             {
                 isRemembering = true;
             }
 
-            /*if (Keyboard.GetState().IsKeyDown(Keys.H))
+            /*if (kState.IsKeyDown(Keys.H))
             {
                 hang();
             }*/
 
             // SPACE BUTTON
-            if (Keyboard.GetState().IsKeyDown(Keys.Space) && oldState.IsKeyUp(Keys.Space)  && (isIdle || isRunning))
+            if (kState.IsKeyDown(Keys.Space) && oldState.IsKeyUp(Keys.Space)  && (isIdle || isRunning))
             {
                 if (facing == 0 && !isRecovering)
                 {
@@ -527,7 +527,6 @@ namespace Silhouette.GameMechs
                             activeAnimation.activeFrameNumber = 0;
                             activeAnimation.start();
                             nextAnimation = choseIdleAnimation();
-                            nextAnimation.activeFrameNumber = 0;
                         }
                         else if (facing == 1)
                         {
@@ -535,14 +534,13 @@ namespace Silhouette.GameMechs
                             activeAnimation.activeFrameNumber = 0;
                             activeAnimation.start();
                             nextAnimation = choseIdleAnimation();
-                            nextAnimation.activeFrameNumber = 0;
                         }
                     }
                 }
             }
 
             // Für den Fall, dass man den Lauf abbricht, wird abgebremst
-            if (Keyboard.GetState().IsKeyUp(Keys.Left) && isRunning && facing == 0)
+            if (kState.IsKeyUp(Keys.Left) && isRunning && facing == 0)
             {
                 isRunning = false;
                 isIdle = true;
@@ -552,7 +550,7 @@ namespace Silhouette.GameMechs
                 activeAnimation.start();
             }
 
-            if (Keyboard.GetState().IsKeyUp(Keys.Right) && isRunning && facing == 1)
+            if (kState.IsKeyUp(Keys.Right) && isRunning && facing == 1)
             {
                 isRunning = false;
                 isIdle = true;
@@ -563,14 +561,14 @@ namespace Silhouette.GameMechs
             }
 
             // WENN KEIN BUTTON GEDRÜCKT IST
-            if (Keyboard.GetState().GetPressedKeys().Length == 0 && oldState.GetPressedKeys().Length == 0)
+            if (kState.GetPressedKeys().Length == 0 && oldState.GetPressedKeys().Length == 0)
             {
                 charRect.Friction = 4;
             }
 
             else { charRect.Friction = 0.1f; }
 
-            oldState = Keyboard.GetState();
+            oldState = kState;
             oldPosition = charRect.Body.Position;
         }
 
@@ -631,26 +629,26 @@ namespace Silhouette.GameMechs
                 {
                     if (activeAnimation.activeFrameNumber <= 6 || activeAnimation.activeFrameNumber >= 14)
                     {
-                        charRect.Body.Position += new Vector2(1.35f / Level.PixelPerMeter, 0);
-                        if (Camera.fixedOnPlayer) { camRect.Body.Position += new Vector2(1.35f / Level.PixelPerMeter, 0); }
+                        charRect.Body.Position += new Vector2(2.75f / Level.PixelPerMeter, 0);
+                        if (Camera.fixedOnPlayer) { camRect.Body.Position += new Vector2(2.75f / Level.PixelPerMeter, 0); }
                     }
                     if (activeAnimation.activeFrameNumber > 6 && activeAnimation.activeFrameNumber < 14)
                     {
-                        charRect.Body.Position += new Vector2(0, -2.2f / Level.PixelPerMeter);
-                        if (Camera.fixedOnPlayer) { camRect.Body.Position += new Vector2(0, -2.2f / Level.PixelPerMeter); }
+                        charRect.Body.Position += new Vector2(0, -4.4f / Level.PixelPerMeter);
+                        if (Camera.fixedOnPlayer) { camRect.Body.Position += new Vector2(0, -4.4f / Level.PixelPerMeter); }
                     }
                 }
                 else
                 {
                     if (activeAnimation.activeFrameNumber <= 6 || activeAnimation.activeFrameNumber >= 14)
                     {
-                        charRect.Body.Position += new Vector2(-1.35f / Level.PixelPerMeter, 0);
-                        if (Camera.fixedOnPlayer) { camRect.Body.Position += new Vector2(-1.35f / Level.PixelPerMeter, 0); }
+                        charRect.Body.Position += new Vector2(-2.75f / Level.PixelPerMeter, 0);
+                        if (Camera.fixedOnPlayer) { camRect.Body.Position += new Vector2(-2.75f / Level.PixelPerMeter, 0); }
                     }
                     if (activeAnimation.activeFrameNumber > 6 && activeAnimation.activeFrameNumber < 14)
                     {
-                        charRect.Body.Position += new Vector2(0, -2.2f / Level.PixelPerMeter);
-                        if (Camera.fixedOnPlayer) { camRect.Body.Position += new Vector2(0, -2.2f / Level.PixelPerMeter); }
+                        charRect.Body.Position += new Vector2(0, -4.4f / Level.PixelPerMeter);
+                        if (Camera.fixedOnPlayer) { camRect.Body.Position += new Vector2(0, -4.4f / Level.PixelPerMeter); }
                     }
                 }
             }
@@ -729,7 +727,7 @@ namespace Silhouette.GameMechs
 
             if (activeAnimation == hang2_left)
             { 
-                if (Keyboard.GetState().IsKeyDown(Keys.Space))
+                if (kState.IsKeyDown(Keys.Space))
                 {
                     activeAnimation = pullup;
                     activeAnimation.activeFrameNumber = 0;
@@ -897,7 +895,7 @@ namespace Silhouette.GameMechs
                 nextAnimation = running_right;
             }
 
-            if (activeAnimation == running_left && Keyboard.GetState().IsKeyUp(Keys.Left))
+            if (activeAnimation == running_left && kState.IsKeyUp(Keys.Left))
             {
                 activeAnimation = runStopping_left;
                 activeAnimation.activeFrameNumber = 0;
@@ -905,7 +903,7 @@ namespace Silhouette.GameMechs
                 nextAnimation = choseIdleAnimation();
             }
 
-            if (activeAnimation == running_right && Keyboard.GetState().IsKeyUp(Keys.Right))
+            if (activeAnimation == running_right && kState.IsKeyUp(Keys.Right))
             {
                 activeAnimation = runStopping_right;
                 activeAnimation.activeFrameNumber = 0;
@@ -931,6 +929,8 @@ namespace Silhouette.GameMechs
                                 activeAnimation == runStopping_right ||
                                 activeAnimation == noJumpRunning_left ||
                                 activeAnimation == noJumpRunning_right ||
+                                activeAnimation != landing_right ||
+                                activeAnimation != landing_left ||
                                 activeAnimation != idle_left ||
                                 activeAnimation != idle_right ||
                                 activeAnimation != idleb_left ||
@@ -976,7 +976,6 @@ namespace Silhouette.GameMechs
                 activeAnimation = choseIdleAnimation();
                 activeAnimation.activeFrameNumber = 0;
                 activeAnimation.start();
-                nextAnimation = null;
             }
 
             if (activeAnimation.activeFrameNumber == activeAnimation.amount - 1 && !activeAnimation.looped)
@@ -992,16 +991,15 @@ namespace Silhouette.GameMechs
                 activeAnimation = choseIdleAnimation();
                 activeAnimation.activeFrameNumber = 0;
                 activeAnimation.start();
-                nextAnimation = null;
+                nextAnimation = choseIdleAnimation();
             }
         }
 
         public void ObserveMovement()
         {
-            //movement = charRect.Body.GetLinearVelocityFromWorldPoint(Vector2.Zero);
             movement = charRect.Body.GetLinearVelocityFromLocalPoint(Vector2.Zero);
 
-            if (isFalling || isJumping)
+            if (isLanding)
             {
                 charRect.Friction = 3;
             }
@@ -1017,7 +1015,7 @@ namespace Silhouette.GameMechs
                 charRect.Friction = 4;
             }
 
-            else if (movement.Y + Level.Physics.Gravity.Y < 0.05f && !rectTouching)
+            if (movement.Y + Level.Physics.Gravity.Y < 0.05f && !rectTouching)
             {
                 isIdle = false;
                 isFalling = false;
@@ -1025,7 +1023,7 @@ namespace Silhouette.GameMechs
                 isJumping = true;
             }
 
-            else if (isJumping && oldPosition.Y < charRect.Body.Position.Y)
+            if (isJumping && oldPosition.Y < charRect.Body.Position.Y && !rectTouching)
             {
                 isIdle = false;
                 isFalling = true;
@@ -1035,8 +1033,10 @@ namespace Silhouette.GameMechs
 
 
 
-            else if (movement.Y > 1.5f && !isFalling && !sRectTouching && !rectTouching && (activeAnimation != jumpStarting_left || activeAnimation != jumpStarting_right || activeAnimation != landing_left || activeAnimation != landing_right))
+            if (movement.Y > 2.50f)
             {
+                if (!rectTouching && !isFalling && !isLanding || (activeAnimation != landing_left && activeAnimation != landing_right && activeAnimation != landing_right && activeAnimation != landing_left))
+                {
                 isIdle = false;
                 isFalling = true;
                 isRunning = false;
@@ -1055,6 +1055,7 @@ namespace Silhouette.GameMechs
                     activeAnimation.activeFrameNumber = 0;
                     activeAnimation.start();
                     nextAnimation = landing_right;
+                }
                 }
             }
 
@@ -1243,10 +1244,9 @@ namespace Silhouette.GameMechs
 
         public bool OnCollision(Fixture fixtureA, Fixture fixtureB, Contact contact)
         {
-            this.contact = contact;
             rectTouching = true;
 
-            if (isFalling && (activeAnimation != landing_right && activeAnimation != landing_left) && !fixtureB.IsSensor)
+            if (isFalling && (activeAnimation != landing_right && activeAnimation != landing_left) && !fixtureB.IsSensor && kState.GetPressedKeys().Length == 0)
             {
                 isFalling = false;
                 isJumping = false;
@@ -1254,18 +1254,18 @@ namespace Silhouette.GameMechs
                 if (facing == 0)
                 {
                     activeAnimation = landing_left;
-                    activeAnimation.activeFrameNumber = 0;
+                    activeAnimation.activeFrameNumber = 4;
                     activeAnimation.start();
                 }
                 else
                 {
                     activeAnimation = landing_right;
-                    activeAnimation.activeFrameNumber = 0;
+                    activeAnimation.activeFrameNumber = 4;
                     activeAnimation.start();
                 }
             }
 
-            if (isFalling && Keyboard.GetState().IsKeyDown(Keys.Left) && !fixtureB.IsSensor)
+            else if ((isFalling || isLanding) && kState.IsKeyDown(Keys.Left) && !fixtureB.IsSensor)
             {
                 isFalling = false;
                 isJumping = false;
@@ -1276,7 +1276,7 @@ namespace Silhouette.GameMechs
                     activeAnimation.start();
             }
 
-            if (isFalling && Keyboard.GetState().IsKeyDown(Keys.Right) && !fixtureB.IsSensor)
+            else if ((isFalling || isLanding) && kState.IsKeyDown(Keys.Right) && !fixtureB.IsSensor)
             {
                 isFalling = false;
                 isJumping = false;
@@ -1286,7 +1286,6 @@ namespace Silhouette.GameMechs
                     activeAnimation.activeFrameNumber = 0;
                     activeAnimation.start();
             }
-
 
             if (fixtureB.isDeadly && fixtureB.Body.Active)
             {
@@ -1298,25 +1297,13 @@ namespace Silhouette.GameMechs
 
         public void OnSeperation(Fixture fixtureA, Fixture fixtureB)
         {
-            if (canClimb)
-            {
-                canClimb = false;
-            }
 
             if (fixtureB.isHalfTransparent && charRect.IsSensor)
             {
                 charRect.IsSensor = false;
             }
 
-            if (this.contact != null && this.contact.IsTouching())
-            {
-                rectTouching = true;
-            }
-
-            else if (this.contact != null && !this.contact.IsTouching())
-            {
                 rectTouching = false;
-            }
         }
 
         public bool nOnCollision(Fixture fixtureA, Fixture fixtureB, Contact contact)
@@ -1333,21 +1320,22 @@ namespace Silhouette.GameMechs
         {
             sRectTouching = true;
 
-            if (isFalling && (activeAnimation != landing_right && activeAnimation != landing_left) && !fixtureB.IsSensor)
+            if (isFalling && !fixtureB.IsSensor)
             {
                 isFalling = false;
-                isIdle = true;
+                isIdle = false;
+                isLanding = true;
                 isJumping = false;
                 if (facing == 0)
                 {
                     activeAnimation = landing_left;
-                    activeAnimation.activeFrameNumber = 0;
+                    activeAnimation.activeFrameNumber = 7;
                     activeAnimation.start();
                 }
                 else
                 {
                     activeAnimation = landing_right;
-                    activeAnimation.activeFrameNumber = 0;
+                    activeAnimation.activeFrameNumber = 7;
                     activeAnimation.start();
                 }
             }
@@ -1368,7 +1356,8 @@ namespace Silhouette.GameMechs
         {
             if (isFalling && !fixtureB.IsSensor)
             {
-
+                isFalling = false;
+                isLanding = true;
                 if (facing == 0)
                 {
                     activeAnimation = landing_left;
@@ -1441,19 +1430,21 @@ namespace Silhouette.GameMechs
             spriteBatch.Draw(activeAnimation.activeTexture, position, null, Color.White, tempRotation, new Vector2(250, 250), 1, SpriteEffects.None, 1);
             //Das auskommentierte hier kann als Debugview dienen.
             /*
-            spriteBatch.DrawString(FontManager.Arial, "Standing: " + isIdle.ToString(), new Vector2(300, 20), Color.Black);
-            spriteBatch.DrawString(FontManager.Arial, "Running: " + isRunning.ToString(), new Vector2(300, 45), Color.Black);
-            spriteBatch.DrawString(FontManager.Arial, "Jumping: " + isJumping.ToString(), new Vector2(300, 70), Color.Black);
-            spriteBatch.DrawString(FontManager.Arial, "Falling: " + isFalling.ToString(), new Vector2(300, 95), Color.Black);
-            spriteBatch.DrawString(FontManager.Arial, charRect.Body.Position.ToString(), new Vector2(300, 120), Color.Black);
-            spriteBatch.DrawString(FontManager.Arial, "Scriptedmoving: " + isScriptedMoving, new Vector2(300, 155), Color.Black);
-            spriteBatch.DrawString(FontManager.Arial, actClimbHeight.ToString(), new Vector2(300, 180), Color.Black);
-            spriteBatch.DrawString(FontManager.Arial, "X: " + movement.X.ToString() + " Y: " + movement.Y.ToString(), new Vector2(300, 205), Color.Black);
-            spriteBatch.DrawString(FontManager.Arial, "CamRectRotation: " + camRect.Body.Rotation.ToString(), new Vector2(300, 230), Color.Black);
-            spriteBatch.DrawString(FontManager.Arial, "CamRotation: " + Camera.Rotation.ToString(), new Vector2(300, 255), Color.Black);
-            spriteBatch.DrawString(FontManager.Arial, "tempRotation: " + tempRotation.ToString(), new Vector2(300, 280), Color.Black);
-            spriteBatch.DrawString(FontManager.Arial, "sJTimer: " + sJTimer.ToString() + " sJRecoveryTimer: " + sJRecoveryTimer.ToString(), new Vector2(300, 305), Color.Black);
-            spriteBatch.DrawString(FontManager.Arial, "canClimb: " + canClimb, new Vector2(300, 320), Color.Black);
+            spriteBatch.DrawString(FontManager.Arial, "Standing: " + isIdle.ToString(), position+new Vector2(300, 20), Color.Black);
+            spriteBatch.DrawString(FontManager.Arial, "Running: " + isRunning.ToString(), position + new Vector2(300, 45), Color.Black);
+            spriteBatch.DrawString(FontManager.Arial, "Jumping: " + isJumping.ToString(), position + new Vector2(300, 70), Color.Black);
+            spriteBatch.DrawString(FontManager.Arial, "Falling: " + isFalling.ToString(), position + new Vector2(300, 95), Color.Black);
+            spriteBatch.DrawString(FontManager.Arial, charRect.Body.Position.ToString(), position + new Vector2(300, 120), Color.Black);
+            spriteBatch.DrawString(FontManager.Arial, "Scriptedmoving: " + isScriptedMoving, position + new Vector2(300, 155), Color.Black);
+            spriteBatch.DrawString(FontManager.Arial, actClimbHeight.ToString(), position + new Vector2(300, 180), Color.Black);
+            
+            spriteBatch.DrawString(FontManager.Arial, "X: " + movement.X.ToString() + " Y: " + movement.Y.ToString(), position + new Vector2(300, 205), Color.Black);
+            
+            spriteBatch.DrawString(FontManager.Arial, "CamRectRotation: " + camRect.Body.Rotation.ToString(), position + new Vector2(300, 230), Color.Black);
+            spriteBatch.DrawString(FontManager.Arial, "CamRotation: " + Camera.Rotation.ToString(), position + new Vector2(300, 255), Color.Black);
+            spriteBatch.DrawString(FontManager.Arial, "tempRotation: " + tempRotation.ToString(), position + new Vector2(300, 280), Color.Black);
+            spriteBatch.DrawString(FontManager.Arial, "sJTimer: " + sJTimer.ToString() + " sJRecoveryTimer: " + sJRecoveryTimer.ToString(), position + new Vector2(300, 305), Color.Black);
+            spriteBatch.DrawString(FontManager.Arial, "canClimb: " + canClimb, position + new Vector2(300, 320), Color.Black);
             */
         }
     }
