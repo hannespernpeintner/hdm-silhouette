@@ -140,8 +140,6 @@ namespace Silhouette.Engine
         //Braucht die position des Trägers!
         public void Update(GameTime gameTime, Vector2 position)
         {
-            if (started)
-            {
                 float elapsed = gameTime.ElapsedGameTime.Milliseconds;
                 totalElapsed += elapsed;
                 this.position = position;
@@ -180,7 +178,7 @@ namespace Silhouette.Engine
                 }
                 activeTexture = pictures[activeFrameNumber];
             }
-        }
+        
 
         // Wird in der Draw des Trägers gerufen
         public void Draw(SpriteBatch spriteBatch)
