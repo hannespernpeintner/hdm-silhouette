@@ -69,9 +69,9 @@ namespace Silhouette.Engine
             [NonSerialized]
             private DebugViewXNA debugView;
             [NonSerialized]
-            private bool DebugViewEnabled = false;
+            private bool DebugViewEnabled;
             [NonSerialized]
-            private bool GraphicsEnabled = false;
+            private bool GraphicsEnabled;
             [NonSerialized]
             SpriteBatch spriteBatch;
 
@@ -107,6 +107,9 @@ namespace Silhouette.Engine
             Camera.Position = new Vector2(GameSettings.Default.resolutionWidth / 2, GameSettings.Default.resolutionHeight / 2);
             Camera.Scale = 0.4f;
             ParticleManager.initialize();
+
+            this.GraphicsEnabled = true;
+            this.DebugViewEnabled = false;
 
             this._contentPath = Path.Combine(Directory.GetCurrentDirectory(), "Content");
 
@@ -179,7 +182,7 @@ namespace Silhouette.Engine
             if (!isVisible)
                 return;
 
-            if (!GraphicsEnabled)
+            if (GraphicsEnabled)
             {
                 GameLoop.gameInstance.GraphicsDevice.SetRenderTarget(renderTargets[1]);
 
@@ -205,7 +208,7 @@ namespace Silhouette.Engine
                 Primitives.Instance.drawBoxFilled(spriteBatch, new Rectangle(0, GameSettings.Default.resolutionHeight - 96, GameSettings.Default.resolutionWidth, 96), Color.Black);
                 spriteBatch.End();
             }
-            if (!DebugViewEnabled)
+            if (DebugViewEnabled)
             {
                 debugView.RenderDebugData(ref proj, ref Camera.debugMatrix);
             }
