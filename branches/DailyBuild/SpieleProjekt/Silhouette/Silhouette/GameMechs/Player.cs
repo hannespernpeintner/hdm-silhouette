@@ -1033,29 +1033,31 @@ namespace Silhouette.GameMechs
 
 
 
-            if (movement.Y > 2.50f)
+            if (movement.Y > 2.50f && !isFalling && !isLanding)
             {
-                if (!rectTouching && !isFalling && !isLanding || (activeAnimation != landing_left && activeAnimation != landing_right && activeAnimation != landing_right && activeAnimation != landing_left))
+                if (!rectTouching && !sRectTouching &&
+                    activeAnimation != landing_left && activeAnimation != landing_right &&
+                    activeAnimation != falling_right && activeAnimation != falling_left)
                 {
-                isIdle = false;
-                isFalling = true;
-                isRunning = false;
-                isJumping = false;
+                    isIdle = false;
+                    isFalling = true;
+                    isRunning = false;
+                    isJumping = false;
 
-                if (facing == 0)
-                {
-                    activeAnimation = falling_left;
-                    activeAnimation.activeFrameNumber = 0;
-                    activeAnimation.start();
-                    nextAnimation = landing_left;
-                }
-                else
-                {
-                    activeAnimation = falling_right;
-                    activeAnimation.activeFrameNumber = 0;
-                    activeAnimation.start();
-                    nextAnimation = landing_right;
-                }
+                    if (facing == 0)
+                    {
+                        activeAnimation = falling_left;
+                        activeAnimation.activeFrameNumber = 0;
+                        activeAnimation.start();
+                        nextAnimation = landing_left;
+                    }
+                    else
+                    {
+                        activeAnimation = falling_right;
+                        activeAnimation.activeFrameNumber = 0;
+                        activeAnimation.start();
+                        nextAnimation = landing_right;
+                    }
                 }
             }
 
@@ -1318,43 +1320,74 @@ namespace Silhouette.GameMechs
 
         public bool sOnCollision(Fixture fixtureA, Fixture fixtureB, Contact contact)
         {
-            sRectTouching = true;
-
-            if (isFalling && !fixtureB.IsSensor)
+            if (!isScriptedMoving)
             {
-                isFalling = false;
-                isIdle = false;
-                isLanding = true;
-                isJumping = false;
-                if (facing == 0)
+                sRectTouching = true;
+
+                if (isFalling && !fixtureB.IsSensor)
                 {
-                    activeAnimation = landing_left;
-                    activeAnimation.activeFrameNumber = 7;
-                    activeAnimation.start();
+                    isFalling = false;
+                    isIdle = false;
+                    isLanding = true;
+                    isJumping = false;
+                    if (facing == 0)
+                    {
+                        activeAnimation = landing_left;
+                        activeAnimation.activeFrameNumber = 6;
+                        activeAnimation.start();
+                    }
+                    else
+                    {
+                        activeAnimation = landing_right;
+                        activeAnimation.activeFrameNumber = 6;
+                        activeAnimation.start();
+                    }
                 }
-                else
+
+                if (isLanding && !fixtureB.IsSensor && activeAnimation.activeFrameNumber >= 6)
                 {
-                    activeAnimation = landing_right;
-                    activeAnimation.activeFrameNumber = 7;
-                    activeAnimation.start();
+                    isFalling = false;
+                    isLanding = false;
+
+                    if (kState.IsKeyDown(Keys.Left))
+                    {
+                        isRunning = true;
+                        activeAnimation = running_left;
+                        activeAnimation.activeFrameNumber = 0;
+                        activeAnimation.start();
+                    }
+                    if (kState.IsKeyDown(Keys.Right))
+                    {
+                        isRunning = true;
+                        activeAnimation = running_right;
+                        activeAnimation.activeFrameNumber = 0;
+                        activeAnimation.start();
+                    }
+
+                    else
+                    {
+                        isIdle = true;
+                        activeAnimation = choseIdleAnimation();
+                        activeAnimation.activeFrameNumber = 0;
+                        activeAnimation.start();
+                    }
+                }
+
+                if (charRect.IsSensor == true && !fixtureB.IsSensor && fixtureB.isHalfTransparent)
+                {
+                    try
+                    {
+                        charRect.IsSensor = false;
+                    }
+                    catch (Exception e) { }
                 }
             }
-
-            if (charRect.IsSensor == true && !fixtureB.IsSensor && fixtureB.isHalfTransparent)
-            {
-                try
-                {
-                    charRect.IsSensor = false;
-                }
-                catch (Exception e) { }
-            }
-
-            return true;
+                return true;
         }
 
         public bool landOnCollision(Fixture fixtureA, Fixture fixtureB, Contact contact)
         {
-            if (isFalling && !fixtureB.IsSensor)
+            if (isFalling && !fixtureB.IsSensor && !isScriptedMoving)
             {
                 isFalling = false;
                 isLanding = true;
