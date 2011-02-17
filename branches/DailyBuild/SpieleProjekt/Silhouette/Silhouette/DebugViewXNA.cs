@@ -174,7 +174,7 @@ namespace Silhouette
                     {
                         if (b.Active == false)
                         {
-                            DrawShape(f, xf, InactiveShapeColor);
+                          // DrawShape(f, xf, InactiveShapeColor);
                         }
                         else if (b.BodyType == BodyType.Static)
                         {
