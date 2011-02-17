@@ -72,7 +72,7 @@ namespace FarseerPhysics.Common
                         if (polygon != null && polygon.Count > 2)
                         {
                             polygonEntrance = GetTopMostVertex(polygon);
-                        }
+                        }   
                     }
                     else if (polygonEntrance.HasValue)
                     {
