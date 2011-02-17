@@ -178,7 +178,56 @@ namespace Silhouette.Engine
                 }
                 activeTexture = pictures[activeFrameNumber];
             }
+
+        //Nevermind!
+        public void Update2(GameTime gameTime, Vector2 position)
+        {
+            this.position = position;
+            if (started)
+            {
+                float elapsed = gameTime.ElapsedGameTime.Milliseconds;
+                totalElapsed += elapsed;
+
+
+
+                if (looped && started)
+                {
+                    if (totalElapsed > speed)
+                    {
+                        totalElapsed -= speed;
+                        if (activeFrameNumber < amount - 1)
+                        {
+                            activeFrameNumber++;
+                        }
+                        else if (activeFrameNumber == amount - 1)
+                        {
+                            activeFrameNumber = 0;
+                            started = false;
+                        }
+                    }
+                }
+
+                if (!looped && !playedOnce && started)
+                {
+                    if (totalElapsed > speed)
+                    {
+                        totalElapsed -= speed;
+                        if (activeFrameNumber < amount - 1)
+                        {
+                            activeFrameNumber++;
+                        }
+                        else if (activeFrameNumber == amount - 1)
+                        {
+                            activeFrameNumber = amount -1;
+                            //playedOnce = true;
+                            started = false;
+                        }
+                    }
+                }
+                activeTexture = pictures[activeFrameNumber];
+            }
         
+        }
 
         // Wird in der Draw des Trägers gerufen
         public void Draw(SpriteBatch spriteBatch)
