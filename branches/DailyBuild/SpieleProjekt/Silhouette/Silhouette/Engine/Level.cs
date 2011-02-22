@@ -36,6 +36,7 @@ namespace Silhouette.Engine
          * Die Repräsentation eines Levels im Spiel.
         */
 
+        
         #region Definitions
             private string _name;
             [DisplayName("Name"), Category("General")]
@@ -90,6 +91,7 @@ namespace Silhouette.Engine
             private KeyboardState oldKeyboardState;
         #endregion
 
+            RenderTarget2D transparentRenderTarget;
         public Level()
         {
             _layerList = new List<Layer>();
@@ -99,6 +101,7 @@ namespace Silhouette.Engine
         {
             renderTargets = new RenderTarget2D[2];
             renderTargets[1] = new RenderTarget2D(GameLoop.gameInstance.GraphicsDevice, GameSettings.Default.resolutionWidth, GameSettings.Default.resolutionHeight);
+            transparentRenderTarget = new RenderTarget2D(GameLoop.gameInstance.GraphicsDevice, GameSettings.Default.resolutionWidth, GameSettings.Default.resolutionHeight);
             this.spriteBatch = new SpriteBatch(GameLoop.gameInstance.GraphicsDevice);
             _Gravitation = new Vector2(0.0f, 9.8f);
             Physics = new World(_Gravitation);
@@ -183,7 +186,13 @@ namespace Silhouette.Engine
                 return;
 
             if (GraphicsEnabled)
+
+
             {
+
+              
+                
+
                 GameLoop.gameInstance.GraphicsDevice.SetRenderTarget(renderTargets[1]);
 
                 foreach (Layer l in layerList)
@@ -196,13 +205,27 @@ namespace Silhouette.Engine
                     Camera.Position = oldCameraPosition;
                 }
 
-                GameLoop.gameInstance.GraphicsDevice.SetRenderTarget(null);
-                GameLoop.gameInstance.GraphicsDevice.Clear(Color.Black);
-
-                spriteBatch.Begin(SpriteSortMode.Deferred, null, null, null, null, EffectManager.VignettenBlur());
+                GameLoop.gameInstance.GraphicsDevice.SetRenderTarget(transparentRenderTarget);
+                GameLoop.gameInstance.GraphicsDevice.Clear(Color.Transparent);
+                spriteBatch.Begin();
                 spriteBatch.Draw(renderTargets[1], Vector2.Zero, Color.White);
                 spriteBatch.End();
 
+                GameLoop.gameInstance.GraphicsDevice.SetRenderTarget(null);
+                GameLoop.gameInstance.GraphicsDevice.Clear(Color.Black);
+
+               /*
+                spriteBatch.Begin(SpriteSortMode.Deferred, null, null, null, null, null);
+                spriteBatch.Draw(renderTargets[1], Vector2.Zero, Color.White);
+                spriteBatch.Draw(transparentRenderTarget, Vector2.Zero, Color.White);
+                spriteBatch.End(); 
+                */
+                spriteBatch.Begin(SpriteSortMode.Deferred, null, null, null, null, null);
+                spriteBatch.Draw(transparentRenderTarget, Vector2.Zero, Color.White);
+                spriteBatch.End();
+
+                
+                
                 spriteBatch.Begin();
                 Primitives.Instance.drawBoxFilled(spriteBatch, new Rectangle(0, 0, GameSettings.Default.resolutionWidth, 96), Color.Black);
                 Primitives.Instance.drawBoxFilled(spriteBatch, new Rectangle(0, GameSettings.Default.resolutionHeight - 96, GameSettings.Default.resolutionWidth, 96), Color.Black);
