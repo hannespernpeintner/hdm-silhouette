@@ -36,62 +36,60 @@ namespace Silhouette.Engine
          * Die Repräsentation eines Levels im Spiel.
         */
 
-        
         #region Definitions
-            private string _name;
-            [DisplayName("Name"), Category("General")]
-            [Description("The name of the level.")]
-            public string name { get { return _name; } set { _name = value; } }
+        private string _name;
+        [DisplayName("Name"), Category("General")]
+        [Description("The name of the level.")]
+        public string name { get { return _name; } set { _name = value; } }
 
-            [NonSerialized]
-            private string _contentPath;
-            [DisplayName("Content Path"), Category("General")]
-            [Description("The path to the content of the Level. All textures will be safed and loaded relative to this path.")]
-            public string contentPath { get { return _contentPath; } set { _contentPath = value; } }
+        [NonSerialized]
+        private string _contentPath;
+        [DisplayName("Content Path"), Category("General")]
+        [Description("The path to the content of the Level. All textures will be safed and loaded relative to this path.")]
+        public string contentPath { get { return _contentPath; } set { _contentPath = value; } }
 
-            [NonSerialized]
-            public static World Physics;
+        [NonSerialized]
+        public static World Physics;
 
-            private const float _PixelPerMeter = 100.0f;
-            public static float PixelPerMeter { get { return _PixelPerMeter; } }
+        private const float _PixelPerMeter = 100.0f;
+        public static float PixelPerMeter { get { return _PixelPerMeter; } }
 
-            private Vector2 _Gravitation;
-            [DisplayName("Gravition"), Category("General")]
-            [Description("The Gravitation controls the force vectors applied to every dynamic fixture.")]
-            public Vector2 Gravitation { get { return _Gravitation; } set { _Gravitation = value; } }
+        private Vector2 _Gravitation;
+        [DisplayName("Gravition"), Category("General")]
+        [Description("The Gravitation controls the force vectors applied to every dynamic fixture.")]
+        public Vector2 Gravitation { get { return _Gravitation; } set { _Gravitation = value; } }
 
-            private Vector2 _startPosition;
-            [DisplayName("Start Position"), Category("General")]
-            [Description("Defines the characters starting position.")]
-            public Vector2 startPosition { get { return _startPosition; } set { _startPosition = value; } }
+        private Vector2 _startPosition;
+        [DisplayName("Start Position"), Category("General")]
+        [Description("Defines the characters starting position.")]
+        public Vector2 startPosition { get { return _startPosition; } set { _startPosition = value; } }
 
-            public bool isVisible = true;
+        public bool isVisible = true;
 
-            [NonSerialized]
-            private DebugViewXNA debugView;
-            [NonSerialized]
-            private bool DebugViewEnabled;
-            [NonSerialized]
-            private bool GraphicsEnabled;
-            [NonSerialized]
-            SpriteBatch spriteBatch;
+        [NonSerialized]
+        private DebugViewXNA debugView;
+        [NonSerialized]
+        private bool DebugViewEnabled;
+        [NonSerialized]
+        private bool GraphicsEnabled;
+        [NonSerialized]
+        SpriteBatch spriteBatch;
 
-            private List<Layer> _layerList;
-            [DisplayName("Layers"), Category("Layer")]
-            [Description("The Layers of the Level.")]
-            public List<Layer> layerList { get { return _layerList; } }
+        private List<Layer> _layerList;
+        [DisplayName("Layers"), Category("Layer")]
+        [Description("The Layers of the Level.")]
+        public List<Layer> layerList { get { return _layerList; } }
 
-            [NonSerialized]
-            private Matrix proj;
-            [NonSerialized]
-            public RenderTarget2D[] renderTargets;
-            [NonSerialized]
-            private KeyboardState keyboardState;
-            [NonSerialized]
-            private KeyboardState oldKeyboardState;
+        [NonSerialized]
+        private Matrix proj;
+        [NonSerialized]
+        public RenderTarget2D[] renderTargets;
+        [NonSerialized]
+        private KeyboardState keyboardState;
+        [NonSerialized]
+        private KeyboardState oldKeyboardState;
         #endregion
 
-            RenderTarget2D transparentRenderTarget;
         public Level()
         {
             _layerList = new List<Layer>();
@@ -101,7 +99,6 @@ namespace Silhouette.Engine
         {
             renderTargets = new RenderTarget2D[2];
             renderTargets[1] = new RenderTarget2D(GameLoop.gameInstance.GraphicsDevice, GameSettings.Default.resolutionWidth, GameSettings.Default.resolutionHeight);
-            transparentRenderTarget = new RenderTarget2D(GameLoop.gameInstance.GraphicsDevice, GameSettings.Default.resolutionWidth, GameSettings.Default.resolutionHeight);
             this.spriteBatch = new SpriteBatch(GameLoop.gameInstance.GraphicsDevice);
             _Gravitation = new Vector2(0.0f, 9.8f);
             Physics = new World(_Gravitation);
@@ -150,33 +147,33 @@ namespace Silhouette.Engine
             }
 
             #region DebugView
-                keyboardState = Keyboard.GetState();
+            keyboardState = Keyboard.GetState();
 
-                if (keyboardState.IsKeyDown(Keys.F1) && oldKeyboardState.IsKeyUp(Keys.F1))
-                    DebugViewEnabled = !DebugViewEnabled;
-                if (keyboardState.IsKeyDown(Keys.F2) && oldKeyboardState.IsKeyUp(Keys.F2))
-                    EnableOrDisableFlag(DebugViewFlags.DebugPanel);
-                if (keyboardState.IsKeyDown(Keys.F3) && oldKeyboardState.IsKeyUp(Keys.F3))
-                    EnableOrDisableFlag(DebugViewFlags.Shape);
-                if (keyboardState.IsKeyDown(Keys.F4) && oldKeyboardState.IsKeyUp(Keys.F4))
-                    EnableOrDisableFlag(DebugViewFlags.Joint);
-                if (keyboardState.IsKeyDown(Keys.F5) && oldKeyboardState.IsKeyUp(Keys.F5))
-                    EnableOrDisableFlag(DebugViewFlags.AABB);
-                if (keyboardState.IsKeyDown(Keys.F6) && oldKeyboardState.IsKeyUp(Keys.F6))
-                    EnableOrDisableFlag(DebugViewFlags.CenterOfMass);
-                if (keyboardState.IsKeyDown(Keys.F7) && oldKeyboardState.IsKeyUp(Keys.F7))
-                    EnableOrDisableFlag(DebugViewFlags.Pair);
-                if (keyboardState.IsKeyDown(Keys.F8) && oldKeyboardState.IsKeyUp(Keys.F8))
-                {
-                    EnableOrDisableFlag(DebugViewFlags.ContactPoints);
-                    EnableOrDisableFlag(DebugViewFlags.ContactNormals);
-                }
-                if (keyboardState.IsKeyDown(Keys.F9) && oldKeyboardState.IsKeyUp(Keys.F9))
-                    EnableOrDisableFlag(DebugViewFlags.PolygonPoints);
-                if (keyboardState.IsKeyDown(Keys.F10) && oldKeyboardState.IsKeyUp(Keys.F10))
-                    GraphicsEnabled = !GraphicsEnabled;
+            if (keyboardState.IsKeyDown(Keys.F1) && oldKeyboardState.IsKeyUp(Keys.F1))
+                DebugViewEnabled = !DebugViewEnabled;
+            if (keyboardState.IsKeyDown(Keys.F2) && oldKeyboardState.IsKeyUp(Keys.F2))
+                EnableOrDisableFlag(DebugViewFlags.DebugPanel);
+            if (keyboardState.IsKeyDown(Keys.F3) && oldKeyboardState.IsKeyUp(Keys.F3))
+                EnableOrDisableFlag(DebugViewFlags.Shape);
+            if (keyboardState.IsKeyDown(Keys.F4) && oldKeyboardState.IsKeyUp(Keys.F4))
+                EnableOrDisableFlag(DebugViewFlags.Joint);
+            if (keyboardState.IsKeyDown(Keys.F5) && oldKeyboardState.IsKeyUp(Keys.F5))
+                EnableOrDisableFlag(DebugViewFlags.AABB);
+            if (keyboardState.IsKeyDown(Keys.F6) && oldKeyboardState.IsKeyUp(Keys.F6))
+                EnableOrDisableFlag(DebugViewFlags.CenterOfMass);
+            if (keyboardState.IsKeyDown(Keys.F7) && oldKeyboardState.IsKeyUp(Keys.F7))
+                EnableOrDisableFlag(DebugViewFlags.Pair);
+            if (keyboardState.IsKeyDown(Keys.F8) && oldKeyboardState.IsKeyUp(Keys.F8))
+            {
+                EnableOrDisableFlag(DebugViewFlags.ContactPoints);
+                EnableOrDisableFlag(DebugViewFlags.ContactNormals);
+            }
+            if (keyboardState.IsKeyDown(Keys.F9) && oldKeyboardState.IsKeyUp(Keys.F9))
+                EnableOrDisableFlag(DebugViewFlags.PolygonPoints);
+            if (keyboardState.IsKeyDown(Keys.F10) && oldKeyboardState.IsKeyUp(Keys.F10))
+                GraphicsEnabled = !GraphicsEnabled;
 
-                oldKeyboardState = keyboardState;
+            oldKeyboardState = keyboardState;
             #endregion
         }
 
@@ -186,13 +183,7 @@ namespace Silhouette.Engine
                 return;
 
             if (GraphicsEnabled)
-
-
             {
-
-              
-                
-
                 GameLoop.gameInstance.GraphicsDevice.SetRenderTarget(renderTargets[1]);
 
                 foreach (Layer l in layerList)
@@ -205,27 +196,13 @@ namespace Silhouette.Engine
                     Camera.Position = oldCameraPosition;
                 }
 
-                GameLoop.gameInstance.GraphicsDevice.SetRenderTarget(transparentRenderTarget);
-                GameLoop.gameInstance.GraphicsDevice.Clear(Color.Transparent);
-                spriteBatch.Begin();
-                spriteBatch.Draw(renderTargets[1], Vector2.Zero, Color.White);
-                spriteBatch.End();
-
                 GameLoop.gameInstance.GraphicsDevice.SetRenderTarget(null);
                 GameLoop.gameInstance.GraphicsDevice.Clear(Color.Black);
 
-               /*
-                spriteBatch.Begin(SpriteSortMode.Deferred, null, null, null, null, null);
+                spriteBatch.Begin(SpriteSortMode.Deferred, null, null, null, null, EffectManager.VignettenBlur());
                 spriteBatch.Draw(renderTargets[1], Vector2.Zero, Color.White);
-                spriteBatch.Draw(transparentRenderTarget, Vector2.Zero, Color.White);
-                spriteBatch.End(); 
-                */
-                spriteBatch.Begin(SpriteSortMode.Deferred, null, null, null, null, null);
-                spriteBatch.Draw(transparentRenderTarget, Vector2.Zero, Color.White);
                 spriteBatch.End();
 
-                
-                
                 spriteBatch.Begin();
                 Primitives.Instance.drawBoxFilled(spriteBatch, new Rectangle(0, 0, GameSettings.Default.resolutionWidth, 96), Color.Black);
                 Primitives.Instance.drawBoxFilled(spriteBatch, new Rectangle(0, GameSettings.Default.resolutionHeight - 96, GameSettings.Default.resolutionWidth, 96), Color.Black);
@@ -251,12 +228,12 @@ namespace Silhouette.Engine
         {
             EndBoss boss = new EndBoss();
             boss.Initialise();
-        
-            boss.position = new Vector2(900,0);
+
+            boss.position = new Vector2(900, 0);
             boss.layer = layer;
-            
-            
-            layer.loList.Add(boss);     
+
+
+            layer.loList.Add(boss);
         }
 
         public static Level LoadLevelFile(string levelPath)
@@ -276,13 +253,13 @@ namespace Silhouette.Engine
         }
 
         #region DebugViewMethods
-            private void EnableOrDisableFlag(DebugViewFlags flag)
-            {
-                if ((debugView.Flags & flag) == flag)
-                    debugView.RemoveFlags(flag);
-                else
-                    debugView.AppendFlags(flag);
-            }
+        private void EnableOrDisableFlag(DebugViewFlags flag)
+        {
+            if ((debugView.Flags & flag) == flag)
+                debugView.RemoveFlags(flag);
+            else
+                debugView.AppendFlags(flag);
+        }
         #endregion
     }
 }
