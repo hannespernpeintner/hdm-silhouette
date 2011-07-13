@@ -23,6 +23,9 @@ namespace Silhouette.GameMechs
 {
     public class Player : DrawableLevelObject
     {
+        public static int JUMPFORCENORMAL = 1350;
+        public static int JUMPFORCESUPER = 1700;
+
         public float tempRotation;
         public int resetTimer;
         public Vector2 centerPosition;      // Hannes: Rectangles für Kollisionserkennung. Muss noch um Kollisionsgruppe erweitert werden.
@@ -50,6 +53,7 @@ namespace Silhouette.GameMechs
         private bool isFalling;
         private bool isIdle;
         private bool isScriptedMoving;
+        private bool isUncontrollableMoving;
         private bool isDying;
         public bool isRemembering;         // So kommt Tom in den Erinnerungszustand
         public bool isRecovering;
@@ -68,6 +72,7 @@ namespace Silhouette.GameMechs
         public float fadeOrange;
 
         private String actScriptedMove;
+        private String actUncontrollableMove;
 
         private bool canClimb;
         private int actClimbHeight;
@@ -228,8 +233,8 @@ namespace Silhouette.GameMechs
             hang2_right.Load(1, "Sprites/Player/hang2_right_", 1f, false);
             pullup.Load(13, "Sprites/Player/pullup_left_", 1f, false);
 
-            dying_left.Load(4, "Sprites/Player/die_left_", 0.5f, false);
-            dying_right.Load(4, "Sprites/Player/die_right_", 0.5f, false);
+            dying_left.Load(4, "Sprites/Player/die_left_", 0.7f, false);
+            dying_right.Load(4, "Sprites/Player/die_right_", 0.7f, false);
             dying2_left.Load(1, "Sprites/Player/die2_left_", 0.1f, false);
             dying2_right.Load(1, "Sprites/Player/die2_right_", 0.1f, false);
 
@@ -321,11 +326,11 @@ namespace Silhouette.GameMechs
         public override void Update(GameTime gameTime)
         {
             calcRotation(gameTime);
-            if (!isDying && !isScriptedMoving)
+            if (!isDying && !isScriptedMoving && !isUncontrollableMoving)
             {
                 ObserveMovement();
             }
-            if (!isDying && !isScriptedMoving && !controlsEnabled)
+            if (!isDying && !isScriptedMoving)
             {
                 UpdateControls(gameTime);
             }
@@ -337,6 +342,12 @@ namespace Silhouette.GameMechs
             {
                 doScriptedMove();
             }
+            if (isUncontrollableMoving)
+            {
+                doUncontrollableMove();
+            }
+
+
             UpdatePositions();
             UpdateTexture(gameTime);
             UpdateCamera();
@@ -475,11 +486,11 @@ namespace Silhouette.GameMechs
                     // Unterscheiden von Superjump und NormalJump
                     if (isRemembering)
                     {
-                        charRect.Body.ApplyForce(new Vector2(-50, -1650));
+                        charRect.Body.ApplyForce(new Vector2(-50, -JUMPFORCESUPER));
                     }
                     else
                     {
-                        charRect.Body.ApplyForce(new Vector2(-50, -1400));
+                        charRect.Body.ApplyForce(new Vector2(-50, -JUMPFORCENORMAL));
                     }
                 }
                 else if (facing == 1 && !isRecovering)
@@ -493,11 +504,11 @@ namespace Silhouette.GameMechs
                     isRunning = false;
                     if (isRemembering)
                     {
-                        charRect.Body.ApplyForce(new Vector2(50, -1650));
+                        charRect.Body.ApplyForce(new Vector2(50, -JUMPFORCESUPER));
                     }
                     else
                     {
-                        charRect.Body.ApplyForce(new Vector2(50, -1400));
+                        charRect.Body.ApplyForce(new Vector2(50, -JUMPFORCENORMAL));
                     }
                 }
                 else if (isRecovering)
@@ -574,19 +585,27 @@ namespace Silhouette.GameMechs
 
         private void doScriptedMove()
         {
-            if (actScriptedMove.Equals("climb") && isScriptedMoving)
+            if ("climb".Equals(actScriptedMove) && isScriptedMoving)
             {
                 climb();
             }
 
-            if (actScriptedMove.Equals("die") && isScriptedMoving)
+            /*if ("die".Equals(actScriptedMove) && (!controlsEnabled))
             {
                 die();
-            }
+            }*/
 
-            if (actScriptedMove.Equals("hang") && isScriptedMoving)
+            if ("hang".Equals(actScriptedMove) && isScriptedMoving)
             {
                 hang();
+            }
+        }
+
+        private void doUncontrollableMove()
+        { 
+            if ("die".Equals(actUncontrollableMove) && (!controlsEnabled))
+            {
+                die();
             }
         }
 
@@ -770,18 +789,20 @@ namespace Silhouette.GameMechs
 
         private void die()
         {
-            if (!isScriptedMoving)
+            //if (!isScriptedMoving)
+            if (!isUncontrollableMoving)
             {
-                actScriptedMove = "die";
-                isScriptedMoving = true;
+                actUncontrollableMove = "die";
+                isUncontrollableMoving = true;
+                controlsEnabled = false;
                 isIdle = false;
                 isRunning = false;
                 isJumping = false;
                 isDying = true;
                 isFalling = false;
 
-                charRect.Body.BodyType = BodyType.Static;
-                charRect.Body.IgnoreGravity = true;
+                //charRect.Body.BodyType = BodyType.Static;
+                //charRect.Body.IgnoreGravity = true;
 
                 if (facing == 0)
                 {
@@ -959,7 +980,6 @@ namespace Silhouette.GameMechs
             {
                 nextAnimation = dying2_right;
             }
-
 
 
             if (activeAnimation.activeFrameNumber == activeAnimation.amount - 1 &&
@@ -1200,7 +1220,9 @@ namespace Silhouette.GameMechs
             try
             {
                 isScriptedMoving = false;
+                isUncontrollableMoving = false;
                 actScriptedMove = "";
+                actUncontrollableMove = "";
                 isIdle = true;
                 isDying = false;
                 isFalling = false;
@@ -1222,7 +1244,9 @@ namespace Silhouette.GameMechs
             catch (Exception e)
             {
                 isScriptedMoving = false;
+                isUncontrollableMoving = false;
                 actScriptedMove = "";
+                actUncontrollableMove = "";
                 isIdle = true;
                 isDying = false;
                 isFalling = false;
