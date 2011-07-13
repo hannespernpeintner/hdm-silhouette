@@ -648,26 +648,26 @@ namespace Silhouette.GameMechs
                 {
                     if (activeAnimation.activeFrameNumber <= 6 || activeAnimation.activeFrameNumber >= 14)
                     {
-                        charRect.Body.Position += new Vector2(2.75f / Level.PixelPerMeter, 0);
-                        if (Camera.fixedOnPlayer) { camRect.Body.Position += new Vector2(2.75f / Level.PixelPerMeter, 0); }
+                        charRect.Body.Position += new Vector2(3.8f / Level.PixelPerMeter, 0);
+                        if (Camera.fixedOnPlayer) { camRect.Body.Position += new Vector2(3.8f / Level.PixelPerMeter, 0); }
                     }
                     if (activeAnimation.activeFrameNumber > 6 && activeAnimation.activeFrameNumber < 14)
                     {
-                        charRect.Body.Position += new Vector2(0, -4.4f / Level.PixelPerMeter);
-                        if (Camera.fixedOnPlayer) { camRect.Body.Position += new Vector2(0, -4.4f / Level.PixelPerMeter); }
+                        charRect.Body.Position += new Vector2(0, -4.7f / Level.PixelPerMeter);
+                        if (Camera.fixedOnPlayer) { camRect.Body.Position += new Vector2(0, -4.7f / Level.PixelPerMeter); }
                     }
                 }
                 else
                 {
                     if (activeAnimation.activeFrameNumber <= 6 || activeAnimation.activeFrameNumber >= 14)
                     {
-                        charRect.Body.Position += new Vector2(-2.75f / Level.PixelPerMeter, 0);
-                        if (Camera.fixedOnPlayer) { camRect.Body.Position += new Vector2(-2.75f / Level.PixelPerMeter, 0); }
+                        charRect.Body.Position += new Vector2(-3.8f / Level.PixelPerMeter, 0);
+                        if (Camera.fixedOnPlayer) { camRect.Body.Position += new Vector2(-3.8f / Level.PixelPerMeter, 0); }
                     }
                     if (activeAnimation.activeFrameNumber > 6 && activeAnimation.activeFrameNumber < 14)
                     {
-                        charRect.Body.Position += new Vector2(0, -4.4f / Level.PixelPerMeter);
-                        if (Camera.fixedOnPlayer) { camRect.Body.Position += new Vector2(0, -4.4f / Level.PixelPerMeter); }
+                        charRect.Body.Position += new Vector2(0, -4.7f / Level.PixelPerMeter);
+                        if (Camera.fixedOnPlayer) { camRect.Body.Position += new Vector2(0, -4.7f / Level.PixelPerMeter); }
                     }
                 }
             }
