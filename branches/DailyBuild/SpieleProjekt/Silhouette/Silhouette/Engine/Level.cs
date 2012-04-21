@@ -97,8 +97,13 @@ namespace Silhouette.Engine
 
         public void Initialize()
         {
-            renderTargets = new RenderTarget2D[2];
+
+            renderTargets = new RenderTarget2D[5];
             renderTargets[1] = new RenderTarget2D(GameLoop.gameInstance.GraphicsDevice, GameSettings.Default.resolutionWidth, GameSettings.Default.resolutionHeight);
+            renderTargets[2] = new RenderTarget2D(GameLoop.gameInstance.GraphicsDevice, GameSettings.Default.resolutionWidth, GameSettings.Default.resolutionHeight);
+            renderTargets[3] = new RenderTarget2D(GameLoop.gameInstance.GraphicsDevice, GameSettings.Default.resolutionWidth, GameSettings.Default.resolutionHeight);
+            renderTargets[4] = new RenderTarget2D(GameLoop.gameInstance.GraphicsDevice, GameSettings.Default.resolutionWidth, GameSettings.Default.resolutionHeight);
+
             this.spriteBatch = new SpriteBatch(GameLoop.gameInstance.GraphicsDevice);
             _Gravitation = new Vector2(0.0f, 9.8f);
             Physics = new World(_Gravitation);
@@ -139,12 +144,15 @@ namespace Silhouette.Engine
 
         public void Update(GameTime gameTime)
         {
+
             Physics.Step(Math.Min((float)gameTime.ElapsedGameTime.TotalMilliseconds * 0.001f, (1f / 30f)));
 
             foreach (Layer l in layerList)
             {
                 l.updateLayer(gameTime);
             }
+
+            EffectManager.gameTime = gameTime;
 
             #region DebugView
             keyboardState = Keyboard.GetState();
@@ -185,22 +193,42 @@ namespace Silhouette.Engine
             if (GraphicsEnabled)
             {
                 GameLoop.gameInstance.GraphicsDevice.SetRenderTarget(renderTargets[1]);
-
+                
+                
                 foreach (Layer l in layerList)
                 {
                     Vector2 oldCameraPosition = Camera.Position;
                     Camera.Position *= l.ScrollSpeed;
-                    spriteBatch.Begin(SpriteSortMode.Deferred, l.getBlendStateByEffect(l.shaderType), null, null, null, l.getShaderByType(l.shaderType), Camera.matrix);
+
+                    spriteBatch.Begin(SpriteSortMode.Deferred, l.getBlendStateByEffect(l.shaderType), null, null, null, l.getShaderByType(l.shaderType), Camera.matrix);                   
                     l.drawLayer(spriteBatch);
                     spriteBatch.End();
                     Camera.Position = oldCameraPosition;
                 }
 
+
+                GameLoop.gameInstance.GraphicsDevice.SetRenderTarget(renderTargets[2]);
+                GameLoop.gameInstance.GraphicsDevice.Clear(Color.Black);
+
+                spriteBatch.Begin(SpriteSortMode.Deferred, null, null, null, null, EffectManager.Godrays());
+                spriteBatch.Draw(renderTargets[1], Vector2.Zero, Color.White);
+                spriteBatch.End();
+
+                GameLoop.gameInstance.GraphicsDevice.SetRenderTarget(renderTargets[3]);
+                GameLoop.gameInstance.GraphicsDevice.Clear(Color.Black);
+
+                spriteBatch.Begin(SpriteSortMode.Deferred, null, null, null, null, EffectManager.Bloom());
+                spriteBatch.Draw(renderTargets[2], Vector2.Zero, Color.White);
+                spriteBatch.End();
+
                 GameLoop.gameInstance.GraphicsDevice.SetRenderTarget(null);
                 GameLoop.gameInstance.GraphicsDevice.Clear(Color.Black);
 
-                spriteBatch.Begin(SpriteSortMode.Deferred, null, null, null, null, EffectManager.VignettenBlur());
+                spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, null, null, null, EffectManager.VignettenBlur());
+                spriteBatch.Draw(renderTargets[2], Vector2.Zero, Color.White);
                 spriteBatch.Draw(renderTargets[1], Vector2.Zero, Color.White);
+
+                //spriteBatch.Draw(renderTargets[3], Vector2.Zero, Color.White);
                 spriteBatch.End();
 
                 spriteBatch.Begin();
