@@ -1197,6 +1197,11 @@
       <Importer>EffectImporter</Importer>
       <Processor>EffectProcessor</Processor>
     </Compile>
+    <Compile Include="Effects\godrays.fx">
+      <Name>godrays</Name>
+      <Importer>EffectImporter</Importer>
+      <Processor>EffectProcessor</Processor>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Sprites\Player\walkStart_left_03.png">
@@ -2314,10 +2319,7 @@
     <None Include="Audio\Abspann.ogg">
       <Name>Abspann</Name>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-
     </None>
-
-
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Sprites\Menu\HowToPlay.png">
@@ -2325,7 +2327,6 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\$(XnaFrameworkVersion)\Microsoft.Xna.GameStudio.ContentPipeline.targets" />
   <!--  To modify your build process, add your task inside one of the targets below and uncomment it. 
