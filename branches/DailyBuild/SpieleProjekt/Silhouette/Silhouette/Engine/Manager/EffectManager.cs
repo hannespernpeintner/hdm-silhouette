@@ -32,6 +32,9 @@ namespace Silhouette.Engine.Manager
         private static Effect colorChange;
         private static bool overallBlur;
         private static bool overallVignette;
+        private static Effect godrays;
+
+        public static GameTime gameTime;
 
         public static void loadEffects() 
         {
@@ -56,8 +59,10 @@ namespace Silhouette.Engine.Manager
             weakBleach = GameLoop.gameInstance.Content.Load<Effect>("Effects/bleach");
             strongBleach = GameLoop.gameInstance.Content.Load<Effect>("Effects/bleach");
 
-            bloomer = GameLoop.gameInstance.Content.Load<Effect>("Effects/bloom");
+            bloomer = GameLoop.gameInstance.Content.Load<Effect>("Effects/Bloom");
             vignettenBlur = GameLoop.gameInstance.Content.Load<Effect>("Effects/VignettenBlur");
+
+            godrays = GameLoop.gameInstance.Content.Load<Effect>("Effects/godrays");
         }
 
         public static Effect Blender()
@@ -130,7 +135,31 @@ namespace Silhouette.Engine.Manager
 
         public static Effect Bloom()
         {
+            Matrix projection = Matrix.CreateOrthographicOffCenter(0, GameLoop.gameInstance.GraphicsDevice.Viewport.Width, GameLoop.gameInstance.GraphicsDevice.Viewport.Height, 0, 0, 1);
+            Matrix halfPixelOffset = Matrix.CreateTranslation(-0.5f, -0.5f, 0);
+
+            bloomer.Parameters["MatrixTransform"].SetValue(halfPixelOffset * projection); 
             return bloomer;
+        }
+
+        public static Effect Godrays()
+        {
+            Matrix projection = Matrix.CreateOrthographicOffCenter(0, GameLoop.gameInstance.GraphicsDevice.Viewport.Width, GameLoop.gameInstance.GraphicsDevice.Viewport.Height, 0, 0, 1);
+            Matrix halfPixelOffset = Matrix.CreateTranslation(-0.5f, -0.5f, 0);
+
+            godrays.Parameters["MatrixTransform"].SetValue(halfPixelOffset * projection);
+
+
+            // For the rays to change strength slightly (simulating cloud movement)
+            double temp = 0.001;
+            if (gameTime != null)
+            {
+                temp = Math.Sin(0.001f * gameTime.TotalGameTime.TotalMilliseconds) * 0.01 * (new Random().Next(95, 105) * 0.01f);
+            }
+            
+            godrays.Parameters["Exposure"].SetValue(0.04515f + (float)(temp));
+
+            return godrays;
         }
 
         public static Effect VignettenBlur()
@@ -174,5 +203,7 @@ namespace Silhouette.Engine.Manager
         {
             overallVignette = b;
         }
+
+
     }
 }
