@@ -3,6 +3,7 @@ float BlurDistance = 0.002f;
 sampler2D frameSampler: register(s0){
 };
 
+
 float4 PS_blur(float2 Tex: TEXCOORD0) : COLOR
 {
 	float4 Color;
@@ -41,13 +42,13 @@ float4 PS_blur(float2 Tex: TEXCOORD0) : COLOR
 Color = Color / 16;
 
 //Kontrast erhöhen
-Color.rgb=pow(Color.rgb,2.0f)*1.5;
+Color.rgb=pow(Color.rgb,2.0f)*0.5f;
 
 //Siehe Kommentar oben
 //Color = Color + regularColor;
 //return Color/2;
 
-return Color;
+return Color/2;
 }
 
 float4x4 MatrixTransform : register(vs, c0);
