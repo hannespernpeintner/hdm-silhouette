@@ -103,7 +103,7 @@ namespace Silhouette.Engine
             renderTargets[2] = new RenderTarget2D(GameLoop.gameInstance.GraphicsDevice, GameSettings.Default.resolutionWidth, GameSettings.Default.resolutionHeight);
             renderTargets[3] = new RenderTarget2D(GameLoop.gameInstance.GraphicsDevice, GameSettings.Default.resolutionWidth, GameSettings.Default.resolutionHeight);
             renderTargets[4] = new RenderTarget2D(GameLoop.gameInstance.GraphicsDevice, GameSettings.Default.resolutionWidth, GameSettings.Default.resolutionHeight);
-
+            
             this.spriteBatch = new SpriteBatch(GameLoop.gameInstance.GraphicsDevice);
             _Gravitation = new Vector2(0.0f, 9.8f);
             Physics = new World(_Gravitation);
@@ -152,7 +152,7 @@ namespace Silhouette.Engine
                 l.updateLayer(gameTime);
             }
 
-            EffectManager.gameTime = gameTime;
+            EffectManager.Update(gameTime);
 
             #region DebugView
             keyboardState = Keyboard.GetState();
@@ -227,14 +227,18 @@ namespace Silhouette.Engine
                 spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, null, null, null, EffectManager.VignettenBlur());
                 spriteBatch.Draw(renderTargets[2], Vector2.Zero, Color.White);
                 spriteBatch.Draw(renderTargets[1], Vector2.Zero, Color.White);
+                spriteBatch.Draw(renderTargets[3], Vector2.Zero, Color.White);
 
-                //spriteBatch.Draw(renderTargets[3], Vector2.Zero, Color.White);
                 spriteBatch.End();
 
                 spriteBatch.Begin();
+
                 Primitives.Instance.drawBoxFilled(spriteBatch, new Rectangle(0, 0, GameSettings.Default.resolutionWidth, 96), Color.Black);
                 Primitives.Instance.drawBoxFilled(spriteBatch, new Rectangle(0, GameSettings.Default.resolutionHeight - 96, GameSettings.Default.resolutionWidth, 96), Color.Black);
+
                 spriteBatch.End();
+
+
             }
             if (DebugViewEnabled)
             {

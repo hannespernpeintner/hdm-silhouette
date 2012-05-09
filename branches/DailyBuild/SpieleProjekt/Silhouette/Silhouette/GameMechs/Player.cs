@@ -129,7 +129,6 @@ namespace Silhouette.GameMechs
             // position = Vector2.Zero;
             // position = new Vector2(200, 200);
 
-
             idle_left = new Animation();
             idle_right = new Animation();
             idleb_left = new Animation();
