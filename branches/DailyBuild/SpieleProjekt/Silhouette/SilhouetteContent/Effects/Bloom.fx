@@ -1,4 +1,5 @@
 float BlurDistance = 0.002f;
+float oldSceneAverageBrightness = 0.5f;
 
 sampler2D frameSampler: register(s0){
 };
@@ -42,7 +43,7 @@ float4 PS_blur(float2 Tex: TEXCOORD0) : COLOR
 Color = Color / 16;
 
 //Kontrast erhöhen
-Color.rgb=pow(Color.rgb,2.0f)*0.5f;
+Color.rgb=pow(Color.rgb,2.0f)*oldSceneAverageBrightness;
 
 //Siehe Kommentar oben
 //Color = Color + regularColor;

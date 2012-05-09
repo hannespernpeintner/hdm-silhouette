@@ -1,6 +1,6 @@
 #define NUM_SAMPLES 180
 
-float3 ScreenLightPos = (0,1,0.5);
+float3 ScreenLightPos = (0,1,0.3);
 
 float Density = .95f;
 float Decay = .98f;
@@ -9,11 +9,12 @@ float Exposure = .15f;
 
 sampler2D frameSampler: register(s0){
 };
-sampler2D clouds: register(s3){
-};
+
+sampler noiseSampler: register(s3);
 
 float4 lightRayPS( float2 texCoord : TEXCOORD0 ) : COLOR0
 {
+	float4 noise = tex2D(noiseSampler, texCoord);
 
   // Calculate vector from pixel to light source in screen space.  
    float2 deltaTexCoord = (texCoord - ScreenLightPos.xy);  
@@ -40,8 +41,9 @@ float4 lightRayPS( float2 texCoord : TEXCOORD0 ) : COLOR0
   // Output final color with a further scale control factor.  
   float4 temp = float4( color * Exposure, 0.1);
   temp.a = 0.6;
+  temp += float4(noise.r,noise.r,noise.r,noise.r)/10;
   return temp;
-   //return float4( color * Exposure, 0.1);  
+   //return float4( color * Exposure, 0.1);
     
 }
 

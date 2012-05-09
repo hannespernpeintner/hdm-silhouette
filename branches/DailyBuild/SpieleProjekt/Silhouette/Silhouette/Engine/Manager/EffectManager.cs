@@ -1,14 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Audio;
-using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
-using Microsoft.Xna.Framework.Media;
 using Silhouette.GameMechs;
+using System.IO;
 
 namespace Silhouette.Engine.Manager
 {
@@ -18,6 +12,8 @@ namespace Silhouette.Engine.Manager
     public static class EffectManager
     {
         private static Texture2D vignette;
+        private static Texture2D clouds;
+        private static Texture2D noise;
 
         private static Effect blender;
         private static Effect blurrer;
@@ -43,6 +39,12 @@ namespace Silhouette.Engine.Manager
 
             vignette = GameLoop.gameInstance.Content.Load<Texture2D>("Sprites/Overlays/Vignette");
             GameLoop.gameInstance.GraphicsDevice.Textures[1] = vignette;
+
+            clouds = GameLoop.gameInstance.Content.Load<Texture2D>("Sprites/Overlays/clouds");
+            GameLoop.gameInstance.GraphicsDevice.Textures[2] = clouds;
+
+            noise = GameLoop.gameInstance.Content.Load<Texture2D>("Sprites/Overlays/noise");
+            GameLoop.gameInstance.GraphicsDevice.Textures[3] = noise;
 
             blender = GameLoop.gameInstance.Content.Load<Effect>("Effects/blender");
 
@@ -138,7 +140,8 @@ namespace Silhouette.Engine.Manager
             Matrix projection = Matrix.CreateOrthographicOffCenter(0, GameLoop.gameInstance.GraphicsDevice.Viewport.Width, GameLoop.gameInstance.GraphicsDevice.Viewport.Height, 0, 0, 1);
             Matrix halfPixelOffset = Matrix.CreateTranslation(-0.5f, -0.5f, 0);
 
-            bloomer.Parameters["MatrixTransform"].SetValue(halfPixelOffset * projection); 
+            bloomer.Parameters["MatrixTransform"].SetValue(halfPixelOffset * projection);
+
             return bloomer;
         }
 
@@ -154,7 +157,7 @@ namespace Silhouette.Engine.Manager
             double temp = 0.001;
             if (gameTime != null)
             {
-                temp = Math.Sin(0.001f * gameTime.TotalGameTime.TotalMilliseconds) * 0.01 * (new Random().Next(95, 105) * 0.01f);
+                temp = Math.Sin(0.0005f * gameTime.TotalGameTime.TotalMilliseconds) * 0.01 * (new Random().Next(95, 105) * 0.01f);
             }
             
             godrays.Parameters["Exposure"].SetValue(0.04515f + (float)(temp));
@@ -204,6 +207,11 @@ namespace Silhouette.Engine.Manager
             overallVignette = b;
         }
 
+        public static void Update(GameTime gameTime) {
+            EffectManager.gameTime = gameTime;
+        }
+
+        
 
     }
 }
