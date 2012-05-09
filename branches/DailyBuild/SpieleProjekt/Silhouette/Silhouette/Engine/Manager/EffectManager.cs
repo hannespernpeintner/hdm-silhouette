@@ -155,12 +155,18 @@ namespace Silhouette.Engine.Manager
 
             // For the rays to change strength slightly (simulating cloud movement)
             double temp = 0.001;
+            double noiseMove = 0.5f;
+            double lightPosX = 0.5f;
             if (gameTime != null)
             {
-                temp = Math.Sin(0.0005f * gameTime.TotalGameTime.TotalMilliseconds) * 0.01 * (new Random().Next(95, 105) * 0.01f);
+                temp = Math.Sin(0.0015f * gameTime.TotalGameTime.TotalMilliseconds) * 0.01 * (new Random().Next(95, 105) * 0.01f);
+                noiseMove += Math.Sin(0.000005f * gameTime.TotalGameTime.TotalMilliseconds);
+                lightPosX = 10*Math.Sin(gameTime.TotalGameTime.TotalMilliseconds);
             }
-            
+
             godrays.Parameters["Exposure"].SetValue(0.04515f + (float)(temp));
+            godrays.Parameters["NoiseMove"].SetValue((float)noiseMove);
+            godrays.Parameters["LightPositionX"].SetValue((float)lightPosX);
 
             return godrays;
         }
