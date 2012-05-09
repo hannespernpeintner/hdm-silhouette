@@ -74,6 +74,15 @@ namespace Silhouette.Engine.Manager
             return fixture;
         }
 
+        public static List<Fixture> CreateCapsule(float height, float radius, Vector2 position, BodyType bodyType, float density) 
+        {
+            radius /= Level.PixelPerMeter;
+            List<Fixture> fixtures = FixtureFactory.CreateCapsule(Level.Physics, height, radius, density);
+            fixtures[0].Body.BodyType = bodyType;
+            fixtures[0].Body.Position = ToMeter(position);
+            return fixtures;
+        }
+
         public static Fixture CreatePolygon(Texture2D texture, Vector2 scaling, BodyType bodyType, Vector2 position, float density)
         {
             uint[] data = new uint[texture.Width * texture.Height];
