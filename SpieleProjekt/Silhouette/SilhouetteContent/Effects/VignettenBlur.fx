@@ -4,12 +4,16 @@
 // This will use the texture bound to the object( like from the sprite batch ).
 sampler ColorMapSampler : register(s0);
 sampler MaskSampler : register(s1);
+//sampler noiseSampler: register(s3);
 
 bool bBlur;
 bool bVignette;
  
 float4 PS(float2 Tex: TEXCOORD0) : COLOR
 {
+
+	//float4 noise = tex2D(noiseSampler, Tex);
+
 	float4 Color;
 	float4 Vignette = tex2D(MaskSampler, Tex);
 	// Vignette ist schwarz-weiﬂ. Abh. vom blau-Wert wird Blurst‰rke ausgew‰hlt
@@ -32,8 +36,7 @@ if (bVignette)
 	}
 
 Color *= Vignette;
- 
-// returned the blurred color
+//Color += float4(noise.r,noise.r,noise.r,noise.r)/50 * Vignette;
 
 }
 
