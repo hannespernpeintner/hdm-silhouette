@@ -1,5 +1,5 @@
-float BlurDistance = 0.002f;
-float oldSceneAverageBrightness = 0.5f;
+float BlurDistance = 0.2f;
+float oldSceneAverageBrightness = 0.3f;
 
 sampler2D frameSampler: register(s0){
 };

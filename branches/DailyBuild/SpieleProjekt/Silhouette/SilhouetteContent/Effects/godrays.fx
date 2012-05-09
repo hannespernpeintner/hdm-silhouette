@@ -1,11 +1,13 @@
 #define NUM_SAMPLES 180
 
-float3 ScreenLightPos = (0,1,0.3);
-
 float Density = .95f;
 float Decay = .98f;
-float Weight = 0.2f;
+float Weight = 0.152f;
 float Exposure = .15f;
+float NoiseMove = 1;
+float LightPositionX = 0.5f;
+
+
 
 sampler2D frameSampler: register(s0){
 };
@@ -14,7 +16,13 @@ sampler noiseSampler: register(s3);
 
 float4 lightRayPS( float2 texCoord : TEXCOORD0 ) : COLOR0
 {
-	float4 noise = tex2D(noiseSampler, texCoord);
+	float3 ScreenLightPos = (0.5,1,0.3f+(Exposure/2));
+	float4 noise = tex2D(noiseSampler, texCoord + NoiseMove);
+	float4 noise2 = tex2D(noiseSampler, texCoord - 1.5f*NoiseMove);
+	noise2.a = NoiseMove*Exposure;
+	noise = noise + noise2;
+	noise = noise/2;
+
 
   // Calculate vector from pixel to light source in screen space.  
    float2 deltaTexCoord = (texCoord - ScreenLightPos.xy);  
