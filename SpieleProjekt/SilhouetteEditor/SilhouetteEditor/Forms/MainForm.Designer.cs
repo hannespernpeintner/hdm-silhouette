@@ -98,8 +98,12 @@ namespace SilhouetteEditor.Forms
             this.propertyGrid1 = new System.Windows.Forms.PropertyGrid();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.TextureView = new System.Windows.Forms.ListView();
+            this.TextureViewAnimations = new System.Windows.Forms.ListView();
             this.ImageList32 = new System.Windows.Forms.ImageList(this.components);
+            this.ImageListAnimations32 = new System.Windows.Forms.ImageList(this.components);
             this.BrowseButton = new System.Windows.Forms.Button();
+            this.tabPageAnimations = new System.Windows.Forms.TabPage();
+            this.BrowseButtonAnimations = new System.Windows.Forms.Button();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.BrowseButton2 = new System.Windows.Forms.Button();
             this.InteractiveView = new System.Windows.Forms.ListView();
@@ -141,6 +145,7 @@ namespace SilhouetteEditor.Forms
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.tabPage3.SuspendLayout();
+            this.tabPageAnimations.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.GameView)).BeginInit();
             this.LevelContextMenu.SuspendLayout();
             this.LayerContextMenu.SuspendLayout();
@@ -689,6 +694,7 @@ namespace SilhouetteEditor.Forms
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Controls.Add(this.tabPage3);
+            this.tabControl1.Controls.Add(this.tabPageAnimations);
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
@@ -732,6 +738,18 @@ namespace SilhouetteEditor.Forms
             this.tabPage2.Text = "Textures";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
+            // tabPage2.5 Animations
+            // 
+            this.tabPageAnimations.Controls.Add(this.TextureViewAnimations);
+            this.tabPageAnimations.Controls.Add(this.BrowseButtonAnimations);
+            this.tabPageAnimations.Location = new System.Drawing.Point(4, 22);
+            this.tabPageAnimations.Name = "tabPageAnimations";
+            this.tabPageAnimations.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageAnimations.Size = new System.Drawing.Size(237, 367);
+            this.tabPageAnimations.TabIndex = 3;
+            this.tabPageAnimations.Text = "Animations";
+            this.tabPageAnimations.UseVisualStyleBackColor = true;
+            // 
             // TextureView
             // 
             this.TextureView.AllowDrop = true;
@@ -746,11 +764,31 @@ namespace SilhouetteEditor.Forms
             this.TextureView.DragOver += new System.Windows.Forms.DragEventHandler(this.TextureView_DragOver);
             this.TextureView.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.TextureView_MouseDoubleClick);
             // 
+            // TextureView
+            // 
+            this.TextureViewAnimations.AllowDrop = true;
+            this.TextureViewAnimations.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.TextureViewAnimations.LargeImageList = this.ImageListAnimations32;
+            this.TextureViewAnimations.Location = new System.Drawing.Point(3, 3);
+            this.TextureViewAnimations.Name = "TextureViewAnimations";
+            this.TextureViewAnimations.Size = new System.Drawing.Size(231, 338);
+            this.TextureViewAnimations.TabIndex = 3;
+            this.TextureViewAnimations.UseCompatibleStateImageBehavior = false;
+            this.TextureViewAnimations.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(this.TextureViewAnimations_ItemDrag);
+            this.TextureViewAnimations.DragOver += new System.Windows.Forms.DragEventHandler(this.TextureViewAnimations_DragOver);
+            this.TextureViewAnimations.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.TextureViewAnimations_MouseDoubleClick);
+            // 
             // ImageList32
             // 
             this.ImageList32.ColorDepth = System.Windows.Forms.ColorDepth.Depth8Bit;
             this.ImageList32.ImageSize = new System.Drawing.Size(32, 32);
             this.ImageList32.TransparentColor = System.Drawing.Color.Transparent;
+            // 
+            // ImageList32Animations
+            // 
+            this.ImageListAnimations32.ColorDepth = System.Windows.Forms.ColorDepth.Depth8Bit;
+            this.ImageListAnimations32.ImageSize = new System.Drawing.Size(32, 32);
+            this.ImageListAnimations32.TransparentColor = System.Drawing.Color.Transparent;
             // 
             // BrowseButton
             // 
@@ -762,6 +800,17 @@ namespace SilhouetteEditor.Forms
             this.BrowseButton.Text = "Browse...";
             this.BrowseButton.UseVisualStyleBackColor = true;
             this.BrowseButton.Click += new System.EventHandler(this.BrowseButton_Click);
+            // 
+            // BrowseButtonAnimations
+            // 
+            this.BrowseButtonAnimations.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.BrowseButtonAnimations.Location = new System.Drawing.Point(3, 341);
+            this.BrowseButtonAnimations.Name = "BrowseButtonAnimations";
+            this.BrowseButtonAnimations.Size = new System.Drawing.Size(231, 23);
+            this.BrowseButtonAnimations.TabIndex = 0;
+            this.BrowseButtonAnimations.Text = "Browse...";
+            this.BrowseButtonAnimations.UseVisualStyleBackColor = true;
+            this.BrowseButtonAnimations.Click += new System.EventHandler(this.BrowseButtonAnimations_Click);
             // 
             // tabPage3
             // 
@@ -1008,6 +1057,7 @@ namespace SilhouetteEditor.Forms
             this.tabPage1.ResumeLayout(false);
             this.tabPage2.ResumeLayout(false);
             this.tabPage3.ResumeLayout(false);
+            this.tabPageAnimations.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.GameView)).EndInit();
             this.LevelContextMenu.ResumeLayout(false);
             this.LayerContextMenu.ResumeLayout(false);
@@ -1060,14 +1110,18 @@ namespace SilhouetteEditor.Forms
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.TabPage tabPage2;
+        private System.Windows.Forms.TabPage tabPageAnimations;
         private System.Windows.Forms.Button BrowseButton;
+        private System.Windows.Forms.Button BrowseButtonAnimations;
+        private System.Windows.Forms.Button BrowseButton2;
         private System.Windows.Forms.ListView TextureView;
+        private System.Windows.Forms.ListView TextureViewAnimations;
         private System.Windows.Forms.ImageList ImageList32;
+        private System.Windows.Forms.ImageList ImageListAnimations32;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
         public System.Windows.Forms.ToolStripStatusLabel EditorStatus;
         public System.Windows.Forms.ToolStripStatusLabel FPS;
         private System.Windows.Forms.TabPage tabPage3;
-        private System.Windows.Forms.Button BrowseButton2;
         private System.Windows.Forms.ListView InteractiveView;
         private System.Windows.Forms.ImageList ImageListInteractive32;
         private System.Windows.Forms.ToolStripDropDownButton PrimitiveButton;
@@ -1112,5 +1166,6 @@ namespace SilhouetteEditor.Forms
         private System.Windows.Forms.ToolStripMenuItem changeVisibilityToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem applyForceToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem saveStateToolStripMenuItem;
+
     }
 }

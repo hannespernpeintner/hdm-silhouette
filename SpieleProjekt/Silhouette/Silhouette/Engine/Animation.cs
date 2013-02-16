@@ -25,26 +25,86 @@ namespace Silhouette.Engine
         Bilder reingeladen. Abgespielt wird automatisch und endlos. Die Animation ist beweglich.
         */
 
+        enum AnimationState { 
+            Play,
+            Pause,
+            Stop
+        }
+
+        private AnimationState state;
+        private AnimationState State
+        {
+            get { return state; }
+            set { state = value; }
+        }
+
         public List<Texture2D> pictures;                    // Liste mit Einzelbildern, Nummer des gerade aktiven Bildes,
         public int activeFrameNumber;                       // zur Sicherheit auch das aktive Bild selber, können wir später
         public Texture2D activeTexture;                     // rauslöschen, wenn keine weitere Verwendung, auÃ erdem framespersecond
         public float speed;
         public Vector2 position;
         public float rotation;
-        public bool looped;
-        public bool playedOnce;
-        public String fullpath;
 
-        private bool started;
+        private bool looped;
+        public bool Looped
+        {
+            get { return looped; }
+            set { looped = value; }
+        }
+
+        private bool backwards;
+        public bool Backwards
+        {
+            get { return backwards; }
+            set { backwards = value; }
+        }
+
+        private bool pingpong;
+        public bool Pingpong
+        {
+            get { return pingpong; }
+            set { pingpong = value; }
+        }
+
+        private bool playedOnce;
+        public bool PlayedOnce
+        {
+            get { return playedOnce; }
+            set { playedOnce = value; }
+        }
+
+        private String fullpath;
+        public String Fullpath
+        {
+            get { return fullpath; }
+            set { fullpath = value; }
+        }
+
         private float totalElapsed;
-        public int amount;
+        public float TotalElapsed
+        {
+            get { return totalElapsed; }
+            set { totalElapsed = value; }
+        }
+
+        private int amount;
+        public int Amount
+        {
+            get { return amount; }
+            set { amount = value; }
+        }
 
         public Animation()
         {
             pictures = new List<Texture2D>();
             totalElapsed = 0;
-            this.playedOnce = false;
-            this.started = false;
+            playedOnce = false;
+            pingpong = false;
+            totalElapsed = 0;
+            amount = 0;
+            speed = 25;
+            looped = false;
+            State = AnimationState.Play;
         }
 
         public Animation(String fullpath, int amount)
@@ -53,18 +113,18 @@ namespace Silhouette.Engine
             pictures = new List<Texture2D>();
             totalElapsed = 0;
             this.playedOnce = false;
-            this.started = false;
             this.fullpath = fullpath;
             this.amount = amount;
-            this.speed = 100;
-            this.looped = false;
+            this.speed = 1;
+            this.looped = true;
             this.position = Vector2.Zero;
         }
 
         // Wird in der Load des zugehörigen Trägers gerufen
-        public void Load(int amount, String path, float speed, bool looped)
+        // speed sind Bilder pro Sekunde. Also irgendeine Integerahl
+        public void Load(int amount, String path, int speed, bool looped)
         {
-            this.speed = (1 / speed) * 100;
+            this.speed = speed / 1000f;
             this.amount = amount;
             this.position = Vector2.Zero;
             this.looped = looped;
@@ -87,146 +147,299 @@ namespace Silhouette.Engine
             activeTexture = pictures[activeFrameNumber];
         }
 
+        public void LoadInEditor(int amount, String path, int speed, bool looped)
+        {
+            this.speed = speed / 1000f;
+            this.amount = amount;
+            this.position = Vector2.Zero;
+            this.looped = looped;
+
+
+            pictures.Add(GameLoop.gameInstance.Content.Load<Texture2D>(path));
+            
+            activeFrameNumber = 0;
+            activeTexture = pictures[activeFrameNumber];
+        }
+
         public void Load()
         {
-            //Achtung, Zählung beginnt bei den AMlern mit 01, nicht 00!!!!!
-            for (int i = 1; i <= amount; i++)
+            String pathCut = Fullpath;
+
+            if (pathCut.EndsWith(".png"))
+            {
+                pathCut = pathCut.Replace(".png", "");
+            }
+            if (pathCut.EndsWith("1"))
+            {
+                pathCut = pathCut.Remove(pathCut.Length - 1);
+            }
+            if (pathCut.EndsWith("0"))
+            {
+                pathCut = pathCut.Remove(pathCut.Length - 1);
+            }
+
+            int max = 100;
+
+            for (int i = 1; i < max; i++)
+            {
+                if (i < 10)
+                {
+                    String temp = (pathCut + "0" + i + ".png").ToString();
+                    try 
+                    {
+                        Texture2D t = GameLoop.gameInstance.Content.Load<Texture2D>(temp);
+                        if (t != null)
+                        {
+                            pictures.Add(t);
+                        }
+                    } catch (Exception e)
+                    {
+                        Texture2D t = TextureManager.Instance.LoadFromFile(temp);
+                        if (t != null)
+                        {
+                            pictures.Add(t);
+                        }
+                        Console.WriteLine(e.Message);
+                    }
+                }
+                else
+                {
+                    String temp = (pathCut + i + ".png").ToString();
+                    try 
+                    {
+                        Texture2D t = GameLoop.gameInstance.Content.Load<Texture2D>(temp);
+                        if (t != null)
+                        {
+                            pictures.Add(t);
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        Texture2D t = TextureManager.Instance.LoadFromFile(temp);
+                        if (t != null)
+                        {
+                            pictures.Add(t);
+                        }
+                        Console.WriteLine(e.Message);
+                    }
+                }
+            }
+
+            if(pictures.Count == 0)
             {
                 try
                 {
-                    if (i < 10)
-                    {
-                        String temp = (fullpath + "0" + i).ToString();
-                        pictures.Add(GameLoop.gameInstance.Content.Load<Texture2D>(temp));
-                    }
-                    else
-                    {
-                        String temp = (fullpath + i).ToString();
-                        pictures.Add(GameLoop.gameInstance.Content.Load<Texture2D>(temp));
-                    }
+                    pictures.Add(GameLoop.gameInstance.Content.Load<Texture2D>(fullpath));
                 }
-
-                catch (Exception e1)
+                catch (Exception e)
                 {
-                        if (i < 10)
-                        {
-                           String temp = (fullpath + "0" + i).ToString();
-                           string p = Path.Combine(Path.Combine(Directory.GetCurrentDirectory(), "Content"),Path.GetFileName(temp));
-                           pictures.Add(TextureManager.Instance.LoadFromFile(p));
-                    }
-                        else
-                        {
-                            String temp = (fullpath + i).ToString();
-                            string p = Path.Combine(Path.Combine(Directory.GetCurrentDirectory(), "Content"), Path.GetFileName(temp));
-                            Texture2D tempTex = TextureManager.Instance.LoadFromFile(p);
-
-                            if ( tempTex == null)
-                            {
-                                throw new Exception();
-                            }
-                            else
-                            {
-                                pictures.Add(tempTex);
-                            }
-                        }
-                    }
+                    pictures.Add(TextureManager.Instance.LoadFromFile(fullpath));
                 }
-
-
-                activeFrameNumber = 0;
-                activeTexture = pictures[activeFrameNumber];
             }
+
+            activeFrameNumber = 0;
+            looped = true;
+            activeTexture = pictures[activeFrameNumber];
+            //State = AnimationState.Play;
+        }
 
         //Braucht die position des Trägers!
         public void Update(GameTime gameTime, Vector2 position)
         {
-                float elapsed = gameTime.ElapsedGameTime.Milliseconds;
-                totalElapsed += elapsed;
-                this.position = position;
+            this.position = position;
 
-                if (looped && started)
+            switch(State)
+            {
+                case AnimationState.Play:
                 {
+                    float elapsed = gameTime.ElapsedGameTime.Milliseconds;
+                    totalElapsed += elapsed;
+
                     if (totalElapsed > speed)
                     {
                         totalElapsed -= speed;
-                        if (activeFrameNumber < amount - 1)
-                        {
-                            activeFrameNumber++;
-                        }
-                        else if (activeFrameNumber == amount - 1)
-                        {
-                            activeFrameNumber = 0;
-                        }
+                        switchToNextFrame();
                     }
+                    break;
                 }
-
-                if (!looped && !playedOnce && started)
+                case AnimationState.Stop:
                 {
-                    if (totalElapsed > speed)
-                    {
-                        totalElapsed -= speed;
-                        if (activeFrameNumber < amount - 1)
-                        {
-                            activeFrameNumber++;
-                        }
-                        else if (activeFrameNumber == amount - 1)
-                        {
-                            activeFrameNumber = 0;
-                            playedOnce = true;
-                        }
-                    }
+
+                    break;
                 }
-                activeTexture = pictures[activeFrameNumber];
+                case AnimationState.Pause:
+                {
+
+                    break;
+                }
             }
+                
+            activeTexture = pictures[activeFrameNumber];
+        }
+
+        private void switchToNextFrame()
+        {
+            switch (backwards)
+            {
+                case false:
+                    switch (looped)
+                    {
+                        case false:
+                            switch (pingpong)
+                            {
+                                case false:
+                                    // vorwärts, nonlooped, nonpingpong
+                                    if (activeFrameNumber == pictures.Count - 1)
+                                    {
+                                        playedOnce = true;
+                                        State = AnimationState.Pause;
+                                    }
+                                    else
+                                    {
+                                        activeFrameNumber += 1;
+                                    }
+                                    break;
+                                case true:
+                                    // vorwärts, nonlooped, pingpong
+                                    if (activeFrameNumber == pictures.Count - 1)
+                                    {
+                                        backwards = true;
+                                    }
+                                    else
+                                    {
+                                        activeFrameNumber += 1;
+                                    }
+                                    break;
+                            }
+                            break;
+                        case true:
+                            switch (pingpong)
+                            {
+                                case false:
+                                    // vorwärts, looped, nonpingpong
+                                    if (activeFrameNumber == pictures.Count - 1)
+                                    {
+                                        playedOnce = true;
+                                        activeFrameNumber = 0;
+                                    }
+                                    else
+                                    {
+                                        activeFrameNumber += 1;
+                                    }
+                                    break;
+                                case true:
+                                    // vorwärts, looped, pingpong
+                                    if (activeFrameNumber == pictures.Count - 1)
+                                    {
+                                        backwards = true;
+                                    }
+                                    else
+                                    {
+                                        activeFrameNumber += 1;
+                                    }
+                                    break;
+                            }
+                            break;
+                    }
+                    break;
+                case true:
+                    switch (looped)
+                    {
+                        case false:
+                            switch (pingpong)
+                            {
+                                case false:
+                                    // rückwärts, nonlooped, nonpingpong
+                                    if (activeFrameNumber == 0)
+                                    {
+                                        playedOnce = true;
+                                        State = AnimationState.Pause;
+                                    }
+                                    else
+                                    {
+                                        activeFrameNumber -= 1;
+                                    }
+                                    break;
+                                case true:
+                                    // rückwärts, nonlooped, pingpong
+                                    if (activeFrameNumber == 0)
+                                    {
+                                        backwards = false;
+                                    }
+                                    else
+                                    {
+                                        activeFrameNumber -= 1;
+                                    }
+                                    break;
+                            }
+                            break;
+                        case true:
+                            switch (pingpong)
+                            {
+                                case false:
+                                    // rückwärts, looped, nonpingpong
+                                    if (activeFrameNumber == 0)
+                                    {
+                                        playedOnce = true;
+                                        activeFrameNumber = pictures.Count - 1;
+                                    }
+                                    else
+                                    {
+                                        activeFrameNumber -= 1;
+                                    }
+                                    break;
+                                case true:
+                                    // rückwärts, looped, pingpong
+                                    if (activeFrameNumber == 0)
+                                    {
+                                        backwards = false;
+                                    }
+                                    else
+                                    {
+                                        activeFrameNumber -= 1;
+                                    }
+                                    break;
+                            }
+                            break;
+                    }
+                    break;
+            }
+
+            activeTexture = pictures[activeFrameNumber];
+        }
 
         //Nevermind!
         public void Update2(GameTime gameTime, Vector2 position)
         {
             this.position = position;
-            if (started)
+
+            switch (State)
             {
-                float elapsed = gameTime.ElapsedGameTime.Milliseconds;
-                totalElapsed += elapsed;
-
-
-
-                if (looped && started)
-                {
-                    if (totalElapsed > speed)
+                case AnimationState.Play:
                     {
-                        totalElapsed -= speed;
-                        if (activeFrameNumber < amount - 1)
-                        {
-                            activeFrameNumber++;
-                        }
-                        else if (activeFrameNumber == amount - 1)
-                        {
-                            activeFrameNumber = 0;
-                            started = false;
-                        }
-                    }
-                }
+                        float elapsed = gameTime.ElapsedGameTime.Milliseconds;
+                        totalElapsed += elapsed;
 
-                if (!looped && !playedOnce && started)
-                {
-                    if (totalElapsed > speed)
-                    {
-                        totalElapsed -= speed;
-                        if (activeFrameNumber < amount - 1)
+                        if (totalElapsed > speed)
                         {
-                            activeFrameNumber++;
+                            totalElapsed -= speed;
+                            switchToNextFrame();
                         }
-                        else if (activeFrameNumber == amount - 1)
-                        {
-                            activeFrameNumber = amount -1;
-                            //playedOnce = true;
-                            started = false;
-                        }
+                        break;
                     }
-                }
-                activeTexture = pictures[activeFrameNumber];
+                case AnimationState.Stop:
+                    {
+
+                        break;
+                    }
+                case AnimationState.Pause:
+                    {
+
+                        break;
+                    }
             }
-        
+
+            activeTexture = pictures[activeFrameNumber];
         }
 
         // Wird in der Draw des Trägers gerufen
@@ -237,17 +450,31 @@ namespace Silhouette.Engine
 
         public void start()
         {
-            started = true;
+            State = AnimationState.Play;
         }
 
-        public void setSpeed(float speed)
+        public void stop()
         {
-            this.speed = (1/speed) * 100;
+            resetAnimationProgress();
+            State = AnimationState.Stop;
         }
 
-        public void setLooped()
+        private void resetAnimationProgress()
         {
-            this.looped = true;
+            totalElapsed = 0;
+            if (backwards)
+            {
+                activeFrameNumber = pictures.Capacity - 1;
+            }
+            else
+            {
+                activeFrameNumber = 0;
+            }
+        }
+
+        public void pause()
+        {
+            State = AnimationState.Pause;
         }
     }
 }

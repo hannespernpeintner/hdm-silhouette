@@ -36,7 +36,7 @@ namespace Silhouette.Engine
         }
 
         // Wird in der Load des zugehörigen Trägers gerufen
-        public void Load(int amount, String path, float speed)
+        public void Load(int amount, String path, int speed)
         {
             animation.Load(amount, path, speed, true);
             polygons = FixtureManager.AnimationToPolygons(animation);

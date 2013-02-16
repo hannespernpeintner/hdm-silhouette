@@ -196,47 +196,47 @@ namespace Silhouette.GameMechs
         public override void LoadContent()
         {
             // Hier müssen alle Sprites geladen werden.
-            idle_left.Load(6, "Sprites/Player/idleA_left_", 0.5f, true);
-            idle_right.Load(6, "Sprites/Player/idleA_right_", 0.5f, true);
-            idleb_left.Load(6, "Sprites/Player/idleB_left_", 0.5f, true);
-            idleb_right.Load(6, "Sprites/Player/idleB_right_", 0.5f, true);
-            idlec_left.Load(6, "Sprites/Player/idleC_left_", 0.5f, true);
-            idlec_right.Load(6, "Sprites/Player/idleC_right_", 0.5f, true);
+            idle_left.Load(6, "Sprites/Player/idleA_left_", 15, true);
+            idle_right.Load(6, "Sprites/Player/idleA_right_", 15, true);
+            idleb_left.Load(6, "Sprites/Player/idleB_left_", 15, true);
+            idleb_right.Load(6, "Sprites/Player/idleB_right_", 15, true);
+            idlec_left.Load(6, "Sprites/Player/idleC_left_", 15, true);
+            idlec_right.Load(6, "Sprites/Player/idleC_right_", 15, true);
 
-            noJumpIdle_left.Load(2, "Sprites/Player/nojumpI_left_", 0.5f, false);
-            noJumpIdle_right.Load(2, "Sprites/Player/nojumpI_right_", 0.5f, false);
+            noJumpIdle_left.Load(2, "Sprites/Player/nojumpI_left_", 15, false);
+            noJumpIdle_right.Load(2, "Sprites/Player/nojumpI_right_", 15, false);
 
-            jumpStarting_left.Load(5, "Sprites/Player/jumpStart_left_", 1.5f, false);
-            jumpStarting_right.Load(5, "Sprites/Player/jumpStart_right_", 1.5f, false);
-            falling_left.Load(2, "Sprites/Player/falling_left_", 0.5f, true);
-            falling_right.Load(2, "Sprites/Player/falling_right_", 0.5f, true);
-            landing_left.Load(8, "Sprites/Player/landing_left_", 1f, false);
-            landing_right.Load(8, "Sprites/Player/landing_right_", 1f, false);
+            jumpStarting_left.Load(5, "Sprites/Player/jumpStart_left_", 25, false);
+            jumpStarting_right.Load(5, "Sprites/Player/jumpStart_right_", 25, false);
+            falling_left.Load(2, "Sprites/Player/falling_left_", 15, true);
+            falling_right.Load(2, "Sprites/Player/falling_right_", 15, true);
+            landing_left.Load(8, "Sprites/Player/landing_left_", 10, false);
+            landing_right.Load(8, "Sprites/Player/landing_right_", 10, false);
             //1,5
 
-            running_left.Load(8, "Sprites/Player/walk_left_", 1.75f, true);
-            running_right.Load(8, "Sprites/Player/walk_right_", 1.75f, true);
-            runStarting_left.Load(8, "Sprites/Player/walkStart_left_", 2f, false);
-            runStarting_right.Load(8, "Sprites/Player/walkStart_right_", 2f, false);
-            runStopping_left.Load(8, "Sprites/Player/walkStop_left_", 1.0f, false);
-            runStopping_right.Load(8, "Sprites/Player/walkStop_right_", 1.0f, false);
+            running_left.Load(8, "Sprites/Player/walk_left_", 30, true);
+            running_right.Load(8, "Sprites/Player/walk_right_", 30, true);
+            runStarting_left.Load(8, "Sprites/Player/walkStart_left_", 30, false);
+            runStarting_right.Load(8, "Sprites/Player/walkStart_right_", 30, false);
+            runStopping_left.Load(8, "Sprites/Player/walkStop_left_", 15, false);
+            runStopping_right.Load(8, "Sprites/Player/walkStop_right_", 15, false);
 
-            noJumpRunning_left.Load(2, "Sprites/Player/nojumpW_left_", 0.5f, false);
-            noJumpRunning_right.Load(2, "Sprites/Player/nojumpW_right_", 0.5f, false);
+            noJumpRunning_left.Load(2, "Sprites/Player/nojumpW_left_", 15, false);
+            noJumpRunning_right.Load(2, "Sprites/Player/nojumpW_right_", 15, false);
 
-            climbing_left.Load(21, "Sprites/Player/climb_left_", 1.6f, false);
-            climbing_right.Load(21, "Sprites/Player/climb_right_", 1.6f, false);
+            climbing_left.Load(21, "Sprites/Player/climb_left_", 15, false);
+            climbing_right.Load(21, "Sprites/Player/climb_right_", 15, false);
 
-            hang_left.Load(5, "Sprites/Player/hang_left_", 0.5f, false);
-            hang_right.Load(5, "Sprites/Player/hang_right_", 0.5f, false);
-            hang2_left.Load(1, "Sprites/Player/hang2_left_", 1f, false);
-            hang2_right.Load(1, "Sprites/Player/hang2_right_", 1f, false);
-            pullup.Load(13, "Sprites/Player/pullup_left_", 1f, false);
+            hang_left.Load(5, "Sprites/Player/hang_left_", 15, false);
+            hang_right.Load(5, "Sprites/Player/hang_right_", 15, false);
+            hang2_left.Load(1, "Sprites/Player/hang2_left_", 10, false);
+            hang2_right.Load(1, "Sprites/Player/hang2_right_", 10, false);
+            pullup.Load(13, "Sprites/Player/pullup_left_", 10, false);
 
-            dying_left.Load(4, "Sprites/Player/die_left_", 0.7f, false);
-            dying_right.Load(4, "Sprites/Player/die_right_", 0.7f, false);
-            dying2_left.Load(1, "Sprites/Player/die2_left_", 0.1f, false);
-            dying2_right.Load(1, "Sprites/Player/die2_right_", 0.1f, false);
+            dying_left.Load(4, "Sprites/Player/die_left_", 10, false);
+            dying_right.Load(4, "Sprites/Player/die_right_", 10, false);
+            dying2_left.Load(1, "Sprites/Player/die2_left_", 10, false);
+            dying2_right.Load(1, "Sprites/Player/die2_right_", 10, false);
 
             activeAnimation = choseIdleAnimation();
             activeAnimation.start();
@@ -648,7 +648,7 @@ namespace Silhouette.GameMechs
                 }
             }
             // Hier wird noch gebessert
-            if (activeAnimation.activeFrameNumber < activeAnimation.amount - 1)
+            if (activeAnimation.activeFrameNumber < activeAnimation.Amount - 1)
             {
                 int temp = activeAnimation.activeFrameNumber;
                 actClimbHeight = temp;
@@ -681,7 +681,7 @@ namespace Silhouette.GameMechs
             }
 
 
-            if (activeAnimation.activeFrameNumber == activeAnimation.amount - 1)
+            if (activeAnimation.activeFrameNumber == activeAnimation.Amount - 1)
             {
                 try
                 {
@@ -736,7 +736,7 @@ namespace Silhouette.GameMechs
                 }
             }
 
-            if ((activeAnimation == hang_right || activeAnimation == hang_left) && activeAnimation.activeFrameNumber < activeAnimation.amount - 1)
+            if ((activeAnimation == hang_right || activeAnimation == hang_left) && activeAnimation.activeFrameNumber < activeAnimation.Amount - 1)
             {
                 float maxHeight = 700/ Level.PixelPerMeter;
                 if (charRect[0].Body.Position.Y < maxHeight)
@@ -746,7 +746,7 @@ namespace Silhouette.GameMechs
                 }
             }
 
-            if ((activeAnimation == hang_right || activeAnimation == hang_left) &&activeAnimation.activeFrameNumber == activeAnimation.amount - 1)
+            if ((activeAnimation == hang_right || activeAnimation == hang_left) &&activeAnimation.activeFrameNumber == activeAnimation.Amount - 1)
             {
                 activeAnimation = hang2_left;
                 activeAnimation.start();
@@ -764,13 +764,13 @@ namespace Silhouette.GameMechs
 
             if (activeAnimation == pullup)
             {
-                if (activeAnimation.activeFrameNumber >=8 && activeAnimation.activeFrameNumber < activeAnimation.amount - 1)
+                if (activeAnimation.activeFrameNumber >=8 && activeAnimation.activeFrameNumber < activeAnimation.Amount - 1)
                 {
                     charRect[0].Body.Position += new Vector2(-10f / Level.PixelPerMeter, -5f / Level.PixelPerMeter);
                     if (Camera.fixedOnPlayer) { camRect.Body.Position += new Vector2(-10f / Level.PixelPerMeter, -5f / Level.PixelPerMeter); }
                 }
 
-                else if (activeAnimation.activeFrameNumber == activeAnimation.amount - 1)
+                else if (activeAnimation.activeFrameNumber == activeAnimation.Amount - 1)
                 {
                     try
                     {
@@ -829,7 +829,7 @@ namespace Silhouette.GameMechs
             }
             // Hier wird noch gebessert
 
-            if (activeAnimation.activeFrameNumber == activeAnimation.amount - 1)
+            if (activeAnimation.activeFrameNumber == activeAnimation.Amount - 1)
             {
                 try
                 {
@@ -990,7 +990,7 @@ namespace Silhouette.GameMechs
             }
 
 
-            if (activeAnimation.activeFrameNumber == activeAnimation.amount - 1 &&
+            if (activeAnimation.activeFrameNumber == activeAnimation.Amount - 1 &&
                 (
                 (activeAnimation == idle_left) ||
                 (activeAnimation == idleb_left) ||
@@ -1006,7 +1006,7 @@ namespace Silhouette.GameMechs
                 activeAnimation.start();
             }
 
-            if (activeAnimation.activeFrameNumber == activeAnimation.amount - 1 && !activeAnimation.looped)
+            if (activeAnimation.activeFrameNumber == activeAnimation.Amount - 1 && !activeAnimation.Looped)
             {
                 activeAnimation = nextAnimation;
                 activeAnimation.activeFrameNumber = 0;

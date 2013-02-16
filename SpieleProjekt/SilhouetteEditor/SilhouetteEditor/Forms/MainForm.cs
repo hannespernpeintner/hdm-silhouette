@@ -349,6 +349,12 @@ namespace SilhouetteEditor.Forms
                 Editor.Default.createCurrentObject(false);
                 Editor.Default.startPositioning();
             }
+            else if (lvi.Tag == "AnimatedObject")
+            {
+                Editor.Default.createAnimatedObject(lvi.Name);
+                Editor.Default.createCurrentObject(false);
+                Editor.Default.startPositioning();
+            }
         }   
 
         private void GameView_Resize(object sender, EventArgs e)
@@ -366,7 +372,7 @@ namespace SilhouetteEditor.Forms
             ImageList32.Images.Clear();
             TextureView.Clear();
 
-            
+
             DirectoryInfo di = new DirectoryInfo(path);
 
             string filters = "*.jpg;*.png;*.bmp;";
@@ -392,12 +398,54 @@ namespace SilhouetteEditor.Forms
             }
         }
 
+        public void loadFolderAnimations(string path)
+        {
+            ImageListAnimations32.Images.Clear();
+            TextureViewAnimations.Clear();
+
+
+            DirectoryInfo di = new DirectoryInfo(path);
+
+            string filters = "*.jpg;*.png;*.bmp;";
+            List<FileInfo> fileList = new List<FileInfo>();
+            string[] extensions = filters.Split(';');
+            foreach (string filter in extensions) fileList.AddRange(di.GetFiles(filter));
+            FileInfo[] files = fileList.ToArray();
+
+            foreach (FileInfo file in files)
+            {
+                Bitmap bmp = new Bitmap(file.FullName);
+                ImageListAnimations32.Images.Add(file.FullName, Editor.Default.getThumbNail(bmp, 32, 32));
+
+
+                ListViewItem lvi = new ListViewItem();
+                lvi.Name = file.FullName;
+                lvi.Text = file.Name;
+                lvi.ImageKey = file.FullName;
+                lvi.Tag = "AnimatedObject";
+                lvi.ToolTipText = file.Name + " (" + bmp.Width.ToString() + " x " + bmp.Height.ToString() + ")";
+
+                TextureViewAnimations.Items.Add(lvi);
+            }
+        }
+
         private void TextureView_ItemDrag(object sender, ItemDragEventArgs e)
         {
             TextureView.DoDragDrop(e.Item, DragDropEffects.Move);
         }
 
+        private void TextureViewAnimations_ItemDrag(object sender, ItemDragEventArgs e)
+        {
+            TextureViewAnimations.DoDragDrop(e.Item, DragDropEffects.Move);
+        }
+
         private void TextureView_DragOver(object sender, DragEventArgs e)
+        {
+            e.Effect = DragDropEffects.Move;
+            Point p = GameView.PointToClient(new Point(e.X, e.Y));
+            Editor.Default.SetMousePosition(p.X, p.Y);
+        }
+        private void TextureViewAnimations_DragOver(object sender, DragEventArgs e)
         {
             e.Effect = DragDropEffects.Move;
             Point p = GameView.PointToClient(new Point(e.X, e.Y));
@@ -408,6 +456,12 @@ namespace SilhouetteEditor.Forms
         {
             FolderBrowserDialog d = new FolderBrowserDialog();
             if (d.ShowDialog() == DialogResult.OK) loadFolder(d.SelectedPath);
+        }
+
+        private void BrowseButtonAnimations_Click(object sender, EventArgs e)
+        {
+            FolderBrowserDialog d = new FolderBrowserDialog();
+            if (d.ShowDialog() == DialogResult.OK) loadFolderAnimations(d.SelectedPath);
         }
 
         private void TextureView_MouseDoubleClick(object sender, MouseEventArgs e)
@@ -423,6 +477,21 @@ namespace SilhouetteEditor.Forms
             }
 
             Editor.Default.createTextureObject(TextureView.FocusedItem.Name);
+        }
+
+        private void TextureViewAnimations_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            if (Editor.Default.selectedLayer == null)
+            {
+                DialogResult result = MessageBox.Show("There is no layer to add animations to it! Do you want to create one?", "Error", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
+
+                if (result == DialogResult.Yes)
+                    new AddLayer().ShowDialog();
+                else
+                    return;
+            }
+
+            Editor.Default.createAnimatedObject(TextureViewAnimations.FocusedItem.Name);
         }
 
         //---> InteractiveView-Steuerung <---//
