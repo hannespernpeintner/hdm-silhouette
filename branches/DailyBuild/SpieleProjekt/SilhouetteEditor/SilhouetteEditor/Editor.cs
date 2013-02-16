@@ -637,8 +637,8 @@ namespace SilhouetteEditor
                 }
             #endregion
 
-            #region CREATE_TEXTURES/INTERACTIVE
-                if (editorState == EditorState.CREATE_TEXTURES || editorState == EditorState.CREATE_INTERACTIVE)
+            #region CREATE_TEXTURES/INTERACTIVE/ANIMATION
+                if (editorState == EditorState.CREATE_TEXTURES || editorState == EditorState.CREATE_INTERACTIVE || editorState == EditorState.CREATE_ANIMATION)
                 {
                     MainForm.Default.EditorStatus.Text = "Editorstatus: Brush Texture";
                     MainForm.Default.GameView.Cursor = null;
@@ -1014,6 +1014,17 @@ namespace SilhouetteEditor
             to.texture = TextureManager.Instance.LoadFromFile(path, EditorLoop.EditorLoopInstance.GraphicsDevice);
             currentObject = to;
         }
+        public void createAnimatedObject(string path)
+        {
+            editorState = EditorState.CREATE_ANIMATION;
+            AnimatedObject ao = new AnimatedObject(Vector2.Zero, 1, path, 25);
+            ao.path = path;
+            //ao.LoadContent2();
+            ao.texture = TextureManager.Instance.LoadFromFile(path, EditorLoop.EditorLoopInstance.GraphicsDevice);
+            //ao.animation.activeTexture = ao.texture;
+            
+            currentObject = ao;
+        }
 
         public void createInteractiveObject(string path)
         {
@@ -1104,6 +1115,17 @@ namespace SilhouetteEditor
                 AddLevelObject(po);
                 selectedLevelObjects.Clear();
                 selectedLevelObjects.Add(po);
+            }
+            if (currentObject is AnimatedObject)
+            {
+                AnimatedObject temp = (AnimatedObject)currentObject;
+                AnimatedObject ao = new AnimatedObject(MouseWorldPosition, 1, temp.path, temp.speed);
+                ao.name = ao.getPrefix() + selectedLayer.getNextObjectNumber();
+                ao.layer = selectedLayer;
+                ao.texture = temp.texture;
+                AddLevelObject(ao);
+                selectedLevelObjects.Clear();
+                selectedLevelObjects.Add(ao);
             }
 
             MainForm.Default.UpdateTreeView();
@@ -1570,6 +1592,11 @@ namespace SilhouetteEditor
                     {
                         TextureObject to = (TextureObject)currentObject;
                         spriteBatch.Draw(to.texture, new Vector2(MouseWorldPosition.X, MouseWorldPosition.Y), null, new Microsoft.Xna.Framework.Color(1f, 1f, 1f, 7f), to.rotation, new Vector2(to.texture.Width / 2, to.texture.Height / 2), to.scale, SpriteEffects.None, 0);
+                    }
+                    if (l == selectedLayer && editorState == EditorState.CREATE_ANIMATION)
+                    {
+                        AnimatedObject ao = (AnimatedObject)currentObject;
+                        spriteBatch.Draw(ao.texture, new Vector2(MouseWorldPosition.X, MouseWorldPosition.Y), null, new Microsoft.Xna.Framework.Color(1f, 1f, 1f, 7f), 0, new Vector2(ao.texture.Width / 2, ao.texture.Height / 2), 1, SpriteEffects.None, 0);
                     }
                     if (l == selectedLayer && editorState == EditorState.CREATE_INTERACTIVE)
                     {
