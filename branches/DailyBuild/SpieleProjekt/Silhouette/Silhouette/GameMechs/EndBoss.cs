@@ -246,7 +246,7 @@ namespace Silhouette.GameMechs
             // Hier müssen alle Sprites geladen werden.
 
 
-            idleState.animation.Load(1, "Sprites/Boss/idle_", 0.5f, false);
+            idleState.animation.Load(1, "Sprites/Boss/idle_", 10, false);
            // idleState.animation.position = FixtureManager.ToPixel(new Vector2(0, 0));
             idleState.animation.start();
             idleState.Initialise();
@@ -254,22 +254,22 @@ namespace Silhouette.GameMechs
             throughTheRoof.animation.Load(7, "Sprites/Boss/BreakingIn_", 5, false);
             
 
-            attackFist.animation.Load(16, "Sprites/Boss/HandAttackFist_", 1.0f , false);
+            attackFist.animation.Load(16, "Sprites/Boss/HandAttackFist_", 10 , false);
             attackFist.Initialise();
 
-            attackWave.animation.Load(24, "Sprites/Boss/HandAttackWave_", 1.0f, false);
+            attackWave.animation.Load(24, "Sprites/Boss/HandAttackWave_", 10, false);
             attackWave.Initialise();
 
-            attackSnip.animation.Load(15, "Sprites/Boss/HandAttackSnip_", 1f, false);
+            attackSnip.animation.Load(15, "Sprites/Boss/HandAttackSnip_", 10, false);
             attackSnip.Initialise();
 
-            HandFlat.animation.Load(14, "Sprites/Boss/HandFlat_", 1.0f, false);
+            HandFlat.animation.Load(14, "Sprites/Boss/HandFlat_", 10, false);
             HandFlat.Initialise();
 
-            HandRopeDown.animation.Load(9, "Sprites/Boss/HandRopeDownPt1_", 1.0f, false);
+            HandRopeDown.animation.Load(9, "Sprites/Boss/HandRopeDownPt1_", 10, false);
             HandRopeDown.Initialise();
 
-            HandRopeLetGo.animation.Load(8, "Sprites/Boss/HandRopeDownPt1_", 1.0f, false);
+            HandRopeLetGo.animation.Load(8, "Sprites/Boss/HandRopeDownPt1_", 10, false);
             HandRopeLetGo.Initialise();
 
 
@@ -317,13 +317,13 @@ namespace Silhouette.GameMechs
                 case State.Attacking:
                     {
 
-                        if (activeAnimation.animation.activeFrameNumber == activeAnimation.animation.amount - 1 && !activeAnimation.animation.looped)
+                        if (activeAnimation.animation.activeFrameNumber == activeAnimation.animation.Amount - 1 && !activeAnimation.animation.Looped)
                             {
                                 currentBossState = State.AttackMoving;
                                 Console.WriteLine("StateSwitch: " + currentBossState);
                                 nextAnimation = idleState;
                                
-                                activeAnimation.animation.playedOnce = false;
+                                activeAnimation.animation.PlayedOnce = false;
                                 numberOfAttacks--;
                             
                             }
@@ -356,7 +356,7 @@ namespace Silhouette.GameMechs
                                 targetPositionReached = false;
                             }
 
-                            if (activeAnimation.animation.activeFrameNumber == activeAnimation.animation.amount - 1)
+                            if (activeAnimation.animation.activeFrameNumber == activeAnimation.animation.Amount - 1)
                             {
                                 if (!targetPositionReached)
                                 {
@@ -561,12 +561,12 @@ namespace Silhouette.GameMechs
 
             if (nextAnimation != null)
             {
-                if (activeAnimation.animation.activeFrameNumber == activeAnimation.animation.amount - 1 && !activeAnimation.animation.looped)
+                if (activeAnimation.animation.activeFrameNumber == activeAnimation.animation.Amount - 1 && !activeAnimation.animation.Looped)
                 {
                     activeAnimation.isActive = false;
                     activeAnimation.animation.activeFrameNumber = 0;
 
-                    activeAnimation.animation.playedOnce = false;
+                    activeAnimation.animation.PlayedOnce = false;
                     activeAnimation = nextAnimation;
                     activeAnimation.isActive = true;
                     activeAnimation.animation.activeFrameNumber = 0;
