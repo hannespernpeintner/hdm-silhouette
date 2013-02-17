@@ -65,8 +65,8 @@ namespace Silhouette
 
         public bool reallyWantToQuit = false;
 
-        KeyboardState kstate;
-        KeyboardState oldkstate;
+        public KeyboardState kstate;
+        public KeyboardState oldkstate;
 
         public static GameStateManager Default;
 

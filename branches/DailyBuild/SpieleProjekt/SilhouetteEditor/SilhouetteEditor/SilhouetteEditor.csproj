@@ -178,6 +178,7 @@
     <Content Include="Resources\AddPrimitive.gif" />
     <Content Include="Resources\DeleteLayer.gif" />
     <Content Include="Resources\NewLayer.gif" />
+    <Content Include="Resources\Zoom.gif" />
     <None Include="Resources\Physics.gif" />
     <Content Include="Resources\ToolBox.gif" />
   </ItemGroup>

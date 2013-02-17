@@ -132,6 +132,7 @@ namespace SilhouetteEditor
 
         KeyboardState kstate, oldkstate;
         MouseState mstate, oldmstate;
+        float gameCamScale = 0.4f; //Das hier ist das Scaling, was im Spiel 100% ergibt...
 
         //---> EditorLoop-Functions <---//
 
@@ -191,14 +192,14 @@ namespace SilhouetteEditor
                 {
                     float zoom = (float)Math.Round(Camera.Scale * 10) * 10.0f + 10.0f;
                     if (zoom >= 110) zoom = 100;
-                    MainForm.Default.ZoomStatus.Text = "Zoom: " + zoom.ToString() + "%";
+                    MainForm.Default.ZoomStatus.Text = "Zoom: " + (zoom).ToString() + "%";
                     Camera.Scale = zoom / 100.0f;
                 }
                 if (mwheeldelta < 0)
                 {
                     float zoom = (float)Math.Round(Camera.Scale * 10) * 10.0f - 10.0f;
                     if (zoom <= 0.0f) zoom = 10;
-                    MainForm.Default.ZoomStatus.Text = "Zoom: " + zoom.ToString() + "%";
+                    MainForm.Default.ZoomStatus.Text = "Zoom: " + (zoom).ToString() + "%";
                     Camera.Scale = zoom / 100.0f;
                 }
             #endregion

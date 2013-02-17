@@ -75,6 +75,7 @@ namespace SilhouetteEditor.Forms
             this.particleObjectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.soundObjectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.EventButton = new System.Windows.Forms.ToolStripDropDownButton();
+            this.GameScaleButton = new System.Windows.Forms.ToolStripButton();
             this.objectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.moveRotateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.changeVisibilityToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -401,7 +402,8 @@ namespace SilhouetteEditor.Forms
             this.PrimitiveButton,
             this.FixtureButton,
             this.PhysicsButton,
-            this.EventButton});
+            this.EventButton,
+            this.GameScaleButton});
             this.ToolBar.Location = new System.Drawing.Point(0, 0);
             this.ToolBar.Name = "ToolBar";
             this.ToolBar.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
@@ -429,6 +431,17 @@ namespace SilhouetteEditor.Forms
             this.DeleteLayerButton.Text = "Delete Layer";
             this.DeleteLayerButton.ToolTipText = "Delete Layer";
             this.DeleteLayerButton.Click += new System.EventHandler(this.DeleteLayerButton_Click);
+            // 
+            // GameScaleButton
+            // 
+            this.GameScaleButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.GameScaleButton.Image = global::SilhouetteEditor.Properties.Resource.ApplyGameScale;
+            this.GameScaleButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.GameScaleButton.Name = "GameScaleButton";
+            this.GameScaleButton.Size = new System.Drawing.Size(23, 22);
+            this.GameScaleButton.Text = "Set Zoom to ingame zoom";
+            this.GameScaleButton.ToolTipText = "Set Zoom to ingame zoom";
+            this.GameScaleButton.Click += new System.EventHandler(this.GameScaleButton_Click);
             // 
             // toolStripSeparator2
             // 
@@ -1134,6 +1147,7 @@ namespace SilhouetteEditor.Forms
         private System.Windows.Forms.ToolStripMenuItem pathCollisionToolStripMenuItem;
         private System.Windows.Forms.ToolStripDropDownButton PhysicsButton;
         private System.Windows.Forms.ToolStripDropDownButton EventButton;
+        private System.Windows.Forms.ToolStripButton GameScaleButton;
         public System.Windows.Forms.ToolStripStatusLabel ZoomStatus;
         private System.Windows.Forms.ToolStripMenuItem physicToolStripMenuItem;
         public System.Windows.Forms.ContextMenuStrip EventContextMenü;

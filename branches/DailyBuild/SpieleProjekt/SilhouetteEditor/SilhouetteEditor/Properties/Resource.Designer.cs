@@ -94,10 +94,21 @@ namespace SilhouetteEditor.Properties {
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
-        
-        internal static System.Drawing.Bitmap Physics {
-            get {
+
+        internal static System.Drawing.Bitmap Physics
+        {
+            get
+            {
                 object obj = ResourceManager.GetObject("Physics", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+
+        internal static System.Drawing.Bitmap ApplyGameScale
+        {
+            get
+            {
+                object obj = ResourceManager.GetObject("Zoom", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

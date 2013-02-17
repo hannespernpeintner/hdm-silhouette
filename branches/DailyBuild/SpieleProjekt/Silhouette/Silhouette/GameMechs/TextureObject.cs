@@ -130,6 +130,10 @@ namespace Silhouette.GameMechs
                 {
                     string p = Path.Combine(layer.level.contentPath, Path.GetFileName(fullPath));
                     texture = TextureManager.Instance.LoadFromFile(p, graphics);
+                    if (texture == null)
+                    {
+                        texture = TextureManager.Instance.LoadFromFile(fullPath, graphics);
+                    }
                     this.fullPath = p;
                 }
                 catch (Exception e)
