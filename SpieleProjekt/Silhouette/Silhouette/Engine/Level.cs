@@ -110,7 +110,7 @@ namespace Silhouette.Engine
             debugView = new DebugViewXNA(Level.Physics);
             Camera.initialize(GameSettings.Default.resolutionWidth, GameSettings.Default.resolutionHeight);
             Camera.Position = new Vector2(GameSettings.Default.resolutionWidth / 2, GameSettings.Default.resolutionHeight / 2);
-            Camera.Scale = 0.4f;
+            Camera.Scale = GameSettings.Default.gameCamScale;
             ParticleManager.initialize();
 
             this.GraphicsEnabled = true;

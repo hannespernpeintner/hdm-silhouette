@@ -570,6 +570,13 @@ namespace SilhouetteEditor.Forms
             }
         }
 
+        private void GameScaleButton_Click(object sender, EventArgs e)
+        {
+            int zoom = 40;
+            MainForm.Default.ZoomStatus.Text = "Zoom: " + (zoom).ToString() + "%";
+            Camera.Scale = zoom / 100.0f;
+        }
+
         private void LevelToolStrip_AddLayer(object sender, EventArgs e)
         {
             new AddLayer().ShowDialog();
