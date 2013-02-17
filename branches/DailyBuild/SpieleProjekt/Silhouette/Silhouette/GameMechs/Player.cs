@@ -30,8 +30,8 @@ namespace Silhouette.GameMechs
         public int resetTimer;
         public Vector2 centerPosition;      // Hannes: Rectangles für Kollisionserkennung. Muss noch um Kollisionsgruppe erweitert werden.
         public Vector2 camPosition;
-        //public Fixture charRect;
-        public List<Fixture> charRect;
+        public Fixture charRect;
+        //public List<Fixture> charRect;
         public Fixture sRect;
         public Fixture nRect;
         public Fixture eRect;
@@ -243,14 +243,14 @@ namespace Silhouette.GameMechs
             nextAnimation = choseIdleAnimation();
 
             //Fördert schlechtes Charverhalten wegen statischer Physik
-            //charRect = FixtureManager.CreatePolygon(idle_left.pictures[0], new Vector2(0.85f, 0.95f), BodyType.Dynamic, position, 1);
-            //charRect.Friction = 1;
-            //charRect.isPlayer = true;
+            charRect = FixtureManager.CreatePolygon(idle_left.pictures[0], new Vector2(0.85f, 0.95f), BodyType.Dynamic, position, 1);
+            charRect.Friction = 1;
+            charRect.isPlayer = true;
 
-            charRect = FixtureManager.CreateCapsule((idle_left.pictures[0].Height / 5) / Level.PixelPerMeter, 50, position, BodyType.Dynamic, 1);
-            charRect[0].Body.FixedRotation = true;
-            charRect[0].Friction = 5;
-            charRect[0].isPlayer = true;
+            //charRect = FixtureManager.CreateCapsule((idle_left.pictures[0].Height / 5) / Level.PixelPerMeter, 50, position, BodyType.Dynamic, 1);
+            //charRect.Body.FixedRotation = true;
+            //charRect.Friction = 5;
+            //charRect.isPlayer = true;
 
             nRect = FixtureManager.CreateRectangle(140, 10, new Vector2(position.X, position.Y - 85), BodyType.Dynamic, 0);
             nRect.Body.FixedRotation = true;
@@ -284,20 +284,20 @@ namespace Silhouette.GameMechs
             camRect.IsSensor = true;
             camRect.isPlayer = true;
 
-            sRect.IgnoreCollisionWith(charRect[0]);
+            sRect.IgnoreCollisionWith(charRect);
             sRect.IgnoreCollisionWith(camRect);
-            nRect.IgnoreCollisionWith(charRect[0]);
+            nRect.IgnoreCollisionWith(charRect);
             nRect.IgnoreCollisionWith(camRect);
             nRect.IgnoreCollisionWith(sRect);
-            eRect.IgnoreCollisionWith(charRect[0]);
+            eRect.IgnoreCollisionWith(charRect);
             eRect.IgnoreCollisionWith(camRect);
-            wRect.IgnoreCollisionWith(charRect[0]);
+            wRect.IgnoreCollisionWith(charRect);
             wRect.IgnoreCollisionWith(camRect);
-            charRect[0].IgnoreCollisionWith(sRect);
-            charRect[0].IgnoreCollisionWith(nRect);
-            charRect[0].IgnoreCollisionWith(eRect);
-            charRect[0].IgnoreCollisionWith(wRect);
-            charRect[0].IgnoreCollisionWith(camRect);
+            charRect.IgnoreCollisionWith(sRect);
+            charRect.IgnoreCollisionWith(nRect);
+            charRect.IgnoreCollisionWith(eRect);
+            charRect.IgnoreCollisionWith(wRect);
+            charRect.IgnoreCollisionWith(camRect);
 
             //joint0 = new RopeJoint(charRect[0].Body, camRect.Body, new Vector2(100 / Level.PixelPerMeter, 80 / Level.PixelPerMeter) * 2, new Vector2(50 / Level.PixelPerMeter, 50 / Level.PixelPerMeter));
             //joint1 = new RopeJoint(charRect[0].Body, camRect.Body, new Vector2(-100 / Level.PixelPerMeter, -80 / Level.PixelPerMeter) * 2, new Vector2(-50 / Level.PixelPerMeter, -50 / Level.PixelPerMeter));
@@ -317,8 +317,8 @@ namespace Silhouette.GameMechs
             //Level.Physics.AddJoint(joint2);
             //Level.Physics.AddJoint(joint3);
 
-            charRect[0].OnCollision += this.OnCollision;
-            charRect[0].OnSeparation += this.OnSeperation;
+            charRect.OnCollision += this.OnCollision;
+            charRect.OnSeparation += this.OnSeperation;
             nRect.OnCollision += this.nOnCollision;
             sRect.OnCollision += this.sOnCollision;
             sRect.OnSeparation += this.sOnSeperation;
@@ -362,13 +362,13 @@ namespace Silhouette.GameMechs
 
         public void UpdatePositions()
         {
-            centerPosition = new Vector2(charRect[0].Body.Position.X * Level.PixelPerMeter, charRect[0].Body.Position.Y * Level.PixelPerMeter);
+            centerPosition = new Vector2(charRect.Body.Position.X * Level.PixelPerMeter, charRect.Body.Position.Y * Level.PixelPerMeter);
             position = new Vector2(centerPosition.X, centerPosition.Y);
-            sRect.Body.Position = charRect[0].Body.Position + new Vector2(0, 120 / Level.PixelPerMeter);
-            nRect.Body.Position = charRect[0].Body.Position + new Vector2(0, -85 / Level.PixelPerMeter);
-            wRect.Body.Position = charRect[0].Body.Position + new Vector2(-110 / Level.PixelPerMeter, 0);
-            eRect.Body.Position = charRect[0].Body.Position + new Vector2(105 / Level.PixelPerMeter, 0);
-            landRect.Body.Position = charRect[0].Body.Position + new Vector2(0, 300 / Level.PixelPerMeter);
+            sRect.Body.Position = charRect.Body.Position + new Vector2(0, 120 / Level.PixelPerMeter);
+            nRect.Body.Position = charRect.Body.Position + new Vector2(0, -85 / Level.PixelPerMeter);
+            wRect.Body.Position = charRect.Body.Position + new Vector2(-110 / Level.PixelPerMeter, 0);
+            eRect.Body.Position = charRect.Body.Position + new Vector2(105 / Level.PixelPerMeter, 0);
+            landRect.Body.Position = charRect.Body.Position + new Vector2(0, 300 / Level.PixelPerMeter);
             camPosition = new Vector2(camRect.Body.Position.X * Level.PixelPerMeter, camRect.Body.Position.Y * Level.PixelPerMeter);
         }
 
@@ -386,6 +386,7 @@ namespace Silhouette.GameMechs
         private void UpdateControls(GameTime gameTime)
         {
             kState = Keyboard.GetState();
+
             // LEFT ARROW
             if (kState.IsKeyDown(Keys.Left) && (isRunning || isIdle) && movement.X >= -3.3f)
             {
@@ -405,7 +406,7 @@ namespace Silhouette.GameMechs
 
                     isIdle = false;
                     isRunning = true;
-                    charRect[0].Body.ApplyForce(new Vector2(-40, 0));
+                    charRect.Body.ApplyForce(new Vector2(-40, 0));
                 }
             }
 
@@ -417,7 +418,7 @@ namespace Silhouette.GameMechs
                 }
                 else
                 {
-                    charRect[0].Body.ApplyForce(new Vector2(-15, 0));
+                    charRect.Body.ApplyForce(new Vector2(-15, 0));
                 }
             }
 
@@ -440,7 +441,7 @@ namespace Silhouette.GameMechs
 
                     isIdle = false;
                     isRunning = true;
-                    charRect[0].Body.ApplyForce(new Vector2(40, 0));
+                    charRect.Body.ApplyForce(new Vector2(40, 0));
                 }
             }
 
@@ -452,7 +453,7 @@ namespace Silhouette.GameMechs
                 }
                 else
                 {
-                    charRect[0].Body.ApplyForce(new Vector2(15, 0));
+                    charRect.Body.ApplyForce(new Vector2(15, 0));
                 }
             }
 
@@ -494,11 +495,11 @@ namespace Silhouette.GameMechs
                     // Unterscheiden von Superjump und NormalJump
                     if (isRemembering)
                     {
-                        charRect[0].Body.ApplyForce(new Vector2(-50, -JUMPFORCESUPER));
+                        charRect.Body.ApplyForce(new Vector2(-50, -JUMPFORCESUPER));
                     }
                     else
                     {
-                        charRect[0].Body.ApplyForce(new Vector2(-50, -JUMPFORCENORMAL));
+                        charRect.Body.ApplyForce(new Vector2(-50, -JUMPFORCENORMAL));
                     }
                 }
                 else if (facing == 1 && !isRecovering)
@@ -512,11 +513,11 @@ namespace Silhouette.GameMechs
                     isRunning = false;
                     if (isRemembering)
                     {
-                        charRect[0].Body.ApplyForce(new Vector2(50, -JUMPFORCESUPER));
+                        charRect.Body.ApplyForce(new Vector2(50, -JUMPFORCESUPER));
                     }
                     else
                     {
-                        charRect[0].Body.ApplyForce(new Vector2(50, -JUMPFORCENORMAL));
+                        charRect.Body.ApplyForce(new Vector2(50, -JUMPFORCENORMAL));
                     }
                 }
                 else if (isRecovering)
@@ -582,13 +583,13 @@ namespace Silhouette.GameMechs
             // WENN KEIN BUTTON GEDRÜCKT IST
             if (kState.GetPressedKeys().Length == 0 && oldState.GetPressedKeys().Length == 0)
             {
-                charRect[0].Friction = 4;
+                charRect.Friction = 4;
             }
 
-            else { charRect[0].Friction = 0.1f; }
+            else { charRect.Friction = 0.1f; }
 
             oldState = kState;
-            oldPosition = charRect[0].Body.Position;
+            oldPosition = charRect.Body.Position;
         }
 
         private void doScriptedMove()
@@ -629,8 +630,8 @@ namespace Silhouette.GameMechs
                 isDying = false;
                 isFalling = false;
 
-                charRect[0].Body.BodyType = BodyType.Static;
-                charRect[0].Body.IgnoreGravity = true;
+                charRect.Body.BodyType = BodyType.Static;
+                charRect.Body.IgnoreGravity = true;
 
                 if (facing == 0)
                 {
@@ -656,12 +657,12 @@ namespace Silhouette.GameMechs
                 {
                     if (activeAnimation.activeFrameNumber <= 6 || activeAnimation.activeFrameNumber >= 14)
                     {
-                        charRect[0].Body.Position += new Vector2(3.8f / Level.PixelPerMeter, 0);
+                        charRect.Body.Position += new Vector2(3.8f / Level.PixelPerMeter, 0);
                         if (Camera.fixedOnPlayer) { camRect.Body.Position += new Vector2(3.8f / Level.PixelPerMeter, 0); }
                     }
                     if (activeAnimation.activeFrameNumber > 6 && activeAnimation.activeFrameNumber < 14)
                     {
-                        charRect[0].Body.Position += new Vector2(0, -4.7f / Level.PixelPerMeter);
+                        charRect.Body.Position += new Vector2(0, -4.7f / Level.PixelPerMeter);
                         if (Camera.fixedOnPlayer) { camRect.Body.Position += new Vector2(0, -4.7f / Level.PixelPerMeter); }
                     }
                 }
@@ -669,12 +670,12 @@ namespace Silhouette.GameMechs
                 {
                     if (activeAnimation.activeFrameNumber <= 6 || activeAnimation.activeFrameNumber >= 14)
                     {
-                        charRect[0].Body.Position += new Vector2(-3.8f / Level.PixelPerMeter, 0);
+                        charRect.Body.Position += new Vector2(-3.8f / Level.PixelPerMeter, 0);
                         if (Camera.fixedOnPlayer) { camRect.Body.Position += new Vector2(-3.8f / Level.PixelPerMeter, 0); }
                     }
                     if (activeAnimation.activeFrameNumber > 6 && activeAnimation.activeFrameNumber < 14)
                     {
-                        charRect[0].Body.Position += new Vector2(0, -4.7f / Level.PixelPerMeter);
+                        charRect.Body.Position += new Vector2(0, -4.7f / Level.PixelPerMeter);
                         if (Camera.fixedOnPlayer) { camRect.Body.Position += new Vector2(0, -4.7f / Level.PixelPerMeter); }
                     }
                 }
@@ -691,8 +692,8 @@ namespace Silhouette.GameMechs
                     activeAnimation.start();
                     actClimbHeight = 0;
                     actScriptedMove = "";
-                    charRect[0].Body.BodyType = BodyType.Dynamic;
-                    charRect[0].Body.IgnoreGravity = false;
+                    charRect.Body.BodyType = BodyType.Dynamic;
+                    charRect.Body.IgnoreGravity = false;
                     isScriptedMoving = false;
                     isIdle = true;
                     isRunning = false;
@@ -717,8 +718,8 @@ namespace Silhouette.GameMechs
                 isDying = false;
                 isFalling = false;
 
-                charRect[0].Body.BodyType = BodyType.Static;
-                charRect[0].Body.IgnoreGravity = true;
+                charRect.Body.BodyType = BodyType.Static;
+                charRect.Body.IgnoreGravity = true;
 
                 if (facing == 0)
                 {
@@ -739,9 +740,9 @@ namespace Silhouette.GameMechs
             if ((activeAnimation == hang_right || activeAnimation == hang_left) && activeAnimation.activeFrameNumber < activeAnimation.Amount - 1)
             {
                 float maxHeight = 700/ Level.PixelPerMeter;
-                if (charRect[0].Body.Position.Y < maxHeight)
+                if (charRect.Body.Position.Y < maxHeight)
                 {
-                    charRect[0].Body.Position += new Vector2(0, -10 / Level.PixelPerMeter);
+                    charRect.Body.Position += new Vector2(0, -10 / Level.PixelPerMeter);
                     if (Camera.fixedOnPlayer) { camRect.Body.Position += new Vector2(1.35f / Level.PixelPerMeter, 0); }
                 }
             }
@@ -766,7 +767,7 @@ namespace Silhouette.GameMechs
             {
                 if (activeAnimation.activeFrameNumber >=8 && activeAnimation.activeFrameNumber < activeAnimation.Amount - 1)
                 {
-                    charRect[0].Body.Position += new Vector2(-10f / Level.PixelPerMeter, -5f / Level.PixelPerMeter);
+                    charRect.Body.Position += new Vector2(-10f / Level.PixelPerMeter, -5f / Level.PixelPerMeter);
                     if (Camera.fixedOnPlayer) { camRect.Body.Position += new Vector2(-10f / Level.PixelPerMeter, -5f / Level.PixelPerMeter); }
                 }
 
@@ -778,16 +779,16 @@ namespace Silhouette.GameMechs
                         activeAnimation.activeFrameNumber = 0;
                         activeAnimation.start();
                         actScriptedMove = "";
-                        charRect[0].Body.BodyType = BodyType.Dynamic;
-                        charRect[0].Body.IgnoreGravity = false;
+                        charRect.Body.BodyType = BodyType.Dynamic;
+                        charRect.Body.IgnoreGravity = false;
                         isScriptedMoving = false;
                         isFalling = true;
                     }
                     catch (Exception e)
                     {
-                        charRect[0].Body.Position = Vector2.Zero;
-                        charRect[0].Body.BodyType = BodyType.Dynamic;
-                        charRect[0].Body.IgnoreGravity = false;
+                        charRect.Body.Position = Vector2.Zero;
+                        charRect.Body.BodyType = BodyType.Dynamic;
+                        charRect.Body.IgnoreGravity = false;
                         isScriptedMoving = false;
                         isIdle = true;
                     }
@@ -1025,22 +1026,22 @@ namespace Silhouette.GameMechs
 
         public void ObserveMovement()
         {
-            movement = charRect[0].Body.GetLinearVelocityFromLocalPoint(Vector2.Zero);
+            movement = charRect.Body.GetLinearVelocityFromLocalPoint(Vector2.Zero);
 
             if (isLanding)
             {
-                charRect[0].Friction = 3;
+                charRect.Friction = 3;
             }
 
-            if (Math.Max(oldPosition.X, charRect[0].Body.Position.X) - Math.Min(oldPosition.X, charRect[0].Body.Position.X) < 0.0001 &&
-                Math.Max(oldPosition.Y, charRect[0].Body.Position.Y) - Math.Min(oldPosition.Y, charRect[0].Body.Position.Y) < 0.0001)
+            if (Math.Max(oldPosition.X, charRect.Body.Position.X) - Math.Min(oldPosition.X, charRect.Body.Position.X) < 0.0001 &&
+                Math.Max(oldPosition.Y, charRect.Body.Position.Y) - Math.Min(oldPosition.Y, charRect.Body.Position.Y) < 0.0001)
             {
                 isIdle = true;
                 isFalling = false;
                 isRunning = false;
                 isJumping = false;
 
-                charRect[0].Friction = 4;
+                charRect.Friction = 4;
             }
 
             if (movement.Y + Level.Physics.Gravity.Y < 0.05f && !rectTouching)
@@ -1051,7 +1052,7 @@ namespace Silhouette.GameMechs
                 isJumping = true;
             }
 
-            if (isJumping && oldPosition.Y < charRect[0].Body.Position.Y && !rectTouching)
+            if (isJumping && oldPosition.Y < charRect.Body.Position.Y && !rectTouching)
             {
                 isIdle = false;
                 isFalling = true;
@@ -1219,8 +1220,8 @@ namespace Silhouette.GameMechs
 
         public void calcRotation(GameTime gameTime)
         {
-            if (charRect[0].Body.Rotation < 0.5f && charRect[0].Body.Rotation > -0.5f)
-            { tempRotation = charRect[0].Body.Rotation; }
+            if (charRect.Body.Rotation < 0.5f && charRect.Body.Rotation > -0.5f)
+            { tempRotation = charRect.Body.Rotation; }
         }
 
         public void reset()
@@ -1237,9 +1238,9 @@ namespace Silhouette.GameMechs
                 isRecovering = false;
                 isRemembering = false;
                 isJumping = false;
-                charRect[0].Body.Position = GameStateManager.Default.currentLevel.startPosition / Level.PixelPerMeter;
-                charRect[0].Body.BodyType = BodyType.Dynamic;
-                charRect[0].Body.IgnoreGravity = false;
+                charRect.Body.Position = GameStateManager.Default.currentLevel.startPosition / Level.PixelPerMeter;
+                charRect.Body.BodyType = BodyType.Dynamic;
+                charRect.Body.IgnoreGravity = false;
                 camRect.Body.Position = GameStateManager.Default.currentLevel.startPosition / Level.PixelPerMeter;
 
                     isRecovering = false;
@@ -1261,9 +1262,9 @@ namespace Silhouette.GameMechs
                 isRecovering = false;
                 isRemembering = false;
                 isJumping = false;
-                charRect[0].Body.Position = Vector2.Zero;
-                charRect[0].Body.BodyType = BodyType.Dynamic;
-                charRect[0].Body.IgnoreGravity = false;
+                charRect.Body.Position = Vector2.Zero;
+                charRect.Body.BodyType = BodyType.Dynamic;
+                charRect.Body.IgnoreGravity = false;
                 camRect.Body.Position = Vector2.Zero;
 
                     isRecovering = false;
@@ -1332,9 +1333,9 @@ namespace Silhouette.GameMechs
         public void OnSeperation(Fixture fixtureA, Fixture fixtureB)
         {
 
-            if (fixtureB.isHalfTransparent && charRect[0].IsSensor)
+            if (fixtureB.isHalfTransparent && charRect.IsSensor)
             {
-                charRect[0].IsSensor = false;
+                charRect.IsSensor = false;
             }
 
                 rectTouching = false;
@@ -1344,7 +1345,7 @@ namespace Silhouette.GameMechs
         {
             if (fixtureB.isHalfTransparent)
             {
-                charRect[0].IsSensor = true;
+                charRect.IsSensor = true;
             }
             return true;
 
@@ -1405,11 +1406,11 @@ namespace Silhouette.GameMechs
                     }
                 }
 
-                if (charRect[0].IsSensor == true && !fixtureB.IsSensor && fixtureB.isHalfTransparent)
+                if (charRect.IsSensor == true && !fixtureB.IsSensor && fixtureB.isHalfTransparent)
                 {
                     try
                     {
-                        charRect[0].IsSensor = false;
+                        charRect.IsSensor = false;
                     }
                     catch (Exception e) { }
                 }

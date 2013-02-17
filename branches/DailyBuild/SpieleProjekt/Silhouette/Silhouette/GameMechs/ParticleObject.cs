@@ -27,9 +27,10 @@ using System.ComponentModel;
 namespace Silhouette.GameMechs
 {
     public enum ParticleType
-    { 
+    {
         None,
         Waterfall,
+        Smoke,
         Rain
     }
 

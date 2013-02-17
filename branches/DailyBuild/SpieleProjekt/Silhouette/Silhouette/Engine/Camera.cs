@@ -100,6 +100,7 @@ namespace Silhouette.Engine
 
         public static void updateMatrix()
         {
+
             matrix = Matrix.CreateTranslation(-_Position.X, -_Position.Y, 0.0f) *
                      Matrix.CreateRotationZ(_Rotation) *
                      Matrix.CreateScale(_Scale) *

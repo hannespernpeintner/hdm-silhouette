@@ -64,18 +64,30 @@ namespace Silhouette
                     if (_resolutionHeight != value)
                         Changed = true;
                     _resolutionHeight = value; 
-                } 
+                }
             }
 
             private bool _fullscreen = false;
-            public bool fullscreen 
-            { 
-                get { return _fullscreen; } 
-                set 
+            public bool fullscreen
+            {
+                get { return _fullscreen; }
+                set
                 {
                     if (_fullscreen != value)
                         Changed = true;
-                    _fullscreen = value; 
+                    _fullscreen = value;
+                }
+            }
+
+            private float _gameCamScale = 0.4f;
+            public float gameCamScale
+            {
+                get { return _gameCamScale; }
+                set
+                {
+                    if (_gameCamScale != value)
+                        Changed = true;
+                    _gameCamScale = value;
                 }
             }
 
