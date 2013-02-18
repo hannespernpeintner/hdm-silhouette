@@ -19,19 +19,30 @@ namespace Silhouette.GameMechs
         [NonSerialized]
         public Texture2D texture;
 
-        private String _path;
+        private String _fullPath;
         [DisplayName("Path"), Category("Animation Data")]
         [Description("The absolute path to the sound file.")]
-        public String path { get { return _path; } set { _path = value; } }
+        public String fullPath { get { return _fullPath; } set { _fullPath = value; } }
 
-        private int _amount;
-        [Browsable(false)]
-        public int amount { get { return _amount; } set { _amount = value; } }
+        private Vector2 _scale;
+        [DisplayName("Scale"), Category("Texture Data")]
+        [Description("The scale factor of the object.")]
+        public Vector2 scale { get { return _scale; } set { _scale = value; transformed(); } }
 
-        private int _speed;
+        private float _rotation;
+        [DisplayName("Rotation"), Category("Texture Data")]
+        [Description("The rotation factor of the object.")]
+        public float rotation { get { return _rotation; } set { _rotation = value; transformed(); } }
+
+        private Vector2 _origin;
+        [DisplayName("Origin"), Category("Texture Data")]
+        [Description("The sprite origin. Default is (0,0), which is the upper left corner.")]
+        public Vector2 origin { get { return _origin; } set { _origin = value; transformed(); } } 
+
+        private float _speed;
         [DisplayName("Speed"), Category("Animation Data")]
-        [Description("The animation speed.")]
-        public int speed { get { return _speed; } set { _speed = value; } }
+        [Description("The animation speed in fps.")]
+        public float speed { get { return _speed; } set { _speed = value; } }
 
         private bool _looped;
         [DisplayName("Looped"), Category("Animation Data")]
@@ -67,18 +78,24 @@ namespace Silhouette.GameMechs
         [NonSerialized]
         public Fixture fixture;
         [NonSerialized]
-        public Animation animation;     
+        public Animation animation;
+        Vector2[] polygon;
+        Rectangle boundingBox;
+        Matrix transform;
 
-        public AnimatedObject(Vector2 position, int amount, String path, int speed)
+        public AnimatedObject(Vector2 position, int amount, String path, float speed)
         {
             this.position = position;
-            this.amount = amount;
+            this.origin = Vector2.Zero;
+            this.scale = new Vector2(1, 1);
+            this.rotation = 0;
 
-            this.path = path;
+            this.fullPath = path;
             this.speed = speed;
             this.looped = true;
             this.pingpong = false;
             this.backwards = false;
+            this.polygon = new Vector2[4];
             animation = new Animation();
             animation.Fullpath = path;
             animation.speed = speed;
@@ -97,10 +114,13 @@ namespace Silhouette.GameMechs
             {
                 animation.stop();
             }
-            animation.Fullpath = path;
+            animation.Fullpath = fullPath;
             animation.Load();
             //animation.Load(amount, path, speed, false);
             ToFixture();
+            if (texture != null)
+                origin = new Vector2((float)(texture.Width / 2), (float)(texture.Height / 2));
+            transformed();
         }
         public void LoadContent2()
         {
@@ -109,12 +129,14 @@ namespace Silhouette.GameMechs
                 animation = new Animation();
             }
             animation.Load();
+
             //ToFixture();
         }
 
         public override void Update(GameTime gameTime)
         {
-            animation.Update(gameTime, position);
+            animation.Update(gameTime);
+            animation.UpdateTransformation(position, rotation, scale);
         }
 
         public override void Draw(SpriteBatch spriteBatch)
@@ -124,11 +146,15 @@ namespace Silhouette.GameMechs
 
         public override void drawInEditor(SpriteBatch spriteBatch)
         {
+            Color color = Color.White;
+            if (mouseOn) color = Constants.onHover;
+
             if (texture == null)
             {
-                LoadContent2();
+                return;
             }
-            spriteBatch.Draw(texture, new Vector2((position.X-texture.Width/2), (position.Y-texture.Height/2)), Color.White);
+            origin = new Vector2((float)(texture.Width / 2), (float)(texture.Height / 2));
+            spriteBatch.Draw(texture, position, null, color, rotation, origin, getScale(), SpriteEffects.None, 1);
         }
 
         public override string getPrefix()
@@ -136,12 +162,81 @@ namespace Silhouette.GameMechs
             return "AnimatedObject_";
         }
 
+        public override bool canScale() { return true; }
+        public override Vector2 getScale() { return scale; }
+        public override void setScale(Vector2 scale) { this.scale = scale; }
+        public override bool canRotate() { return true; }
+        public override float getRotation() { return rotation; }
+        public override void setRotation(float rotate) { this.rotation = rotate; }
+
         public void ToFixture()
         {
             fixture = FixtureManager.CreateRectangle(animation.activeTexture.Width, animation.activeTexture.Height, position, bodyType, density);
             fixture.IsSensor = true;
             fixture.OnCollision += this.OnCollision;
             fixture.OnSeparation += this.OnSeperation;
+        }
+
+        public override void drawSelectionFrame(SpriteBatch spriteBatch, Matrix matrix)
+        {
+            Primitives.Instance.drawPolygon(spriteBatch, polygon, Color.Yellow, 2);
+            foreach (Vector2 p in polygon)
+            {
+                Primitives.Instance.drawCircleFilled(spriteBatch, p, 4, Color.Yellow);
+            }
+        }
+
+        public override LevelObject clone()
+        {
+            AnimatedObject result = (AnimatedObject)this.MemberwiseClone();
+            result.polygon = (Vector2[])this.polygon.Clone();
+            result.mouseOn = false;
+            return result;
+        }
+
+        public override void transformed()
+        {
+            if (texture == null)
+                return;
+
+            transform =
+                Matrix.CreateTranslation(new Vector3(-origin.X, -origin.Y, 0.0f)) *
+                Matrix.CreateScale(scale.X, scale.Y, 1) *
+                Matrix.CreateRotationZ(rotation) *
+                Matrix.CreateTranslation(new Vector3(position, 0.0f));
+
+            Vector2 leftTop = new Vector2(0, 0);
+            Vector2 rightTop = new Vector2(texture.Width, 0);
+            Vector2 leftBottom = new Vector2(0, texture.Height);
+            Vector2 rightBottom = new Vector2(texture.Width, texture.Height);
+
+            Vector2.Transform(ref leftTop, ref transform, out leftTop);
+            Vector2.Transform(ref rightTop, ref transform, out rightTop);
+            Vector2.Transform(ref leftBottom, ref transform, out leftBottom);
+            Vector2.Transform(ref rightBottom, ref transform, out rightBottom);
+
+            polygon[0] = leftTop;
+            polygon[1] = rightTop;
+            polygon[3] = leftBottom;
+            polygon[2] = rightBottom;
+
+            Vector2 min = Vector2.Min(Vector2.Min(leftTop, rightTop),
+                                      Vector2.Min(leftBottom, rightBottom));
+            Vector2 max = Vector2.Max(Vector2.Max(leftTop, rightTop),
+                                      Vector2.Max(leftBottom, rightBottom));
+
+            boundingBox = new Rectangle((int)min.X, (int)min.Y,
+                                 (int)(max.X - min.X), (int)(max.Y - min.Y));
+        }
+
+        public override bool contains(Vector2 worldPosition)
+        {
+            if (boundingBox.Contains(new Point((int)worldPosition.X, (int)worldPosition.Y)))
+            {
+                return true;
+            }
+
+            return false;
         }
 
         public bool OnCollision(Fixture f1, Fixture f2, Contact contact) 

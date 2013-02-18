@@ -46,7 +46,8 @@ namespace Silhouette.Engine
         //Braucht die position des Trägers!
         public void Update(GameTime gameTime, Vector2 position)
         {
-            animation.Update(gameTime, position);
+            animation.Update(gameTime);
+            animation.UpdatePosition(position);
             activePolygon = polygons[animation.activeFrameNumber];
             activePolygon[0].Body.Position = position;
         }
