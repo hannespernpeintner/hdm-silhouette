@@ -1019,7 +1019,7 @@ namespace SilhouetteEditor
         {
             editorState = EditorState.CREATE_ANIMATION;
             AnimatedObject ao = new AnimatedObject(Vector2.Zero, 1, path, 25);
-            ao.path = path;
+            ao.fullPath = path;
             //ao.LoadContent2();
             ao.texture = TextureManager.Instance.LoadFromFile(path, EditorLoop.EditorLoopInstance.GraphicsDevice);
             //ao.animation.activeTexture = ao.texture;
@@ -1090,6 +1090,21 @@ namespace SilhouetteEditor
                 selectedLevelObjects.Clear();
                 selectedLevelObjects.Add(to);
             }
+            if (currentObject is AnimatedObject)
+            {
+                AnimatedObject temp = (AnimatedObject)currentObject;
+                AnimatedObject ao = new AnimatedObject(MouseWorldPosition, 1, temp.fullPath, temp.speed);
+                ao.texture = temp.texture;
+                ao.position = MouseWorldPosition;
+                ao.rotation = temp.rotation;
+                ao.scale = temp.scale;
+                ao.name = ao.getPrefix() + selectedLayer.getNextObjectNumber();
+                ao.layer = selectedLayer;
+                ao.loadContentInEditor(EditorLoop.EditorLoopInstance.GraphicsDevice);
+                AddLevelObject(ao);
+                selectedLevelObjects.Clear();
+                selectedLevelObjects.Add(ao);
+            }
             if (currentObject is InteractiveObject)
             {
                 InteractiveObject temp = (InteractiveObject)currentObject;
@@ -1116,17 +1131,6 @@ namespace SilhouetteEditor
                 AddLevelObject(po);
                 selectedLevelObjects.Clear();
                 selectedLevelObjects.Add(po);
-            }
-            if (currentObject is AnimatedObject)
-            {
-                AnimatedObject temp = (AnimatedObject)currentObject;
-                AnimatedObject ao = new AnimatedObject(MouseWorldPosition, 1, temp.path, temp.speed);
-                ao.name = ao.getPrefix() + selectedLayer.getNextObjectNumber();
-                ao.layer = selectedLayer;
-                ao.texture = temp.texture;
-                AddLevelObject(ao);
-                selectedLevelObjects.Clear();
-                selectedLevelObjects.Add(ao);
             }
 
             MainForm.Default.UpdateTreeView();
@@ -1597,7 +1601,7 @@ namespace SilhouetteEditor
                     if (l == selectedLayer && editorState == EditorState.CREATE_ANIMATION)
                     {
                         AnimatedObject ao = (AnimatedObject)currentObject;
-                        spriteBatch.Draw(ao.texture, new Vector2(MouseWorldPosition.X, MouseWorldPosition.Y), null, new Microsoft.Xna.Framework.Color(1f, 1f, 1f, 7f), 0, new Vector2(ao.texture.Width / 2, ao.texture.Height / 2), 1, SpriteEffects.None, 0);
+                        spriteBatch.Draw(ao.texture, new Vector2(MouseWorldPosition.X, MouseWorldPosition.Y), null, new Microsoft.Xna.Framework.Color(1f, 1f, 1f, 7f), ao.rotation, new Vector2(ao.texture.Width / 2, ao.texture.Height / 2), ao.scale, SpriteEffects.None, 0);
                     }
                     if (l == selectedLayer && editorState == EditorState.CREATE_INTERACTIVE)
                     {

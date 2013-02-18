@@ -87,6 +87,11 @@ namespace Silhouette.GameMechs.Events
                                 TextureObject to = (TextureObject)lo;
                                 to.rotation += this.step;
                             }
+                            if (lo is AnimatedObject)
+                            {
+                                AnimatedObject to = (AnimatedObject)lo;
+                                to.rotation += this.step;
+                            }
                         }
                         break;
                     case Attribute.Position:
@@ -105,6 +110,11 @@ namespace Silhouette.GameMechs.Events
                             if (lo is TextureObject)
                             {
                                 TextureObject to = (TextureObject)lo;
+                                to.position += this.stepV;
+                            }
+                            if (lo is AnimatedObject)
+                            {
+                                AnimatedObject to = (AnimatedObject)lo;
                                 to.position += this.stepV;
                             }
                         }

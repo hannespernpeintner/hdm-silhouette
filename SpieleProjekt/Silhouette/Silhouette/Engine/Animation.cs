@@ -15,7 +15,8 @@ using Silhouette.GameMechs;
 
 namespace Silhouette.Engine
 {
-    public class Animation
+    [Serializable]
+    public class Animation:DrawableLevelObject
     {
         /* Hannes: 
         Da wir den Plan verworfen haben mehrere Einzelbilder in ein Spritebild zu packen, weil wir dann das zugehörige Polygon
@@ -42,8 +43,12 @@ namespace Silhouette.Engine
         public int activeFrameNumber;                       // zur Sicherheit auch das aktive Bild selber, können wir später
         public Texture2D activeTexture;                     // rauslöschen, wenn keine weitere Verwendung, auÃ erdem framespersecond
         public float speed;
-        public Vector2 position;
+        //public Vector2 position;
         public float rotation;
+        public Vector2 scale;
+
+        public override Vector2 getScale() { return scale; }
+        public override float getRotation() { return rotation; }
 
         private bool looped;
         public bool Looped
@@ -104,6 +109,8 @@ namespace Silhouette.Engine
             amount = 0;
             speed = 25;
             looped = false;
+            scale = new Vector2(1, 1);
+            rotation = 0;
             State = AnimationState.Play;
         }
 
@@ -120,11 +127,16 @@ namespace Silhouette.Engine
             this.position = Vector2.Zero;
         }
 
+        public override void Initialise()
+        {
+            
+        }
+
         // Wird in der Load des zugehörigen Trägers gerufen
         // speed sind Bilder pro Sekunde. Also irgendeine Integerahl
-        public void Load(int amount, String path, int speed, bool looped)
+        public void Load(int amount, String path, float speed, bool looped)
         {
-            this.speed = speed / 1000f;
+            this.speed = speed;
             this.amount = amount;
             this.position = Vector2.Zero;
             this.looped = looped;
@@ -147,18 +159,14 @@ namespace Silhouette.Engine
             activeTexture = pictures[activeFrameNumber];
         }
 
-        public void LoadInEditor(int amount, String path, int speed, bool looped)
+        public override void loadContentInEditor(GraphicsDevice graphics)
         {
-            this.speed = speed / 1000f;
-            this.amount = amount;
-            this.position = Vector2.Zero;
-            this.looped = looped;
+            Load();
+        }
 
-
-            pictures.Add(GameLoop.gameInstance.Content.Load<Texture2D>(path));
-            
-            activeFrameNumber = 0;
-            activeTexture = pictures[activeFrameNumber];
+        public override void LoadContent()
+        {
+            Load();
         }
 
         public void Load()
@@ -244,9 +252,11 @@ namespace Silhouette.Engine
         }
 
         //Braucht die position des Trägers!
-        public void Update(GameTime gameTime, Vector2 position)
+        public override void Update(GameTime gameTime)
         {
-            this.position = position;
+
+            float fps = 1f / speed;
+            float mspf = 1000f / speed;
 
             switch(State)
             {
@@ -255,9 +265,9 @@ namespace Silhouette.Engine
                     float elapsed = gameTime.ElapsedGameTime.Milliseconds;
                     totalElapsed += elapsed;
 
-                    if (totalElapsed > speed)
+                    if (totalElapsed > mspf)
                     {
-                        totalElapsed -= speed;
+                        totalElapsed -= mspf;
                         switchToNextFrame();
                     }
                     break;
@@ -277,6 +287,18 @@ namespace Silhouette.Engine
             activeTexture = pictures[activeFrameNumber];
         }
 
+        public void UpdateTransformation(Vector2 position, float rotation, Vector2 scale)
+        {
+            this.position = position;
+            this.scale = scale;
+            this.rotation = rotation;
+        }
+
+        public void UpdatePosition(Vector2 position)
+        {
+            this.position = position;
+        }
+        
         private void switchToNextFrame()
         {
             switch (backwards)
@@ -443,9 +465,11 @@ namespace Silhouette.Engine
         }
 
         // Wird in der Draw des Trägers gerufen
-        public void Draw(SpriteBatch spriteBatch)
+        public override void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(activeTexture, new Rectangle((int)position.X, (int)position.Y, activeTexture.Width, activeTexture.Height), new Rectangle(0, 0, activeTexture.Width, activeTexture.Height), Color.White, this.rotation, Vector2.Zero, SpriteEffects.None, 0.0f);
+            Vector2 origin = new Vector2((float)(pictures[0].Width / 2), (float)(pictures[0].Height / 2));
+            //spriteBatch.Draw(activeTexture, position, new Rectangle((int)position.X, (int)position.Y, activeTexture.Width, activeTexture.Height), new Rectangle(0, 0, activeTexture.Width, activeTexture.Height), Color.White, getRotation, origin, getScale(), SpriteEffects.None, 1);
+            spriteBatch.Draw(activeTexture, position, null, Color.White, rotation, origin, scale, SpriteEffects.None, 1);
         }
 
         public void start()
