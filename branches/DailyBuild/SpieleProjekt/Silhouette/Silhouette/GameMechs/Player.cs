@@ -847,7 +847,8 @@ namespace Silhouette.GameMechs
 
         private void UpdateTexture(GameTime gameTime)
         {
-            activeAnimation.Update(gameTime, position);
+            activeAnimation.Update(gameTime);
+            activeAnimation.UpdatePosition(position);
         }
 
         public Animation choseIdleAnimation()
