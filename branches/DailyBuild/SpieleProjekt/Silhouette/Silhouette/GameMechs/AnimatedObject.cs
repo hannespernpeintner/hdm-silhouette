@@ -98,7 +98,7 @@ namespace Silhouette.GameMechs
             this.polygon = new Vector2[4];
             animation = new Animation();
             animation.Fullpath = path;
-            animation.speed = speed;
+            animation.Speed = speed;
             animation.position = position;
             animation.Looped = looped;
             animation.Pingpong = pingpong;
@@ -110,6 +110,10 @@ namespace Silhouette.GameMechs
         public override void LoadContent()
         {
             animation = new Animation();
+            animation.Speed = speed;
+            animation.Looped = looped;
+            animation.Pingpong = pingpong;
+            animation.Backwards = backwards;
             if(isSensor)
             {
                 animation.stop();

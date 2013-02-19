@@ -1098,6 +1098,7 @@ namespace SilhouetteEditor
                 ao.position = MouseWorldPosition;
                 ao.rotation = temp.rotation;
                 ao.scale = temp.scale;
+                ao.speed = temp.speed;
                 ao.name = ao.getPrefix() + selectedLayer.getNextObjectNumber();
                 ao.layer = selectedLayer;
                 ao.loadContentInEditor(EditorLoop.EditorLoopInstance.GraphicsDevice);

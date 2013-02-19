@@ -42,7 +42,13 @@ namespace Silhouette.Engine
         public List<Texture2D> pictures;                    // Liste mit Einzelbildern, Nummer des gerade aktiven Bildes,
         public int activeFrameNumber;                       // zur Sicherheit auch das aktive Bild selber, können wir später
         public Texture2D activeTexture;                     // rauslöschen, wenn keine weitere Verwendung, auÃ erdem framespersecond
-        public float speed;
+        private float speed;
+
+        public float Speed
+        {
+            get { return speed; }
+            set { speed = value; }
+        }
         //public Vector2 position;
         public float rotation;
         public Vector2 scale;
@@ -107,14 +113,13 @@ namespace Silhouette.Engine
             pingpong = false;
             totalElapsed = 0;
             amount = 0;
-            speed = 25;
             looped = false;
             scale = new Vector2(1, 1);
             rotation = 0;
             State = AnimationState.Play;
         }
 
-        public Animation(String fullpath, int amount)
+        public Animation(String fullpath, int amount, float speed)
         {
             // Der fullpath muss bis zum Unterstrich vor der Zahl angegeben werden!!
             pictures = new List<Texture2D>();
@@ -122,7 +127,7 @@ namespace Silhouette.Engine
             this.playedOnce = false;
             this.fullpath = fullpath;
             this.amount = amount;
-            this.speed = 1;
+            this.Speed = speed;
             this.looped = true;
             this.position = Vector2.Zero;
         }
@@ -136,7 +141,7 @@ namespace Silhouette.Engine
         // speed sind Bilder pro Sekunde. Also irgendeine Integerahl
         public void Load(int amount, String path, float speed, bool looped)
         {
-            this.speed = speed;
+            this.Speed = speed;
             this.amount = amount;
             this.position = Vector2.Zero;
             this.looped = looped;
@@ -246,7 +251,7 @@ namespace Silhouette.Engine
             }
 
             activeFrameNumber = 0;
-            looped = true;
+            //looped = true;
             activeTexture = pictures[activeFrameNumber];
             //State = AnimationState.Play;
         }
@@ -255,8 +260,8 @@ namespace Silhouette.Engine
         public override void Update(GameTime gameTime)
         {
 
-            float fps = 1f / speed;
-            float mspf = 1000f / speed;
+            float fps = 1f / Speed;
+            float mspf = 1000f / Speed;
 
             switch(State)
             {
@@ -442,9 +447,9 @@ namespace Silhouette.Engine
                         float elapsed = gameTime.ElapsedGameTime.Milliseconds;
                         totalElapsed += elapsed;
 
-                        if (totalElapsed > speed)
+                        if (totalElapsed > Speed)
                         {
-                            totalElapsed -= speed;
+                            totalElapsed -= Speed;
                             switchToNextFrame();
                         }
                         break;
