@@ -1027,6 +1027,15 @@ namespace Silhouette.GameMechs
 
         public void ObserveMovement()
         {
+
+            if (charRect.Body.Rotation > 0.2)
+            {
+                charRect.Body.Rotation = 0.2f;
+            }
+            else if (charRect.Body.Rotation < -0.2)
+            {
+                charRect.Body.Rotation = -0.2f;
+            }
             movement = charRect.Body.GetLinearVelocityFromLocalPoint(Vector2.Zero);
 
             if (isLanding)
@@ -1327,7 +1336,6 @@ namespace Silhouette.GameMechs
             {
                 die();
             }
-
             return true;
         }
 
