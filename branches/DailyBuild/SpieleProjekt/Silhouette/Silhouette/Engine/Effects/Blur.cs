@@ -1,0 +1,87 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
+using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.GamerServices;
+using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Media;
+using System.Text;
+
+namespace Silhouette.Engine.Effects
+{
+    public class Blur : Effects.EffectObject
+    {
+        private static Dictionary<String, float> _radiuses;
+
+        private static Dictionary<String, float> Radiuses
+        {
+            get { return Blur._radiuses; }
+            set { Blur._radiuses = value; }
+        }
+
+        private int _samples;
+        public int Samples
+        {
+            get { return _samples; }
+            set { _samples = value; }
+        }
+        private float _radius;
+        public float Radius
+        {
+            get { return _radius; }
+            set { _radius = value; }
+        }
+
+        private override String _type;
+        public override String Type
+        {
+            get { return _type; }
+            set 
+            {
+                Radius = Radiuses[_type];
+                _type = value;
+            }
+        }
+
+        private override Effect _effect;
+        public override Effect Effect
+        {
+            get
+            {
+                _effect.Parameters["BlurDistance"].SetValue(Radius);
+                _effect.Parameters["Samples"].SetValue(Samples);
+                return _effect;
+            }
+            set { _effect = value; }
+        }
+
+        public void Initialise()
+        {
+            Radiuses.Add("Normal", 0.003f);
+            Radiuses.Add("Weak", 0.0015f);
+            Radiuses.Add("Strong", 0.008f);
+
+            Active = true;
+            Path = "Effects/Blur";
+            Samples = 4;
+            Types = new List<string>();
+
+            Dictionary<String, float>.Enumerator enumerator = Radiuses.GetEnumerator();
+            while(enumerator.MoveNext())
+            {
+                KeyValuePair<String, float> pair = enumerator.Current;
+                Types.Add(pair.Key);
+            }
+            Type = Types.ElementAt(0);
+        }
+        public void LoadContent()
+        {
+            Effect = GameLoop.gameInstance.Content.Load<Effect>(Path);
+        }
+        public virtual void loadContentInEditor(GraphicsDevice graphics) { }
+
+    }
+}

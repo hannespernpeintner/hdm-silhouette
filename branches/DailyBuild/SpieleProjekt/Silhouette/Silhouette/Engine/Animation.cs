@@ -122,6 +122,7 @@ namespace Silhouette.Engine
         public Animation(String fullpath, int amount, float speed)
         {
             // Der fullpath muss bis zum Unterstrich vor der Zahl angegeben werden!!
+            amount = 0;
             pictures = new List<Texture2D>();
             totalElapsed = 0;
             this.playedOnce = false;
@@ -177,6 +178,7 @@ namespace Silhouette.Engine
         public void Load()
         {
             String pathCut = Fullpath;
+            String assetName = "";
 
             if (pathCut.EndsWith(".png"))
             {
@@ -191,6 +193,8 @@ namespace Silhouette.Engine
                 pathCut = pathCut.Remove(pathCut.Length - 1);
             }
 
+            assetName = Path.GetFileNameWithoutExtension(fullpath);
+
             int max = 100;
 
             for (int i = 1; i < max; i++)
@@ -198,11 +202,14 @@ namespace Silhouette.Engine
                 if (i < 10)
                 {
                     String temp = (pathCut + "0" + i + ".png").ToString();
+                    assetName = Path.GetFileNameWithoutExtension(pathCut) + "0" + i + Path.GetExtension(fullpath);
                     try 
                     {
-                        Texture2D t = GameLoop.gameInstance.Content.Load<Texture2D>(temp);
+                        //Texture2D t = GameLoop.gameInstance.Content.Load<Texture2D>("Sprites/Menu/Animations/" + assetName);
+                        Texture2D t = TextureManager.Instance.LoadFromFile(Path.Combine(Directory.GetCurrentDirectory(), "Content", "Sprites", "Animations", assetName));
                         if (t != null)
                         {
+                            amount++;
                             pictures.Add(t);
                         }
                     } catch (Exception e)
@@ -210,30 +217,36 @@ namespace Silhouette.Engine
                         Texture2D t = TextureManager.Instance.LoadFromFile(temp);
                         if (t != null)
                         {
+                            amount++;
                             pictures.Add(t);
                         }
-                        Console.WriteLine(e.Message);
+                        else break;
                     }
                 }
                 else
                 {
                     String temp = (pathCut + i + ".png").ToString();
+                    assetName = Path.GetFileNameWithoutExtension(pathCut) + i + Path.GetExtension(fullpath);
                     try 
                     {
-                        Texture2D t = GameLoop.gameInstance.Content.Load<Texture2D>(temp);
+                        //Texture2D t = GameLoop.gameInstance.Content.Load<Texture2D>(temp);
+                        Texture2D t = TextureManager.Instance.LoadFromFile(Path.Combine(Directory.GetCurrentDirectory(), "Content", "Sprites", "Animations", assetName));                    
                         if (t != null)
                         {
+                            amount++;
                             pictures.Add(t);
                         }
+                        else break;
                     }
                     catch (Exception e)
                     {
                         Texture2D t = TextureManager.Instance.LoadFromFile(temp);
                         if (t != null)
                         {
+                            amount++;
                             pictures.Add(t);
                         }
-                        Console.WriteLine(e.Message);
+                        else break;
                     }
                 }
             }
@@ -242,10 +255,12 @@ namespace Silhouette.Engine
             {
                 try
                 {
+                    amount++;
                     pictures.Add(GameLoop.gameInstance.Content.Load<Texture2D>(fullpath));
                 }
                 catch (Exception e)
                 {
+                    amount++;
                     pictures.Add(TextureManager.Instance.LoadFromFile(fullpath));
                 }
             }
@@ -479,6 +494,7 @@ namespace Silhouette.Engine
 
         public void start()
         {
+            resetAnimationProgress();
             State = AnimationState.Play;
         }
 
@@ -491,12 +507,13 @@ namespace Silhouette.Engine
         private void resetAnimationProgress()
         {
             totalElapsed = 0;
-            if (backwards)
+            if (backwards && !pingpong)
             {
-                activeFrameNumber = pictures.Capacity - 1;
+                activeFrameNumber = pictures.Count - 1;
             }
             else
             {
+                backwards = false;
                 activeFrameNumber = 0;
             }
         }

@@ -75,6 +75,8 @@ namespace Silhouette.GameMechs
         [Description("Defines if the player or any other physical object can collide with this object.")]
         public bool isSensor { get { return _isSensor; } set { _isSensor = value; } }
 
+        public Layer layer;
+
         [NonSerialized]
         public Fixture fixture;
         [NonSerialized]
@@ -120,6 +122,7 @@ namespace Silhouette.GameMechs
             }
             animation.Fullpath = fullPath;
             animation.Load();
+            texture = animation.activeTexture;
             //animation.Load(amount, path, speed, false);
             ToFixture();
             if (texture != null)
