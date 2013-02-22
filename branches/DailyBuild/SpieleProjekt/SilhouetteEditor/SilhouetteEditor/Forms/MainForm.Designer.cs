@@ -93,6 +93,7 @@ namespace SilhouetteEditor.Forms
             this.videoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.playToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.deathToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.loadLevelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cameraToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
@@ -555,6 +556,7 @@ namespace SilhouetteEditor.Forms
             this.audioToolStripMenuItem,
             this.videoToolStripMenuItem,
             this.deathToolStripMenuItem,
+            this.loadLevelToolStripMenuItem,
             this.cameraToolStripMenuItem});
             this.EventButton.Image = global::SilhouetteEditor.Properties.Resource.AddEvent;
             this.EventButton.ImageTransparentColor = System.Drawing.Color.Magenta;
@@ -693,6 +695,13 @@ namespace SilhouetteEditor.Forms
             this.deathToolStripMenuItem.Size = new System.Drawing.Size(115, 22);
             this.deathToolStripMenuItem.Text = "Death";
             this.deathToolStripMenuItem.Click += new System.EventHandler(this.deathToolStripMenuItem_Click);
+            // 
+            // loadLevelToolStripMenuItem
+            // 
+            this.loadLevelToolStripMenuItem.Name = "loadLevelToolStripMenuItem";
+            this.loadLevelToolStripMenuItem.Size = new System.Drawing.Size(115, 22);
+            this.loadLevelToolStripMenuItem.Text = "LoadLevel";
+            this.loadLevelToolStripMenuItem.Click += new System.EventHandler(this.loadLevelToolStripMenuItem_Click);
             // 
             // cameraToolStripMenuItem
             // 
@@ -1036,6 +1045,13 @@ namespace SilhouetteEditor.Forms
             this.saveStateToolStripMenuItem.Text = "SaveState";
             this.saveStateToolStripMenuItem.Click += new System.EventHandler(this.saveStateToolStripMenuItem_Click);
             // 
+            // loadLevelToolStripMenuItem
+            // 
+            this.loadLevelToolStripMenuItem.Name = "loadLevelToolStripMenuItem";
+            this.loadLevelToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.loadLevelToolStripMenuItem.Text = "LoadLevel";
+            this.loadLevelToolStripMenuItem.Click += new System.EventHandler(this.loadLevelToolStripMenuItem_Click);
+            // 
             // MainForm
             // 
             this.AllowDrop = true;
@@ -1180,6 +1196,7 @@ namespace SilhouetteEditor.Forms
         private System.Windows.Forms.ToolStripMenuItem changeVisibilityToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem applyForceToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem saveStateToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem loadLevelToolStripMenuItem;
 
     }
 }
