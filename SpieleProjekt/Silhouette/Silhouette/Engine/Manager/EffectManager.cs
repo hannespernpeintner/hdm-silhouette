@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Silhouette.GameMechs;
 using System.IO;
+using Silhouette.Engine.Effects;
 
 namespace Silhouette.Engine.Manager
 {
@@ -11,6 +12,24 @@ namespace Silhouette.Engine.Manager
 
     public static class EffectManager
     {
+        public static enum Effects
+        { 
+            Blur
+        }
+
+        public static EffectObject GetEffectObject(Effects type) 
+        {
+            if(type == Effects.Blur)
+            {
+                Blur blur = new Blur();
+                blur.Initialise();
+                blur.LoadContent();
+                return blur;
+            }
+
+            return null;
+        }
+
         private static Texture2D vignette;
         private static Texture2D clouds;
         private static Texture2D noise;
@@ -93,6 +112,7 @@ namespace Silhouette.Engine.Manager
         public static Effect Bleach()
         {
             Player player = GameLoop.gameInstance.playerInstance;
+            //Tom player = GameLoop.gameInstance.playerInstance;
             float fadeOrange = player.fadeOrange / 1000; // zählen beide von 0 bis 1
             float fadeBlue = player.fadeBlue / 1000;
 
@@ -106,6 +126,7 @@ namespace Silhouette.Engine.Manager
         public static Effect WeakBleach()
         {
             Player player = GameLoop.gameInstance.playerInstance;
+            //Tom player = GameLoop.gameInstance.playerInstance;
             float fadeOrange = player.fadeOrange / 1000; // zählen beide von 0 bis 1
             float fadeBlue = player.fadeBlue / 1000;
 
@@ -119,6 +140,7 @@ namespace Silhouette.Engine.Manager
         public static Effect StrongBleach()
         {
             Player player = GameLoop.gameInstance.playerInstance;
+            //Tom player = GameLoop.gameInstance.playerInstance;
             float fadeOrange = player.fadeOrange / 1000; // zählen beide von 0 bis 1
             float fadeBlue = player.fadeBlue / 1000;
 
@@ -181,6 +203,7 @@ namespace Silhouette.Engine.Manager
         public static Effect ColorChange()
         {
             Player player = GameLoop.gameInstance.playerInstance;
+            //Tom player = GameLoop.gameInstance.playerInstance;
             float fadeOrange = player.fadeOrange / 1000; // zählen beide von 0 bis 1
             float fadeBlue = player.fadeBlue / 1000;
 

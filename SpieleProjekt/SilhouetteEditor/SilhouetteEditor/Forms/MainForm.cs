@@ -714,6 +714,11 @@ namespace SilhouetteEditor.Forms
             Editor.Default.AddEvents(EventType.SaveState);
         }
 
+        private void loadLevelToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Editor.Default.AddEvents(EventType.LoadLevel);
+        }
+
         //---> ToolStrips <---//
 
         private void deleteToolStripMenuItem_Click(object sender, EventArgs e)

@@ -189,6 +189,7 @@ namespace Silhouette.GameMechs
             canClimb = false;
             tempRotation = 0.0f;
             resetTimer = 2000;
+            controlsEnabled = true;
 
             facing = 1;
         }
@@ -386,6 +387,10 @@ namespace Silhouette.GameMechs
         private void UpdateControls(GameTime gameTime)
         {
             kState = Keyboard.GetState();
+
+            if (!controlsEnabled) {
+                return;
+            }
 
             // LEFT ARROW
             if (kState.IsKeyDown(Keys.Left) && (isRunning || isIdle) && movement.X >= -3.3f)
@@ -1238,6 +1243,7 @@ namespace Silhouette.GameMechs
         {
             try
             {
+                controlsEnabled = true;
                 isScriptedMoving = false;
                 isUncontrollableMoving = false;
                 actScriptedMove = "";
@@ -1251,6 +1257,7 @@ namespace Silhouette.GameMechs
                 charRect.Body.Position = GameStateManager.Default.currentLevel.startPosition / Level.PixelPerMeter;
                 charRect.Body.BodyType = BodyType.Dynamic;
                 charRect.Body.IgnoreGravity = false;
+                charRect.Body.SleepingAllowed = false;
                 camRect.Body.Position = GameStateManager.Default.currentLevel.startPosition / Level.PixelPerMeter;
 
                     isRecovering = false;

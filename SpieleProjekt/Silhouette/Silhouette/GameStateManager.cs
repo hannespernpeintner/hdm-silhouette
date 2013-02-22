@@ -167,6 +167,16 @@ namespace Silhouette
             currentGameState = GameState.InGame;
         }
 
+        public void NewGame(String levelName)
+        {
+            string temp = levelName;
+            this.levelPath = temp;
+            currentLevel = Level.LoadLevelFile(temp);
+            currentLevel.Initialize();
+            currentLevel.LoadContent();
+            currentGameState = GameState.InGame;
+        }
+
         public void ContinueGame()
         {
             SaveGame.LoadSaveGame();

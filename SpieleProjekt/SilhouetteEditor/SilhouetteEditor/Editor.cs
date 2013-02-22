@@ -52,6 +52,7 @@ namespace SilhouetteEditor
 
         Death,
         SaveState,
+        LoadLevel,
         Camera
     }
 
@@ -1252,6 +1253,13 @@ namespace SilhouetteEditor
                     e14.layer = selectedLayer;
                     selectedLayer.loList.Add(e14);
                     selectLevelObject(e14);
+                    break;
+                case EventType.LoadLevel:
+                    LoadLevelEvent e15 = new LoadLevelEvent(Extensions.RectangleFromVectors(clickedPoints[0], clickedPoints[1]));
+                    e15.name = e15.getPrefix() + selectedLayer.getNextObjectNumber();
+                    e15.layer = selectedLayer;
+                    selectedLayer.loList.Add(e15);
+                    selectLevelObject(e15);
                     break;
             }
             MainForm.Default.UpdateTreeView();

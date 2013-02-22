@@ -34,6 +34,7 @@ namespace Silhouette
     {
         public GraphicsDeviceManager graphics;
         public GameMechs.Player playerInstance;
+        //public GameMechs.Tom playerInstance;
 
         public static GameLoop gameInstance;
 
