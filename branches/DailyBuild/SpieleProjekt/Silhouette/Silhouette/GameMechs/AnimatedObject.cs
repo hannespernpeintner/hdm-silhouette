@@ -75,6 +75,13 @@ namespace Silhouette.GameMechs
         [Description("Defines if the player or any other physical object can collide with this object.")]
         public bool isSensor { get { return _isSensor; } set { _isSensor = value; } }
 
+        private int _startInMiliseonds;
+        public int StartInMiliseonds
+        {
+            get { return _startInMiliseonds; }
+            set { _startInMiliseonds = value; }
+        }
+
         public Layer layer;
 
         [NonSerialized]
@@ -98,13 +105,14 @@ namespace Silhouette.GameMechs
             this.pingpong = false;
             this.backwards = false;
             this.polygon = new Vector2[4];
-            animation = new Animation();
-            animation.Fullpath = path;
-            animation.Speed = speed;
+            animation = new Animation(path, 0, speed, null, 0);
+            //animation.Fullpath = path;
+            //animation.Speed = speed;
             animation.position = position;
             animation.Looped = looped;
             animation.Pingpong = pingpong;
             animation.Backwards = backwards;
+            //StartInMiliseonds = 0;
         }
 
         public override void Initialise() { }
@@ -116,10 +124,8 @@ namespace Silhouette.GameMechs
             animation.Looped = looped;
             animation.Pingpong = pingpong;
             animation.Backwards = backwards;
-            if(isSensor)
-            {
-                animation.stop();
-            }
+            animation.StartInMiliseconds = StartInMiliseonds;
+
             animation.Fullpath = fullPath;
             animation.Load();
             texture = animation.activeTexture;
@@ -128,6 +134,14 @@ namespace Silhouette.GameMechs
             if (texture != null)
                 origin = new Vector2((float)(texture.Width / 2), (float)(texture.Height / 2));
             transformed();
+            if (isSensor)
+            {
+                animation.stop();
+            }
+            else
+            {
+                animation.start();
+            }
         }
         public void LoadContent2()
         {
@@ -248,13 +262,19 @@ namespace Silhouette.GameMechs
 
         public bool OnCollision(Fixture f1, Fixture f2, Contact contact) 
         {
-            this.animation.start();
+            if (isSensor)
+            {
+                this.animation.start();
+            }
             return true;
         }
 
         public void OnSeperation(Fixture f1, Fixture f2)
         {
-            this.animation.PlayedOnce = false;
+            if (isSensor)
+            {
+                this.animation.PlayedOnce = false;
+            }
         }
     }
 }

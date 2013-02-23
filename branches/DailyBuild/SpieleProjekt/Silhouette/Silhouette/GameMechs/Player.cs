@@ -215,10 +215,10 @@ namespace Silhouette.GameMechs
             landing_right.Load(8, "Sprites/Player/landing_right_", 10, false);
             //1,5
 
-            running_left.Load(8, "Sprites/Player/walk_left_", 30, true);
-            running_right.Load(8, "Sprites/Player/walk_right_", 30, true);
-            runStarting_left.Load(8, "Sprites/Player/walkStart_left_", 30, false);
-            runStarting_right.Load(8, "Sprites/Player/walkStart_right_", 30, false);
+            running_left.Load(8, "Sprites/Player/walk_left_", 15, true);
+            running_right.Load(8, "Sprites/Player/walk_right_", 15, true);
+            runStarting_left.Load(8, "Sprites/Player/walkStart_left_", 15, false);
+            runStarting_right.Load(8, "Sprites/Player/walkStart_right_", 15, false);
             runStopping_left.Load(8, "Sprites/Player/walkStop_left_", 15, false);
             runStopping_right.Load(8, "Sprites/Player/walkStop_right_", 15, false);
 
@@ -228,11 +228,11 @@ namespace Silhouette.GameMechs
             climbing_left.Load(21, "Sprites/Player/climb_left_", 15, false);
             climbing_right.Load(21, "Sprites/Player/climb_right_", 15, false);
 
-            hang_left.Load(5, "Sprites/Player/hang_left_", 15, false);
-            hang_right.Load(5, "Sprites/Player/hang_right_", 15, false);
-            hang2_left.Load(1, "Sprites/Player/hang2_left_", 10, false);
-            hang2_right.Load(1, "Sprites/Player/hang2_right_", 10, false);
-            pullup.Load(13, "Sprites/Player/pullup_left_", 10, false);
+            hang_left.Load(5, "Sprites/Player/hang_left_", 5, false);
+            hang_right.Load(5, "Sprites/Player/hang_right_", 5, false);
+            hang2_left.Load(1, "Sprites/Player/hang2_left_", 5, false);
+            hang2_right.Load(1, "Sprites/Player/hang2_right_", 5, false);
+            pullup.Load(13, "Sprites/Player/pullup_left_", 5, false);
 
             dying_left.Load(4, "Sprites/Player/die_left_", 10, false);
             dying_right.Load(4, "Sprites/Player/die_right_", 10, false);
@@ -480,10 +480,10 @@ namespace Silhouette.GameMechs
                 isRemembering = true;
             }
 
-            /*if (kState.IsKeyDown(Keys.H))
+            if (kState.IsKeyDown(Keys.H))
             {
                 hang();
-            }*/
+            }
 
             // SPACE BUTTON
             if (kState.IsKeyDown(Keys.Space) && oldState.IsKeyUp(Keys.Space)  && (isIdle || isRunning))
@@ -760,7 +760,7 @@ namespace Silhouette.GameMechs
 
             if (activeAnimation == hang2_left)
             { 
-                if (kState.IsKeyDown(Keys.Space))
+                if (Keyboard.GetState().IsKeyDown(Keys.Space))
                 {
                     activeAnimation = pullup;
                     activeAnimation.activeFrameNumber = 0;
