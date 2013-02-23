@@ -12,7 +12,7 @@ float4 PS_CC(float2 texCoord: TEXCOORD0): COLOR
 	// Hier kann ich targetColor von color abhängig machen!!
 	float4 targetColor = float4(targetRed* color.r, targetGreen*color.g, targetBlue*color.b, alpha);
 
-		color = color + targetColor;
+		color.rgb = color.rgb + targetColor.rgb;
 
 	return color;
 }

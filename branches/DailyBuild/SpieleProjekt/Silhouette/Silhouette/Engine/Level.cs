@@ -85,6 +85,8 @@ namespace Silhouette.Engine
         [NonSerialized]
         public RenderTarget2D[] renderTargets;
         [NonSerialized]
+        private RenderTargetFlipFlop _flipFlop;
+        [NonSerialized]
         private KeyboardState keyboardState;
         [NonSerialized]
         private KeyboardState oldKeyboardState;
@@ -103,8 +105,10 @@ namespace Silhouette.Engine
             renderTargets[2] = new RenderTarget2D(GameLoop.gameInstance.GraphicsDevice, GameSettings.Default.resolutionWidth, GameSettings.Default.resolutionHeight);
             renderTargets[3] = new RenderTarget2D(GameLoop.gameInstance.GraphicsDevice, GameSettings.Default.resolutionWidth, GameSettings.Default.resolutionHeight);
             renderTargets[4] = new RenderTarget2D(GameLoop.gameInstance.GraphicsDevice, GameSettings.Default.resolutionWidth, GameSettings.Default.resolutionHeight);
-            
+
             this.spriteBatch = new SpriteBatch(GameLoop.gameInstance.GraphicsDevice);
+            _flipFlop = new RenderTargetFlipFlop(ref spriteBatch);
+            _flipFlop.Initialise();
             _Gravitation = new Vector2(0.0f, 9.8f);
             Physics = new World(_Gravitation);
             debugView = new DebugViewXNA(Level.Physics);
@@ -192,52 +196,15 @@ namespace Silhouette.Engine
 
             if (GraphicsEnabled)
             {
-                GameLoop.gameInstance.GraphicsDevice.SetRenderTarget(renderTargets[1]);
-                
-                
-                foreach (Layer l in layerList)
-                {
-                    Vector2 oldCameraPosition = Camera.Position;
-                    Camera.Position *= l.ScrollSpeed;
+                //GameLoop.gameInstance.GraphicsDevice.SetRenderTarget(renderTargets[1]);
 
-                    spriteBatch.Begin(SpriteSortMode.Deferred, l.getBlendStateByEffect(l.shaderType), null, null, null, l.getShaderByType(l.shaderType), Camera.matrix);                   
-                    l.drawLayer(spriteBatch);
-                    spriteBatch.End();
-                    Camera.Position = oldCameraPosition;
-                }
-
-
-                GameLoop.gameInstance.GraphicsDevice.SetRenderTarget(renderTargets[2]);
-                GameLoop.gameInstance.GraphicsDevice.Clear(Color.Black);
-
-
-                Effects.EffectObject eff = EffectManager.GetEffectObject(EffectManager.Effects.Blur);
-                eff.Type = "Normal";
-
-                spriteBatch.Begin(SpriteSortMode.Deferred, null, null, null, null, EffectManager.Godrays());
-                //spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, null, null, null, eff.Effect);
-                spriteBatch.Draw(renderTargets[1], Vector2.Zero, Color.White);
-                spriteBatch.End();
-
-                GameLoop.gameInstance.GraphicsDevice.SetRenderTarget(renderTargets[3]);
-                GameLoop.gameInstance.GraphicsDevice.Clear(Color.Black);
-
-                spriteBatch.Begin(SpriteSortMode.Deferred, null, null, null, null, EffectManager.Bloom());
-                spriteBatch.Draw(renderTargets[2], Vector2.Zero, Color.White);
-                spriteBatch.End();
+                _flipFlop.Draw(layerList);
 
                 GameLoop.gameInstance.GraphicsDevice.SetRenderTarget(null);
-                GameLoop.gameInstance.GraphicsDevice.Clear(Color.Black);
-
-                spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, null, null, null, EffectManager.VignettenBlur());
-                spriteBatch.Draw(renderTargets[2], Vector2.Zero, Color.White);
-                spriteBatch.Draw(renderTargets[1], Vector2.Zero, Color.White);
-                spriteBatch.Draw(renderTargets[3], Vector2.Zero, Color.White);
-
-                spriteBatch.End();
-
+                GameLoop.gameInstance.GraphicsDevice.Clear(Color.White);
                 spriteBatch.Begin();
 
+                spriteBatch.Draw(_flipFlop.Result, Vector2.Zero, Color.White);
                 Primitives.Instance.drawBoxFilled(spriteBatch, new Rectangle(0, 0, GameSettings.Default.resolutionWidth, 96), Color.Black);
                 Primitives.Instance.drawBoxFilled(spriteBatch, new Rectangle(0, GameSettings.Default.resolutionHeight - 96, GameSettings.Default.resolutionWidth, 96), Color.Black);
 
