@@ -12,7 +12,7 @@ namespace Silhouette.Engine.Manager
 
     public static class EffectManager
     {
-        public static enum Effects
+        public enum Effects
         { 
             Blur
         }

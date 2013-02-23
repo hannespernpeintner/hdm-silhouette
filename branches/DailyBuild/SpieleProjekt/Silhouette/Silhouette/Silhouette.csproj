@@ -122,6 +122,7 @@
   <ItemGroup>
     <Compile Include="DebugViewXNA.cs" />
     <Compile Include="Engine\AnimationWithFixture.cs" />
+    <Compile Include="Engine\Timer.cs" />
     <Compile Include="Engine\Camera.cs" />
     <Compile Include="Engine\Constants.cs" />
     <Compile Include="Engine\Effects\EffectObject.cs" />

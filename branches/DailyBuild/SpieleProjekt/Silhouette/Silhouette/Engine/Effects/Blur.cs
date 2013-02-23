@@ -35,18 +35,18 @@ namespace Silhouette.Engine.Effects
             set { _radius = value; }
         }
 
-        private override String _type;
+        private String _type;
         public override String Type
         {
             get { return _type; }
             set 
             {
-                Radius = Radiuses[_type];
+                Radius = Radiuses[value];
                 _type = value;
             }
         }
 
-        private override Effect _effect;
+        private Effect _effect;
         public override Effect Effect
         {
             get
@@ -58,9 +58,10 @@ namespace Silhouette.Engine.Effects
             set { _effect = value; }
         }
 
-        public void Initialise()
+        public override void Initialise()
         {
-            Radiuses.Add("Normal", 0.003f);
+            Radiuses = new Dictionary<string, float>();
+            Radiuses.Add("Normal", 0.3f);
             Radiuses.Add("Weak", 0.0015f);
             Radiuses.Add("Strong", 0.008f);
 
@@ -77,7 +78,7 @@ namespace Silhouette.Engine.Effects
             }
             Type = Types.ElementAt(0);
         }
-        public void LoadContent()
+        public override void LoadContent()
         {
             Effect = GameLoop.gameInstance.Content.Load<Effect>(Path);
         }
