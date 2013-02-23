@@ -1101,6 +1101,7 @@ namespace SilhouetteEditor
                 ao.scale = temp.scale;
                 ao.speed = temp.speed;
                 ao.name = ao.getPrefix() + selectedLayer.getNextObjectNumber();
+                ao.StartInMiliseonds = temp.StartInMiliseonds;
                 ao.layer = selectedLayer;
                 ao.loadContentInEditor(EditorLoop.EditorLoopInstance.GraphicsDevice);
                 AddLevelObject(ao);

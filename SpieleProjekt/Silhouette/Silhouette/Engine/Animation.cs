@@ -26,8 +26,10 @@ namespace Silhouette.Engine
         Bilder reingeladen. Abgespielt wird automatisch und endlos. Die Animation ist beweglich.
         */
 
-        enum AnimationState { 
+        enum AnimationState
+        {
             Play,
+            CountDown,
             Pause,
             Stop
         }
@@ -105,6 +107,33 @@ namespace Silhouette.Engine
             set { amount = value; }
         }
 
+        private int _startInMiliseonds;
+        public int StartInMiliseconds
+        {
+            get { return _startInMiliseonds; }
+            set { _startInMiliseonds = value; }
+        }
+
+        private Timer _timer;
+        public Timer StartTimer
+        {
+            get { return _timer; }
+            set { _timer = value; }
+        }
+
+        public delegate void OnFinish();
+        OnFinish _handler;
+        public OnFinish Handler
+        {
+            get { return _handler; }
+            set { _handler = value; }
+        }
+
+        public void StartOnTimeOut()
+        {
+            State = AnimationState.Play;
+        }
+
         public Animation()
         {
             pictures = new List<Texture2D>();
@@ -116,11 +145,15 @@ namespace Silhouette.Engine
             looped = false;
             scale = new Vector2(1, 1);
             rotation = 0;
-            State = AnimationState.Play;
+            StartInMiliseconds = 0;
+            State = AnimationState.Stop;
+            Timer.OnTimeout del = StartOnTimeOut;
+            StartTimer = new Timer(Timer.TimerType.CountDown, StartInMiliseconds, 0, del);
+            StartTimer.Active = false;
         }
 
-        public Animation(String fullpath, int amount, float speed)
-        {
+        public Animation(String fullpath, int amount, float speed, OnFinish todo, int startInMiliseconds)
+        {            
             // Der fullpath muss bis zum Unterstrich vor der Zahl angegeben werden!!
             amount = 0;
             pictures = new List<Texture2D>();
@@ -131,6 +164,33 @@ namespace Silhouette.Engine
             this.Speed = speed;
             this.looped = true;
             this.position = Vector2.Zero;
+            Handler = todo;
+            State = AnimationState.Stop;
+            StartInMiliseconds = startInMiliseconds;
+            Handler = todo;
+
+            Timer.OnTimeout del = StartOnTimeOut;
+            StartTimer = new Timer(Timer.TimerType.CountDown, StartInMiliseconds, 0, del);
+            StartTimer.Active = false;
+        }
+
+        public void StartAnimation()
+        {
+            if (State == AnimationState.Stop || State == AnimationState.Pause)
+            {
+                StartTimer.Active = true;
+                State = AnimationState.CountDown;
+            }
+        }
+
+        public Animation(String fullpath, int amount, float speed)
+            : this(fullpath, amount, speed, null, 0)
+        {
+        }
+
+        public Animation(String fullpath, int amount, float speed, int startInMiliseconds)
+            : this(fullpath, amount, speed, null, startInMiliseconds)
+        {
         }
 
         public override void Initialise()
@@ -138,14 +198,20 @@ namespace Silhouette.Engine
             
         }
 
+        public void Load(int amount, String fullpath, float speed, bool looped)
+        {
+            Load(amount, fullpath, speed, looped, null);
+        }
+
         // Wird in der Load des zugehörigen Trägers gerufen
         // speed sind Bilder pro Sekunde. Also irgendeine Integerahl
-        public void Load(int amount, String path, float speed, bool looped)
+        public void Load(int amount, String path, float speed, bool looped, OnFinish todo)
         {
             this.Speed = speed;
             this.amount = amount;
             this.position = Vector2.Zero;
             this.looped = looped;
+            Handler = todo;
 
             //Achtung, Zählung beginnt bei den AMlern mit 01, nicht 00!!!!!
             for (int i = 1; i <= amount; i++)
@@ -177,6 +243,7 @@ namespace Silhouette.Engine
 
         public void Load()
         {
+            StartTimer.StartInMiliSeconds = StartInMiliseconds;
             String pathCut = Fullpath;
             String assetName = "";
 
@@ -292,6 +359,11 @@ namespace Silhouette.Engine
                     }
                     break;
                 }
+                case AnimationState.CountDown:
+                {
+                    StartTimer.Update(gameTime);
+                    break;
+                }
                 case AnimationState.Stop:
                 {
 
@@ -335,6 +407,7 @@ namespace Silhouette.Engine
                                     {
                                         playedOnce = true;
                                         State = AnimationState.Pause;
+                                        DoOnFinish();
                                     }
                                     else
                                     {
@@ -396,6 +469,7 @@ namespace Silhouette.Engine
                                     {
                                         playedOnce = true;
                                         State = AnimationState.Pause;
+                                        DoOnFinish();
                                     }
                                     else
                                     {
@@ -450,6 +524,14 @@ namespace Silhouette.Engine
             activeTexture = pictures[activeFrameNumber];
         }
 
+        private void DoOnFinish()
+        {
+            if (Handler != null)
+            {
+                Handler();
+            }
+        }
+
         //Nevermind!
         public void Update2(GameTime gameTime, Vector2 position)
         {
@@ -495,7 +577,7 @@ namespace Silhouette.Engine
         public void start()
         {
             resetAnimationProgress();
-            State = AnimationState.Play;
+            StartAnimation();
         }
 
         public void stop()

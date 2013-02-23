@@ -210,7 +210,12 @@ namespace Silhouette.Engine
                 GameLoop.gameInstance.GraphicsDevice.SetRenderTarget(renderTargets[2]);
                 GameLoop.gameInstance.GraphicsDevice.Clear(Color.Black);
 
+
+                Effects.EffectObject eff = EffectManager.GetEffectObject(EffectManager.Effects.Blur);
+                eff.Type = "Normal";
+
                 spriteBatch.Begin(SpriteSortMode.Deferred, null, null, null, null, EffectManager.Godrays());
+                //spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, null, null, null, eff.Effect);
                 spriteBatch.Draw(renderTargets[1], Vector2.Zero, Color.White);
                 spriteBatch.End();
 
@@ -249,8 +254,10 @@ namespace Silhouette.Engine
         public void AddPlayer(Layer layer)
         {
             Player player = new Player();
-            player.Initialise();
+            //Tom player = new Tom();
             player.position = startPosition;
+            player.Initialise();
+            //player.position = startPosition;
             player.layer = layer;
             GameLoop.gameInstance.playerInstance = player;
             layer.loList.Add(player);

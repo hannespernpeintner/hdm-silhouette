@@ -37,7 +37,7 @@ namespace Silhouette.Engine.Effects
         }
 
         private Effect _effect;
-        public Effect Effect
+        public virtual Effect Effect
         {
             get { return _effect; }
             set { _effect = value; }
@@ -51,8 +51,8 @@ namespace Silhouette.Engine.Effects
         }
 
         // Bitte initialisiert im Types-Array immer den Default-Type als ERSTES ELEMENT bei Index 0.
-        public virtual void Initialise();
-        public virtual void LoadContent();
+        public abstract void Initialise();
+        public abstract void LoadContent();
         public virtual void loadContentInEditor(GraphicsDevice graphics) { }
 
     }
