@@ -1,4 +1,4 @@
-#define NUM_SAMPLES 180
+#define NUM_SAMPLES 100
 
 float Density = .95f;
 float Decay = .98f;
@@ -40,7 +40,7 @@ float4 lightRayPS( float2 texCoord : TEXCOORD0 ) : COLOR0
     // Retrieve sample at new location.  
    float3 sample = tex2D(frameSampler, texCoord);  
     // Apply sample attenuation scale/decay factors.  
-    sample *= illuminationDecay * Weight;  
+    sample *= illuminationDecay * (Weight);  
     // Accumulate combined color.  
     color += sample;  
     // Update exponential decay factor.  
@@ -48,7 +48,7 @@ float4 lightRayPS( float2 texCoord : TEXCOORD0 ) : COLOR0
   }  
   // Output final color with a further scale control factor.  
   float4 temp = float4( color * Exposure, 0.1);
-  temp.a = 0.6;
+  temp.a = 0.1;
   temp += float4(noise.r,noise.r,noise.r,noise.r)/10;
   return temp;
    //return float4( color * Exposure, 0.1);

@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Silhouette.GameMechs;
 using System.IO;
 using Silhouette.Engine.Effects;
+using System.Collections;
 
 namespace Silhouette.Engine.Manager
 {

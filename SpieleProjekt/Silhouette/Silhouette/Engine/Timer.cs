@@ -95,7 +95,6 @@ namespace Silhouette.Engine
 
             if (StartInMiliSeconds > 0)
             {
-                Console.WriteLine("Start in: " + StartInMiliSeconds); 
                 StartInMiliSeconds -= dt;
             }
             else if (MiliSecondsLeft > 0)
@@ -107,7 +106,6 @@ namespace Silhouette.Engine
             {
                 MiliSecondsLeft = 0;
                 DoTimerAction();
-                Console.WriteLine("TimerAction " + dt + " Start in: " + StartInMiliSeconds); 
             }
         }
 

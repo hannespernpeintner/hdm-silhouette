@@ -56,6 +56,10 @@ namespace Silhouette.Engine
         [Description("The objects of the Layer.")]
         public List<LevelObject> loList { get { return _loList; } }
 
+        [NonSerialized]
+        private RenderTarget2D _rt;
+        public RenderTarget2D Rt { get { return _rt; } set { _rt = value; } }
+
         public bool isVisible = true;
 
         [NonSerialized]
@@ -74,6 +78,7 @@ namespace Silhouette.Engine
         public void loadLayer()
         {
             particleRenderer = new ParticleRenderer();
+            Rt = new RenderTarget2D(GameLoop.gameInstance.GraphicsDevice, GameSettings.Default.resolutionWidth, GameSettings.Default.resolutionHeight);
 
             foreach (LevelObject lo in loList)
             {
