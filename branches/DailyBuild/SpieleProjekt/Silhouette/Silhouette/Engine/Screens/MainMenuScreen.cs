@@ -16,13 +16,13 @@ using Silhouette.GameMechs;
 namespace Silhouette.Engine.Screens
 {
     public enum MenuPage
-    { 
+    {
         MainPage,
         HowToPlayPage
     }
 
     public enum MenuState
-    { 
+    {
         NewGame,
         Continue,
         HowToPlay,
@@ -41,7 +41,7 @@ namespace Silhouette.Engine.Screens
         public SoundObject mainMenuTheme;
 
         KeyboardState kstate;
-        KeyboardState oldkstate;
+
 
         public void initializeScreen()
         {
@@ -52,7 +52,7 @@ namespace Silhouette.Engine.Screens
             positions = new Vector2[15];
         }
 
-        public void loadScreen() 
+        public void loadScreen()
         {
             textures[0] = GameLoop.gameInstance.Content.Load<Texture2D>("Sprites/Menu/Menu_1");
             textures[1] = GameLoop.gameInstance.Content.Load<Texture2D>("Sprites/Menu/Menu_2");
@@ -93,13 +93,14 @@ namespace Silhouette.Engine.Screens
             mainMenuTheme.Play();
         }
 
-        public void updateScreen(GameTime gameTime) 
+        public void updateScreen(GameTime gameTime)
         {
-            kstate = Keyboard.GetState();
+            kstate = GameStateManager.kstate;
+            KeyboardState oldkstate = GameStateManager.oldkstate;
 
             if (menuPage == MenuPage.MainPage)
             {
-                if (kstate.IsKeyDown(Keys.Down) && oldkstate.IsKeyUp(Keys.Down))
+                if (kstate.IsKeyUp(Keys.Down) && oldkstate.IsKeyDown(Keys.Down))
                 {
                     if (menuState == MenuState.Exit)
                         menuState = MenuState.NewGame;
@@ -109,7 +110,7 @@ namespace Silhouette.Engine.Screens
                     }
                 }
 
-                if (kstate.IsKeyDown(Keys.Up) && oldkstate.IsKeyUp(Keys.Up))
+                if (kstate.IsKeyUp(Keys.Up) && oldkstate.IsKeyDown(Keys.Up))
                 {
                     if (menuState == MenuState.NewGame)
                         menuState = MenuState.Exit;
@@ -127,16 +128,16 @@ namespace Silhouette.Engine.Screens
                         GameStateManager.Default.NewGame();
                     }
                     if (menuState == MenuState.Continue)
-                    { 
-                    
+                    {
+
                     }
                     if (menuState == MenuState.HowToPlay)
                     {
                         menuPage = MenuPage.HowToPlayPage;
                     }
                     if (menuState == MenuState.Credits)
-                    { 
-                    
+                    {
+
                     }
                     if (menuState == MenuState.Exit)
                         GameLoop.gameInstance.Exit();
@@ -145,16 +146,16 @@ namespace Silhouette.Engine.Screens
 
             if (menuPage == MenuPage.HowToPlayPage)
             {
-                if (kstate.IsKeyDown(Keys.Escape) && oldkstate.IsKeyUp(Keys.Escape))
+                if (kstate.IsKeyUp(Keys.Escape) && oldkstate.IsKeyDown(Keys.Escape))
                 {
                     menuPage = MenuPage.MainPage;
                 }
             }
 
-            oldkstate = kstate;
+
         }
 
-        public void drawScreen(SpriteBatch spriteBatch) 
+        public void drawScreen(SpriteBatch spriteBatch)
         {
             spriteBatch.Begin();
             if (menuPage == MenuPage.MainPage)

@@ -12,6 +12,18 @@ namespace Silhouette
         {
             using (GameLoop game = new GameLoop())
             {
+                for (int i = 0; i < args.LongLength; i++)
+                {
+                    if (args[i].Equals("--novideo"))
+                    {
+                        game.parameterNoVideo = true;
+                    }
+                    if (args[i].Equals("--loadlevel"))
+                    {
+                        game.parameterLevelToLoad = args[i + 1];
+                    }
+                }
+
                 game.Run();
             }
         }

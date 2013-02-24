@@ -17,8 +17,8 @@ using Microsoft.Xna.Framework.Media;
 
 namespace Silhouette.Engine.Manager
 {
-    public enum VideoName 
-    { 
+    public enum VideoName
+    {
         None,
         Cutscene_1,
         Cutscene_2
@@ -81,7 +81,8 @@ namespace Silhouette.Engine.Manager
 
         public static void play(VideoName name)
         {
-            if (!IsPlaying)
+
+            if (!IsPlaying && !GameLoop.gameInstance.parameterNoVideo)
             {  //Julius: enum für jedes verfügbare video anpassen!
                 switch (name)
                 {
@@ -90,10 +91,10 @@ namespace Silhouette.Engine.Manager
                          */
                     //Container["Testvideo"].play();
                     //currentlyPlaying = "Testvideo";
-                    
+
                     case VideoName.None:
                         return;
-                    
+
                     case VideoName.Cutscene_1:
                         Container["Cutscene 1"].play();
                         currentlyPlaying = "Cutscene 1";
@@ -104,7 +105,7 @@ namespace Silhouette.Engine.Manager
                         Container["Cutscene 2"].play();
                         currentlyPlaying = "Cutscene 2";
                         GameStateManager.Default.currentGameState = GameState.PlayingCutscene;
-                        break; 
+                        break;
                 }
             }
         }

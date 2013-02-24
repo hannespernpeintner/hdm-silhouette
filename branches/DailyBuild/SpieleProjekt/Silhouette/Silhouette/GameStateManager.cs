@@ -32,7 +32,7 @@ using FarseerPhysics.Collision;
 namespace Silhouette
 {
     public enum GameState
-    { 
+    {
         MainMenu,
         InGame,
         PlayingCutscene,
@@ -41,7 +41,7 @@ namespace Silhouette
     }
 
     public enum LevelState
-    { 
+    {
         Level_1,
         Level_2,
         Level_3,
@@ -65,8 +65,8 @@ namespace Silhouette
 
         public bool reallyWantToQuit = false;
 
-        public KeyboardState kstate;
-        public KeyboardState oldkstate;
+        public static KeyboardState kstate;
+        public static KeyboardState oldkstate;
 
         public static GameStateManager Default;
 
@@ -82,40 +82,56 @@ namespace Silhouette
             Default = this;
         }
 
-        public void Initialize() 
+        public void Initialize()
         {
             mainMenuScreen.initializeScreen();
             menuScreen.initializeScreen();
             quitScreen.initializeScreen();
         }
 
-        public void LoadContent() 
+        public void LoadContent()
         {
             mainMenuScreen.loadScreen();
             menuScreen.loadScreen();
             quitScreen.loadScreen();
         }
 
-        public void Update(GameTime gameTime) 
+        public void Update(GameTime gameTime)
         {
-            kstate = Keyboard.GetState();
+            if ((GameLoop.gameInstance.parameterLevelToLoad != null) && (currentGameState != GameState.InGame))
+            {
+                this.levelPath = GameLoop.gameInstance.parameterLevelToLoad;
+                currentLevel = Level.LoadLevelFile(GameLoop.gameInstance.parameterLevelToLoad);
+                currentLevel.Initialize();
+                currentLevel.LoadContent();
+                currentGameState = GameState.InGame;
+                GameLoop.gameInstance.parameterLevelToLoad = null;
+                return;
+            }
+            GameStateManager.kstate = Keyboard.GetState();
+            if (currentGameState == GameState.MainMenu)
+            {
+                mainMenuScreen.updateScreen(gameTime);
+            }
 
             if (currentGameState == GameState.InGame)
             {
                 if (!reallyWantToQuit)
                     currentLevel.Update(gameTime);
                 else
+                {
                     quitScreen.updateScreen(gameTime);
+                    oldkstate = kstate;
+                    //need this as a fix for botched up gamestate
+                }
+
 
                 if (kstate.IsKeyDown(Keys.Escape) && oldkstate.IsKeyUp(Keys.Escape))
                 {
                     reallyWantToQuit = true;
                 }
             }
-            if (currentGameState == GameState.MainMenu)
-            {
-                mainMenuScreen.updateScreen(gameTime);
-            }
+
             if (currentGameState == GameState.Menu)
             {
                 menuScreen.updateScreen(gameTime);
@@ -126,10 +142,13 @@ namespace Silhouette
                     VideoManager.Container[VideoManager.currentlyPlaying].stop();
             }
 
-            oldkstate = kstate;
+            GameStateManager.oldkstate = GameStateManager.kstate;
+
+            //check wheter the LoadLevel option has been set:
+
         }
 
-        public void Draw(GameTime gameTime) 
+        public void Draw(GameTime gameTime)
         {
             if (currentGameState == GameState.MainMenu)
             {
@@ -151,7 +170,7 @@ namespace Silhouette
             if (currentGameState == GameState.PlayingCutscene)
             {
                 spriteBatch.Begin();
-                if(VideoManager.VideoFrame != null)
+                if (VideoManager.VideoFrame != null)
                     spriteBatch.Draw(VideoManager.VideoFrame, new Rectangle(0, 0, (int)GameSettings.Default.resolutionWidth, (int)GameSettings.Default.resolutionHeight), Color.White);
                 spriteBatch.End();
             }
@@ -190,8 +209,8 @@ namespace Silhouette
         }
 
         public void GoToNextLevel()
-        { 
-        
+        {
+
         }
     }
 }
