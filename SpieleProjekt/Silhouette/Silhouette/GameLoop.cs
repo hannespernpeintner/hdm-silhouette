@@ -41,6 +41,9 @@ namespace Silhouette
         //DisplayFPS displayFPS;
         GameStateManager gameStateManager;
 
+        public bool parameterNoVideo { get; set; }
+        public string parameterLevelToLoad { get; set; }
+
         public GameLoop()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -52,7 +55,7 @@ namespace Silhouette
             gameInstance = this;
 
             GameSettings.Initialise();
-            GameSettings.ApplyChanges(ref graphics);    
+            GameSettings.ApplyChanges(ref graphics);
         }
 
         protected override void Initialize()
@@ -60,6 +63,7 @@ namespace Silhouette
             Primitives.Instance.Initialize(this.GraphicsDevice);
             SoundManager.Initialize();
             VideoManager.Initialize();
+
 
             gameStateManager = new GameStateManager();
             gameStateManager.Initialize();
@@ -78,7 +82,7 @@ namespace Silhouette
             gameStateManager.LoadContent();
         }
 
-        protected override void UnloadContent(){}
+        protected override void UnloadContent() { }
 
         protected override void Update(GameTime gameTime)
         {
@@ -91,7 +95,7 @@ namespace Silhouette
         }
 
         protected override void Draw(GameTime gameTime)
-        {         
+        {
             GraphicsDevice.Clear(Color.White);
 
             gameStateManager.Draw(gameTime);

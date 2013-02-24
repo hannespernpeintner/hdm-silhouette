@@ -65,7 +65,8 @@ namespace Silhouette.Engine.Screens
 
         public void updateScreen(GameTime gameTime)
         {
-            kstate = Keyboard.GetState();
+            kstate = GameStateManager.kstate;
+            KeyboardState oldkstate = GameStateManager.oldkstate;
 
             if (kstate.IsKeyDown(Keys.Left) && oldkstate.IsKeyUp(Keys.Left))
             {
@@ -91,7 +92,8 @@ namespace Silhouette.Engine.Screens
                 }
             }
 
-            oldkstate = kstate;
+
+
         }
 
         public void drawScreen(SpriteBatch spriteBatch)
