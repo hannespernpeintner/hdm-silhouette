@@ -176,9 +176,10 @@
     <Content Include="Resources\AddEvent.gif" />
     <Content Include="Resources\AddFixture.gif" />
     <Content Include="Resources\AddPrimitive.gif" />
+    <None Include="Resources\ApplyGameScale.gif" />
     <Content Include="Resources\DeleteLayer.gif" />
     <Content Include="Resources\NewLayer.gif" />
-    <Content Include="Resources\Zoom.gif" />
+    <None Include="Resources\Zoom.gif" />
     <None Include="Resources\Physics.gif" />
     <Content Include="Resources\ToolBox.gif" />
   </ItemGroup>
