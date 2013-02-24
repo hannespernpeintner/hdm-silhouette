@@ -12,8 +12,7 @@ float distance1(float x1, float y1, float x2, float y2)
 
 float4 PS(float2 Tex: TEXCOORD0) : COLOR
 {
-
-	float4 Color = tex2D(frameSampler, float2( Tex.x+(cos(Tex.x*20))*(0.13)*(Time), Tex.y+(sin(Tex.y*20))*(0.13)*(Time)));
+	float4 Color = tex2D(frameSampler, float2( Tex.x+(cos(Tex.x*50))*(0.13)*(Time), Tex.y+(sin(Tex.y*20))*(0.13)*(Time)));
 	return Color;
 }
  
