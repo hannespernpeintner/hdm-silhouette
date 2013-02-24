@@ -14,7 +14,7 @@ using Silhouette.Engine;
 using Silhouette.Engine.Manager;
 using Silhouette.GameMechs;
 using Silhouette.Engine.SoundEngine;
-using System.IO;    
+using System.IO;
 
 using System.ComponentModel;
 
@@ -33,7 +33,7 @@ using IrrKlang;
  * Lange Rede, kurzer Unsinn: Wenn man play() ein zweites mal aufruft, bevor der Track zuende ist, kann man vom alten Sound Dinge wie Effekte, Lautstärke etc. nicht mehr ändern!
  */
 namespace Silhouette.GameMechs
-{   
+{
     [Serializable]
     public class SoundObject : LevelObject
     {
@@ -54,38 +54,44 @@ namespace Silhouette.GameMechs
         public Boolean looped { get { return _looped; } set { _looped = value; } }
 
         private String pathToFile;
-        
+
         /* Julius: Property für die Pause.
          * ACHTUNG: Funktioniert nur, wenn davor play() aufgerufen worden ist.
           */
         [Browsable(false)]
-        public Boolean Pause {
+        public Boolean Pause
+        {
 
             get
             {
                 if (Sound != null)
                 { return Sound.Paused; }
-                else return false;}
+                else return false;
+            }
 
             set
             {
                 if (Sound != null)
                 { Sound.Paused = value; }
-            
-            
-            } }
 
-        
+
+            }
+        }
+
+
         [DisplayName("Volume"), Category("Initial Sound Data")]
         [Description("The Sound's inital Volume. Float Value Min/Max: 0.0 / 1.0")]
-        public float volume { get{
-            if (Sound != null)
+        public float volume
+        {
+            get
             {
-                return Sound.Volume;
-                
+                if (Sound != null)
+                {
+                    return Sound.Volume;
+
+                }
+                else return _volume;
             }
-            else return _volume;
-        }
 
             set
             {
@@ -96,38 +102,59 @@ namespace Silhouette.GameMechs
         }
         [DisplayName("Start Muted"), Category("Initial Sound Data")]
         [Description("Decides wether a Sound is muted or not")]
-        public Boolean mute { get { return _mute; } set {
-            if (value == false)
+        public Boolean mute
+        {
+            get { return _mute; }
+            set
             {
-                volume = _MuteVolume;
-                _mute = false;
+                if (value == false)
+                {
+                    volume = _MuteVolume;
+                    _mute = false;
+                }
+                else
+                {
+                    _mute = true;
+                    _MuteVolume = volume;
+                    volume = 0;
+                }
+
+
+            }
+        }
+
+        public Boolean isPlaying()
+        {
+            if (Sound == null)
+            {
+                return false;
             }
             else
             {
-                _mute = true;
-                _MuteVolume = volume;
-                volume = 0;
-            
+                if (this.Pause == false && Sound.Finished == false)
+                    return true;
+                else
+                    return false;
             }
 
-        
-        } }
+        }
+
         private Boolean _mute;
         private float _MuteVolume = 1;
         //Julius: Zustandsspeicher, falls sound noch nicht erzeugt wurde
-        float _volume= 1;
+        float _volume = 1;
         [NonSerialized]
-         IrrKlang.ISound Sound;
-        
+        IrrKlang.ISound Sound;
+
 
         //Julius: Zustandsspeicher und Parameter für EQ
         Boolean _EQActivated = false;
-          [Browsable(false)]
-        public float _EQBandwith{ get; set; }
-          [Browsable(false)]
+        [Browsable(false)]
+        public float _EQBandwith { get; set; }
+        [Browsable(false)]
         public float _EQCenter { get; set; }
-          [Browsable(false)]
-        public float _EQGain { get; set; } 
+        [Browsable(false)]
+        public float _EQGain { get; set; }
 
         //Julius: Zustandsspeicher sammt Paramter für Reverb
         [DisplayName("Reverb activated"), Category("Initial Sound Data")]
@@ -144,7 +171,7 @@ namespace Silhouette.GameMechs
         [Description("Reverb mix, in dB. Min/Max: [-96.0,0.0]")]
         public float RevfReverbMix { get { return _RevfReverbMix; } set { _RevfReverbMix = value; } }
         private float _RevfReverbMix;
-        
+
         [DisplayName("Reverb time"), Category("Initial Sound Data")]
         [Description("Reverb time, in milliseconds. Min/Max: [0.001,3000.0]")]
         public float RevfReverbTime { get { return _RevfReverbTime; } set { _RevfReverbTime = value; } }
@@ -157,27 +184,27 @@ namespace Silhouette.GameMechs
 
 
         //Julius: Zustandsspeicher & Krempel für Fader
-        
+
         Boolean _FaderActivated;
         [Browsable(false)]
         public float _fFadeTime { get; set; }
 
         float _fFadeStep;
-        enum FadeType {FadeUp, FadeDown }
-        FadeType _eFadeType; 
-          
+        enum FadeType { FadeUp, FadeDown }
+        FadeType _eFadeType;
+
         public SoundObject(String path)
         {
             this.fullPath = path;
             this.assetName = Path.GetFileNameWithoutExtension(path);
 
-            looped = false;        
+            looped = false;
 
             //Julius: Beim Event registrieren...
             Engine.Manager.SoundManager.UpdateFader += new SoundManager.UpdateFaderEventHandler(Update);
-           
+
             _volume = 1;
-            
+
         }
 
 
@@ -224,9 +251,9 @@ namespace Silhouette.GameMechs
         public void fadeDown(float FadeTimeInSeconds, float Loss)
         {   //Julius: Denkt dran Kinder, immer schön an die Division durch 0 denken!
             if (Loss != 0)
-            _fFadeStep = (float)(Loss / (double)FadeTimeInSeconds);
+                _fFadeStep = (float)(Loss / (double)FadeTimeInSeconds);
             else
-            _fFadeStep = (float)(1.0f / (double)FadeTimeInSeconds);
+                _fFadeStep = (float)(1.0f / (double)FadeTimeInSeconds);
 
             _fFadeTime = FadeTimeInSeconds;
             _eFadeType = FadeType.FadeDown;
@@ -241,7 +268,7 @@ namespace Silhouette.GameMechs
          * this.Volume > SilentSound.Volume
          * 
          */
-        public void Crossfade(SoundObject SilentSound, float GainSilentSound, float LossCurrentSound,float FadeTimeInSeconds)
+        public void Crossfade(SoundObject SilentSound, float GainSilentSound, float LossCurrentSound, float FadeTimeInSeconds)
         {
             SilentSound.fadeUp(FadeTimeInSeconds, GainSilentSound);
             this.fadeDown(FadeTimeInSeconds, LossCurrentSound);
@@ -263,7 +290,7 @@ namespace Silhouette.GameMechs
             {
                 pathToFile = Environment.CurrentDirectory + "\\Content\\Audio\\" + _assetName + ".ogg";
             }
-            
+
             Sound = IrrAudioEngine.play(pathToFile, looped, true);
 
             if (_EQActivated)
@@ -280,10 +307,11 @@ namespace Silhouette.GameMechs
                 Sound.Volume = 0;
             else
                 Sound.Volume = _volume;
-     
+
 
             Sound.Paused = false;
-            
+
+
         }
 
         public void EnableEqualizer(float fCenter, float fBandwidth, float fGain)
@@ -291,11 +319,11 @@ namespace Silhouette.GameMechs
             if (Sound != null)
             {
                 _EQActivated = true;
-                 Sound.SoundEffectControl.EnableParamEqSoundEffect(fCenter, fBandwidth, fGain);
-                
+                Sound.SoundEffectControl.EnableParamEqSoundEffect(fCenter, fBandwidth, fGain);
+
                 _EQBandwith = fBandwidth;
-                 _EQCenter = fCenter;
-                 _EQGain = fGain;
+                _EQCenter = fCenter;
+                _EQGain = fGain;
             }
             else
             {
@@ -303,7 +331,7 @@ namespace Silhouette.GameMechs
                 _EQBandwith = fBandwidth;
                 _EQCenter = fCenter;
                 _EQGain = fGain;
-            }          
+            }
         }
 
         public void DisableEqualizer()
@@ -327,7 +355,7 @@ namespace Silhouette.GameMechs
                 _RevInGain = fInGain;
                 _RevfReverbMix = fReverbMix;
                 _RevfReverbTime = fReverbTime;
-                _RevfHighFreqRTRatio = fHighFreqRTRatio;    
+                _RevfHighFreqRTRatio = fHighFreqRTRatio;
             }
             else
             {
@@ -414,5 +442,5 @@ namespace Silhouette.GameMechs
         }
     }
 
-   
+
 }
