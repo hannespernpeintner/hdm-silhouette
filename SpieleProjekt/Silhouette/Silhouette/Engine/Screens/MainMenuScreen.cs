@@ -90,9 +90,17 @@ namespace Silhouette.Engine.Screens
 
             mainMenuTheme = new SoundObject(Path.Combine(Directory.GetCurrentDirectory(), "Content", "Audio", "Menu_ForAllThat.ogg"));
             mainMenuTheme.looped = true;
-            mainMenuTheme.Play();
+
         }
 
+        public void playMenuMusic()
+        {
+            if (!mainMenuTheme.isPlaying())
+            {
+                mainMenuTheme.Play();
+            }
+
+        }
         public void updateScreen(GameTime gameTime)
         {
             kstate = GameStateManager.kstate;

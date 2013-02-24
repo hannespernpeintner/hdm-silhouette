@@ -112,6 +112,7 @@ namespace Silhouette
             if (currentGameState == GameState.MainMenu)
             {
                 mainMenuScreen.updateScreen(gameTime);
+                mainMenuScreen.playMenuMusic();
             }
 
             if (currentGameState == GameState.InGame)
