@@ -45,6 +45,7 @@ namespace Silhouette.Engine.Manager
         private static Effect strongBleach;
         private static Effect bloomer;
         private static Effect vignettenBlur;
+        private static Effect water;
         private static Effect colorChange;
         private static bool overallBlur;
         private static bool overallVignette;
@@ -83,6 +84,7 @@ namespace Silhouette.Engine.Manager
 
             bloomer = GameLoop.gameInstance.Content.Load<Effect>("Effects/Bloom");
             vignettenBlur = GameLoop.gameInstance.Content.Load<Effect>("Effects/VignettenBlur");
+            water = GameLoop.gameInstance.Content.Load<Effect>("Effects/Water");
 
             godrays = GameLoop.gameInstance.Content.Load<Effect>("Effects/godrays");
         }
@@ -192,6 +194,17 @@ namespace Silhouette.Engine.Manager
             godrays.Parameters["LightPositionX"].SetValue((float)lightPosX);
 
             return godrays;
+        }
+
+        public static Effect Water()
+        {
+            if (gameTime != null)
+            {
+                float temp = (float)Math.Sin((float)gameTime.ElapsedGameTime.TotalMilliseconds* 0.001);
+                Console.WriteLine(temp);
+                water.Parameters["Time"].SetValue(temp);
+            }
+            return water;
         }
 
         public static Effect VignettenBlur()
