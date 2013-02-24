@@ -132,8 +132,8 @@ namespace Silhouette.Engine
             Batch.Draw(Target2, Vector2.Zero, Color.White);
             Batch.End();
             GameLoop.gameInstance.GraphicsDevice.SetRenderTarget(Target2);
-            //Batch.Begin(SpriteSortMode.Deferred, null, null, null, null, EffectManager.VignettenBlur());
-            Batch.Begin(SpriteSortMode.Deferred, null, null, null, null, EffectManager.Water());
+            Batch.Begin(SpriteSortMode.Deferred, null, null, null, null, EffectManager.VignettenBlur());
+            //Batch.Begin(SpriteSortMode.Deferred, null, null, null, null, EffectManager.Water());
             Batch.Draw(Target1, Vector2.Zero, Color.White);
             Batch.End();
             GameLoop.gameInstance.GraphicsDevice.SetRenderTarget(Result);
