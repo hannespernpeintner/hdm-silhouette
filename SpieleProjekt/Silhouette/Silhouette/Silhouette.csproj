@@ -193,6 +193,12 @@
     <Content Include="Game.ico" />
     <Content Include="GameThumbNail.ico" />
     <Content Include="GameThumbnail.png" />
+    <None Include="12345">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="123456">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="ikpMP3.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

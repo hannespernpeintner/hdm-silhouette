@@ -20,8 +20,9 @@ using Silhouette.Engine.Manager;
 namespace Silhouette.Engine
 {
     public enum ShaderType
-    { 
+    {
         None,
+        Water,
         ColorChange,
         WeakBlur,
         Blur,
@@ -126,6 +127,8 @@ namespace Silhouette.Engine
             {
                 case ShaderType.None:
                     return null;
+                case ShaderType.Water:
+                    return EffectManager.Water();
                 case ShaderType.ColorChange:
                     return EffectManager.ColorChange();
                 case ShaderType.WeakBleach:
