@@ -79,6 +79,7 @@ namespace SilhouetteEditor.Forms
             this.PrismaticJointButton = new System.Windows.Forms.ToolStripMenuItem();
             this.GearJointButton = new System.Windows.Forms.ToolStripMenuItem();
             this.PulleyJointButton = new System.Windows.Forms.ToolStripMenuItem();
+            this.RopeJointButton = new System.Windows.Forms.ToolStripMenuItem();
             this.soundObjectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.EventButton = new System.Windows.Forms.ToolStripDropDownButton();
             this.GameScaleButton = new System.Windows.Forms.ToolStripButton();
@@ -580,7 +581,8 @@ namespace SilhouetteEditor.Forms
             this.DistanceJointButton,
             this.PrismaticJointButton,
             this.GearJointButton,
-            this.PulleyJointButton});
+            this.PulleyJointButton,
+            this.RopeJointButton});
             this.JointButton.Image = global::SilhouetteEditor.Properties.Resource.AddEvent;
             this.JointButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.JointButton.Name = "JointButton";
@@ -767,6 +769,13 @@ namespace SilhouetteEditor.Forms
             this.PulleyJointButton.Size = new System.Drawing.Size(115, 22);
             this.PulleyJointButton.Text = "Pulley";
             this.PulleyJointButton.Click += new System.EventHandler(this.pulleyJointObjectToolStripMenuItem_Click);
+            // 
+            // ropeJointToolStripMenuItem
+            // 
+            this.RopeJointButton.Name = "RopeJointButton";
+            this.RopeJointButton.Size = new System.Drawing.Size(115, 22);
+            this.RopeJointButton.Text = "Rope";
+            this.RopeJointButton.Click += new System.EventHandler(this.ropeJointObjectToolStripMenuItem_Click);
             // 
             // tabControl1
             // 
@@ -1227,6 +1236,7 @@ namespace SilhouetteEditor.Forms
         private System.Windows.Forms.ToolStripMenuItem PrismaticJointButton;
         private System.Windows.Forms.ToolStripMenuItem GearJointButton;
         private System.Windows.Forms.ToolStripMenuItem PulleyJointButton;
+        private System.Windows.Forms.ToolStripMenuItem RopeJointButton;
         private System.Windows.Forms.ToolStripButton GameScaleButton;
         public System.Windows.Forms.ToolStripStatusLabel ZoomStatus;
         private System.Windows.Forms.ToolStripMenuItem physicToolStripMenuItem;

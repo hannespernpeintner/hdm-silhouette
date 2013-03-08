@@ -191,7 +191,12 @@ namespace Silhouette.Engine
         public void drawPolygon(SpriteBatch sb, Vector2[] points, Color c, int linewidth)
         {
             drawPath(sb, points, c, linewidth);
-            drawLine(sb, points[points.Length-1], points[0], c, linewidth);
+            drawLine(sb, points[points.Length - 1], points[0], c, linewidth);
+        }
+
+        public void drawRope(SpriteBatch sb, Vector2[] points, Color c, int linewidth)
+        {
+            drawPath(sb, points, c, linewidth);
         }
 
         public Vector2[] makeCircle(Vector2 position, float radius, int numpoints)

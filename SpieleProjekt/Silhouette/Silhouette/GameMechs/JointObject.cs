@@ -588,7 +588,7 @@ namespace Silhouette.GameMechs
         }
     }
     #endregion
-    #region GearRevRevJoint
+    #region GearJoint
     [Serializable]
     public class GearJointObject : JointObject
     {
@@ -686,5 +686,175 @@ namespace Silhouette.GameMechs
             }
         }
     }
+    #endregion
+    #region RopeJoint
+    [Serializable]
+    public class RopeJointObject : JointObject
+    {
+
+        private int _segments;
+        public int Segments
+        {
+            get { return _segments; }
+            set { _segments = value; }
+        }
+
+        private int _length;
+        public int Length
+        {
+            get { return _length; }
+            set { _length = value; }
+        }
+
+        private int _width;
+        public int Width
+        {
+            get { return _width; }
+            set { _width = value; }
+        }
+
+        [NonSerialized]
+        private FarseerPhysics.Common.Path _path;
+        public FarseerPhysics.Common.Path Path
+        {
+            get { return _path; }
+            set { _path = value; }
+        }
+        [NonSerialized]
+        private List<Body> _bodies;
+        public List<Body> Bodies
+        {
+            get { return _bodies; }
+            set { _bodies = value; }
+        }
+        [NonSerialized]
+        private List<Shape> _shapes;
+        public List<Shape> Shapes
+        {
+            get { return _shapes; }
+            set { _shapes = value; }
+        }
+
+
+        public override void Initialise()
+        {
+            Circle = new CirclePrimitiveObject(position, JointObject.radius);
+            Length = 200;
+            Segments = 20;
+            Width = 15;
+        }
+
+        public override void LoadContent()
+        {
+        }
+
+        public override void loadContentInEditor(GraphicsDevice graphics) { }
+        public override void Update(GameTime gameTime)
+        {
+            if (Path == null)
+            {
+                Path = new FarseerPhysics.Common.Path();
+                Path.Add(position/Level.PixelPerMeter);
+                Path.Add(new Vector2(position.X, position.Y + Length) / Level.PixelPerMeter);
+                Path.Closed = false;
+
+                float rectLength = (Length / Segments) / Level.PixelPerMeter;
+                float rectWidth = (Width) / Level.PixelPerMeter;
+
+                List<Shape> shapes = new List<Shape>(1);
+                //shapes.Add(new PolygonShape(PolygonTools.CreateRectangle(Width/Level.PixelPerMeter, (Length/Segments)/Level.PixelPerMeter, new Vector2(0, 0), 0f), 1));
+                shapes.Add(new PolygonShape(PolygonTools.CreateRectangle(rectWidth, rectLength, new Vector2(rectWidth, rectLength), 0f), 1));
+                Bodies = PathManager.EvenlyDistributeShapesAlongPath(Level.Physics, Path, shapes, BodyType.Dynamic, Segments);
+                
+
+                if (Object1 == null)
+                {
+                    Bodies.ElementAt(0).BodyType = BodyType.Static;
+                }
+                else
+                {
+                    WeldJoint joint = JointFactory.CreateWeldJoint(Level.Physics, Object1.fixture.Body, Bodies.ElementAt(0), Vector2.Zero, Vector2.Zero);
+                    foreach (Body body in Bodies)
+                    {
+                        foreach(Fixture fix in body.FixtureList)
+                        {
+                            fix.IgnoreCollisionWith(Object1.fixture);
+                        }
+                    }
+                }
+                if (Object2 != null)
+                {
+                    WeldJoint joint = JointFactory.CreateWeldJoint(Level.Physics, Object2.fixture.Body, Bodies.ElementAt(Bodies.Count - 1), Vector2.Zero, Vector2.Zero);
+                    foreach (Body body in Bodies)
+                    {
+                        foreach (Fixture fix in body.FixtureList)
+                        {
+                            fix.IgnoreCollisionWith(Object2.fixture);
+                        }
+                    }
+                }
+
+                PathManager.AttachBodiesWithRevoluteJoint(Level.Physics, Bodies, new Vector2(0, 0.25f), new Vector2(0, -0.25f), false, false);
+            }
+        }
+
+        public override void Draw(SpriteBatch spriteBatch)
+        {
+            List<Vector2> centers = new List<Vector2>();
+
+            foreach (Body body in Bodies)
+            {
+                centers.Add(body.WorldCenter*Level.PixelPerMeter);
+            }
+            
+            Primitives.Instance.drawRope(spriteBatch, centers.ToArray(), Color.Black,(int)Width);
+        }
+
+        //---> Editor-Funktionalität <---//
+
+        public override void drawInEditor(SpriteBatch spriteBatch)
+        {
+            if (Circle == null)
+            {
+                return;
+            }
+            Color onHover = color;
+            if (this.mouseOn) onHover = Constants.onHover;
+            color = onHover;
+            Circle.drawInEditor(spriteBatch);
+        }
+
+        public override string getPrefix()
+        {
+            return "RopeJointObject_";
+        }
+
+        public override LevelObject clone()
+        {
+            RopeJointObject result = (RopeJointObject)this.MemberwiseClone();
+            result.mouseOn = false;
+            return result;
+        }
+
+        public override bool contains(Vector2 worldPosition)
+        {
+            return Circle.contains(new Vector2((int)worldPosition.X, (int)worldPosition.Y));
+        }
+
+        public override void drawSelectionFrame(SpriteBatch spriteBatch, Matrix matrix)
+        {
+            Rectangle rect = new Rectangle((int)(Circle.position.X - Circle.radius), (int)(Circle.position.Y - Circle.radius), (int)Circle.radius, (int)Circle.radius);
+            Primitives.Instance.drawBox(spriteBatch, rect, Color.Yellow, 2);
+
+            Vector2[] poly = rect.ToPolygon();
+
+            foreach (Vector2 p in poly)
+            {
+                Primitives.Instance.drawCircleFilled(spriteBatch, p, 4, Color.Yellow);
+            }
+        }
+    }
+
+    
     #endregion
 }
