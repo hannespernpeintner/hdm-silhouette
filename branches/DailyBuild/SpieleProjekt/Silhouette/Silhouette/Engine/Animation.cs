@@ -148,7 +148,7 @@ namespace Silhouette.Engine
             StartInMiliseconds = 0;
             State = AnimationState.Stop;
             Timer.OnTimeout del = StartOnTimeOut;
-            StartTimer = new Timer(Timer.TimerType.CountDown, StartInMiliseconds, 0, del);
+            StartTimer = new Timer(StartInMiliseconds, del);
             StartTimer.Active = false;
         }
 
@@ -170,7 +170,7 @@ namespace Silhouette.Engine
             Handler = todo;
 
             Timer.OnTimeout del = StartOnTimeOut;
-            StartTimer = new Timer(Timer.TimerType.CountDown, StartInMiliseconds, 0, del);
+            StartTimer = new Timer(StartInMiliseconds, del);
             StartTimer.Active = false;
         }
 

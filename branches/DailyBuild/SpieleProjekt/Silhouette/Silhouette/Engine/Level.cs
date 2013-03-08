@@ -96,10 +96,9 @@ namespace Silhouette.Engine
         {
             _layerList = new List<Layer>();
         }
-
+        
         public void Initialize()
         {
-
             renderTargets = new RenderTarget2D[5];
             renderTargets[1] = new RenderTarget2D(GameLoop.gameInstance.GraphicsDevice, GameSettings.Default.resolutionWidth, GameSettings.Default.resolutionHeight);
             renderTargets[2] = new RenderTarget2D(GameLoop.gameInstance.GraphicsDevice, GameSettings.Default.resolutionWidth, GameSettings.Default.resolutionHeight);
@@ -155,6 +154,8 @@ namespace Silhouette.Engine
             {
                 l.updateLayer(gameTime);
             }
+
+
 
             EffectManager.Update(gameTime);
 

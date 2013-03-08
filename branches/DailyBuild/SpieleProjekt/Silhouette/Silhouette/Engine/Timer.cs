@@ -18,7 +18,8 @@ namespace Silhouette.Engine
     {
         public enum TimerType
         { 
-            CountDown
+            CountDown,
+            Repeated
         }
 
         private TimerType _type;
@@ -51,6 +52,11 @@ namespace Silhouette.Engine
           set { _handler = value; }
         }
 
+        public static void PrintSomething()
+        {
+            Console.WriteLine("Test");
+        }
+
         private bool _active;
         public bool Active
         {
@@ -58,13 +64,33 @@ namespace Silhouette.Engine
             set { _active = value; }
         }
 
+        private int _repeatInterval;
+        public int RepeatInterval
+        {
+            get { return _repeatInterval; }
+            set { _repeatInterval = value; }
+        }
+
+        private int _repeatCount;
+        public int RepeatCount
+        {
+            get { return _repeatCount; }
+            set { _repeatCount = value; }
+        }
+
+        // Simplest timer ever: starts right now, executes delegate after timed out.
         public Timer(int MiliSeconds, OnTimeout PassedDelegate)
-               :this(TimerType.CountDown, 0, MiliSeconds, PassedDelegate)
+            : this(TimerType.CountDown, 0, MiliSeconds, 0, 0, PassedDelegate)
         {
         }
 
-        // Caution, the explicit start time has to be passed
-        public Timer(TimerType type, int startInMiliSeconds, int MiliSeconds, OnTimeout PassedDelegate)
+        // Pass a negative value for and endless timer.
+        public Timer(int MiliSeconds, int repeatInterval, int repeatCount, OnTimeout PassedDelegate)
+            : this(TimerType.Repeated, 0, MiliSeconds, repeatCount, repeatInterval, PassedDelegate)
+        {
+        }
+
+        public Timer(TimerType type, int startInMiliSeconds, int MiliSeconds, int repeatCount, int repeatInterval, OnTimeout PassedDelegate)
         {
             // nix mit Verarschen hier
             if (startInMiliSeconds < 0)
@@ -80,6 +106,8 @@ namespace Silhouette.Engine
             StartInMiliSeconds = startInMiliSeconds;
             MiliSecondsLeft = MiliSeconds;
             Handler += PassedDelegate;
+            RepeatInterval = repeatInterval;
+            RepeatCount = repeatCount;
             Active = true;
         }
 
@@ -125,6 +153,25 @@ namespace Silhouette.Engine
                 {
                     Active = false;
                     Handler();
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine("Timer wasn't able to execute its delegate.");
+                }
+            }
+            else if (Type == TimerType.Repeated)
+            {
+                try
+                {
+                    if (RepeatCount == 0)
+                    {
+                        Active = false;
+                        return;
+                    }
+
+                    Handler();
+                    RepeatCount--;
+                    MiliSecondsLeft = RepeatInterval;
                 }
                 catch (Exception e)
                 {
