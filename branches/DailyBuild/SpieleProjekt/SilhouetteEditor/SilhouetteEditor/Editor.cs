@@ -81,6 +81,7 @@ namespace SilhouetteEditor
         CREATE_PHYSICS,
         CREATE_EVENTS,
         CREATE_PARTICLE,
+        CREATE_JOINT,
         ROTATING,
         SCALING,
         POSITIONING,
@@ -698,21 +699,38 @@ namespace SilhouetteEditor
             #endregion
 
             #region CREATE_PARTICLE
-                if (editorState == EditorState.CREATE_PARTICLE)
+            if (editorState == EditorState.CREATE_PARTICLE)
+            {
+                MainForm.Default.EditorStatus.Text = "Editorstatus: Create Particle";
+                MainForm.Default.GameView.Cursor = null;
+
+                if (mstate.LeftButton == Microsoft.Xna.Framework.Input.ButtonState.Pressed && oldmstate.LeftButton == Microsoft.Xna.Framework.Input.ButtonState.Released)
                 {
-                    MainForm.Default.EditorStatus.Text = "Editorstatus: Create Particle";
+                    createCurrentObject(false);
+                }
+                if (mstate.RightButton == Microsoft.Xna.Framework.Input.ButtonState.Pressed && oldmstate.LeftButton == Microsoft.Xna.Framework.Input.ButtonState.Released)
+                {
+                    editorState = EditorState.IDLE;
+                }
+            }
+            #endregion
+
+            #region CREATE_JOINT
+                if (editorState == EditorState.CREATE_JOINT)
+                {
+                    MainForm.Default.EditorStatus.Text = "Editorstatus: Create Joint";
                     MainForm.Default.GameView.Cursor = null;
 
                     if (mstate.LeftButton == Microsoft.Xna.Framework.Input.ButtonState.Pressed && oldmstate.LeftButton == Microsoft.Xna.Framework.Input.ButtonState.Released)
                     {
-                        createCurrentObject(false);
+                        createJointObject();
                     }
                     if (mstate.RightButton == Microsoft.Xna.Framework.Input.ButtonState.Pressed && oldmstate.LeftButton == Microsoft.Xna.Framework.Input.ButtonState.Released)
                     {
                         editorState = EditorState.IDLE;
                     }
                 }
-            #endregion
+                #endregion
 
             #region POSITIONING
                 if (editorState == EditorState.POSITIONING)
@@ -1044,6 +1062,46 @@ namespace SilhouetteEditor
             currentObject = p;
         }
 
+        public void createRevoluteJointObject()
+        {
+            editorState = EditorState.CREATE_JOINT;
+            RevoluteJointObject rjo = new RevoluteJointObject();
+            currentObject = rjo;
+            currentObject.Initialise();
+        }
+
+        public void createDistanceJointObject()
+        {
+            editorState = EditorState.CREATE_JOINT;
+            DistanceJointObject djo = new DistanceJointObject();
+            currentObject = djo;
+            currentObject.Initialise();
+        }
+
+        public void createPrismaticJointObject()
+        {
+            editorState = EditorState.CREATE_JOINT;
+            PrismaticJointObject pjo = new PrismaticJointObject();
+            currentObject = pjo;
+            currentObject.Initialise();
+        }
+
+        public void createGearJointObject()
+        {
+            editorState = EditorState.CREATE_JOINT;
+            GearJointObject gjo = new GearJointObject();
+            currentObject = gjo;
+            currentObject.Initialise();
+        }
+
+        public void createPulleyJointObject()
+        {
+            editorState = EditorState.CREATE_JOINT;
+            PulleyJointObject pjo = new PulleyJointObject();
+            currentObject = pjo;
+            currentObject.Initialise();
+        }
+
         //---> Destroy Objects <---//
 
         public void destroyCurrentObject()
@@ -1140,6 +1198,121 @@ namespace SilhouetteEditor
 
             if (!continueAfterPaint)
                 destroyCurrentObject();
+        }
+
+        public void createJointObject()
+        {
+            if (currentObject is RevoluteJointObject)
+            {
+                if (Editor.Default.selectedLayer == null)
+                {
+                    DialogResult result = MessageBox.Show("There is no layer to add joints to it! Do you want to create one?", "Error", MessageBoxButtons.YesNo, System.Windows.Forms.MessageBoxIcon.Error);
+
+                    if (result == DialogResult.Yes)
+                        new AddLayer().ShowDialog();
+                    else
+                        return;
+                }
+
+                RevoluteJointObject temp = (RevoluteJointObject)currentObject;
+                RevoluteJointObject rjo = new RevoluteJointObject();
+                rjo.position = MouseWorldPosition;
+                rjo.name = rjo.getPrefix() + selectedLayer.getNextObjectNumber();
+                rjo.layer = selectedLayer;
+                rjo.Initialise();
+                AddLevelObject(rjo);
+                selectedLevelObjects.Clear();
+                selectedLevelObjects.Add(rjo);
+            }
+            else if (currentObject is DistanceJointObject)
+            {
+                if (Editor.Default.selectedLayer == null)
+                {
+                    DialogResult result = MessageBox.Show("There is no layer to add joints to it! Do you want to create one?", "Error", MessageBoxButtons.YesNo, System.Windows.Forms.MessageBoxIcon.Error);
+
+                    if (result == DialogResult.Yes)
+                        new AddLayer().ShowDialog();
+                    else
+                        return;
+                }
+
+                DistanceJointObject temp = (DistanceJointObject)currentObject;
+                DistanceJointObject djo = new DistanceJointObject();
+                djo.position = MouseWorldPosition;
+                djo.name = djo.getPrefix() + selectedLayer.getNextObjectNumber();
+                djo.layer = selectedLayer;
+                djo.Initialise();
+                AddLevelObject(djo);
+                selectedLevelObjects.Clear();
+                selectedLevelObjects.Add(djo);
+            }
+            else if (currentObject is PulleyJointObject)
+            {
+                if (Editor.Default.selectedLayer == null)
+                {
+                    DialogResult result = MessageBox.Show("There is no layer to add joints to it! Do you want to create one?", "Error", MessageBoxButtons.YesNo, System.Windows.Forms.MessageBoxIcon.Error);
+
+                    if (result == DialogResult.Yes)
+                        new AddLayer().ShowDialog();
+                    else
+                        return;
+                }
+
+                PulleyJointObject temp = (PulleyJointObject)currentObject;
+                PulleyJointObject pjo = new PulleyJointObject();
+                pjo.position = MouseWorldPosition;
+                pjo.name = pjo.getPrefix() + selectedLayer.getNextObjectNumber();
+                pjo.layer = selectedLayer;
+                pjo.Initialise();
+                AddLevelObject(pjo);
+                selectedLevelObjects.Clear();
+                selectedLevelObjects.Add(pjo);
+            }
+            else if (currentObject is PrismaticJointObject)
+            {
+                if (Editor.Default.selectedLayer == null)
+                {
+                    DialogResult result = MessageBox.Show("There is no layer to add joints to it! Do you want to create one?", "Error", MessageBoxButtons.YesNo, System.Windows.Forms.MessageBoxIcon.Error);
+
+                    if (result == DialogResult.Yes)
+                        new AddLayer().ShowDialog();
+                    else
+                        return;
+                }
+
+                PrismaticJointObject temp = (PrismaticJointObject)currentObject;
+                PrismaticJointObject pjo = new PrismaticJointObject();
+                pjo.position = MouseWorldPosition;
+                pjo.name = pjo.getPrefix() + selectedLayer.getNextObjectNumber();
+                pjo.layer = selectedLayer;
+                pjo.Initialise();
+                AddLevelObject(pjo);
+                selectedLevelObjects.Clear();
+                selectedLevelObjects.Add(pjo);
+            }
+            else if (currentObject is GearJointObject)
+            {
+                if (Editor.Default.selectedLayer == null)
+                {
+                    DialogResult result = MessageBox.Show("There is no layer to add joints to it! Do you want to create one?", "Error", MessageBoxButtons.YesNo, System.Windows.Forms.MessageBoxIcon.Error);
+
+                    if (result == DialogResult.Yes)
+                        new AddLayer().ShowDialog();
+                    else
+                        return;
+                }
+
+                GearJointObject temp = (GearJointObject)currentObject;
+                GearJointObject gjo = new GearJointObject();
+                gjo.position = MouseWorldPosition;
+                gjo.name = gjo.getPrefix() + selectedLayer.getNextObjectNumber();
+                gjo.layer = selectedLayer;
+                gjo.Initialise();
+                AddLevelObject(gjo);
+                selectedLevelObjects.Clear();
+                selectedLevelObjects.Add(gjo);
+            }
+            
         }
 
         /* Sascha:

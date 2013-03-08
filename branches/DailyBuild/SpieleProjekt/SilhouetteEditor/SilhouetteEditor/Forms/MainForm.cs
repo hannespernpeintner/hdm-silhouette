@@ -343,6 +343,12 @@ namespace SilhouetteEditor.Forms
                 Editor.Default.createCurrentObject(false);
                 Editor.Default.startPositioning();
             }
+            else if (lvi.Tag == "AnimatedObject")
+            {
+                Editor.Default.createAnimatedObject(lvi.Name);
+                Editor.Default.createCurrentObject(false);
+                Editor.Default.startPositioning();
+            }
             else if (lvi.Tag == "InteractiveObject")
             {
                 Editor.Default.createInteractiveObject(lvi.Name);
@@ -793,6 +799,31 @@ namespace SilhouetteEditor.Forms
         private void particleObjectToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Editor.Default.createParticleObject();
+        }
+
+        private void revoluteJointObjectToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Editor.Default.createRevoluteJointObject();
+        }
+
+        private void distanceJointObjectToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Editor.Default.createDistanceJointObject();
+        }
+
+        private void prismaticJointObjectToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Editor.Default.createPrismaticJointObject();
+        }
+
+        private void gearJointObjectToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Editor.Default.createGearJointObject();
+        }
+
+        private void pulleyJointObjectToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Editor.Default.createPulleyJointObject();
         }
 
         //---> Actions <---//

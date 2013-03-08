@@ -73,6 +73,12 @@ namespace SilhouetteEditor.Forms
             this.pathCollisionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.PhysicsButton = new System.Windows.Forms.ToolStripDropDownButton();
             this.particleObjectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.JointButton = new System.Windows.Forms.ToolStripDropDownButton();
+            this.RevoluteJointButton = new System.Windows.Forms.ToolStripMenuItem();
+            this.DistanceJointButton = new System.Windows.Forms.ToolStripMenuItem();
+            this.PrismaticJointButton = new System.Windows.Forms.ToolStripMenuItem();
+            this.GearJointButton = new System.Windows.Forms.ToolStripMenuItem();
+            this.PulleyJointButton = new System.Windows.Forms.ToolStripMenuItem();
             this.soundObjectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.EventButton = new System.Windows.Forms.ToolStripDropDownButton();
             this.GameScaleButton = new System.Windows.Forms.ToolStripButton();
@@ -404,6 +410,7 @@ namespace SilhouetteEditor.Forms
             this.FixtureButton,
             this.PhysicsButton,
             this.EventButton,
+            this.JointButton,
             this.GameScaleButton});
             this.ToolBar.Location = new System.Drawing.Point(0, 0);
             this.ToolBar.Name = "ToolBar";
@@ -565,6 +572,22 @@ namespace SilhouetteEditor.Forms
             this.EventButton.Text = "toolStripDropDownButton1";
             this.EventButton.ToolTipText = "Add Event";
             // 
+            // JointButton
+            // 
+            this.JointButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.JointButton.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.RevoluteJointButton,
+            this.DistanceJointButton,
+            this.PrismaticJointButton,
+            this.GearJointButton,
+            this.PulleyJointButton});
+            this.JointButton.Image = global::SilhouetteEditor.Properties.Resource.AddEvent;
+            this.JointButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.JointButton.Name = "JointButton";
+            this.JointButton.Size = new System.Drawing.Size(29, 22);
+            this.JointButton.Text = "toolStripDropDownButton2";
+            this.JointButton.ToolTipText = "Add Joint";
+            // 
             // objectToolStripMenuItem
             // 
             this.objectToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -709,6 +732,41 @@ namespace SilhouetteEditor.Forms
             this.cameraToolStripMenuItem.Size = new System.Drawing.Size(115, 22);
             this.cameraToolStripMenuItem.Text = "Camera";
             this.cameraToolStripMenuItem.Click += new System.EventHandler(this.cameraToolStripMenuItem_Click);
+            // 
+            // revoluteJointToolStripMenuItem
+            // 
+            this.RevoluteJointButton.Name = "RevoluteJointButton";
+            this.RevoluteJointButton.Size = new System.Drawing.Size(115, 22);
+            this.RevoluteJointButton.Text = "Revolute";
+            this.RevoluteJointButton.Click += new System.EventHandler(this.revoluteJointObjectToolStripMenuItem_Click);
+            // 
+            // revoluteJointToolStripMenuItem
+            // 
+            this.DistanceJointButton.Name = "DistanceJointButton";
+            this.DistanceJointButton.Size = new System.Drawing.Size(115, 22);
+            this.DistanceJointButton.Text = "Distance";
+            this.DistanceJointButton.Click += new System.EventHandler(this.distanceJointObjectToolStripMenuItem_Click);
+            // 
+            // prismaticJointToolStripMenuItem
+            // 
+            this.PrismaticJointButton.Name = "PrismaticJointButton";
+            this.PrismaticJointButton.Size = new System.Drawing.Size(115, 22);
+            this.PrismaticJointButton.Text = "Prismatic";
+            this.PrismaticJointButton.Click += new System.EventHandler(this.prismaticJointObjectToolStripMenuItem_Click);
+            // 
+            // gearJointToolStripMenuItem
+            // 
+            this.GearJointButton.Name = "GearJointButton";
+            this.GearJointButton.Size = new System.Drawing.Size(115, 22);
+            this.GearJointButton.Text = "Gear";
+            this.GearJointButton.Click += new System.EventHandler(this.gearJointObjectToolStripMenuItem_Click);
+            // 
+            // pulleyJointToolStripMenuItem
+            // 
+            this.PulleyJointButton.Name = "PulleyJointButton";
+            this.PulleyJointButton.Size = new System.Drawing.Size(115, 22);
+            this.PulleyJointButton.Text = "Pulley";
+            this.PulleyJointButton.Click += new System.EventHandler(this.pulleyJointObjectToolStripMenuItem_Click);
             // 
             // tabControl1
             // 
@@ -1163,6 +1221,12 @@ namespace SilhouetteEditor.Forms
         private System.Windows.Forms.ToolStripMenuItem pathCollisionToolStripMenuItem;
         private System.Windows.Forms.ToolStripDropDownButton PhysicsButton;
         private System.Windows.Forms.ToolStripDropDownButton EventButton;
+        private System.Windows.Forms.ToolStripDropDownButton JointButton;
+        private System.Windows.Forms.ToolStripMenuItem RevoluteJointButton;
+        private System.Windows.Forms.ToolStripMenuItem DistanceJointButton;
+        private System.Windows.Forms.ToolStripMenuItem PrismaticJointButton;
+        private System.Windows.Forms.ToolStripMenuItem GearJointButton;
+        private System.Windows.Forms.ToolStripMenuItem PulleyJointButton;
         private System.Windows.Forms.ToolStripButton GameScaleButton;
         public System.Windows.Forms.ToolStripStatusLabel ZoomStatus;
         private System.Windows.Forms.ToolStripMenuItem physicToolStripMenuItem;

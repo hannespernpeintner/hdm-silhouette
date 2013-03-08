@@ -200,8 +200,8 @@ namespace Silhouette.Engine.Manager
         {
             if (gameTime != null)
             {
-                float temp = (float)Math.Sin((float)gameTime.ElapsedGameTime.TotalMilliseconds* 0.001);
-                Console.WriteLine(temp);
+                float temp = (float)Math.Sin((float)gameTime.ElapsedGameTime.TotalMilliseconds* 0.001f);
+                //Console.WriteLine(temp);
                 water.Parameters["Time"].SetValue(temp);
             }
             return water;

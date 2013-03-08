@@ -1235,7 +1235,7 @@ namespace Silhouette.GameMechs
 
         public void calcRotation(GameTime gameTime)
         {
-            if (charRect.Body.Rotation < 0.5f && charRect.Body.Rotation > -0.5f)
+            if (charRect.Body.Rotation < 0.7f && charRect.Body.Rotation > -0.7f)
             { tempRotation = charRect.Body.Rotation; }
         }
 
@@ -1359,7 +1359,7 @@ namespace Silhouette.GameMechs
 
         public bool nOnCollision(Fixture fixtureA, Fixture fixtureB, Contact contact)
         {
-            if (fixtureB.isHalfTransparent)
+            if (fixtureB.isHalfTransparent && (charRect.Body.LinearVelocity.Y < 0))
             {
                 charRect.IsSensor = true;
             }
