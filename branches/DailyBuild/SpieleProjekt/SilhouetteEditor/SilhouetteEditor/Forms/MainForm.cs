@@ -826,6 +826,11 @@ namespace SilhouetteEditor.Forms
             Editor.Default.createPulleyJointObject();
         }
 
+        private void ropeJointObjectToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Editor.Default.createRopeJointObject();
+        }
+
         //---> Actions <---//
 
         private void ActionDelete(object sender, EventArgs e)

@@ -1101,6 +1101,13 @@ namespace SilhouetteEditor
             currentObject = pjo;
             currentObject.Initialise();
         }
+        public void createRopeJointObject()
+        {
+            editorState = EditorState.CREATE_JOINT;
+            RopeJointObject rjo = new RopeJointObject();
+            currentObject = rjo;
+            currentObject.Initialise();
+        }
 
         //---> Destroy Objects <---//
 
@@ -1311,6 +1318,28 @@ namespace SilhouetteEditor
                 AddLevelObject(gjo);
                 selectedLevelObjects.Clear();
                 selectedLevelObjects.Add(gjo);
+            }
+            else if (currentObject is RopeJointObject)
+            {
+                if (Editor.Default.selectedLayer == null)
+                {
+                    DialogResult result = MessageBox.Show("There is no layer to add joints to it! Do you want to create one?", "Error", MessageBoxButtons.YesNo, System.Windows.Forms.MessageBoxIcon.Error);
+
+                    if (result == DialogResult.Yes)
+                        new AddLayer().ShowDialog();
+                    else
+                        return;
+                }
+
+                RopeJointObject temp = (RopeJointObject)currentObject;
+                RopeJointObject rjo = new RopeJointObject();
+                rjo.position = MouseWorldPosition;
+                rjo.name = rjo.getPrefix() + selectedLayer.getNextObjectNumber();
+                rjo.layer = selectedLayer;
+                rjo.Initialise();
+                AddLevelObject(rjo);
+                selectedLevelObjects.Clear();
+                selectedLevelObjects.Add(rjo);
             }
             
         }
