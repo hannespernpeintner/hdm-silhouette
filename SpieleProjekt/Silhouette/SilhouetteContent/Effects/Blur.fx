@@ -1,8 +1,8 @@
-float BlurDistance = 0.002f;
+float BlurDistance = 1;
+float factor = 0.0051;
 int Samples = 4;
 sampler ColorMapSampler : register(s0);
-//const float bw = 1/1366;
-//const float bh = 1/720;
+sampler Bokeh : register(s4);
 
 
 float2 poissonDisk[64] =
@@ -78,8 +78,7 @@ float4 blurpoisson(float2 Tex: TEXCOORD0) : COLOR
 
 	float4 Color = float4(0,0,0,0);
 	{
-		//float bd = 1/720;
-		float bd = BlurDistance*0.02;
+		float bd = BlurDistance*factor;
 		
 		Color = float4(0,0,0,0);
 
@@ -98,8 +97,7 @@ float4 blurpoisson2(float2 Tex: TEXCOORD0) : COLOR
 
 	float4 Color = float4(0,0,0,0);
 	{
-		//float bd = 1/720;
-		float bd = BlurDistance*0.02;
+		float bd = BlurDistance*2*factor;
 		
 		Color = float4(0,0,0,0);
 
@@ -114,12 +112,13 @@ float4 blurpoisson2(float2 Tex: TEXCOORD0) : COLOR
 	return Color;
 }
 
+
 float4 blurgauss(float2 Tex: TEXCOORD0) : COLOR
 {
 
 	float4 Color;
 	{
-		float bd = BlurDistance*0.02;
+		float bd = BlurDistance*factor;
 		
 		Color = tex2D( ColorMapSampler, float2(Tex.x-bd, Tex.y-bd));
 		Color += 2*tex2D( ColorMapSampler, float2(Tex.x-bd, Tex.y));
@@ -134,18 +133,14 @@ float4 blurgauss(float2 Tex: TEXCOORD0) : COLOR
 		Color += tex2D( ColorMapSampler, float2(Tex.x+bd, Tex.y+bd));
 	}
     
-
-	// We need to devide the color with the amount of times we added
-	// a color to it, in this case 4, to get the avg. color
 	Color = Color / (16);
  
-	// returned the blurred color
 	return Color;
 }
  
 technique PostProcess
 {
-       pass P0
+       pass P1
        {
              PixelShader = compile ps_2_0 blurpoisson();
        }
@@ -153,8 +148,8 @@ technique PostProcess
        {
              PixelShader = compile ps_2_0 blurpoisson2();
        }
-       pass P2
+       pass P1
        {
-             PixelShader = compile ps_2_0 blurgauss();
+             PixelShader = compile ps_2_0 blurpoisson();
        }
 }

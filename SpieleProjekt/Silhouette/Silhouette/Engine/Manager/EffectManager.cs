@@ -3,8 +3,9 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Silhouette.GameMechs;
 using System.IO;
-using Silhouette.Engine.Effects;
 using System.Collections;
+using Silhouette.Engine.Effects;
+using System.Collections.Generic;
 
 namespace Silhouette.Engine.Manager
 {
@@ -13,6 +14,7 @@ namespace Silhouette.Engine.Manager
 
     public static class EffectManager
     {
+        public static Dictionary<Effects, EffectObject> AllEffects;
         public enum Effects
         { 
             Blur
@@ -55,6 +57,12 @@ namespace Silhouette.Engine.Manager
 
         public static void loadEffects() 
         {
+            AllEffects = new Dictionary<Effects, EffectObject>();
+            EffectObject blur = new Blur();
+            blur.Initialise();
+            blur.LoadContent();
+            AllEffects.Add(Effects.Blur, blur);
+
             overallBlur = true;
             overallVignette = true;
 
@@ -97,18 +105,24 @@ namespace Silhouette.Engine.Manager
         public static Effect Blurrer()
         {
             blurrer.Parameters["BlurDistance"].SetValue(0.002f);
+            AllEffects[Effects.Blur].Type = "Normal";
+            return AllEffects[Effects.Blur].Effect;
             return blurrer;
         }
 
         public static Effect WeakBlurrer()
         {
             weakBlurrer.Parameters["BlurDistance"].SetValue(0.001f);
+            AllEffects[Effects.Blur].Type = "Weak";
+            return AllEffects[Effects.Blur].Effect;
             return weakBlurrer;
         }
 
         public static Effect StrongBlurrer()
         {
             strongBlurrer.Parameters["BlurDistance"].SetValue(0.006f);
+            AllEffects[Effects.Blur].Type = "Strong";
+            return AllEffects[Effects.Blur].Effect;
             return strongBlurrer;
         }
 
