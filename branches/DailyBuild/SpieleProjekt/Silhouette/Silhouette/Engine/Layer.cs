@@ -103,6 +103,8 @@ namespace Silhouette.Engine
             particleRenderer.initializeParticles();
 
             Effects = new List<EffectObject>();
+            EffectObject e0 = new Blur();
+            //Effects.Add(e0);
 
             foreach (EffectObject eo in Effects)
             {

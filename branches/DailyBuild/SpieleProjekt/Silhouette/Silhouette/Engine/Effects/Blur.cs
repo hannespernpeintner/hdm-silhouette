@@ -15,7 +15,6 @@ namespace Silhouette.Engine.Effects
     public class Blur : Effects.EffectObject
     {
         private static Dictionary<String, float> _radiuses;
-
         private static Dictionary<String, float> Radiuses
         {
             get { return Blur._radiuses; }
@@ -58,12 +57,13 @@ namespace Silhouette.Engine.Effects
             set { _effect = value; }
         }
 
+
         public override void Initialise()
         {
-            Radiuses = new Dictionary<string, float>();
-            Radiuses.Add("Normal", 0.3f);
-            Radiuses.Add("Weak", 0.0015f);
-            Radiuses.Add("Strong", 0.008f);
+            Radiuses = new Dictionary<String, float>();
+            Radiuses.Add("Normal", 2f);
+            Radiuses.Add("Weak", 1f);
+            Radiuses.Add("Strong", 3f);
 
             Active = true;
             Path = "Effects/Blur";
@@ -76,7 +76,7 @@ namespace Silhouette.Engine.Effects
                 KeyValuePair<String, float> pair = enumerator.Current;
                 Types.Add(pair.Key);
             }
-            Type = Types.ElementAt(0);
+            Type = "Normal";
         }
         public override void LoadContent()
         {
