@@ -16,7 +16,7 @@ sampler noiseSampler: register(s3);
 
 float4 lightRayPS( float2 texCoord : TEXCOORD0 ) : COLOR0
 {
-	float3 ScreenLightPos = (0.5,1,0.3f+(Exposure/2));
+	float3 ScreenLightPos = (0.5,0.3,0.3f+(Exposure/2));
 	float4 noise = tex2D(noiseSampler, texCoord + NoiseMove);
 	float4 noise2 = tex2D(noiseSampler, texCoord - 1.5f*NoiseMove);
 	noise2.a = NoiseMove*Exposure;
@@ -29,7 +29,8 @@ float4 lightRayPS( float2 texCoord : TEXCOORD0 ) : COLOR0
   // Divide by number of samples and scale by control factor.  
   deltaTexCoord *= 1.0f / NUM_SAMPLES * Density;  
   // Store initial sample.  
-   float3 color = tex2D(frameSampler, texCoord);  
+   float3 color = tex2D(frameSampler, texCoord); 
+   float4 simpleColor = tex2D(frameSampler, texCoord); 
   // Set up illumination decay factor.  
    float illuminationDecay = 1.0f;  
   // Evaluate summation from Equation 3 NUM_SAMPLES iterations.  
@@ -50,7 +51,7 @@ float4 lightRayPS( float2 texCoord : TEXCOORD0 ) : COLOR0
   float4 temp = float4( color * Exposure, 0.1);
   temp.a = 0.1;
   temp += float4(noise.r,noise.r,noise.r,noise.r)/10;
-  return temp;
+  return simpleColor + temp;
    //return float4( color * Exposure, 0.1);
     
 }
