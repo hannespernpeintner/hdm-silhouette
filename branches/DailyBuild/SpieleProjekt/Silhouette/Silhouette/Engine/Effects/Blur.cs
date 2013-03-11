@@ -82,6 +82,11 @@ namespace Silhouette.Engine.Effects
         {
             Effect = GameLoop.gameInstance.Content.Load<Effect>(Path);
         }
+
+        public override void Uddate(GameTime gameTime)
+        {
+        
+        }
         public virtual void loadContentInEditor(GraphicsDevice graphics) { }
 
     }

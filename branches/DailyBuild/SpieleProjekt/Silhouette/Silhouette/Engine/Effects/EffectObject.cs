@@ -53,6 +53,7 @@ namespace Silhouette.Engine.Effects
         // Bitte initialisiert im Types-Array immer den Default-Type als ERSTES ELEMENT bei Index 0.
         public abstract void Initialise();
         public abstract void LoadContent();
+        public abstract void Uddate(GameTime gameTime);
         public virtual void loadContentInEditor(GraphicsDevice graphics) { }
 
     }
