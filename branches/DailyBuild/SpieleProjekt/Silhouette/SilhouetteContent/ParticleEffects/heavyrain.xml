@@ -3,17 +3,17 @@
   <Asset Type="ProjectMercury.ParticleEffect">
     <Item Type="ProjectMercury.Emitters.LineEmitter">
       <Name>Rain Drops</Name>
-      <Budget>500</Budget>
-      <Term>35</Term>
-      <ReleaseQuantity>100</ReleaseQuantity>
+      <Budget>20000</Budget>
+      <Term>1</Term>
+      <ReleaseQuantity>20</ReleaseQuantity>
       <Enabled>True</Enabled>
       <ReleaseSpeed>
         <Value>1050</Value>
-        <Variation>300</Variation>
+        <Variation>900</Variation>
       </ReleaseSpeed>
       <ReleaseColour>
         <Value>0.8745098 0.9254902 1</Value>
-        <Variation>0 0 0</Variation>
+        <Variation>0.1 0.1 0</Variation>
       </ReleaseColour>
       <ReleaseOpacity>
         <Value>1</Value>
@@ -28,7 +28,7 @@
         <Variation>0</Variation>
       </ReleaseRotation>
       <ReleaseImpulse>0 0</ReleaseImpulse>
-      <ParticleTextureAssetName>ParticleEffects/ParticleTextures/BeamBlurred</ParticleTextureAssetName>
+      <ParticleTextureAssetName>ParticleEffects/ParticleTextures/Beam</ParticleTextureAssetName>
       <Modifiers>
         <Item Type="ProjectMercury.Modifiers.LinearGravityModifier">
           <Gravity>0 250</Gravity>
@@ -37,7 +37,89 @@
       <BlendMode>Alpha</BlendMode>
       <TriggerOffset>0 0</TriggerOffset>
       <MinimumTriggerPeriod>0</MinimumTriggerPeriod>
-      <Length>600</Length>
+      <Length>1600</Length>
+      <Angle>-2.1415925</Angle>
+      <Rectilinear>true</Rectilinear>
+      <EmitBothWays>false</EmitBothWays>
+    </Item>
+    <Item Type="ProjectMercury.Emitters.LineEmitter">
+      <Name>Copy of Rain Drops</Name>
+      <Budget>20000</Budget>
+      <Term>1</Term>
+      <ReleaseQuantity>5</ReleaseQuantity>
+      <Enabled>True</Enabled>
+      <ReleaseSpeed>
+        <Value>1050</Value>
+        <Variation>900</Variation>
+      </ReleaseSpeed>
+      <ReleaseColour>
+        <Value>0.8745098 0.9254902 1</Value>
+        <Variation>0.1 0.1 0</Variation>
+      </ReleaseColour>
+      <ReleaseOpacity>
+        <Value>0.01</Value>
+        <Variation>0.052</Variation>
+      </ReleaseOpacity>
+      <ReleaseScale>
+        <Value>800</Value>
+        <Variation>600</Variation>
+      </ReleaseScale>
+      <ReleaseRotation>
+        <Value>7</Value>
+        <Variation>0</Variation>
+      </ReleaseRotation>
+      <ReleaseImpulse>0 0</ReleaseImpulse>
+      <ParticleTextureAssetName>ParticleEffects/ParticleTextures/SoftClumpy</ParticleTextureAssetName>
+      <Modifiers>
+        <Item Type="ProjectMercury.Modifiers.LinearGravityModifier">
+          <Gravity>0 250</Gravity>
+        </Item>
+      </Modifiers>
+      <BlendMode>Alpha</BlendMode>
+      <TriggerOffset>0 0</TriggerOffset>
+      <MinimumTriggerPeriod>0</MinimumTriggerPeriod>
+      <Length>1200</Length>
+      <Angle>-2.1415925</Angle>
+      <Rectilinear>true</Rectilinear>
+      <EmitBothWays>false</EmitBothWays>
+    </Item>
+    <Item Type="ProjectMercury.Emitters.LineEmitter">
+      <Name>Copy of Copy of Rain Drops</Name>
+      <Budget>20000</Budget>
+      <Term>1</Term>
+      <ReleaseQuantity>5</ReleaseQuantity>
+      <Enabled>True</Enabled>
+      <ReleaseSpeed>
+        <Value>50</Value>
+        <Variation>10</Variation>
+      </ReleaseSpeed>
+      <ReleaseColour>
+        <Value>0.8745098 0.9254902 1</Value>
+        <Variation>0.1 0.1 0</Variation>
+      </ReleaseColour>
+      <ReleaseOpacity>
+        <Value>0.01</Value>
+        <Variation>0.052</Variation>
+      </ReleaseOpacity>
+      <ReleaseScale>
+        <Value>80</Value>
+        <Variation>20</Variation>
+      </ReleaseScale>
+      <ReleaseRotation>
+        <Value>7</Value>
+        <Variation>0</Variation>
+      </ReleaseRotation>
+      <ReleaseImpulse>0 0</ReleaseImpulse>
+      <ParticleTextureAssetName>ParticleEffects/ParticleTextures/Beam</ParticleTextureAssetName>
+      <Modifiers>
+        <Item Type="ProjectMercury.Modifiers.LinearGravityModifier">
+          <Gravity>0 250</Gravity>
+        </Item>
+      </Modifiers>
+      <BlendMode>Alpha</BlendMode>
+      <TriggerOffset>0 0</TriggerOffset>
+      <MinimumTriggerPeriod>0</MinimumTriggerPeriod>
+      <Length>1200</Length>
       <Angle>-2.1415925</Angle>
       <Rectilinear>true</Rectilinear>
       <EmitBothWays>false</EmitBothWays>

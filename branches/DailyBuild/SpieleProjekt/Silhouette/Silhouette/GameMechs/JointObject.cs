@@ -205,7 +205,7 @@ namespace Silhouette.GameMechs
 
         public override void drawSelectionFrame(SpriteBatch spriteBatch, Matrix matrix)
         {
-            Rectangle rect = new Rectangle((int)(Circle.position.X - Circle.radius), (int)(Circle.position.Y - Circle.radius), (int)Circle.radius, (int)Circle.radius);
+            Rectangle rect = new Rectangle((int)(Circle.position.X - Circle.radius), (int)(Circle.position.Y - Circle.radius), 2*(int)Circle.radius, 2*(int)Circle.radius);
             Primitives.Instance.drawBox(spriteBatch, rect, Color.Yellow, 2);
 
             Vector2[] poly = rect.ToPolygon();
@@ -322,7 +322,7 @@ namespace Silhouette.GameMechs
 
         public override void drawSelectionFrame(SpriteBatch spriteBatch, Matrix matrix)
         {
-            Rectangle rect = new Rectangle((int)(Circle.position.X - Circle.radius), (int)(Circle.position.Y - Circle.radius), (int)Circle.radius, (int)Circle.radius);
+            Rectangle rect = new Rectangle((int)(Circle.position.X - Circle.radius), (int)(Circle.position.Y - Circle.radius), 2*(int)Circle.radius, 2*(int)Circle.radius);
             Primitives.Instance.drawBox(spriteBatch, rect, Color.Yellow, 2);
 
             Vector2[] poly = rect.ToPolygon();
@@ -442,7 +442,7 @@ namespace Silhouette.GameMechs
 
         public override void drawSelectionFrame(SpriteBatch spriteBatch, Matrix matrix)
         {
-            Rectangle rect = new Rectangle((int)(Circle.position.X - Circle.radius), (int)(Circle.position.Y - Circle.radius), (int)Circle.radius, (int)Circle.radius);
+            Rectangle rect = new Rectangle((int)(Circle.position.X - Circle.radius), (int)(Circle.position.Y - Circle.radius), 2*(int)Circle.radius, 2*(int)Circle.radius);
             Primitives.Instance.drawBox(spriteBatch, rect, Color.Yellow, 2);
 
             Vector2[] poly = rect.ToPolygon();
@@ -576,7 +576,7 @@ namespace Silhouette.GameMechs
 
         public override void drawSelectionFrame(SpriteBatch spriteBatch, Matrix matrix)
         {
-            Rectangle rect = new Rectangle((int)(Circle.position.X - Circle.radius), (int)(Circle.position.Y - Circle.radius), (int)Circle.radius, (int)Circle.radius);
+            Rectangle rect = new Rectangle((int)(Circle.position.X - Circle.radius), (int)(Circle.position.Y - Circle.radius), 2*(int)Circle.radius, 2*(int)Circle.radius);
             Primitives.Instance.drawBox(spriteBatch, rect, Color.Yellow, 2);
 
             Vector2[] poly = rect.ToPolygon();
@@ -675,7 +675,7 @@ namespace Silhouette.GameMechs
 
         public override void drawSelectionFrame(SpriteBatch spriteBatch, Matrix matrix)
         {
-            Rectangle rect = new Rectangle((int)(Circle.position.X - Circle.radius), (int)(Circle.position.Y - Circle.radius), (int)Circle.radius, (int)Circle.radius);
+            Rectangle rect = new Rectangle((int)(Circle.position.X - Circle.radius), (int)(Circle.position.Y - Circle.radius), 2*(int)Circle.radius, 2*(int)Circle.radius);
             Primitives.Instance.drawBox(spriteBatch, rect, Color.Yellow, 2);
 
             Vector2[] poly = rect.ToPolygon();
@@ -843,7 +843,7 @@ namespace Silhouette.GameMechs
 
         public override void drawSelectionFrame(SpriteBatch spriteBatch, Matrix matrix)
         {
-            Rectangle rect = new Rectangle((int)(Circle.position.X - Circle.radius), (int)(Circle.position.Y - Circle.radius), (int)Circle.radius, (int)Circle.radius);
+            Rectangle rect = new Rectangle((int)(Circle.position.X - Circle.radius), (int)(Circle.position.Y - Circle.radius), 2*(int)Circle.radius, 2*(int)Circle.radius);
             Primitives.Instance.drawBox(spriteBatch, rect, Color.Yellow, 2);
 
             Vector2[] poly = rect.ToPolygon();

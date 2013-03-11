@@ -11,17 +11,18 @@ using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 using System.IO;
 using Silhouette.Engine.Manager;
+using Silhouette.Engine.Effects;
 
 namespace Silhouette.Engine
 {
     public class RenderTargetFlipFlop
     {
 
-        private RenderTarget2D _basicTarget;
-        public RenderTarget2D BasicTarget
+        private RenderTarget2D _target0;
+        public RenderTarget2D Target0
         {
-            get { return _basicTarget; }
-            set { _basicTarget = value; }
+            get { return _target0; }
+            set { _target0 = value; }
         }
 
         private RenderTarget2D _target1;
@@ -37,12 +38,18 @@ namespace Silhouette.Engine
             get { return _target2; }
             set { _target2 = value; }
         }
-        private int _sourceTarget;
 
-        public int SourceTarget
+        private RenderTarget2D _sourceTarget;
+        public RenderTarget2D SourceTarget
         {
             get { return _sourceTarget; }
             set { _sourceTarget = value; }
+        }
+        private RenderTarget2D _destTarget;
+        public RenderTarget2D DestTarget
+        {
+            get { return _destTarget; }
+            set { _destTarget = value; }
         }
 
         private RenderTarget2D _result;
@@ -66,13 +73,15 @@ namespace Silhouette.Engine
 
         public void Initialise()
         {
-            BasicTarget = new RenderTarget2D(GameLoop.gameInstance.GraphicsDevice, GameSettings.Default.resolutionWidth, GameSettings.Default.resolutionHeight);
+            Target0 = new RenderTarget2D(GameLoop.gameInstance.GraphicsDevice, GameSettings.Default.resolutionWidth, GameSettings.Default.resolutionHeight);
             Target1 = new RenderTarget2D(GameLoop.gameInstance.GraphicsDevice, GameSettings.Default.resolutionWidth, GameSettings.Default.resolutionHeight);
             Target2 = new RenderTarget2D(GameLoop.gameInstance.GraphicsDevice, GameSettings.Default.resolutionWidth, GameSettings.Default.resolutionHeight);
 
             Result = new RenderTarget2D(GameLoop.gameInstance.GraphicsDevice, GameSettings.Default.resolutionWidth, GameSettings.Default.resolutionHeight);
-            SourceTarget = 1;
+            SourceTarget = Target0;
+            DestTarget = Target1;
         }
+
         public void Draw(List<Layer> layerList)
         {
             foreach (Layer l in layerList)
@@ -97,49 +106,71 @@ namespace Silhouette.Engine
 
         private void FlipTarget()
         {
-            if (SourceTarget == 1)
+            if (DestTarget == Target0)
             {
-                SourceTarget = 2;
+                SourceTarget = Target0;
+                DestTarget = Target1;
             }
-            else if (SourceTarget == 2)
+            else if (DestTarget == Target1)
             {
-                SourceTarget = 1;
+                SourceTarget = Target1;
+                DestTarget = Target2;
+            }
+            else if (DestTarget == Target2)
+            {
+                SourceTarget = Target2;
+                DestTarget = Target0;
             }
 
+            GameLoop.gameInstance.GraphicsDevice.SetRenderTarget(DestTarget);
+            GameLoop.gameInstance.GraphicsDevice.Clear(Color.Transparent);
         }
 
         private void DrawToResultTarget(List<Layer> layerList)
         {
-            GameLoop.gameInstance.GraphicsDevice.SetRenderTarget(BasicTarget);
-            GameLoop.gameInstance.GraphicsDevice.Clear(Color.Transparent);
-
+            FlipTarget();
             foreach (Layer l in layerList)
             {
                 Batch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, null, null, null, l.getShaderByType(l.shaderType));
                 Batch.Draw(l.Rt, Vector2.Zero, Color.White);
                 Batch.End();
+
+                
+                foreach (EffectObject eo in l.Effects)
+                {
+                    FlipTarget();
+                    Batch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, null, null, null, eo.Effect);
+                    Batch.Draw(SourceTarget, Vector2.Zero, Color.White);
+                    Batch.End();
+                }
             }
 
-            GameLoop.gameInstance.GraphicsDevice.SetRenderTarget(Target2);
+            
+            FlipTarget();
             GameLoop.gameInstance.GraphicsDevice.Clear(Color.Transparent);
             Batch.Begin(SpriteSortMode.Deferred, null, null, null, null, EffectManager.Godrays());
-            Batch.Draw(BasicTarget, Vector2.Zero, Color.White);
+            Batch.Draw(SourceTarget, Vector2.Zero, Color.White);
             Batch.End();
 
-            GameLoop.gameInstance.GraphicsDevice.SetRenderTarget(Target1);
-            Batch.Begin(SpriteSortMode.Deferred, null, null, null, null, null);
-            Batch.Draw(BasicTarget, Vector2.Zero, Color.White);
-            Batch.Draw(Target2, Vector2.Zero, Color.White);
-            Batch.End();
-            GameLoop.gameInstance.GraphicsDevice.SetRenderTarget(Target2);
+            FlipTarget();
             Batch.Begin(SpriteSortMode.Deferred, null, null, null, null, EffectManager.VignettenBlur());
-            //Batch.Begin(SpriteSortMode.Deferred, null, null, null, null, EffectManager.Water());
-            Batch.Draw(Target1, Vector2.Zero, Color.White);
+            Batch.Draw(SourceTarget, Vector2.Zero, Color.White);
             Batch.End();
+
+            FlipTarget();
+            Batch.Begin(SpriteSortMode.Deferred, null, null, null, null, EffectManager.Bloom());
+            Batch.Draw(SourceTarget, Vector2.Zero, Color.White);
+            Batch.End();
+
             GameLoop.gameInstance.GraphicsDevice.SetRenderTarget(Result);
+
             Batch.Begin(SpriteSortMode.Deferred, null, null, null, null, EffectManager.ColorChange());
-            Batch.Draw(Target2, Vector2.Zero, Color.White);
+            Batch.Draw(DestTarget, Vector2.Zero, Color.White);
             Batch.End();
+
+            /*Batch.Begin(SpriteSortMode.Deferred, null, null, null, null, EffectManager.ColorChange());
+            Batch.Draw(Target2, Vector2.Zero, Color.White);
+            Batch.End();*/
 
         }
     }

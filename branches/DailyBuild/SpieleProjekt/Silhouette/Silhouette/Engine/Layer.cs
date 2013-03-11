@@ -16,6 +16,7 @@ using Microsoft.Xna.Framework.Media;
 using Silhouette.GameMechs;
 using Silhouette.Engine.PartikelEngine;
 using Silhouette.Engine.Manager;
+using Silhouette.Engine.Effects;
 
 namespace Silhouette.Engine
 {
@@ -61,6 +62,13 @@ namespace Silhouette.Engine
         private RenderTarget2D _rt;
         public RenderTarget2D Rt { get { return _rt; } set { _rt = value; } }
 
+
+        private List<EffectObject> _effects;
+        public List<EffectObject> Effects
+        {
+            get { return _effects; }
+            set { _effects = value; }
+        }
         public bool isVisible = true;
 
         [NonSerialized]
@@ -93,6 +101,14 @@ namespace Silhouette.Engine
             }
 
             particleRenderer.initializeParticles();
+
+            Effects = new List<EffectObject>();
+
+            foreach (EffectObject eo in Effects)
+            {
+                eo.Initialise();
+                eo.LoadContent();
+            }
         }
 
         public void updateLayer(GameTime gameTime)
@@ -103,6 +119,12 @@ namespace Silhouette.Engine
             }
 
             particleRenderer.updateParticles(gameTime);
+
+
+            foreach (EffectObject eo in Effects)
+            {
+                eo.Uddate(gameTime);
+            }
         }
 
         public void drawLayer(SpriteBatch spriteBatch)
