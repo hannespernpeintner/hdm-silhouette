@@ -103,7 +103,33 @@ namespace Silhouette.Engine
             particleRenderer.initializeParticles();
 
             Effects = new List<EffectObject>();
-            EffectObject e0 = new Blur();
+            //Effects.Add(e0);
+
+            foreach (EffectObject eo in Effects)
+            {
+                eo.Initialise();
+                eo.LoadContent();
+            }
+        }
+        public void loadLayerInEditor()
+        {
+            //particleRenderer = new ParticleRenderer();
+            Rt = new RenderTarget2D(GameLoop.gameInstance.GraphicsDevice, GameSettings.Default.resolutionWidth, GameSettings.Default.resolutionHeight);
+
+            foreach (LevelObject lo in loList)
+            {
+                lo.LoadContent();
+
+                if (lo is ParticleObject)
+                {
+                    ParticleObject p = (ParticleObject)lo;
+                    particleRenderer.addParticleObjects(p);
+                }
+            }
+
+            particleRenderer.initializeParticles();
+
+            Effects = new List<EffectObject>();
             //Effects.Add(e0);
 
             foreach (EffectObject eo in Effects)
@@ -137,12 +163,27 @@ namespace Silhouette.Engine
                 {
                     DrawableLevelObject dlo = (DrawableLevelObject)lo;
 
-                    if(dlo.isVisible)
+                    if (dlo.isVisible)
                         dlo.Draw(spriteBatch);
                 }
             }
 
             particleRenderer.drawParticles();
+        }
+
+        public void drawLayerInEditor(SpriteBatch spriteBatch)
+        {
+            foreach (LevelObject lo in loList)
+            {
+                if (lo is DrawableLevelObject)
+                {
+                    DrawableLevelObject dlo = (DrawableLevelObject)lo;
+
+                    if (dlo.isVisible)
+                        dlo.Draw(spriteBatch);
+                }
+            }
+
         }
 
         public Effect getShaderByType(ShaderType shaderType)

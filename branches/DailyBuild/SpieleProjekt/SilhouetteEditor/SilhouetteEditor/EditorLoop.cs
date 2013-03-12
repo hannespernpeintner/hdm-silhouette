@@ -73,7 +73,7 @@ namespace SilhouetteEditor
             GraphicsDevice.Clear(Color.White);
             int fps = (int)(1 / gameTime.ElapsedGameTime.TotalSeconds);
             MainForm.Default.FPS.Text = "FPS: " + fps.ToString();
-            Editor.Default.Draw();
+            Editor.Default.Draw(MainForm.Default.treeView1.Width);
             base.Draw(gameTime);
         }
 

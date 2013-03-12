@@ -184,6 +184,16 @@ namespace Silhouette.GameMechs
             if (this.mouseOn) onHover = Constants.onHover;
             color = onHover;
             Circle.drawInEditor(spriteBatch);
+
+
+            if (Object1 != null)
+            {
+                Primitives.Instance.drawLine(spriteBatch, Object1.origin, Circle.position, color, 5);
+            }
+            if (Object2 != null)
+            {
+                Primitives.Instance.drawLine(spriteBatch, Object2.origin, Circle.position, color, 5);
+            }
         }
 
         public override string getPrefix()
@@ -301,6 +311,16 @@ namespace Silhouette.GameMechs
             if (this.mouseOn) onHover = Constants.onHover;
             color = onHover;
             Circle.drawInEditor(spriteBatch);
+
+
+            if (Object1 != null)
+            {
+                Primitives.Instance.drawLine(spriteBatch, Object1.origin, Circle.position, color, 5);
+            }
+            if (Object2 != null)
+            {
+                Primitives.Instance.drawLine(spriteBatch, Object2.origin, Circle.position, color, 5);
+            }
         }
 
         public override string getPrefix()
@@ -421,6 +441,16 @@ namespace Silhouette.GameMechs
             if (this.mouseOn) onHover = Constants.onHover;
             color = onHover;
             Circle.drawInEditor(spriteBatch);
+
+            if (Object1 != null)
+            {
+                Primitives.Instance.drawLine(spriteBatch, Object1.origin, Circle.position, color, 5);
+            }
+            if (Object2 != null)
+            {
+                Primitives.Instance.drawLine(spriteBatch, Object2.origin, Circle.position, color, 5);
+            }
+            
         }
 
         public override string getPrefix()
@@ -555,6 +585,16 @@ namespace Silhouette.GameMechs
             if (this.mouseOn) onHover = Constants.onHover;
             color = onHover;
             Circle.drawInEditor(spriteBatch);
+
+
+            if (Object1 != null)
+            {
+                Primitives.Instance.drawLine(spriteBatch, Object1.origin, Circle.position, color, 5);
+            }
+            if (Object2 != null)
+            {
+                Primitives.Instance.drawLine(spriteBatch, Object2.origin, Circle.position, color, 5);
+            }
         }
 
         public override string getPrefix()
@@ -654,6 +694,15 @@ namespace Silhouette.GameMechs
             if (this.mouseOn) onHover = Constants.onHover;
             color = onHover;
             Circle.drawInEditor(spriteBatch);
+
+            if (Object1 != null)
+            {
+                Primitives.Instance.drawLine(spriteBatch, Object1.origin, Circle.position, color, 5);
+            }
+            if (Object2 != null)
+            {
+                Primitives.Instance.drawLine(spriteBatch, Object2.origin, Circle.position, color, 5);
+            }
         }
 
         public override string getPrefix()
@@ -822,6 +871,16 @@ namespace Silhouette.GameMechs
             if (this.mouseOn) onHover = Constants.onHover;
             color = onHover;
             Circle.drawInEditor(spriteBatch);
+
+
+            if (Object1 != null)
+            {
+                Primitives.Instance.drawLine(spriteBatch, Object1.origin, Circle.position, color, 5);
+            }
+            if (Object2 != null)
+            {
+                Primitives.Instance.drawLine(spriteBatch, Object2.origin, Circle.position, color, 5);
+            }
         }
 
         public override string getPrefix()

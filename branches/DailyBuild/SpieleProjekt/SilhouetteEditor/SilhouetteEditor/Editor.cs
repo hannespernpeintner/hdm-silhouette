@@ -871,12 +871,12 @@ namespace SilhouetteEditor
             oldmstate = mstate;
         }
 
-        public void Draw()
+        public void Draw(int treeviewOffset)
         {
             if (level == null)
                 return;
 
-            level.DrawInEditor();
+            level.DrawInEditor(EditorLoop.EditorLoopInstance.GraphicsDevice, treeviewOffset);
             drawEditorRelated();
         }
 
@@ -891,8 +891,8 @@ namespace SilhouetteEditor
             else
                 level.name = name;
 
-            level.InitializeInEditor(spriteBatch, MainForm.Default.GameView.Width, MainForm.Default.GameView.Height);
-            level.LoadContentInEditor(EditorLoop.EditorLoopInstance.GraphicsDevice);
+            level.InitializeInEditor(EditorLoop.EditorLoopInstance.GraphicsDevice, spriteBatch, MainForm.Default.GameView.Width, MainForm.Default.GameView.Height);
+            level.LoadContentInEditor(EditorLoop.EditorLoopInstance.GraphicsDevice, EditorLoop.EditorLoopInstance.Content);
             MainForm.Default.UpdateTreeView();
         }
 
@@ -906,8 +906,8 @@ namespace SilhouetteEditor
 
                 if (level != null)
                 {
-                    level.InitializeInEditor(spriteBatch, MainForm.Default.GameView.Width, MainForm.Default.GameView.Height);
-                    level.LoadContentInEditor(EditorLoop.EditorLoopInstance.GraphicsDevice);
+                    level.InitializeInEditor(EditorLoop.EditorLoopInstance.GraphicsDevice, spriteBatch, MainForm.Default.GameView.Width, MainForm.Default.GameView.Height);
+                    level.LoadContentInEditor(EditorLoop.EditorLoopInstance.GraphicsDevice, EditorLoop.EditorLoopInstance.Content);
                     editorState = EditorState.IDLE;
                     MainForm.Default.UpdateTreeView();
                 }
@@ -942,6 +942,8 @@ namespace SilhouetteEditor
             l.name = name;
             l.level = level;
             l.initializeInEditor();
+            //l.loadLayerInEditor();
+            l.loadContentInEditor(EditorLoop.EditorLoopInstance.GraphicsDevice, EditorLoop.EditorLoopInstance.Content);
             level.layerList.Add(l);
             selectLayer(level.layerList.Last());
             MainForm.Default.UpdateTreeView();

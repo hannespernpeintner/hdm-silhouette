@@ -15,6 +15,8 @@ using Microsoft.Xna.Framework.Media;
 using Silhouette.GameMechs;
 using Silhouette.Engine.Manager;
 
+using Silhouette.Engine.Effects;
+
 namespace Silhouette.Engine
 {
     public partial class Layer
@@ -23,8 +25,11 @@ namespace Silhouette.Engine
 
         public void initializeInEditor() { }
 
-        public void loadContentInEditor(GraphicsDevice graphics)
+        public void loadContentInEditor(GraphicsDevice graphics, ContentManager content)
         {
+            //particleRenderer = new ParticleRenderer();
+            Rt = new RenderTarget2D(graphics, graphics.Viewport.Width, graphics.Viewport.Height);
+
             foreach (LevelObject lo in loList)
             {
                 if (lo is DrawableLevelObject)
@@ -32,6 +37,14 @@ namespace Silhouette.Engine
                     DrawableLevelObject dlo = (DrawableLevelObject)lo;
                     dlo.loadContentInEditor(graphics);
                 }
+            }
+
+            Effects = new List<EffectObject>();
+
+            foreach (EffectObject eo in Effects)
+            {
+                eo.Initialise();
+                eo.loadContentInEditor(graphics, content);
             }
         }
 
