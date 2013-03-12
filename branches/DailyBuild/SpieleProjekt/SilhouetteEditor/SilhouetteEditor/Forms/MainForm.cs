@@ -368,12 +368,6 @@ namespace SilhouetteEditor.Forms
                 Editor.Default.createCurrentObject(false);
                 Editor.Default.startPositioning();
             }
-            else if (lvi.Tag == "AnimatedObject")
-            {
-                Editor.Default.createAnimatedObject(lvi.Name);
-                Editor.Default.createCurrentObject(false);
-                Editor.Default.startPositioning();
-            }
         }   
 
         private void GameView_Resize(object sender, EventArgs e)
@@ -381,6 +375,10 @@ namespace SilhouetteEditor.Forms
             if(EditorLoop.EditorLoopInstance != null) 
                 EditorLoop.EditorLoopInstance.resizebackbuffer(GameView.Width, GameView.Height);
 
+            if (Editor.Default.level != null)
+            {
+                Editor.Default.level.FlipFlop.InitialiseInEditor(EditorLoop.EditorLoopInstance.GraphicsDevice, EditorLoop.EditorLoopInstance.GraphicsDevice.Viewport.Width, EditorLoop.EditorLoopInstance.GraphicsDevice.Viewport.Height);
+            }
             Camera.updateViewport(GameView.Width, GameView.Height);
         }
 

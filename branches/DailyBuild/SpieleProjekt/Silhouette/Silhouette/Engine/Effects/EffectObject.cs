@@ -54,7 +54,7 @@ namespace Silhouette.Engine.Effects
         public abstract void Initialise();
         public abstract void LoadContent();
         public abstract void Uddate(GameTime gameTime);
-        public virtual void loadContentInEditor(GraphicsDevice graphics) { }
+        public virtual void loadContentInEditor(GraphicsDevice graphics, ContentManager content) { }
 
     }
 }

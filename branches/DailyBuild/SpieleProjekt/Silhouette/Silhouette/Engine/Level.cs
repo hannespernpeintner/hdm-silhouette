@@ -86,6 +86,12 @@ namespace Silhouette.Engine
         public RenderTarget2D[] renderTargets;
         [NonSerialized]
         private RenderTargetFlipFlop _flipFlop;
+
+        public RenderTargetFlipFlop FlipFlop
+        {
+            get { return _flipFlop; }
+            set { _flipFlop = value; }
+        }
         [NonSerialized]
         private KeyboardState keyboardState;
         [NonSerialized]
