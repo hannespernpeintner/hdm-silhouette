@@ -122,6 +122,19 @@ namespace SilhouetteEditor.Forms
             new ManageEvents().ShowDialog();
         }
 
+        private void RunGame(object sender, EventArgs e)
+        {
+            String dir = System.IO.Directory.GetCurrentDirectory();
+            dir = dir.Substring(0, dir.IndexOf("Silhouette"));
+            String targetDir = Path.Combine(dir, "Silhouette\\Silhouette\\bin\\x86\\Debug");
+            String targetExe = Path.Combine(dir, "Silhouette\\Silhouette\\bin\\x86\\Debug\\Silhouette.exe");
+            String levelFile = Path.Combine(dir, "Silhouette\\Silhouette\\bin\\x86\\Debug", "temp");
+            Editor.Default.levelFileName = levelFile;
+            Editor.Default.SaveLevel(levelFile);
+
+            System.Diagnostics.Process.Start(targetExe, "--loadlevel temp --novideo");
+        }
+
         //---> TreeView-Steuerung <---//
 
         public void UpdateTreeView()
