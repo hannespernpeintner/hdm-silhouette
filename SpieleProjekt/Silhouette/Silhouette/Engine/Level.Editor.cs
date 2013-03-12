@@ -28,9 +28,11 @@ namespace Silhouette.Engine
 {
     public partial class Level
     {
-        public void InitializeInEditor(SpriteBatch spriteBatch, float viewportWidth, float viewportHeight)
+        public void InitializeInEditor(GraphicsDevice graphics, SpriteBatch spriteBatch, float viewportWidth, float viewportHeight)
         {
             this.spriteBatch = spriteBatch;
+            _flipFlop = new RenderTargetFlipFlop(ref spriteBatch);
+            _flipFlop.InitialiseInEditor(graphics, viewportWidth, viewportHeight);
             _Gravitation = new Vector2(0.0f, 9.8f);
             Physics = new World(_Gravitation);
             debugView = new DebugViewXNA(Level.Physics);
@@ -45,13 +47,14 @@ namespace Silhouette.Engine
             }
         }
 
-        public void LoadContentInEditor(GraphicsDevice graphics)
+        public void LoadContentInEditor(GraphicsDevice graphics, ContentManager content)
         {
+            EffectManager.loadEffectsInEditor(graphics, content);
             proj = Matrix.CreateOrthographicOffCenter(0, GameSettings.Default.resolutionWidth / PixelPerMeter, GameSettings.Default.resolutionHeight / PixelPerMeter, 0, 0, 1);
-
             foreach (Layer l in layerList)
             {
-                l.loadContentInEditor(graphics);
+                l.loadContentInEditor(graphics, content);
+                //l.loadLayerInEditor();
             }
         }
 
@@ -60,14 +63,14 @@ namespace Silhouette.Engine
             Physics.Step(Math.Min((float)gameTime.ElapsedGameTime.TotalMilliseconds * 0.001f, (1f / 30f)));
         }
 
-        public void DrawInEditor()
+        public void DrawInEditor(GraphicsDevice graphics, int treeviewOffset)
         {
             if (!isVisible)
                 return;
 
             if (!GraphicsEnabled)
             {
-                foreach (Layer l in layerList)
+                /*foreach (Layer l in layerList)
                 {
                     Vector2 oldCameraPosition = Camera.Position;
                     Camera.Position *= l.ScrollSpeed;
@@ -75,7 +78,17 @@ namespace Silhouette.Engine
                     l.drawInEditor(spriteBatch);
                     spriteBatch.End();
                     Camera.Position = oldCameraPosition;
-                }
+                }*/
+                _flipFlop.DrawInEditor(layerList);
+                graphics.SetRenderTarget(null);
+                graphics.Clear(Color.White);
+                spriteBatch.Begin();
+
+                spriteBatch.Draw(_flipFlop.Result, Vector2.Zero, Color.White);
+                Primitives.Instance.drawBoxFilled(spriteBatch, new Rectangle(0, 0, GameSettings.Default.resolutionWidth, 96), Color.Black);
+                Primitives.Instance.drawBoxFilled(spriteBatch, new Rectangle(0, GameSettings.Default.resolutionHeight - 96, GameSettings.Default.resolutionWidth, 96), Color.Black);
+
+                spriteBatch.End();
             }
         }
 

@@ -66,6 +66,8 @@ namespace Silhouette.Engine
             set { _spriteBatch = value; }
         }
 
+        private GraphicsDevice _graphics;
+
         public RenderTargetFlipFlop(ref SpriteBatch spriteBatch)
         {
             Batch = spriteBatch;
@@ -81,6 +83,17 @@ namespace Silhouette.Engine
             SourceTarget = Target0;
             DestTarget = Target1;
         }
+        public void InitialiseInEditor(GraphicsDevice graphics, float viewportWidth, float viewportHeight)
+        {
+            _graphics = graphics;
+            Target0 = new RenderTarget2D(graphics, (int)viewportWidth, (int)viewportHeight);
+            Target1 = new RenderTarget2D(graphics, (int)viewportWidth, (int)viewportHeight);
+            Target2 = new RenderTarget2D(graphics, (int)viewportWidth, (int)viewportHeight);
+
+            Result = new RenderTarget2D(graphics, (int)viewportWidth, (int)viewportHeight);
+            SourceTarget = Target0;
+            DestTarget = Target1;
+        }
 
         public void Draw(List<Layer> layerList)
         {
@@ -89,6 +102,14 @@ namespace Silhouette.Engine
                 Draw(l);
             }
             DrawToResultTarget(layerList);
+        }
+        public void DrawInEditor(List<Layer> layerList)
+        {
+            foreach (Layer l in layerList)
+            {
+                DrawInEditor(l);
+            }
+            DrawInEditorToResultTarget(layerList);
         }
 
         private void Draw(Layer l)
@@ -100,6 +121,18 @@ namespace Silhouette.Engine
             GameLoop.gameInstance.GraphicsDevice.Clear(Color.Transparent);
             Batch.Begin(SpriteSortMode.Deferred, null, null, null, null, null, Camera.matrix);
             l.drawLayer(Batch);
+            Batch.End();
+            Camera.Position = oldCameraPosition;
+        }
+        private void DrawInEditor(Layer l)
+        {
+            Vector2 oldCameraPosition = Camera.Position;
+            Camera.Position *= l.ScrollSpeed;
+
+            _graphics.SetRenderTarget(l.Rt);
+            _graphics.Clear(Color.Transparent);
+            Batch.Begin(SpriteSortMode.Deferred, null, null, null, null, null, Camera.matrix);
+            l.drawInEditor(Batch);
             Batch.End();
             Camera.Position = oldCameraPosition;
         }
@@ -126,6 +159,28 @@ namespace Silhouette.Engine
             GameLoop.gameInstance.GraphicsDevice.Clear(Color.Transparent);
         }
 
+        private void FlipTargetInEditor()
+        {
+            if (DestTarget == Target0)
+            {
+                SourceTarget = Target0;
+                DestTarget = Target1;
+            }
+            else if (DestTarget == Target1)
+            {
+                SourceTarget = Target1;
+                DestTarget = Target2;
+            }
+            else if (DestTarget == Target2)
+            {
+                SourceTarget = Target2;
+                DestTarget = Target0;
+            }
+
+            _graphics.SetRenderTarget(DestTarget);
+            _graphics.Clear(Color.Transparent);
+        }
+
         private void DrawToResultTarget(List<Layer> layerList)
         {
             FlipTarget();
@@ -135,7 +190,7 @@ namespace Silhouette.Engine
                 Batch.Draw(l.Rt, Vector2.Zero, Color.White);
                 Batch.End();
 
-                
+
                 foreach (EffectObject eo in l.Effects)
                 {
                     FlipTarget();
@@ -145,7 +200,7 @@ namespace Silhouette.Engine
                 }
             }
 
-            
+
             FlipTarget();
             GameLoop.gameInstance.GraphicsDevice.Clear(Color.Transparent);
             Batch.Begin(SpriteSortMode.Deferred, null, null, null, null, EffectManager.Godrays());
@@ -165,6 +220,61 @@ namespace Silhouette.Engine
             GameLoop.gameInstance.GraphicsDevice.SetRenderTarget(Result);
 
             Batch.Begin(SpriteSortMode.Deferred, null, null, null, null, EffectManager.ColorChange());
+            Batch.Draw(DestTarget, Vector2.Zero, Color.White);
+            Batch.End();
+
+            /*Batch.Begin(SpriteSortMode.Deferred, null, null, null, null, EffectManager.ColorChange());
+            Batch.Draw(Target2, Vector2.Zero, Color.White);
+            Batch.End();*/
+
+        }
+        private void DrawInEditorToResultTarget(List<Layer> layerList)
+        {
+            FlipTargetInEditor();
+            foreach (Layer l in layerList)
+            {
+                if (l.Rt == null)
+                {
+                    Console.WriteLine("Rendertarget is null at Layer " + l.name);
+                    continue;
+                }
+                Batch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, null, null, null, l.getShaderByType(l.shaderType));
+                Batch.Draw(l.Rt, Vector2.Zero, Color.White);
+                Batch.End();
+
+                if (l.Effects == null)
+                {
+                    continue;
+                }
+                foreach (EffectObject eo in l.Effects)
+                {
+                    FlipTargetInEditor();
+                    Batch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, null, null, null, eo.Effect);
+                    Batch.Draw(SourceTarget, Vector2.Zero, Color.White);
+                    Batch.End();
+                }
+            }
+
+
+            FlipTargetInEditor();
+            _graphics.Clear(Color.Transparent);
+            Batch.Begin(SpriteSortMode.Deferred, null, null, null, null, EffectManager.GodraysInEditor(_graphics));
+            Batch.Draw(SourceTarget, Vector2.Zero, Color.White);
+            Batch.End();
+
+            FlipTargetInEditor();
+            Batch.Begin(SpriteSortMode.Deferred, null, null, null, null, EffectManager.VignettenBlur());
+            Batch.Draw(SourceTarget, Vector2.Zero, Color.White);
+            Batch.End();
+
+            FlipTargetInEditor();
+            Batch.Begin(SpriteSortMode.Deferred, null, null, null, null, EffectManager.BloomInEditor(_graphics));
+            Batch.Draw(SourceTarget, Vector2.Zero, Color.White);
+            Batch.End();
+
+            _graphics.SetRenderTarget(Result);
+
+            Batch.Begin(SpriteSortMode.Deferred, null, null, null, null, null);
             Batch.Draw(DestTarget, Vector2.Zero, Color.White);
             Batch.End();
 

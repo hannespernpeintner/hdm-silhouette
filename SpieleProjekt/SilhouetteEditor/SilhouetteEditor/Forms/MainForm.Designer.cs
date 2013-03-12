@@ -72,17 +72,10 @@ namespace SilhouetteEditor.Forms
             this.circleCollisionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pathCollisionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.PhysicsButton = new System.Windows.Forms.ToolStripDropDownButton();
+            this.saveStateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.particleObjectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.JointButton = new System.Windows.Forms.ToolStripDropDownButton();
-            this.RevoluteJointButton = new System.Windows.Forms.ToolStripMenuItem();
-            this.DistanceJointButton = new System.Windows.Forms.ToolStripMenuItem();
-            this.PrismaticJointButton = new System.Windows.Forms.ToolStripMenuItem();
-            this.GearJointButton = new System.Windows.Forms.ToolStripMenuItem();
-            this.PulleyJointButton = new System.Windows.Forms.ToolStripMenuItem();
-            this.RopeJointButton = new System.Windows.Forms.ToolStripMenuItem();
             this.soundObjectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.EventButton = new System.Windows.Forms.ToolStripDropDownButton();
-            this.GameScaleButton = new System.Windows.Forms.ToolStripButton();
             this.objectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.moveRotateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.changeVisibilityToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -102,21 +95,29 @@ namespace SilhouetteEditor.Forms
             this.deathToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.loadLevelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cameraToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.JointButton = new System.Windows.Forms.ToolStripDropDownButton();
+            this.RevoluteJointButton = new System.Windows.Forms.ToolStripMenuItem();
+            this.DistanceJointButton = new System.Windows.Forms.ToolStripMenuItem();
+            this.PrismaticJointButton = new System.Windows.Forms.ToolStripMenuItem();
+            this.GearJointButton = new System.Windows.Forms.ToolStripMenuItem();
+            this.PulleyJointButton = new System.Windows.Forms.ToolStripMenuItem();
+            this.RopeJointButton = new System.Windows.Forms.ToolStripMenuItem();
+            this.GameScaleButton = new System.Windows.Forms.ToolStripButton();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.propertyGrid1 = new System.Windows.Forms.PropertyGrid();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.TextureView = new System.Windows.Forms.ListView();
-            this.TextureViewAnimations = new System.Windows.Forms.ListView();
             this.ImageList32 = new System.Windows.Forms.ImageList(this.components);
-            this.ImageListAnimations32 = new System.Windows.Forms.ImageList(this.components);
             this.BrowseButton = new System.Windows.Forms.Button();
-            this.tabPageAnimations = new System.Windows.Forms.TabPage();
-            this.BrowseButtonAnimations = new System.Windows.Forms.Button();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.BrowseButton2 = new System.Windows.Forms.Button();
             this.InteractiveView = new System.Windows.Forms.ListView();
             this.ImageListInteractive32 = new System.Windows.Forms.ImageList(this.components);
+            this.tabPageAnimations = new System.Windows.Forms.TabPage();
+            this.TextureViewAnimations = new System.Windows.Forms.ListView();
+            this.ImageListAnimations32 = new System.Windows.Forms.ImageList(this.components);
+            this.BrowseButtonAnimations = new System.Windows.Forms.Button();
             this.GameView = new System.Windows.Forms.PictureBox();
             this.LevelContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.addLayerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -138,7 +139,6 @@ namespace SilhouetteEditor.Forms
             this.deleteToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.addObjectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.saveStateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.StatusBar.SuspendLayout();
             this.MenuBar.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -240,7 +240,7 @@ namespace SilhouetteEditor.Forms
             this.helpToolStripMenuItem});
             this.MenuBar.Location = new System.Drawing.Point(0, 0);
             this.MenuBar.Name = "MenuBar";
-            this.MenuBar.Size = new System.Drawing.Size(1256, 24);
+            this.MenuBar.Size = new System.Drawing.Size(1256, 26);
             this.MenuBar.TabIndex = 1;
             this.MenuBar.Text = "MenuBar";
             // 
@@ -254,7 +254,7 @@ namespace SilhouetteEditor.Forms
             this.toolStripSeparator1,
             this.exitToolStripMenuItem});
             this.dateiToolStripMenuItem.Name = "dateiToolStripMenuItem";
-            this.dateiToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
+            this.dateiToolStripMenuItem.Size = new System.Drawing.Size(37, 22);
             this.dateiToolStripMenuItem.Text = "File";
             // 
             // newToolStripMenuItem
@@ -302,7 +302,7 @@ namespace SilhouetteEditor.Forms
             this.ansichtToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.eventManagerToolStripMenuItem});
             this.ansichtToolStripMenuItem.Name = "ansichtToolStripMenuItem";
-            this.ansichtToolStripMenuItem.Size = new System.Drawing.Size(48, 20);
+            this.ansichtToolStripMenuItem.Size = new System.Drawing.Size(48, 22);
             this.ansichtToolStripMenuItem.Text = "Tools";
             // 
             // eventManagerToolStripMenuItem
@@ -315,7 +315,7 @@ namespace SilhouetteEditor.Forms
             // runToolStripMenuItem
             // 
             this.runToolStripMenuItem.Name = "runToolStripMenuItem";
-            this.runToolStripMenuItem.Size = new System.Drawing.Size(40, 20);
+            this.runToolStripMenuItem.Size = new System.Drawing.Size(32, 19);
             this.runToolStripMenuItem.Text = "Run";
             this.runToolStripMenuItem.Click += new System.EventHandler(this.RunGame);
             // 
@@ -325,7 +325,7 @@ namespace SilhouetteEditor.Forms
             this.aboutToolStripMenuItem,
             this.helpToolStripMenuItem1});
             this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
-            this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
+            this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 22);
             this.helpToolStripMenuItem.Text = "Help";
             // 
             // aboutToolStripMenuItem
@@ -347,7 +347,7 @@ namespace SilhouetteEditor.Forms
             this.splitContainer1.BackColor = System.Drawing.SystemColors.Window;
             this.splitContainer1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer1.Location = new System.Drawing.Point(0, 24);
+            this.splitContainer1.Location = new System.Drawing.Point(0, 26);
             this.splitContainer1.Name = "splitContainer1";
             // 
             // splitContainer1.Panel1
@@ -357,7 +357,7 @@ namespace SilhouetteEditor.Forms
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.GameView);
-            this.splitContainer1.Size = new System.Drawing.Size(1256, 684);
+            this.splitContainer1.Size = new System.Drawing.Size(1256, 682);
             this.splitContainer1.SplitterDistance = 249;
             this.splitContainer1.TabIndex = 2;
             // 
@@ -378,8 +378,8 @@ namespace SilhouetteEditor.Forms
             // splitContainer2.Panel2
             // 
             this.splitContainer2.Panel2.Controls.Add(this.tabControl1);
-            this.splitContainer2.Size = new System.Drawing.Size(249, 684);
-            this.splitContainer2.SplitterDistance = 283;
+            this.splitContainer2.Size = new System.Drawing.Size(249, 682);
+            this.splitContainer2.SplitterDistance = 282;
             this.splitContainer2.TabIndex = 0;
             // 
             // treeView1
@@ -391,7 +391,7 @@ namespace SilhouetteEditor.Forms
             this.treeView1.Location = new System.Drawing.Point(0, 25);
             this.treeView1.Name = "treeView1";
             this.treeView1.ShowLines = false;
-            this.treeView1.Size = new System.Drawing.Size(245, 254);
+            this.treeView1.Size = new System.Drawing.Size(245, 253);
             this.treeView1.TabIndex = 1;
             this.treeView1.AfterLabelEdit += new System.Windows.Forms.NodeLabelEditEventHandler(this.treeView1_AfterLabelEdit);
             this.treeView1.AfterCheck += new System.Windows.Forms.TreeViewEventHandler(this.treeView1_AfterCheck);
@@ -441,17 +441,6 @@ namespace SilhouetteEditor.Forms
             this.DeleteLayerButton.Text = "Delete Layer";
             this.DeleteLayerButton.ToolTipText = "Delete Layer";
             this.DeleteLayerButton.Click += new System.EventHandler(this.DeleteLayerButton_Click);
-            // 
-            // GameScaleButton
-            // 
-            this.GameScaleButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.GameScaleButton.Image = global::SilhouetteEditor.Properties.Resource.ApplyGameScale;
-            this.GameScaleButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.GameScaleButton.Name = "GameScaleButton";
-            this.GameScaleButton.Size = new System.Drawing.Size(23, 22);
-            this.GameScaleButton.Text = "Set Zoom to ingame zoom";
-            this.GameScaleButton.ToolTipText = "Set Zoom to ingame zoom";
-            this.GameScaleButton.Click += new System.EventHandler(this.GameScaleButton_Click);
             // 
             // toolStripSeparator2
             // 
@@ -542,17 +531,24 @@ namespace SilhouetteEditor.Forms
             this.PhysicsButton.Text = "toolStripDropDownButton3";
             this.PhysicsButton.ToolTipText = "Add Objects";
             // 
+            // saveStateToolStripMenuItem
+            // 
+            this.saveStateToolStripMenuItem.Name = "saveStateToolStripMenuItem";
+            this.saveStateToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+            this.saveStateToolStripMenuItem.Text = "SaveState";
+            this.saveStateToolStripMenuItem.Click += new System.EventHandler(this.saveStateToolStripMenuItem_Click);
+            // 
             // particleObjectToolStripMenuItem
             // 
             this.particleObjectToolStripMenuItem.Name = "particleObjectToolStripMenuItem";
-            this.particleObjectToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.particleObjectToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
             this.particleObjectToolStripMenuItem.Text = "ParticleObject";
             this.particleObjectToolStripMenuItem.Click += new System.EventHandler(this.particleObjectToolStripMenuItem_Click);
             // 
             // soundObjectToolStripMenuItem
             // 
             this.soundObjectToolStripMenuItem.Name = "soundObjectToolStripMenuItem";
-            this.soundObjectToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.soundObjectToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
             this.soundObjectToolStripMenuItem.Text = "SoundObject";
             this.soundObjectToolStripMenuItem.Click += new System.EventHandler(this.soundObjectToolStripMenuItem_Click);
             // 
@@ -574,30 +570,13 @@ namespace SilhouetteEditor.Forms
             this.EventButton.Text = "toolStripDropDownButton1";
             this.EventButton.ToolTipText = "Add Event";
             // 
-            // JointButton
-            // 
-            this.JointButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.JointButton.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.RevoluteJointButton,
-            this.DistanceJointButton,
-            this.PrismaticJointButton,
-            this.GearJointButton,
-            this.PulleyJointButton,
-            this.RopeJointButton});
-            this.JointButton.Image = global::SilhouetteEditor.Properties.Resource.AddEvent;
-            this.JointButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.JointButton.Name = "JointButton";
-            this.JointButton.Size = new System.Drawing.Size(29, 22);
-            this.JointButton.Text = "toolStripDropDownButton2";
-            this.JointButton.ToolTipText = "Add Joint";
-            // 
             // objectToolStripMenuItem
             // 
             this.objectToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.moveRotateToolStripMenuItem,
             this.changeVisibilityToolStripMenuItem});
             this.objectToolStripMenuItem.Name = "objectToolStripMenuItem";
-            this.objectToolStripMenuItem.Size = new System.Drawing.Size(115, 22);
+            this.objectToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
             this.objectToolStripMenuItem.Text = "Object";
             // 
             // moveRotateToolStripMenuItem
@@ -620,7 +599,7 @@ namespace SilhouetteEditor.Forms
             this.changeBodyTypeToolStripMenuItem,
             this.applyForceToolStripMenuItem});
             this.physicToolStripMenuItem.Name = "physicToolStripMenuItem";
-            this.physicToolStripMenuItem.Size = new System.Drawing.Size(115, 22);
+            this.physicToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
             this.physicToolStripMenuItem.Text = "Physic";
             // 
             // changeBodyTypeToolStripMenuItem
@@ -648,7 +627,7 @@ namespace SilhouetteEditor.Forms
             this.setVolumeToolStripMenuItem,
             this.reverbToolStripMenuItem});
             this.audioToolStripMenuItem.Name = "audioToolStripMenuItem";
-            this.audioToolStripMenuItem.Size = new System.Drawing.Size(115, 22);
+            this.audioToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
             this.audioToolStripMenuItem.Text = "Audio";
             // 
             // fadeToolStripMenuItem
@@ -705,7 +684,7 @@ namespace SilhouetteEditor.Forms
             this.videoToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.playToolStripMenuItem});
             this.videoToolStripMenuItem.Name = "videoToolStripMenuItem";
-            this.videoToolStripMenuItem.Size = new System.Drawing.Size(115, 22);
+            this.videoToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
             this.videoToolStripMenuItem.Text = "Video";
             // 
             // playToolStripMenuItem
@@ -718,65 +697,93 @@ namespace SilhouetteEditor.Forms
             // deathToolStripMenuItem
             // 
             this.deathToolStripMenuItem.Name = "deathToolStripMenuItem";
-            this.deathToolStripMenuItem.Size = new System.Drawing.Size(115, 22);
+            this.deathToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
             this.deathToolStripMenuItem.Text = "Death";
             this.deathToolStripMenuItem.Click += new System.EventHandler(this.deathToolStripMenuItem_Click);
             // 
             // loadLevelToolStripMenuItem
             // 
             this.loadLevelToolStripMenuItem.Name = "loadLevelToolStripMenuItem";
-            this.loadLevelToolStripMenuItem.Size = new System.Drawing.Size(115, 22);
+            this.loadLevelToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
             this.loadLevelToolStripMenuItem.Text = "LoadLevel";
             this.loadLevelToolStripMenuItem.Click += new System.EventHandler(this.loadLevelToolStripMenuItem_Click);
             // 
             // cameraToolStripMenuItem
             // 
             this.cameraToolStripMenuItem.Name = "cameraToolStripMenuItem";
-            this.cameraToolStripMenuItem.Size = new System.Drawing.Size(115, 22);
+            this.cameraToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
             this.cameraToolStripMenuItem.Text = "Camera";
             this.cameraToolStripMenuItem.Click += new System.EventHandler(this.cameraToolStripMenuItem_Click);
             // 
-            // revoluteJointToolStripMenuItem
+            // JointButton
+            // 
+            this.JointButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.JointButton.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.RevoluteJointButton,
+            this.DistanceJointButton,
+            this.PrismaticJointButton,
+            this.GearJointButton,
+            this.PulleyJointButton,
+            this.RopeJointButton});
+            this.JointButton.Image = global::SilhouetteEditor.Properties.Resource.AddEvent;
+            this.JointButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.JointButton.Name = "JointButton";
+            this.JointButton.Size = new System.Drawing.Size(29, 22);
+            this.JointButton.Text = "toolStripDropDownButton2";
+            this.JointButton.ToolTipText = "Add Joint";
+            // 
+            // RevoluteJointButton
             // 
             this.RevoluteJointButton.Name = "RevoluteJointButton";
-            this.RevoluteJointButton.Size = new System.Drawing.Size(115, 22);
+            this.RevoluteJointButton.Size = new System.Drawing.Size(123, 22);
             this.RevoluteJointButton.Text = "Revolute";
             this.RevoluteJointButton.Click += new System.EventHandler(this.revoluteJointObjectToolStripMenuItem_Click);
             // 
-            // revoluteJointToolStripMenuItem
+            // DistanceJointButton
             // 
             this.DistanceJointButton.Name = "DistanceJointButton";
-            this.DistanceJointButton.Size = new System.Drawing.Size(115, 22);
+            this.DistanceJointButton.Size = new System.Drawing.Size(123, 22);
             this.DistanceJointButton.Text = "Distance";
             this.DistanceJointButton.Click += new System.EventHandler(this.distanceJointObjectToolStripMenuItem_Click);
             // 
-            // prismaticJointToolStripMenuItem
+            // PrismaticJointButton
             // 
             this.PrismaticJointButton.Name = "PrismaticJointButton";
-            this.PrismaticJointButton.Size = new System.Drawing.Size(115, 22);
+            this.PrismaticJointButton.Size = new System.Drawing.Size(123, 22);
             this.PrismaticJointButton.Text = "Prismatic";
             this.PrismaticJointButton.Click += new System.EventHandler(this.prismaticJointObjectToolStripMenuItem_Click);
             // 
-            // gearJointToolStripMenuItem
+            // GearJointButton
             // 
             this.GearJointButton.Name = "GearJointButton";
-            this.GearJointButton.Size = new System.Drawing.Size(115, 22);
+            this.GearJointButton.Size = new System.Drawing.Size(123, 22);
             this.GearJointButton.Text = "Gear";
             this.GearJointButton.Click += new System.EventHandler(this.gearJointObjectToolStripMenuItem_Click);
             // 
-            // pulleyJointToolStripMenuItem
+            // PulleyJointButton
             // 
             this.PulleyJointButton.Name = "PulleyJointButton";
-            this.PulleyJointButton.Size = new System.Drawing.Size(115, 22);
+            this.PulleyJointButton.Size = new System.Drawing.Size(123, 22);
             this.PulleyJointButton.Text = "Pulley";
             this.PulleyJointButton.Click += new System.EventHandler(this.pulleyJointObjectToolStripMenuItem_Click);
             // 
-            // ropeJointToolStripMenuItem
+            // RopeJointButton
             // 
             this.RopeJointButton.Name = "RopeJointButton";
-            this.RopeJointButton.Size = new System.Drawing.Size(115, 22);
+            this.RopeJointButton.Size = new System.Drawing.Size(123, 22);
             this.RopeJointButton.Text = "Rope";
             this.RopeJointButton.Click += new System.EventHandler(this.ropeJointObjectToolStripMenuItem_Click);
+            // 
+            // GameScaleButton
+            // 
+            this.GameScaleButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.GameScaleButton.Image = global::SilhouetteEditor.Properties.Resource.ApplyGameScale;
+            this.GameScaleButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.GameScaleButton.Name = "GameScaleButton";
+            this.GameScaleButton.Size = new System.Drawing.Size(23, 22);
+            this.GameScaleButton.Text = "Set Zoom to ingame zoom";
+            this.GameScaleButton.ToolTipText = "Set Zoom to ingame zoom";
+            this.GameScaleButton.Click += new System.EventHandler(this.GameScaleButton_Click);
             // 
             // tabControl1
             // 
@@ -789,7 +796,7 @@ namespace SilhouetteEditor.Forms
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(245, 393);
+            this.tabControl1.Size = new System.Drawing.Size(245, 392);
             this.tabControl1.TabIndex = 0;
             // 
             // tabPage1
@@ -798,7 +805,7 @@ namespace SilhouetteEditor.Forms
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(237, 367);
+            this.tabPage1.Size = new System.Drawing.Size(237, 366);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Attributes";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -811,7 +818,7 @@ namespace SilhouetteEditor.Forms
             this.propertyGrid1.Name = "propertyGrid1";
             this.propertyGrid1.PropertySort = System.Windows.Forms.PropertySort.Categorized;
             this.propertyGrid1.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.propertyGrid1.Size = new System.Drawing.Size(231, 361);
+            this.propertyGrid1.Size = new System.Drawing.Size(231, 360);
             this.propertyGrid1.TabIndex = 0;
             this.propertyGrid1.TabStop = false;
             this.propertyGrid1.ToolbarVisible = false;
@@ -828,18 +835,6 @@ namespace SilhouetteEditor.Forms
             this.tabPage2.Text = "Textures";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
-            // tabPage2.5 Animations
-            // 
-            this.tabPageAnimations.Controls.Add(this.TextureViewAnimations);
-            this.tabPageAnimations.Controls.Add(this.BrowseButtonAnimations);
-            this.tabPageAnimations.Location = new System.Drawing.Point(4, 22);
-            this.tabPageAnimations.Name = "tabPageAnimations";
-            this.tabPageAnimations.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageAnimations.Size = new System.Drawing.Size(237, 367);
-            this.tabPageAnimations.TabIndex = 3;
-            this.tabPageAnimations.Text = "Animations";
-            this.tabPageAnimations.UseVisualStyleBackColor = true;
-            // 
             // TextureView
             // 
             this.TextureView.AllowDrop = true;
@@ -854,31 +849,11 @@ namespace SilhouetteEditor.Forms
             this.TextureView.DragOver += new System.Windows.Forms.DragEventHandler(this.TextureView_DragOver);
             this.TextureView.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.TextureView_MouseDoubleClick);
             // 
-            // TextureView
-            // 
-            this.TextureViewAnimations.AllowDrop = true;
-            this.TextureViewAnimations.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.TextureViewAnimations.LargeImageList = this.ImageListAnimations32;
-            this.TextureViewAnimations.Location = new System.Drawing.Point(3, 3);
-            this.TextureViewAnimations.Name = "TextureViewAnimations";
-            this.TextureViewAnimations.Size = new System.Drawing.Size(231, 338);
-            this.TextureViewAnimations.TabIndex = 3;
-            this.TextureViewAnimations.UseCompatibleStateImageBehavior = false;
-            this.TextureViewAnimations.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(this.TextureViewAnimations_ItemDrag);
-            this.TextureViewAnimations.DragOver += new System.Windows.Forms.DragEventHandler(this.TextureViewAnimations_DragOver);
-            this.TextureViewAnimations.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.TextureViewAnimations_MouseDoubleClick);
-            // 
             // ImageList32
             // 
             this.ImageList32.ColorDepth = System.Windows.Forms.ColorDepth.Depth8Bit;
             this.ImageList32.ImageSize = new System.Drawing.Size(32, 32);
             this.ImageList32.TransparentColor = System.Drawing.Color.Transparent;
-            // 
-            // ImageList32Animations
-            // 
-            this.ImageListAnimations32.ColorDepth = System.Windows.Forms.ColorDepth.Depth8Bit;
-            this.ImageListAnimations32.ImageSize = new System.Drawing.Size(32, 32);
-            this.ImageListAnimations32.TransparentColor = System.Drawing.Color.Transparent;
             // 
             // BrowseButton
             // 
@@ -890,17 +865,6 @@ namespace SilhouetteEditor.Forms
             this.BrowseButton.Text = "Browse...";
             this.BrowseButton.UseVisualStyleBackColor = true;
             this.BrowseButton.Click += new System.EventHandler(this.BrowseButton_Click);
-            // 
-            // BrowseButtonAnimations
-            // 
-            this.BrowseButtonAnimations.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.BrowseButtonAnimations.Location = new System.Drawing.Point(3, 341);
-            this.BrowseButtonAnimations.Name = "BrowseButtonAnimations";
-            this.BrowseButtonAnimations.Size = new System.Drawing.Size(231, 23);
-            this.BrowseButtonAnimations.TabIndex = 0;
-            this.BrowseButtonAnimations.Text = "Browse...";
-            this.BrowseButtonAnimations.UseVisualStyleBackColor = true;
-            this.BrowseButtonAnimations.Click += new System.EventHandler(this.BrowseButtonAnimations_Click);
             // 
             // tabPage3
             // 
@@ -945,6 +909,49 @@ namespace SilhouetteEditor.Forms
             this.ImageListInteractive32.ImageSize = new System.Drawing.Size(32, 32);
             this.ImageListInteractive32.TransparentColor = System.Drawing.Color.Transparent;
             // 
+            // tabPageAnimations
+            // 
+            this.tabPageAnimations.Controls.Add(this.TextureViewAnimations);
+            this.tabPageAnimations.Controls.Add(this.BrowseButtonAnimations);
+            this.tabPageAnimations.Location = new System.Drawing.Point(4, 22);
+            this.tabPageAnimations.Name = "tabPageAnimations";
+            this.tabPageAnimations.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageAnimations.Size = new System.Drawing.Size(237, 367);
+            this.tabPageAnimations.TabIndex = 3;
+            this.tabPageAnimations.Text = "Animations";
+            this.tabPageAnimations.UseVisualStyleBackColor = true;
+            // 
+            // TextureViewAnimations
+            // 
+            this.TextureViewAnimations.AllowDrop = true;
+            this.TextureViewAnimations.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.TextureViewAnimations.LargeImageList = this.ImageListAnimations32;
+            this.TextureViewAnimations.Location = new System.Drawing.Point(3, 3);
+            this.TextureViewAnimations.Name = "TextureViewAnimations";
+            this.TextureViewAnimations.Size = new System.Drawing.Size(231, 338);
+            this.TextureViewAnimations.TabIndex = 3;
+            this.TextureViewAnimations.UseCompatibleStateImageBehavior = false;
+            this.TextureViewAnimations.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(this.TextureViewAnimations_ItemDrag);
+            this.TextureViewAnimations.DragOver += new System.Windows.Forms.DragEventHandler(this.TextureViewAnimations_DragOver);
+            this.TextureViewAnimations.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.TextureViewAnimations_MouseDoubleClick);
+            // 
+            // ImageListAnimations32
+            // 
+            this.ImageListAnimations32.ColorDepth = System.Windows.Forms.ColorDepth.Depth8Bit;
+            this.ImageListAnimations32.ImageSize = new System.Drawing.Size(32, 32);
+            this.ImageListAnimations32.TransparentColor = System.Drawing.Color.Transparent;
+            // 
+            // BrowseButtonAnimations
+            // 
+            this.BrowseButtonAnimations.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.BrowseButtonAnimations.Location = new System.Drawing.Point(3, 341);
+            this.BrowseButtonAnimations.Name = "BrowseButtonAnimations";
+            this.BrowseButtonAnimations.Size = new System.Drawing.Size(231, 23);
+            this.BrowseButtonAnimations.TabIndex = 0;
+            this.BrowseButtonAnimations.Text = "Browse...";
+            this.BrowseButtonAnimations.UseVisualStyleBackColor = true;
+            this.BrowseButtonAnimations.Click += new System.EventHandler(this.BrowseButtonAnimations_Click);
+            // 
             // GameView
             // 
             this.GameView.AllowDrop = true;
@@ -952,9 +959,10 @@ namespace SilhouetteEditor.Forms
             this.GameView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.GameView.Location = new System.Drawing.Point(0, 0);
             this.GameView.Name = "GameView";
-            this.GameView.Size = new System.Drawing.Size(999, 680);
+            this.GameView.Size = new System.Drawing.Size(999, 678);
             this.GameView.TabIndex = 0;
             this.GameView.TabStop = false;
+            //this.GameView.Click += new System.EventHandler(this.GameView_Click);
             this.GameView.DragEnter += new System.Windows.Forms.DragEventHandler(this.GameView_DragEnter);
             this.GameView.MouseEnter += new System.EventHandler(this.GameView_MouseEnter);
             this.GameView.MouseLeave += new System.EventHandler(this.GameView_MouseLeave);
@@ -1105,20 +1113,6 @@ namespace SilhouetteEditor.Forms
             this.addObjectToolStripMenuItem.Size = new System.Drawing.Size(154, 22);
             this.addObjectToolStripMenuItem.Text = "Manage Events";
             this.addObjectToolStripMenuItem.Click += new System.EventHandler(this.addObjectToolStripMenuItem_Click);
-            // 
-            // saveStateToolStripMenuItem
-            // 
-            this.saveStateToolStripMenuItem.Name = "saveStateToolStripMenuItem";
-            this.saveStateToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.saveStateToolStripMenuItem.Text = "SaveState";
-            this.saveStateToolStripMenuItem.Click += new System.EventHandler(this.saveStateToolStripMenuItem_Click);
-            // 
-            // loadLevelToolStripMenuItem
-            // 
-            this.loadLevelToolStripMenuItem.Name = "loadLevelToolStripMenuItem";
-            this.loadLevelToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.loadLevelToolStripMenuItem.Text = "LoadLevel";
-            this.loadLevelToolStripMenuItem.Click += new System.EventHandler(this.loadLevelToolStripMenuItem_Click);
             // 
             // MainForm
             // 

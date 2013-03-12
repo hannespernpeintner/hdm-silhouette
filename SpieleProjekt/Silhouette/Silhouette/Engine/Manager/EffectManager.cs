@@ -6,6 +6,7 @@ using System.IO;
 using System.Collections;
 using Silhouette.Engine.Effects;
 using System.Collections.Generic;
+using Microsoft.Xna.Framework.Content;
 
 namespace Silhouette.Engine.Manager
 {
@@ -55,7 +56,7 @@ namespace Silhouette.Engine.Manager
 
         public static GameTime gameTime;
 
-        public static void loadEffects() 
+        public static void loadEffects()
         {
             AllEffects = new Dictionary<Effects, EffectObject>();
             EffectObject blur = new Blur();
@@ -96,6 +97,47 @@ namespace Silhouette.Engine.Manager
 
             godrays = GameLoop.gameInstance.Content.Load<Effect>("Effects/godrays");
         }
+        public static void loadEffectsInEditor(GraphicsDevice graphics, ContentManager content)
+        {
+            AllEffects = new Dictionary<Effects, EffectObject>();
+            EffectObject blur = new Blur();
+            blur.Initialise();
+            blur.loadContentInEditor(graphics, content);
+            AllEffects.Add(Effects.Blur, blur);
+
+            overallBlur = true;
+            overallVignette = true;
+
+            vignette = content.Load<Texture2D>("Sprites/Overlays/Vignette");
+            graphics.Textures[1] = vignette;
+
+            clouds = content.Load<Texture2D>("Sprites/Overlays/clouds");
+            graphics.Textures[2] = clouds;
+
+            noise = content.Load<Texture2D>("Sprites/Overlays/noise");
+            graphics.Textures[3] = noise;
+
+            blender = content.Load<Effect>("Effects/blender");
+
+            colorChange = content.Load<Effect>("Effects/ColorChange");
+
+            blurrer = content.Load<Effect>("Effects/blurrer");
+            weakBlurrer = content.Load<Effect>("Effects/blurrer");
+            strongBlurrer = content.Load<Effect>("Effects/blurrer");
+
+            bleachBlur = content.Load<Effect>("Effects/BleachBlur");
+            bleachBlur.Parameters["BlurDistance"].SetValue(0.002f);
+
+            bleach = content.Load<Effect>("Effects/bleach");
+            weakBleach = content.Load<Effect>("Effects/bleach");
+            strongBleach = content.Load<Effect>("Effects/bleach");
+
+            bloomer = content.Load<Effect>("Effects/Bloom");
+            vignettenBlur = content.Load<Effect>("Effects/VignettenBlur");
+            water = content.Load<Effect>("Effects/Water");
+
+            godrays = content.Load<Effect>("Effects/godrays");
+        }
 
         public static Effect Blender()
         {
@@ -128,10 +170,27 @@ namespace Silhouette.Engine.Manager
 
         public static Effect Bleach()
         {
-            Player player = GameLoop.gameInstance.playerInstance;
-            //Tom player = GameLoop.gameInstance.playerInstance;
-            float fadeOrange = player.fadeOrange / 1000; // zählen beide von 0 bis 1
-            float fadeBlue = player.fadeBlue / 1000;
+            Player player = null;
+            try
+            {
+                player = GameLoop.gameInstance.playerInstance;
+                //Tom player = GameLoop.gameInstance.playerInstance;
+            }
+            catch (Exception e)
+            { 
+            
+            }
+
+            float fadeOrange = 0;
+            float fadeBlue = 0;
+
+
+            if (player != null)
+            {
+                //Tom player = GameLoop.gameInstance.playerInstance;
+                fadeOrange = player.fadeOrange / 1000; // zählen beide von 0 bis 1
+                fadeBlue = player.fadeBlue / 1000;
+            }
 
             bleach.Parameters["fadeOrange"].SetValue(fadeOrange);
             bleach.Parameters["fadeBlue"].SetValue(fadeBlue);
@@ -142,10 +201,27 @@ namespace Silhouette.Engine.Manager
 
         public static Effect WeakBleach()
         {
-            Player player = GameLoop.gameInstance.playerInstance;
-            //Tom player = GameLoop.gameInstance.playerInstance;
-            float fadeOrange = player.fadeOrange / 1000; // zählen beide von 0 bis 1
-            float fadeBlue = player.fadeBlue / 1000;
+            Player player = null;
+            try
+            {
+                player = GameLoop.gameInstance.playerInstance;
+                //Tom player = GameLoop.gameInstance.playerInstance;
+            }
+            catch (Exception e)
+            {
+
+            }
+
+            float fadeOrange = 0;
+            float fadeBlue = 0;
+
+
+            if (player != null)
+            {
+                //Tom player = GameLoop.gameInstance.playerInstance;
+                fadeOrange = player.fadeOrange / 1000; // zählen beide von 0 bis 1
+                fadeBlue = player.fadeBlue / 1000;
+            }
 
             bleach.Parameters["fadeOrange"].SetValue(fadeOrange);
             bleach.Parameters["fadeBlue"].SetValue(fadeBlue);
@@ -156,10 +232,26 @@ namespace Silhouette.Engine.Manager
 
         public static Effect StrongBleach()
         {
-            Player player = GameLoop.gameInstance.playerInstance;
-            //Tom player = GameLoop.gameInstance.playerInstance;
-            float fadeOrange = player.fadeOrange / 1000; // zählen beide von 0 bis 1
-            float fadeBlue = player.fadeBlue / 1000;
+            Player player = null;
+            try
+            {
+                player = GameLoop.gameInstance.playerInstance;
+                //Tom player = GameLoop.gameInstance.playerInstance;
+            }
+            catch (Exception e)
+            {
+
+            }
+            float fadeOrange = 0;
+            float fadeBlue = 0;
+
+
+            if (player != null)
+            {
+                //Tom player = GameLoop.gameInstance.playerInstance;
+                fadeOrange = player.fadeOrange / 1000; // zählen beide von 0 bis 1
+                fadeBlue = player.fadeBlue / 1000;
+            }
 
             bleach.Parameters["fadeOrange"].SetValue(fadeOrange);
             bleach.Parameters["fadeBlue"].SetValue(fadeBlue);
@@ -183,6 +275,15 @@ namespace Silhouette.Engine.Manager
 
             return bloomer;
         }
+        public static Effect BloomInEditor(GraphicsDevice graphics)
+        {
+            Matrix projection = Matrix.CreateOrthographicOffCenter(0, graphics.Viewport.Width, graphics.Viewport.Height, 0, 0, 1);
+            Matrix halfPixelOffset = Matrix.CreateTranslation(-0.5f, -0.5f, 0);
+
+            bloomer.Parameters["MatrixTransform"].SetValue(halfPixelOffset * projection);
+
+            return bloomer;
+        }
 
         public static Effect Godrays()
         {
@@ -200,7 +301,33 @@ namespace Silhouette.Engine.Manager
             {
                 temp = Math.Sin(0.0015f * gameTime.TotalGameTime.TotalMilliseconds) * 0.01 * (new Random().Next(95, 105) * 0.01f);
                 noiseMove += Math.Sin(0.000005f * gameTime.TotalGameTime.TotalMilliseconds);
-                lightPosX = 10*Math.Sin(gameTime.TotalGameTime.TotalMilliseconds);
+                lightPosX = 10 * Math.Sin(gameTime.TotalGameTime.TotalMilliseconds);
+            }
+
+            godrays.Parameters["Exposure"].SetValue(0.04515f + (float)(temp));
+            godrays.Parameters["NoiseMove"].SetValue((float)noiseMove);
+            godrays.Parameters["LightPositionX"].SetValue((float)lightPosX);
+
+            return godrays;
+        }
+
+        public static Effect GodraysInEditor(GraphicsDevice graphics)
+        {
+            Matrix projection = Matrix.CreateOrthographicOffCenter(0, graphics.Viewport.Width, graphics.Viewport.Height, 0, 0, 1);
+            Matrix halfPixelOffset = Matrix.CreateTranslation(-0.5f, -0.5f, 0);
+
+            godrays.Parameters["MatrixTransform"].SetValue(halfPixelOffset * projection);
+
+
+            // For the rays to change strength slightly (simulating cloud movement)
+            double temp = 0.001;
+            double noiseMove = 0.5f;
+            double lightPosX = 0.5f;
+            if (gameTime != null)
+            {
+                temp = Math.Sin(0.0015f * gameTime.TotalGameTime.TotalMilliseconds) * 0.01 * (new Random().Next(95, 105) * 0.01f);
+                noiseMove += Math.Sin(0.000005f * gameTime.TotalGameTime.TotalMilliseconds);
+                lightPosX = 10 * Math.Sin(gameTime.TotalGameTime.TotalMilliseconds);
             }
 
             godrays.Parameters["Exposure"].SetValue(0.04515f + (float)(temp));
@@ -214,9 +341,13 @@ namespace Silhouette.Engine.Manager
         {
             if (gameTime != null)
             {
-                float temp = (float)Math.Sin((float)gameTime.ElapsedGameTime.TotalMilliseconds* 0.001f);
+                float temp = (float)Math.Sin((float)gameTime.ElapsedGameTime.TotalMilliseconds * 0.001f);
                 //Console.WriteLine(temp);
                 water.Parameters["Time"].SetValue(temp);
+            }
+            else
+            {
+                water.Parameters["Time"].SetValue(0);
             }
             return water;
         }
@@ -230,8 +361,16 @@ namespace Silhouette.Engine.Manager
 
         public static Effect ColorChange()
         {
-            Player player = GameLoop.gameInstance.playerInstance;
-            //Tom player = GameLoop.gameInstance.playerInstance;
+            Player player = null;
+            try
+            {
+                player = GameLoop.gameInstance.playerInstance;
+                //Tom player = GameLoop.gameInstance.playerInstance;
+            }
+            catch (Exception e)
+            {
+
+            }
             float fadeOrange = 0;
             float fadeBlue = 0;
 
@@ -242,7 +381,7 @@ namespace Silhouette.Engine.Manager
                 fadeOrange = player.fadeOrange / 1000; // zählen beide von 0 bis 1
                 fadeBlue = player.fadeBlue / 1000;
             }
-            
+
             float orangeTargetRed = 0f;
             float orangeTargetGreen = -0.32f;
             float orangeTargetBlue = -0.45f;
@@ -261,6 +400,7 @@ namespace Silhouette.Engine.Manager
             }
             return colorChange;
         }
+        
 
         public static void setOverallBlur(bool b)
         {
@@ -276,7 +416,27 @@ namespace Silhouette.Engine.Manager
             EffectManager.gameTime = gameTime;
         }
 
-        
+
+        /*public Effect LoadFromFile(string filename, GraphicsDevice graphics)
+        {
+            Effect effect = new Effect(graphics, byte[0];
+            try
+            {
+                FileStream file = FileManager.LoadConfigFile(filename);
+                if (file != null)
+                {
+                        
+                    file.Close();
+                }
+                else
+                    return null;
+            }
+            catch (IOException e)
+            {
+                return null;
+            }
+            return effect;
+        }*/
 
     }
 }
