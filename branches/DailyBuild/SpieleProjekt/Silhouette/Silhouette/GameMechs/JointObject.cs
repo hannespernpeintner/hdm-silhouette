@@ -166,6 +166,21 @@ namespace Silhouette.GameMechs
                 ((RevoluteJoint)Joint).MotorSpeed = MotorSpeed;
                 ((RevoluteJoint)Joint).MotorEnabled = EnableMotor;
             }
+
+
+            Circle.position = position;
+        }
+
+        public override void transformed()
+        {
+            base.transformed();
+
+            if (Circle == null)
+            {
+                return;
+            }
+
+            Circle.position = position;
         }
 
         public override void Draw(SpriteBatch spriteBatch)
@@ -185,14 +200,13 @@ namespace Silhouette.GameMechs
             color = onHover;
             Circle.drawInEditor(spriteBatch);
 
-
             if (Object1 != null)
             {
-                Primitives.Instance.drawLine(spriteBatch, Object1.origin, Circle.position, color, 5);
+                Primitives.Instance.drawLine(spriteBatch, Object1.position, Circle.position, color, 5);
             }
             if (Object2 != null)
             {
-                Primitives.Instance.drawLine(spriteBatch, Object2.origin, Circle.position, color, 5);
+                Primitives.Instance.drawLine(spriteBatch, Object2.position, Circle.position, color, 5);
             }
         }
 
@@ -240,6 +254,14 @@ namespace Silhouette.GameMechs
             get { return _ratio; }
             set { _ratio = value; }
         }
+        private int _lineWidth;
+        [DisplayName("Width of the ropes"), Category("Joint Data")]
+        [Description("The thickness of the rope.")]
+        public int LineWidth
+        {
+            get { return _lineWidth; }
+            set { _lineWidth = value; }
+        }
 
         private Vector2 _anchorA;
         [DisplayName("Anchor A"), Category("Joint Data")]
@@ -263,9 +285,21 @@ namespace Silhouette.GameMechs
         {
             color = Constants.ColorPrimitives;
             Ratio = 1.0f;
+            LineWidth = 8;
             AnchorA = Vector2.Zero;
             AnchorB = Vector2.Zero;
         }
+
+        [NonSerialized]
+        private Vector2 tempAnchorA;
+
+        [NonSerialized]
+        private Vector2 tempAnchorB;
+        [NonSerialized]
+        private Vector2 tempAnchorA2;
+
+        [NonSerialized]
+        private Vector2 tempAnchorB2;
 
         public override void Initialise()
         {
@@ -288,15 +322,39 @@ namespace Silhouette.GameMechs
                 if (Object2.fixtures != null)
                     Object2.fixtures[0].Body.BodyType = BodyType.Dynamic;*/
 
-                Vector2 anchorA = new Vector2(Object1.fixture.Body.WorldCenter.X, this.position.Y / Level.PixelPerMeter);
-                Vector2 anchorB = new Vector2(Object2.fixture.Body.WorldCenter.X, this.position.Y / Level.PixelPerMeter);
-                Joint = JointFactory.CreatePulleyJoint(Level.Physics, Object1.fixture.Body, Object2.fixture.Body, anchorA, anchorB, AnchorA, AnchorB, Ratio);
+                tempAnchorA = new Vector2(Object1.fixture.Body.WorldCenter.X, this.position.Y / Level.PixelPerMeter);
+                tempAnchorB = new Vector2(Object2.fixture.Body.WorldCenter.X, this.position.Y / Level.PixelPerMeter);
+                tempAnchorA2 = new Vector2(Object1.position.X, this.position.Y );
+                tempAnchorB2 = new Vector2(Object2.position.X, this.position.Y );
+                Joint = JointFactory.CreatePulleyJoint(Level.Physics, Object1.fixture.Body, Object2.fixture.Body, tempAnchorA, tempAnchorB, AnchorA, AnchorB, Ratio);
                 Joint.CollideConnected = true;
             }
         }
 
+        public override void transformed()
+        {
+            base.transformed();
+
+            if (Circle == null)
+            {
+                return;
+            }
+
+            Circle.position = position;
+        }
+
         public override void Draw(SpriteBatch spriteBatch)
         {
+            if(Object1 != null && Object2 != null && Joint != null)
+            {
+                Vector2 anchorA = new Vector2(Object1.fixture.Body.WorldCenter.X, this.position.Y / Level.PixelPerMeter);
+                Vector2 anchorB = new Vector2(Object2.fixture.Body.WorldCenter.X, this.position.Y / Level.PixelPerMeter);
+
+                Primitives.Instance.drawLine(spriteBatch, Object1.position, tempAnchorA2, Color.Black, LineWidth);
+                Primitives.Instance.drawLine(spriteBatch, Object2.position, tempAnchorB2, Color.Black, LineWidth);
+                Primitives.Instance.drawLine(spriteBatch, tempAnchorA2, tempAnchorB2, Color.Black, LineWidth);
+
+            }
         }
 
         //---> Editor-Funktionalität <---//
@@ -312,14 +370,15 @@ namespace Silhouette.GameMechs
             color = onHover;
             Circle.drawInEditor(spriteBatch);
 
-
             if (Object1 != null)
             {
-                Primitives.Instance.drawLine(spriteBatch, Object1.origin, Circle.position, color, 5);
+                tempAnchorA = new Vector2(Object1.position.X, this.position.Y / Level.PixelPerMeter);
+                Primitives.Instance.drawLine(spriteBatch, Object1.position, tempAnchorA, color, LineWidth);
             }
             if (Object2 != null)
             {
-                Primitives.Instance.drawLine(spriteBatch, Object2.origin, Circle.position, color, 5);
+                tempAnchorB = new Vector2(Object2.position.X, this.position.Y / Level.PixelPerMeter);
+                Primitives.Instance.drawLine(spriteBatch, Object2.position, tempAnchorB, color, LineWidth);
             }
         }
 
@@ -423,11 +482,26 @@ namespace Silhouette.GameMechs
                 ((DistanceJoint)Joint).CollideConnected = true;
                 ((DistanceJoint)Joint).Frequency = FrequencyHz;
             }
+
+            Circle.position = position;
+        }
+
+        public override void transformed()
+        {
+            base.transformed();
+
+            if (Circle == null)
+            {
+                return;
+            }
+
+            Circle.position = position;
         }
 
         public override void Draw(SpriteBatch spriteBatch)
         {
         }
+
 
         //---> Editor-Funktionalität <---//
 
@@ -444,11 +518,11 @@ namespace Silhouette.GameMechs
 
             if (Object1 != null)
             {
-                Primitives.Instance.drawLine(spriteBatch, Object1.origin, Circle.position, color, 5);
+                Primitives.Instance.drawLine(spriteBatch, Object1.position, Circle.position, color, 5);
             }
             if (Object2 != null)
             {
-                Primitives.Instance.drawLine(spriteBatch, Object2.origin, Circle.position, color, 5);
+                Primitives.Instance.drawLine(spriteBatch, Object2.position, Circle.position, color, 5);
             }
             
         }
@@ -568,6 +642,17 @@ namespace Silhouette.GameMechs
                 ((PrismaticJoint)Joint).MotorSpeed = MotorSpeed;
             }
         }
+        public override void transformed()
+        {
+            base.transformed();
+
+            if (Circle == null)
+            {
+                return;
+            }
+
+            Circle.position = position;
+        }
 
         public override void Draw(SpriteBatch spriteBatch)
         {
@@ -586,14 +671,13 @@ namespace Silhouette.GameMechs
             color = onHover;
             Circle.drawInEditor(spriteBatch);
 
-
             if (Object1 != null)
             {
-                Primitives.Instance.drawLine(spriteBatch, Object1.origin, Circle.position, color, 5);
+                Primitives.Instance.drawLine(spriteBatch, Object1.position, Circle.position, color, 5);
             }
             if (Object2 != null)
             {
-                Primitives.Instance.drawLine(spriteBatch, Object2.origin, Circle.position, color, 5);
+                Primitives.Instance.drawLine(spriteBatch, Object2.position, Circle.position, color, 5);
             }
         }
 
@@ -674,8 +758,46 @@ namespace Silhouette.GameMechs
         {
             if (Joint == null)
             {
-                Joint = JointFactory.CreateGearJoint(Level.Physics, Joint1.Joint, Joint2.Joint, Ratio);
+                try
+                {
+                    // A GearJoint can only have two revolutes or a revolute and a prismatic joint
+                    if (Joint1.GetType() == typeof(PrismaticJointObject))
+                    {
+                        if (Joint2.GetType() == typeof(RevoluteJointObject))
+                        {
+                            Joint = JointFactory.CreateGearJoint(Level.Physics, Joint1.Joint, Joint2.Joint, Ratio);
+                        }
+                    }
+                    else if (Joint1.GetType() == typeof(RevoluteJointObject))
+                    {
+                        if (Joint2.GetType() == typeof(RevoluteJointObject) || Joint2.GetType() == typeof(PrismaticJointObject))
+                        {
+                            Joint = JointFactory.CreateGearJoint(Level.Physics, Joint1.Joint, Joint2.Joint, Ratio);
+                        }
+                    }
+                }
+                catch (Exception e)
+                {
+                    #if DEBUG
+                        Console.WriteLine("OMG - Wasn't able to create Gear Joint.");
+                    #endif
+                }
+
             }
+
+            Circle.position = position;
+        }
+
+        public override void transformed()
+        {
+            base.transformed();
+
+            if (Circle == null)
+            {
+                return;
+            }
+
+            Circle.position = position;
         }
 
         public override void Draw(SpriteBatch spriteBatch)
@@ -697,11 +819,11 @@ namespace Silhouette.GameMechs
 
             if (Object1 != null)
             {
-                Primitives.Instance.drawLine(spriteBatch, Object1.origin, Circle.position, color, 5);
+                Primitives.Instance.drawLine(spriteBatch, Object1.position, Circle.position, color, 5);
             }
             if (Object2 != null)
             {
-                Primitives.Instance.drawLine(spriteBatch, Object2.origin, Circle.position, color, 5);
+                Primitives.Instance.drawLine(spriteBatch, Object2.position, Circle.position, color, 5);
             }
         }
 
@@ -845,6 +967,19 @@ namespace Silhouette.GameMechs
 
                 PathManager.AttachBodiesWithRevoluteJoint(Level.Physics, Bodies, new Vector2(0, 0.25f), new Vector2(0, -0.25f), false, false);
             }
+
+
+            Circle.position = position;
+        }
+
+        public override void transformed()
+        {
+            base.transformed();
+            if (Circle == null)
+            {
+                return;
+            }
+            Circle.position = position;
         }
 
         public override void Draw(SpriteBatch spriteBatch)
@@ -872,14 +1007,13 @@ namespace Silhouette.GameMechs
             color = onHover;
             Circle.drawInEditor(spriteBatch);
 
-
             if (Object1 != null)
             {
-                Primitives.Instance.drawLine(spriteBatch, Object1.origin, Circle.position, color, 5);
+                Primitives.Instance.drawLine(spriteBatch, Object1.position, Circle.position, color, 5);
             }
             if (Object2 != null)
             {
-                Primitives.Instance.drawLine(spriteBatch, Object2.origin, Circle.position, color, 5);
+                Primitives.Instance.drawLine(spriteBatch, Object2.position, Circle.position, color, 5);
             }
         }
 
