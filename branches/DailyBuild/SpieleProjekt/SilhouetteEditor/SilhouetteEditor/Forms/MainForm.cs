@@ -35,7 +35,7 @@ namespace SilhouetteEditor.Forms
             InitializeComponent();
             TypeDescriptor.AddAttributes(typeof(LevelObject), new EditorAttribute(typeof(LevelObjectUITypeEditor), typeof(UITypeEditor)));
         }
- 
+
         public IntPtr getDrawSurface()
         {
             return GameView.Handle;
@@ -128,11 +128,11 @@ namespace SilhouetteEditor.Forms
             dir = dir.Substring(0, dir.IndexOf("Silhouette"));
             String targetDir = Path.Combine(dir, "Silhouette\\Silhouette\\bin\\x86\\Debug");
             String targetExe = Path.Combine(dir, "Silhouette\\Silhouette\\bin\\x86\\Debug\\Silhouette.exe");
-            String levelFile = Path.Combine(dir, "Silhouette\\Silhouette\\bin\\x86\\Debug", "temp");
+            String levelFile = Path.Combine(dir, "SilhouetteEditor\\SilhouetteEditor\\bin\\x86\\Debug", "temp");
             Editor.Default.levelFileName = levelFile;
             Editor.Default.SaveLevel(levelFile);
 
-            System.Diagnostics.Process.Start(targetExe, "--loadlevel temp --novideo");
+            System.Diagnostics.Process.Start(targetExe, "--loadlevel temp  --novideo");
         }
 
         //---> TreeView-Steuerung <---//
@@ -368,11 +368,11 @@ namespace SilhouetteEditor.Forms
                 Editor.Default.createCurrentObject(false);
                 Editor.Default.startPositioning();
             }
-        }   
+        }
 
         private void GameView_Resize(object sender, EventArgs e)
         {
-            if(EditorLoop.EditorLoopInstance != null) 
+            if (EditorLoop.EditorLoopInstance != null)
                 EditorLoop.EditorLoopInstance.resizebackbuffer(GameView.Width, GameView.Height);
 
             if (Editor.Default.level != null)
@@ -639,7 +639,7 @@ namespace SilhouetteEditor.Forms
         {
             OpenFileDialog files = new OpenFileDialog();
             DialogResult result = files.ShowDialog();
-          
+
             if (result == System.Windows.Forms.DialogResult.OK)
             {
                 if (files.FileNames.Length == 0)
