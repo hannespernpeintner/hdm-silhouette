@@ -36,7 +36,7 @@ namespace SilhouetteEditor
         //Physic
         ChangeBodyType,
         ApplyForce,
-        
+
 
         //Audio
         Fade,
@@ -173,37 +173,37 @@ namespace SilhouetteEditor
             */
 
             #region CameraControl
-                if (kstate.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.A) && !kstate.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.LeftControl))
-                {
-                    Camera.PositionX -= Constants.CameraMovingSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
-                }
-                if (kstate.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.D) && !kstate.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.LeftControl))
-                {
-                    Camera.PositionX += Constants.CameraMovingSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
-                }
-                if (kstate.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.S) && !kstate.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.LeftControl))
-                {
-                    Camera.PositionY += Constants.CameraMovingSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
-                }
-                if (kstate.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.W) && !kstate.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.LeftControl))
-                {
-                    Camera.PositionY -= Constants.CameraMovingSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
-                }
-                int mwheeldelta = mstate.ScrollWheelValue - oldmstate.ScrollWheelValue;
-                if (mwheeldelta > 0)
-                {
-                    float zoom = (float)Math.Round(Camera.Scale * 10) * 10.0f + 10.0f;
-                    if (zoom >= 110) zoom = 100;
-                    MainForm.Default.ZoomStatus.Text = "Zoom: " + (zoom).ToString() + "%";
-                    Camera.Scale = zoom / 100.0f;
-                }
-                if (mwheeldelta < 0)
-                {
-                    float zoom = (float)Math.Round(Camera.Scale * 10) * 10.0f - 10.0f;
-                    if (zoom <= 0.0f) zoom = 10;
-                    MainForm.Default.ZoomStatus.Text = "Zoom: " + (zoom).ToString() + "%";
-                    Camera.Scale = zoom / 100.0f;
-                }
+            if (kstate.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.A) && !kstate.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.LeftControl))
+            {
+                Camera.PositionX -= Constants.CameraMovingSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+            }
+            if (kstate.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.D) && !kstate.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.LeftControl))
+            {
+                Camera.PositionX += Constants.CameraMovingSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+            }
+            if (kstate.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.S) && !kstate.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.LeftControl))
+            {
+                Camera.PositionY += Constants.CameraMovingSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+            }
+            if (kstate.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.W) && !kstate.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.LeftControl))
+            {
+                Camera.PositionY -= Constants.CameraMovingSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+            }
+            int mwheeldelta = mstate.ScrollWheelValue - oldmstate.ScrollWheelValue;
+            if (mwheeldelta > 0)
+            {
+                float zoom = (float)Math.Round(Camera.Scale * 10) * 10.0f + 10.0f;
+                if (zoom >= 110) zoom = 100;
+                MainForm.Default.ZoomStatus.Text = "Zoom: " + (zoom).ToString() + "%";
+                Camera.Scale = zoom / 100.0f;
+            }
+            if (mwheeldelta < 0)
+            {
+                float zoom = (float)Math.Round(Camera.Scale * 10) * 10.0f - 10.0f;
+                if (zoom <= 0.0f) zoom = 10;
+                MainForm.Default.ZoomStatus.Text = "Zoom: " + (zoom).ToString() + "%";
+                Camera.Scale = zoom / 100.0f;
+            }
             #endregion
 
             /* Sascha:
@@ -211,24 +211,24 @@ namespace SilhouetteEditor
             */
 
             #region EditorShortcuts
-                if (kstate.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.F1) && oldkstate.IsKeyUp(Microsoft.Xna.Framework.Input.Keys.F1))
+            if (kstate.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.F1) && oldkstate.IsKeyUp(Microsoft.Xna.Framework.Input.Keys.F1))
+            {
+                originsVisible = !originsVisible;
+            }
+            if (kstate.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.LeftControl) && kstate.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.S) && oldkstate.IsKeyUp(Microsoft.Xna.Framework.Input.Keys.S))
+            {
+                if (this.levelFileName != null)
+                    this.SaveLevel(this.levelFileName);
+                else
                 {
-                    originsVisible = !originsVisible;
-                }
-                if (kstate.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.LeftControl) && kstate.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.S) && oldkstate.IsKeyUp(Microsoft.Xna.Framework.Input.Keys.S))
-                {
-                    if (this.levelFileName != null)
-                        this.SaveLevel(this.levelFileName);
-                    else
+                    SaveFileDialog dialog = new SaveFileDialog();
+                    if (dialog.ShowDialog() == DialogResult.OK)
                     {
-                        SaveFileDialog dialog = new SaveFileDialog();
-                        if (dialog.ShowDialog() == DialogResult.OK)
-                        {
-                            this.levelFileName = dialog.FileName;
-                            this.SaveLevel(dialog.FileName);
-                        }
+                        this.levelFileName = dialog.FileName;
+                        this.SaveLevel(dialog.FileName);
                     }
                 }
+            }
             #endregion
 
             /* Sascha:
@@ -236,12 +236,12 @@ namespace SilhouetteEditor
             */
 
             #region getMouseWorldPosition
-                Vector2 maincameraposition = Camera.Position;
-                if (selectedLayer != null) Camera.Position *= selectedLayer.ScrollSpeed;
-                MouseWorldPosition = Vector2.Transform(new Vector2(mstate.X, mstate.Y), Matrix.Invert(Camera.matrix));
-                MouseWorldPosition = MouseWorldPosition.Round();
-                MainForm.Default.MouseWorldPosition.Text = "Mouse: (" + MouseWorldPosition.X + ", " + MouseWorldPosition.Y + ")";
-                Camera.Position = maincameraposition;
+            Vector2 maincameraposition = Camera.Position;
+            if (selectedLayer != null) Camera.Position *= selectedLayer.ScrollSpeed;
+            MouseWorldPosition = Vector2.Transform(new Vector2(mstate.X, mstate.Y), Matrix.Invert(Camera.matrix));
+            MouseWorldPosition = MouseWorldPosition.Round();
+            MainForm.Default.MouseWorldPosition.Text = "Mouse: (" + MouseWorldPosition.X + ", " + MouseWorldPosition.Y + ")";
+            Camera.Position = maincameraposition;
             #endregion
 
             /* Sascha:
@@ -252,450 +252,450 @@ namespace SilhouetteEditor
             #region Editorstate-Logic
 
             #region IDLE
-                if (editorState == EditorState.IDLE)
+            if (editorState == EditorState.IDLE)
+            {
+                MainForm.Default.EditorStatus.Text = "Editorstatus: Idle";
+                MainForm.Default.GameView.Cursor = Cursors.Default;
+
+                LevelObject levelObject = getItemAtPosition(MouseWorldPosition);
+
+                if (levelObject != null)
                 {
-                    MainForm.Default.EditorStatus.Text = "Editorstatus: Idle";
-                    MainForm.Default.GameView.Cursor = Cursors.Default;
+                    MainForm.Default.SelectedItem.Text = "Object: " + levelObject.name;
+                    levelObject.mouseOn = true;
+                }
+                else
+                {
+                    MainForm.Default.SelectedItem.Text = "Object: -";
+                }
+                if (levelObject != lastObject && lastObject != null) lastObject.mouseOn = false;
 
-                    LevelObject levelObject = getItemAtPosition(MouseWorldPosition);
+                lastObject = levelObject;
 
-                    if (levelObject != null)
+                if (mstate.LeftButton == Microsoft.Xna.Framework.Input.ButtonState.Pressed && oldmstate.LeftButton == Microsoft.Xna.Framework.Input.ButtonState.Released)
+                {
+                    if (selectedLevelObjects.Contains(levelObject))
+                        startPositioning();
+                    else if (!selectedLevelObjects.Contains(levelObject))
                     {
-                        MainForm.Default.SelectedItem.Text = "Object: " + levelObject.name;
-                        levelObject.mouseOn = true;
+                        selectLevelObject(levelObject);
+                        if (levelObject != null)
+                            startPositioning();
+                        else
+                        {
+                            GrabbedPoint = MouseWorldPosition;
+                            selectionRectangle = Microsoft.Xna.Framework.Rectangle.Empty;
+                            editorState = EditorState.SELECTING;
+                        }
+                    }
+                }
+
+                if (mstate.RightButton == Microsoft.Xna.Framework.Input.ButtonState.Pressed && oldmstate.RightButton == Microsoft.Xna.Framework.Input.ButtonState.Released)
+                {
+                    if (selectedLevelObjects.Count > 0)
+                    {
+                        GrabbedPoint = MouseWorldPosition - selectedLevelObjects[0].position;
+
+                        initialScale.Clear();
+                        foreach (LevelObject lo in selectedLevelObjects)
+                        {
+                            if (lo.canScale())
+                                initialScale.Add(lo.getScale());
+                        }
+
+                        editorState = EditorState.SCALING;
+                    }
+                }
+
+                if (mstate.MiddleButton == Microsoft.Xna.Framework.Input.ButtonState.Pressed)
+                {
+                    if (selectedLevelObjects.Count > 0)
+                    {
+                        GrabbedPoint = MouseWorldPosition - selectedLevelObjects[0].position;
+
+                        initialRotation.Clear();
+                        foreach (LevelObject lo in selectedLevelObjects)
+                        {
+                            if (lo.canRotate())
+                            {
+                                initialRotation.Add(lo.getRotation());
+                            }
+                        }
+
+                        editorState = EditorState.ROTATING;
+                    }
+                }
+
+                /* Sascha:
+                 * Wenn der Editor im Status IDLE ist und der Benutzer die Entfernen - Taste drückt, werden alle selektierten LevelObjects gelöscht.
+                */
+
+                if (kstate.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.Delete) && oldkstate.IsKeyUp(Microsoft.Xna.Framework.Input.Keys.Delete))
+                {
+                    deleteLevelObjects();
+                }
+
+                /* Sascha:
+                 * Durch drücken von Control + Alt kann man alle momentan selektierten Objekte kopieren.
+                */
+
+                if (kstate.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.LeftControl) && kstate.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.LeftAlt) && selectedLevelObjects.Count > 0)
+                {
+                    List<LevelObject> selectedLevelObjectsCopy = new List<LevelObject>();
+                    foreach (LevelObject lo in selectedLevelObjects)
+                    {
+                        LevelObject lo2 = (LevelObject)lo.clone();
+                        selectedLevelObjectsCopy.Add(lo2);
+                    }
+                    foreach (LevelObject lo in selectedLevelObjectsCopy)
+                    {
+                        lo.name = lo.getPrefix() + lo.layer.getNextObjectNumber();
+                        AddLevelObject(lo);
+                    }
+                    selectLevelObject(selectedLevelObjectsCopy[0]);
+                    MainForm.Default.UpdateTreeView();
+
+                    foreach (LevelObject lo in selectedLevelObjectsCopy)
+                    {
+                        selectedLevelObjects.Add(lo);
+                    }
+                    startPositioning();
+                }
+
+                /* Sascha:
+                 * Mehrfachauswahl durch drücken von LeftShift.
+                */
+
+                if (kstate.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.LeftShift) && oldkstate.IsKeyUp(Microsoft.Xna.Framework.Input.Keys.LeftShift) && levelObject != null)
+                {
+                    if (selectedLevelObjects.Contains(levelObject)) selectedLevelObjects.Remove(levelObject);
+                    else selectedLevelObjects.Add(levelObject);
+                }
+
+                /* Sascha:
+                 * Auswahl aller Objekte der aktuell selektierten Layer. 
+                */
+
+                if (kstate.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.LeftControl) && kstate.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.A))
+                {
+                    selectedLevelObjects.Clear();
+                    foreach (LevelObject lo in selectedLayer.loList)
+                    {
+                        selectedLevelObjects.Add(lo);
+                    }
+                }
+
+                /* Sascha:
+                 * Photoshop-Navigation!
+                */
+
+                if (kstate.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.Space))
+                {
+                    MainForm.Default.GameView.Cursor = Cursors.NoMove2D;
+
+                    if (mstate.LeftButton == Microsoft.Xna.Framework.Input.ButtonState.Pressed)
+                    {
+                        GrabbedPoint = MouseWorldPosition;
+                        editorState = EditorState.MOVING;
+                    }
+                }
+
+                /* Sascha:
+                 * Automatische Erstellung eines Kollisionsobjekt aus einem gegebenen Primitiv.
+                */
+
+                if (kstate.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.C) && oldkstate.IsKeyUp(Microsoft.Xna.Framework.Input.Keys.C) && selectedLevelObjects.Count > 0)
+                {
+                    List<LevelObject> copy = new List<LevelObject>();
+
+                    foreach (LevelObject lo in selectedLevelObjects)
+                    {
+                        if (lo is PrimitiveObject)
+                            copy.Add(lo);
+                    }
+
+                    selectedLevelObjects.Clear();
+
+                    foreach (LevelObject lo in copy)
+                    {
+                        if (lo is RectanglePrimitiveObject)
+                        {
+                            RectanglePrimitiveObject r = (RectanglePrimitiveObject)lo;
+
+                            RectangleCollisionObject rf = new RectangleCollisionObject(r.rectangle);
+                            rf.name = rf.getPrefix() + r.layer.getNextObjectNumber();
+                            rf.layer = r.layer;
+                            r.layer.loList.Add(rf);
+                            selectedLevelObjects.Add(rf);
+                        }
+
+                        if (lo is CirclePrimitiveObject)
+                        {
+                            CirclePrimitiveObject c = (CirclePrimitiveObject)lo;
+
+                            CircleCollisionObject cf = new CircleCollisionObject(c.position, c.radius);
+                            cf.name = cf.getPrefix() + c.layer.getNextObjectNumber();
+                            cf.layer = c.layer;
+                            c.layer.loList.Add(cf);
+                            selectedLevelObjects.Add(cf);
+                        }
+
+                        if (lo is PathPrimitiveObject)
+                        {
+                            PathPrimitiveObject p = (PathPrimitiveObject)lo;
+
+                            PathCollisionObject pf = new PathCollisionObject((Vector2[])p.WorldPoints.Clone());
+                            pf.name = pf.getPrefix() + p.layer.getNextObjectNumber();
+                            pf.layer = p.layer;
+                            p.layer.loList.Add(pf);
+                            selectedLevelObjects.Add(pf);
+                        }
+                    }
+
+                    MainForm.Default.UpdateTreeView();
+                    startPositioning();
+                }
+
+                /* Sascha:
+                 * Setzt die Startposition des Players an die Mausposition.
+                */
+
+                if (kstate.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.P) && oldkstate.IsKeyUp(Microsoft.Xna.Framework.Input.Keys.P) && !(kstate.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.LeftControl)))
+                {
+                    if (level.layerList.Contains(level.getLayerByName("Player")))
+                    {
+                        selectLayer(level.getLayerByName("Player"));
+                        level.startPosition = MouseWorldPosition;
                     }
                     else
                     {
-                        MainForm.Default.SelectedItem.Text = "Object: -";
-                    }
-                    if (levelObject != lastObject && lastObject != null) lastObject.mouseOn = false;
-
-                    lastObject = levelObject;
-
-                    if (mstate.LeftButton == Microsoft.Xna.Framework.Input.ButtonState.Pressed && oldmstate.LeftButton == Microsoft.Xna.Framework.Input.ButtonState.Released)
-                    {
-                        if (selectedLevelObjects.Contains(levelObject))
-                            startPositioning();
-                        else if (!selectedLevelObjects.Contains(levelObject))
-                        {
-                            selectLevelObject(levelObject);
-                            if (levelObject != null)
-                                startPositioning();
-                            else
-                            {
-                                GrabbedPoint = MouseWorldPosition;
-                                selectionRectangle = Microsoft.Xna.Framework.Rectangle.Empty;
-                                editorState = EditorState.SELECTING;
-                            }
-                        }
-                    }
-
-                    if (mstate.RightButton == Microsoft.Xna.Framework.Input.ButtonState.Pressed && oldmstate.RightButton == Microsoft.Xna.Framework.Input.ButtonState.Released)
-                    {
-                        if (selectedLevelObjects.Count > 0)
-                        {
-                            GrabbedPoint = MouseWorldPosition - selectedLevelObjects[0].position;
-
-                            initialScale.Clear();
-                            foreach (LevelObject lo in selectedLevelObjects)
-                            {
-                                if (lo.canScale())
-                                    initialScale.Add(lo.getScale());
-                            }
-
-                            editorState = EditorState.SCALING;
-                        }
-                    }
-
-                    if (mstate.MiddleButton == Microsoft.Xna.Framework.Input.ButtonState.Pressed)
-                    {
-                        if (selectedLevelObjects.Count > 0)
-                        {
-                            GrabbedPoint = MouseWorldPosition - selectedLevelObjects[0].position;
-
-                            initialRotation.Clear();
-                            foreach (LevelObject lo in selectedLevelObjects)
-                            {
-                                if (lo.canRotate())
-                                {
-                                    initialRotation.Add(lo.getRotation());
-                                }
-                            }
-
-                            editorState = EditorState.ROTATING;
-                        }
-                    }
-
-                    /* Sascha:
-                     * Wenn der Editor im Status IDLE ist und der Benutzer die Entfernen - Taste drückt, werden alle selektierten LevelObjects gelöscht.
-                    */
-
-                    if (kstate.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.Delete) && oldkstate.IsKeyUp(Microsoft.Xna.Framework.Input.Keys.Delete))
-                    {
-                        deleteLevelObjects();
-                    }
-
-                    /* Sascha:
-                     * Durch drücken von Control + Alt kann man alle momentan selektierten Objekte kopieren.
-                    */
-
-                    if (kstate.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.LeftControl) && kstate.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.LeftAlt) && selectedLevelObjects.Count > 0)
-                    {
-                        List<LevelObject> selectedLevelObjectsCopy = new List<LevelObject>();
-                        foreach (LevelObject lo in selectedLevelObjects)
-                        {
-                            LevelObject lo2 = (LevelObject)lo.clone();
-                            selectedLevelObjectsCopy.Add(lo2);
-                        }
-                        foreach (LevelObject lo in selectedLevelObjectsCopy)
-                        {
-                            lo.name = lo.getPrefix() + lo.layer.getNextObjectNumber();
-                            AddLevelObject(lo);
-                        }
-                        selectLevelObject(selectedLevelObjectsCopy[0]);
-                        MainForm.Default.UpdateTreeView();
-
-                        foreach (LevelObject lo in selectedLevelObjectsCopy)
-                        {
-                            selectedLevelObjects.Add(lo);
-                        }
-                        startPositioning();
-                    }
-
-                    /* Sascha:
-                     * Mehrfachauswahl durch drücken von LeftShift.
-                    */
-
-                    if (kstate.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.LeftShift) && oldkstate.IsKeyUp(Microsoft.Xna.Framework.Input.Keys.LeftShift) && levelObject != null)
-                    {
-                        if (selectedLevelObjects.Contains(levelObject)) selectedLevelObjects.Remove(levelObject);
-                        else selectedLevelObjects.Add(levelObject);
-                    }
-
-                    /* Sascha:
-                     * Auswahl aller Objekte der aktuell selektierten Layer. 
-                    */
-
-                    if (kstate.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.LeftControl) && kstate.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.A))
-                    {
-                        selectedLevelObjects.Clear();
-                        foreach (LevelObject lo in selectedLayer.loList)
-                        {
-                            selectedLevelObjects.Add(lo);
-                        }
-                    }
-
-                    /* Sascha:
-                     * Photoshop-Navigation!
-                    */
-
-                    if (kstate.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.Space))
-                    {
-                        MainForm.Default.GameView.Cursor = Cursors.NoMove2D;
-
-                        if (mstate.LeftButton == Microsoft.Xna.Framework.Input.ButtonState.Pressed)
-                        {
-                            GrabbedPoint = MouseWorldPosition;
-                            editorState = EditorState.MOVING;
-                        }
-                    }
-
-                    /* Sascha:
-                     * Automatische Erstellung eines Kollisionsobjekt aus einem gegebenen Primitiv.
-                    */
-
-                    if (kstate.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.C) && oldkstate.IsKeyUp(Microsoft.Xna.Framework.Input.Keys.C) && selectedLevelObjects.Count > 0)
-                    {
-                        List<LevelObject> copy = new List<LevelObject>();
-
-                        foreach (LevelObject lo in selectedLevelObjects)
-                        {
-                            if (lo is PrimitiveObject)
-                                copy.Add(lo);
-                        }
-
-                        selectedLevelObjects.Clear();
-
-                        foreach (LevelObject lo in copy)
-                        {
-                            if (lo is RectanglePrimitiveObject)
-                            {
-                                RectanglePrimitiveObject r = (RectanglePrimitiveObject)lo;
-
-                                RectangleCollisionObject rf = new RectangleCollisionObject(r.rectangle);
-                                rf.name = rf.getPrefix() + r.layer.getNextObjectNumber();
-                                rf.layer = r.layer;
-                                r.layer.loList.Add(rf);
-                                selectedLevelObjects.Add(rf);
-                            }
-
-                            if (lo is CirclePrimitiveObject)
-                            {
-                                CirclePrimitiveObject c = (CirclePrimitiveObject)lo;
-
-                                CircleCollisionObject cf = new CircleCollisionObject(c.position, c.radius);
-                                cf.name = cf.getPrefix() + c.layer.getNextObjectNumber();
-                                cf.layer = c.layer;
-                                c.layer.loList.Add(cf);
-                                selectedLevelObjects.Add(cf);
-                            }
-
-                            if (lo is PathPrimitiveObject)
-                            {
-                                PathPrimitiveObject p = (PathPrimitiveObject)lo;
-
-                                PathCollisionObject pf = new PathCollisionObject((Vector2[])p.WorldPoints.Clone());
-                                pf.name = pf.getPrefix() + p.layer.getNextObjectNumber();
-                                pf.layer = p.layer;
-                                p.layer.loList.Add(pf);
-                                selectedLevelObjects.Add(pf);
-                            }
-                        }
-
-                        MainForm.Default.UpdateTreeView();
-                        startPositioning();
-                    }
-
-                    /* Sascha:
-                     * Setzt die Startposition des Players an die Mausposition.
-                    */
-
-                    if (kstate.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.P) && oldkstate.IsKeyUp(Microsoft.Xna.Framework.Input.Keys.P) && !(kstate.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.LeftControl)))
-                    {
-                        if (level.layerList.Contains(level.getLayerByName("Player")))
-                        {
-                            selectLayer(level.getLayerByName("Player"));
-                            level.startPosition = MouseWorldPosition;
-                        }
-                        else
-                        {
-                            AddLayer("Player");
-                            selectLayer(level.getLayerByName("Player"));
-                            level.startPosition = MouseWorldPosition;
-                        }
-                    }
-
-                    if (kstate.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.LeftControl) && kstate.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.P) && oldkstate.IsKeyUp(Microsoft.Xna.Framework.Input.Keys.P) && level.layerList.Contains(level.getLayerByName("Player")))
-                    {
-                        Camera.Scale = 0.4f;
-                        Camera.Position = new Vector2(level.startPosition.X, level.startPosition.Y - (MainForm.Default.GameView.Height / 2) - 50);
-                        MainForm.Default.ZoomStatus.Text = "Zoom: 40%";               
+                        AddLayer("Player");
+                        selectLayer(level.getLayerByName("Player"));
+                        level.startPosition = MouseWorldPosition;
                     }
                 }
+
+                if (kstate.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.LeftControl) && kstate.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.P) && oldkstate.IsKeyUp(Microsoft.Xna.Framework.Input.Keys.P) && level.layerList.Contains(level.getLayerByName("Player")))
+                {
+                    Camera.Scale = 0.4f;
+                    Camera.Position = new Vector2(level.startPosition.X, level.startPosition.Y - (MainForm.Default.GameView.Height / 2) - 50);
+                    MainForm.Default.ZoomStatus.Text = "Zoom: 40%";
+                }
+            }
             #endregion
 
             #region CREATE_PRIMITIVES
-                if (editorState == EditorState.CREATE_PRIMITIVES)
+            if (editorState == EditorState.CREATE_PRIMITIVES)
+            {
+                MainForm.Default.EditorStatus.Text = "Editorstatus: Brush Primitives";
+                MainForm.Default.GameView.Cursor = Cursors.Cross;
+
+                if (mstate.LeftButton == Microsoft.Xna.Framework.Input.ButtonState.Pressed && oldmstate.LeftButton == Microsoft.Xna.Framework.Input.ButtonState.Released)
                 {
-                    MainForm.Default.EditorStatus.Text = "Editorstatus: Brush Primitives";
-                    MainForm.Default.GameView.Cursor = Cursors.Cross;
+                    clickedPoints.Add(MouseWorldPosition);
 
-                    if (mstate.LeftButton == Microsoft.Xna.Framework.Input.ButtonState.Pressed && oldmstate.LeftButton == Microsoft.Xna.Framework.Input.ButtonState.Released)
+                    if (currentPrimitive == PrimitiveType.Path)
+                        selectedLevelObjects.Clear();
+
+                    if (!primitiveStarted)
+                        primitiveStarted = true;
+                    else
                     {
-                        clickedPoints.Add(MouseWorldPosition);
-
-                        if (currentPrimitive == PrimitiveType.Path)
-                            selectedLevelObjects.Clear();
-
-                        if (!primitiveStarted)
-                            primitiveStarted = true;
-                        else
-                        {
-                            if (currentPrimitive != PrimitiveType.Path)
-                            {
-                                createPrimitiveObject();
-                                clickedPoints.Clear();
-                                primitiveStarted = false;
-                            }
-                        }
-                    }
-                    if (kstate.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.Back) && oldkstate.IsKeyUp(Microsoft.Xna.Framework.Input.Keys.Back))
-                    {
-                        if (currentPrimitive == PrimitiveType.Path && clickedPoints.Count > 1)
-                        {
-                            clickedPoints.RemoveAt(clickedPoints.Count - 1);
-                        }
-                    }
-
-                    if (mstate.MiddleButton == Microsoft.Xna.Framework.Input.ButtonState.Pressed && oldmstate.MiddleButton == Microsoft.Xna.Framework.Input.ButtonState.Released)
-                    {
-                        if (currentPrimitive == PrimitiveType.Path && primitiveStarted && clickedPoints.Count > 1)
+                        if (currentPrimitive != PrimitiveType.Path)
                         {
                             createPrimitiveObject();
                             clickedPoints.Clear();
                             primitiveStarted = false;
                         }
                     }
-                    if (mstate.RightButton == Microsoft.Xna.Framework.Input.ButtonState.Pressed && oldmstate.RightButton == Microsoft.Xna.Framework.Input.ButtonState.Released)
+                }
+                if (kstate.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.Back) && oldkstate.IsKeyUp(Microsoft.Xna.Framework.Input.Keys.Back))
+                {
+                    if (currentPrimitive == PrimitiveType.Path && clickedPoints.Count > 1)
                     {
-                        if (primitiveStarted)
-                        {
-                            clickedPoints.Clear();
-                            primitiveStarted = false;
-                        }
-                        else
-                        {
-                            clickedPoints.Clear();
-                            primitiveStarted = false;
-                            editorState = EditorState.IDLE;
-                        }
+                        clickedPoints.RemoveAt(clickedPoints.Count - 1);
                     }
                 }
+
+                if (mstate.MiddleButton == Microsoft.Xna.Framework.Input.ButtonState.Pressed && oldmstate.MiddleButton == Microsoft.Xna.Framework.Input.ButtonState.Released)
+                {
+                    if (currentPrimitive == PrimitiveType.Path && primitiveStarted && clickedPoints.Count > 1)
+                    {
+                        createPrimitiveObject();
+                        clickedPoints.Clear();
+                        primitiveStarted = false;
+                    }
+                }
+                if (mstate.RightButton == Microsoft.Xna.Framework.Input.ButtonState.Pressed && oldmstate.RightButton == Microsoft.Xna.Framework.Input.ButtonState.Released)
+                {
+                    if (primitiveStarted)
+                    {
+                        clickedPoints.Clear();
+                        primitiveStarted = false;
+                    }
+                    else
+                    {
+                        clickedPoints.Clear();
+                        primitiveStarted = false;
+                        editorState = EditorState.IDLE;
+                    }
+                }
+            }
             #endregion
 
             #region CREATE_FIXTURES
-                if (editorState == EditorState.CREATE_FIXTURES)
+            if (editorState == EditorState.CREATE_FIXTURES)
+            {
+                MainForm.Default.EditorStatus.Text = "Editorstatus: Brush Collision";
+                MainForm.Default.GameView.Cursor = Cursors.Cross;
+
+                if (mstate.LeftButton == Microsoft.Xna.Framework.Input.ButtonState.Pressed && oldmstate.LeftButton == Microsoft.Xna.Framework.Input.ButtonState.Released)
                 {
-                    MainForm.Default.EditorStatus.Text = "Editorstatus: Brush Collision";
-                    MainForm.Default.GameView.Cursor = Cursors.Cross;
+                    clickedPoints.Add(MouseWorldPosition);
 
-                    if (mstate.LeftButton == Microsoft.Xna.Framework.Input.ButtonState.Pressed && oldmstate.LeftButton == Microsoft.Xna.Framework.Input.ButtonState.Released)
+                    if (currentFixture == FixtureType.Path)
+                        selectedLevelObjects.Clear();
+
+                    if (!fixtureStarted)
+                        fixtureStarted = true;
+                    else
                     {
-                        clickedPoints.Add(MouseWorldPosition);
-
-                        if (currentFixture == FixtureType.Path)
-                            selectedLevelObjects.Clear();
-
-                        if (!fixtureStarted)
-                            fixtureStarted = true;
-                        else
+                        if (currentFixture != FixtureType.Path)
                         {
-                            if (currentFixture != FixtureType.Path)
-                            {
-                                createCollisionObject();
-                                clickedPoints.Clear();
-                                fixtureStarted = false;
-                            }
-                        }
-                    }
-                    if (kstate.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.Back) && oldkstate.IsKeyUp(Microsoft.Xna.Framework.Input.Keys.Back))
-                    {
-                        if (currentFixture == FixtureType.Path && clickedPoints.Count > 1)
-                        {
-                            clickedPoints.RemoveAt(clickedPoints.Count - 1);
-                        }
-                    }
-
-                    if (mstate.MiddleButton == Microsoft.Xna.Framework.Input.ButtonState.Pressed && oldmstate.MiddleButton == Microsoft.Xna.Framework.Input.ButtonState.Released)
-                    {
-                        if (currentFixture == FixtureType.Path && fixtureStarted && clickedPoints.Count > 1)
-                        {
-                            selectedLevelObjects.Clear();
                             createCollisionObject();
                             clickedPoints.Clear();
                             fixtureStarted = false;
                         }
                     }
-                    if (mstate.RightButton == Microsoft.Xna.Framework.Input.ButtonState.Pressed && oldmstate.RightButton == Microsoft.Xna.Framework.Input.ButtonState.Released)
+                }
+                if (kstate.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.Back) && oldkstate.IsKeyUp(Microsoft.Xna.Framework.Input.Keys.Back))
+                {
+                    if (currentFixture == FixtureType.Path && clickedPoints.Count > 1)
                     {
-                        if (fixtureStarted)
-                        {
-                            clickedPoints.Clear();
-                            fixtureStarted = false;
-                        }
-                        else
-                        {
-                            clickedPoints.Clear();
-                            fixtureStarted = false;
-                            editorState = EditorState.IDLE;
-                        }
+                        clickedPoints.RemoveAt(clickedPoints.Count - 1);
                     }
                 }
+
+                if (mstate.MiddleButton == Microsoft.Xna.Framework.Input.ButtonState.Pressed && oldmstate.MiddleButton == Microsoft.Xna.Framework.Input.ButtonState.Released)
+                {
+                    if (currentFixture == FixtureType.Path && fixtureStarted && clickedPoints.Count > 1)
+                    {
+                        selectedLevelObjects.Clear();
+                        createCollisionObject();
+                        clickedPoints.Clear();
+                        fixtureStarted = false;
+                    }
+                }
+                if (mstate.RightButton == Microsoft.Xna.Framework.Input.ButtonState.Pressed && oldmstate.RightButton == Microsoft.Xna.Framework.Input.ButtonState.Released)
+                {
+                    if (fixtureStarted)
+                    {
+                        clickedPoints.Clear();
+                        fixtureStarted = false;
+                    }
+                    else
+                    {
+                        clickedPoints.Clear();
+                        fixtureStarted = false;
+                        editorState = EditorState.IDLE;
+                    }
+                }
+            }
             #endregion
 
             #region CREATE_EVENTS
-                if (editorState == EditorState.CREATE_EVENTS)
+            if (editorState == EditorState.CREATE_EVENTS)
+            {
+                MainForm.Default.EditorStatus.Text = "Editorstatus: Brush Events";
+                MainForm.Default.GameView.Cursor = Cursors.Cross;
+
+                if (mstate.LeftButton == Microsoft.Xna.Framework.Input.ButtonState.Pressed && oldmstate.LeftButton == Microsoft.Xna.Framework.Input.ButtonState.Released)
                 {
-                    MainForm.Default.EditorStatus.Text = "Editorstatus: Brush Events";
-                    MainForm.Default.GameView.Cursor = Cursors.Cross;
+                    clickedPoints.Add(MouseWorldPosition);
 
-                    if (mstate.LeftButton == Microsoft.Xna.Framework.Input.ButtonState.Pressed && oldmstate.LeftButton == Microsoft.Xna.Framework.Input.ButtonState.Released)
+                    if (!eventStarted)
+                        eventStarted = true;
+                    else
                     {
-                        clickedPoints.Add(MouseWorldPosition);
-
-                        if (!eventStarted)
-                            eventStarted = true;
-                        else
-                        {
-                            createEvent();
-                            clickedPoints.Clear();
-                            eventStarted = false;
-                        }
-                    }
-
-                    if (mstate.RightButton == Microsoft.Xna.Framework.Input.ButtonState.Pressed && oldmstate.RightButton == Microsoft.Xna.Framework.Input.ButtonState.Released)
-                    {
-                        if (eventStarted)
-                        {
-                            clickedPoints.Clear();
-                            eventStarted = false;
-                        }
-                        else
-                        {
-                            clickedPoints.Clear();
-                            eventStarted = false;
-                            editorState = EditorState.IDLE;
-                        }
+                        createEvent();
+                        clickedPoints.Clear();
+                        eventStarted = false;
                     }
                 }
+
+                if (mstate.RightButton == Microsoft.Xna.Framework.Input.ButtonState.Pressed && oldmstate.RightButton == Microsoft.Xna.Framework.Input.ButtonState.Released)
+                {
+                    if (eventStarted)
+                    {
+                        clickedPoints.Clear();
+                        eventStarted = false;
+                    }
+                    else
+                    {
+                        clickedPoints.Clear();
+                        eventStarted = false;
+                        editorState = EditorState.IDLE;
+                    }
+                }
+            }
             #endregion
 
             #region CREATE_TEXTURES/INTERACTIVE/ANIMATION
-                if (editorState == EditorState.CREATE_TEXTURES || editorState == EditorState.CREATE_INTERACTIVE || editorState == EditorState.CREATE_ANIMATION)
+            if (editorState == EditorState.CREATE_TEXTURES || editorState == EditorState.CREATE_INTERACTIVE || editorState == EditorState.CREATE_ANIMATION)
+            {
+                MainForm.Default.EditorStatus.Text = "Editorstatus: Brush Texture";
+                MainForm.Default.GameView.Cursor = null;
+
+                if (kstate.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.G))
+                    MouseWorldPosition = SnapToGrid(MouseWorldPosition);
+
+                if (mstate.LeftButton == Microsoft.Xna.Framework.Input.ButtonState.Pressed && oldmstate.LeftButton == Microsoft.Xna.Framework.Input.ButtonState.Released)
                 {
-                    MainForm.Default.EditorStatus.Text = "Editorstatus: Brush Texture";
-                    MainForm.Default.GameView.Cursor = null;
+                    createCurrentObject(true);
+                }
+                if (mstate.RightButton == Microsoft.Xna.Framework.Input.ButtonState.Pressed && oldmstate.LeftButton == Microsoft.Xna.Framework.Input.ButtonState.Released)
+                {
+                    editorState = EditorState.IDLE;
+                }
 
-                    if (kstate.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.G))
-                        MouseWorldPosition = SnapToGrid(MouseWorldPosition);
-
-                    if (mstate.LeftButton == Microsoft.Xna.Framework.Input.ButtonState.Pressed && oldmstate.LeftButton == Microsoft.Xna.Framework.Input.ButtonState.Released)
+                /* Sascha:
+                 * UltraBrush-Scaling!
+                */
+                if (currentObject != null)
+                {
+                    if (kstate.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.E))
                     {
-                        createCurrentObject(true);
+                        Vector2 tempScale = currentObject.getScale();
+                        tempScale.X *= 1.05f;
+                        tempScale.Y *= 1.05f;
+                        currentObject.setScale(tempScale);
                     }
-                    if (mstate.RightButton == Microsoft.Xna.Framework.Input.ButtonState.Pressed && oldmstate.LeftButton == Microsoft.Xna.Framework.Input.ButtonState.Released)
+                    if (kstate.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.Q))
                     {
-                        editorState = EditorState.IDLE;
+                        Vector2 tempScale = currentObject.getScale();
+                        tempScale.X *= 0.95f;
+                        tempScale.Y *= 0.95f;
+                        currentObject.setScale(tempScale);
                     }
 
                     /* Sascha:
-                     * UltraBrush-Scaling!
+                     * UltraBrush-Rotation!
                     */
-                    if (currentObject != null)
+
+                    if (kstate.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.X))
                     {
-                        if (kstate.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.E))
-                        {
-                            Vector2 tempScale = currentObject.getScale();
-                            tempScale.X *= 1.05f;
-                            tempScale.Y *= 1.05f;
-                            currentObject.setScale(tempScale);
-                        }
-                        if (kstate.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.Q))
-                        {
-                            Vector2 tempScale = currentObject.getScale();
-                            tempScale.X *= 0.95f;
-                            tempScale.Y *= 0.95f;
-                            currentObject.setScale(tempScale);
-                        }
-
-                        /* Sascha:
-                         * UltraBrush-Rotation!
-                        */
-
-                        if (kstate.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.X))
-                        {
-                            float tempRotation = currentObject.getRotation();
-                            tempRotation += 0.05f;
-                            currentObject.setRotation(tempRotation);
-                        }
-                        if (kstate.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.Y))
-                        {
-                            float tempRotation = currentObject.getRotation();
-                            tempRotation += -0.05f;
-                            currentObject.setRotation(tempRotation);
-                        }
+                        float tempRotation = currentObject.getRotation();
+                        tempRotation += 0.05f;
+                        currentObject.setRotation(tempRotation);
+                    }
+                    if (kstate.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.Y))
+                    {
+                        float tempRotation = currentObject.getRotation();
+                        tempRotation += -0.05f;
+                        currentObject.setRotation(tempRotation);
                     }
                 }
+            }
             #endregion
 
             #region CREATE_PARTICLE
@@ -716,153 +716,153 @@ namespace SilhouetteEditor
             #endregion
 
             #region CREATE_JOINT
-                if (editorState == EditorState.CREATE_JOINT)
-                {
-                    MainForm.Default.EditorStatus.Text = "Editorstatus: Create Joint";
-                    MainForm.Default.GameView.Cursor = null;
+            if (editorState == EditorState.CREATE_JOINT)
+            {
+                MainForm.Default.EditorStatus.Text = "Editorstatus: Create Joint";
+                MainForm.Default.GameView.Cursor = null;
 
-                    if (mstate.LeftButton == Microsoft.Xna.Framework.Input.ButtonState.Pressed && oldmstate.LeftButton == Microsoft.Xna.Framework.Input.ButtonState.Released)
-                    {
-                        createJointObject();
-                    }
-                    if (mstate.RightButton == Microsoft.Xna.Framework.Input.ButtonState.Pressed && oldmstate.LeftButton == Microsoft.Xna.Framework.Input.ButtonState.Released)
-                    {
-                        editorState = EditorState.IDLE;
-                    }
+                if (mstate.LeftButton == Microsoft.Xna.Framework.Input.ButtonState.Pressed && oldmstate.LeftButton == Microsoft.Xna.Framework.Input.ButtonState.Released)
+                {
+                    createJointObject();
                 }
-                #endregion
+                if (mstate.RightButton == Microsoft.Xna.Framework.Input.ButtonState.Pressed && oldmstate.LeftButton == Microsoft.Xna.Framework.Input.ButtonState.Released)
+                {
+                    editorState = EditorState.IDLE;
+                }
+            }
+            #endregion
 
             #region POSITIONING
-                if (editorState == EditorState.POSITIONING)
+            if (editorState == EditorState.POSITIONING)
+            {
+                MainForm.Default.EditorStatus.Text = "Editorstatus: Positioning";
+                MainForm.Default.GameView.Cursor = Cursors.SizeAll;
+
+                int i = 0;
+                foreach (LevelObject lo in selectedLevelObjects)
                 {
-                    MainForm.Default.EditorStatus.Text = "Editorstatus: Positioning";
-                    MainForm.Default.GameView.Cursor = Cursors.SizeAll;
+                    Vector2 newPosition = initialPosition[i] + MouseWorldPosition - GrabbedPoint;
 
-                    int i = 0;
-                    foreach (LevelObject lo in selectedLevelObjects)
+                    if (kstate.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.G))
                     {
-                        Vector2 newPosition = initialPosition[i] + MouseWorldPosition - GrabbedPoint;
-
-                        if (kstate.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.G))
-                        {
-                            lo.position = SnapToGrid(newPosition);
-                        }
-                        else
-                            lo.position = newPosition;
-
-                        i++;
+                        lo.position = SnapToGrid(newPosition);
                     }
-                    MainForm.Default.propertyGrid1.Refresh();
-                    if (mstate.LeftButton == Microsoft.Xna.Framework.Input.ButtonState.Released && oldmstate.LeftButton == Microsoft.Xna.Framework.Input.ButtonState.Pressed)
-                    {
-                        editorState = EditorState.IDLE;
-                    }
+                    else
+                        lo.position = newPosition;
+
+                    i++;
                 }
+                MainForm.Default.propertyGrid1.Refresh();
+                if (mstate.LeftButton == Microsoft.Xna.Framework.Input.ButtonState.Released && oldmstate.LeftButton == Microsoft.Xna.Framework.Input.ButtonState.Pressed)
+                {
+                    editorState = EditorState.IDLE;
+                }
+            }
             #endregion
 
             #region SELECTING
-                if (editorState == EditorState.SELECTING)
+            if (editorState == EditorState.SELECTING)
+            {
+                if (selectedLayer == null) return;
+                Vector2 distance = MouseWorldPosition - GrabbedPoint;
+                if (distance.Length() > 0)
                 {
-                    if (selectedLayer == null) return;
-                    Vector2 distance = MouseWorldPosition - GrabbedPoint;
-                    if (distance.Length() > 0)
+                    selectedLevelObjects.Clear();
+                    selectionRectangle = Extensions.RectangleFromVectors(GrabbedPoint, MouseWorldPosition);
+                    foreach (LevelObject lo in selectedLayer.loList)
                     {
-                        selectedLevelObjects.Clear();
-                        selectionRectangle = Extensions.RectangleFromVectors(GrabbedPoint, MouseWorldPosition);
-                        foreach (LevelObject lo in selectedLayer.loList)
-                        {
-                            if (selectionRectangle.Contains((int)lo.position.X, (int)lo.position.Y)) selectedLevelObjects.Add(lo);
-                        }
-                    }
-                    if (mstate.LeftButton == Microsoft.Xna.Framework.Input.ButtonState.Released)
-                    {
-                        if (selectedLevelObjects.Count > 0)
-                            MainForm.Default.propertyGrid1.SelectedObject = selectedLevelObjects[0];
-                        editorState = EditorState.IDLE;
+                        if (selectionRectangle.Contains((int)lo.position.X, (int)lo.position.Y)) selectedLevelObjects.Add(lo);
                     }
                 }
+                if (mstate.LeftButton == Microsoft.Xna.Framework.Input.ButtonState.Released)
+                {
+                    if (selectedLevelObjects.Count > 0)
+                        MainForm.Default.propertyGrid1.SelectedObject = selectedLevelObjects[0];
+                    editorState = EditorState.IDLE;
+                }
+            }
             #endregion
 
             #region SCALING
-                if (editorState == EditorState.SCALING)
+            if (editorState == EditorState.SCALING)
+            {
+                MainForm.Default.EditorStatus.Text = "Editorstatus: Scaling";
+                MainForm.Default.GameView.Cursor = null;
+
+                Vector2 newdistance = MouseWorldPosition - selectedLevelObjects[0].position;
+                float factor = newdistance.Length() / GrabbedPoint.Length();
+                int i = 0;
+                foreach (LevelObject selLO in selectedLevelObjects)
                 {
-                    MainForm.Default.EditorStatus.Text = "Editorstatus: Scaling";
-                    MainForm.Default.GameView.Cursor = null;
-
-                    Vector2 newdistance = MouseWorldPosition - selectedLevelObjects[0].position;
-                    float factor = newdistance.Length() / GrabbedPoint.Length();
-                    int i = 0;
-                    foreach (LevelObject selLO in selectedLevelObjects)
+                    if (selLO.canScale())
                     {
-                        if (selLO.canScale())
+                        Vector2 newscale = initialScale[i];
+                        if (!kstate.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.Y)) newscale.X = initialScale[i].X * (((factor - 1.0f) * 0.5f) + 1.0f);
+                        if (!kstate.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.X)) newscale.Y = initialScale[i].Y * (((factor - 1.0f) * 0.5f) + 1.0f);
+                        selLO.setScale(newscale);
+
+                        if (kstate.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.LeftControl))
                         {
-                            Vector2 newscale = initialScale[i];
-                            if (!kstate.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.Y)) newscale.X = initialScale[i].X * (((factor - 1.0f) * 0.5f) + 1.0f);
-                            if (!kstate.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.X)) newscale.Y = initialScale[i].Y * (((factor - 1.0f) * 0.5f) + 1.0f);
-                            selLO.setScale(newscale);
-
-                            if (kstate.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.LeftControl))
-                            {
-                                Vector2 scale;
-                                scale.X = (float)Math.Round(selLO.getScale().X * 10) / 10;
-                                scale.Y = (float)Math.Round(selLO.getScale().Y * 10) / 10;
-                                selLO.setScale(scale);
-                            }
-                            i++;
+                            Vector2 scale;
+                            scale.X = (float)Math.Round(selLO.getScale().X * 10) / 10;
+                            scale.Y = (float)Math.Round(selLO.getScale().Y * 10) / 10;
+                            selLO.setScale(scale);
                         }
-                    }
-                    MainForm.Default.propertyGrid1.Refresh();
-                    if (mstate.RightButton == Microsoft.Xna.Framework.Input.ButtonState.Released && oldmstate.RightButton == Microsoft.Xna.Framework.Input.ButtonState.Pressed)
-                    {
-                        editorState = EditorState.IDLE;
+                        i++;
                     }
                 }
+                MainForm.Default.propertyGrid1.Refresh();
+                if (mstate.RightButton == Microsoft.Xna.Framework.Input.ButtonState.Released && oldmstate.RightButton == Microsoft.Xna.Framework.Input.ButtonState.Pressed)
+                {
+                    editorState = EditorState.IDLE;
+                }
+            }
             #endregion
 
             #region ROTATING
-                if (editorState == EditorState.ROTATING)
-                {
-                    MainForm.Default.EditorStatus.Text = "Editorstatus: Rotating";
-                    MainForm.Default.GameView.Cursor = null;
+            if (editorState == EditorState.ROTATING)
+            {
+                MainForm.Default.EditorStatus.Text = "Editorstatus: Rotating";
+                MainForm.Default.GameView.Cursor = null;
 
-                    Vector2 newpos = MouseWorldPosition - selectedLevelObjects[0].position;
-                    float deltatheta = (float)Math.Atan2(GrabbedPoint.Y, GrabbedPoint.X) - (float)Math.Atan2(newpos.Y, newpos.X);
-                    int i = 0;
-                    foreach (LevelObject selLO in selectedLevelObjects)
+                Vector2 newpos = MouseWorldPosition - selectedLevelObjects[0].position;
+                float deltatheta = (float)Math.Atan2(GrabbedPoint.Y, GrabbedPoint.X) - (float)Math.Atan2(newpos.Y, newpos.X);
+                int i = 0;
+                foreach (LevelObject selLO in selectedLevelObjects)
+                {
+                    if (selLO.canRotate())
                     {
-                        if (selLO.canRotate())
+                        selLO.setRotation(initialRotation[i] - deltatheta);
+                        if (kstate.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.LeftControl))
                         {
-                            selLO.setRotation(initialRotation[i] - deltatheta);
-                            if (kstate.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.LeftControl))
-                            {
-                                selLO.setRotation((float)Math.Round(selLO.getRotation() / MathHelper.PiOver4) * MathHelper.PiOver4);
-                            }
-                            i++;
+                            selLO.setRotation((float)Math.Round(selLO.getRotation() / MathHelper.PiOver4) * MathHelper.PiOver4);
                         }
-                    }
-                    MainForm.Default.propertyGrid1.Refresh();
-                    if (mstate.MiddleButton == Microsoft.Xna.Framework.Input.ButtonState.Released)
-                    {
-                        editorState = EditorState.IDLE;
+                        i++;
                     }
                 }
+                MainForm.Default.propertyGrid1.Refresh();
+                if (mstate.MiddleButton == Microsoft.Xna.Framework.Input.ButtonState.Released)
+                {
+                    editorState = EditorState.IDLE;
+                }
+            }
             #endregion
 
             #region MOVING
-                if (editorState == EditorState.MOVING)
+            if (editorState == EditorState.MOVING)
+            {
+                MainForm.Default.EditorStatus.Text = "Editorstatus: Moving";
+                MainForm.Default.GameView.Cursor = Cursors.NoMove2D;
+
+                Vector2 newPosition = GrabbedPoint - MouseWorldPosition;
+
+                Camera.Position += newPosition;
+
+                if (mstate.LeftButton == Microsoft.Xna.Framework.Input.ButtonState.Released)
                 {
-                    MainForm.Default.EditorStatus.Text = "Editorstatus: Moving";
-                    MainForm.Default.GameView.Cursor = Cursors.NoMove2D;
-
-                    Vector2 newPosition = GrabbedPoint - MouseWorldPosition;
-
-                    Camera.Position += newPosition;
-
-                    if (mstate.LeftButton == Microsoft.Xna.Framework.Input.ButtonState.Released)
-                    {
-                        editorState = EditorState.IDLE;
-                    }
+                    editorState = EditorState.IDLE;
                 }
+            }
             #endregion
 
             #endregion
@@ -925,7 +925,15 @@ namespace SilhouetteEditor
 
         public void SaveLevel(string fullPath)
         {
-            level.SaveLevel(fullPath);
+            try
+            {
+                level.SaveLevel(fullPath);
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message);
+            }
+
         }
 
         //---> Add-Stuff <---//
@@ -1044,7 +1052,7 @@ namespace SilhouetteEditor
             //ao.LoadContent2();
             ao.texture = TextureManager.Instance.LoadFromFile(path, EditorLoop.EditorLoopInstance.GraphicsDevice);
             //ao.animation.activeTexture = ao.texture;
-            
+
             currentObject = ao;
         }
 
@@ -1343,7 +1351,7 @@ namespace SilhouetteEditor
                 selectedLevelObjects.Clear();
                 selectedLevelObjects.Add(rjo);
             }
-            
+
         }
 
         /* Sascha:
@@ -1353,7 +1361,7 @@ namespace SilhouetteEditor
         public void createEvent()
         {
             switch (currentEvent)
-            { 
+            {
                 case EventType.ChangeBodyType:
                     PhysicChangeBodyTypeEvent e = new PhysicChangeBodyTypeEvent(Extensions.RectangleFromVectors(clickedPoints[0], clickedPoints[1]));
                     e.name = e.getPrefix() + selectedLayer.getNextObjectNumber();
@@ -1643,7 +1651,7 @@ namespace SilhouetteEditor
         {
             int index = level.layerList.IndexOf(l);
 
-            if(index >= (level.layerList.Count - 1))
+            if (index >= (level.layerList.Count - 1))
                 return;
 
             level.layerList[index] = level.layerList[index + 1];
