@@ -1,19 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Audio;
-using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.GamerServices;
-using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
-using Microsoft.Xna.Framework.Media;
 using System.Text;
+using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 
 namespace Silhouette.Engine.Effects
 {
     [Serializable]
-    public class Blur : Effects.EffectObject
+    public class Bloom : Effects.EffectObject
     {
         private float _blurDistanceInPixels;
         public float BlurDistanceInPixels
@@ -59,14 +55,14 @@ namespace Silhouette.Engine.Effects
             }
         }
 
-
         public override void Initialise()
         {
             base.Initialise();
             Active = true;
-            Path = "Effects/Blur";
+            Path = "Effects/Bloom";
+
             BlurStrength = 0.5f;
-            BlurDistanceInPixels = 10;
+            BlurDistanceInPixels = 7;
         }
         public override void LoadContent()
         {
@@ -75,8 +71,8 @@ namespace Silhouette.Engine.Effects
         }
         public override void loadContentInEditor(GraphicsDevice graphics, ContentManager content)
         {
-            Effect = content.Load<Effect>(Path);
             _graphics = graphics;
+            Effect = content.Load<Effect>(Path);
         }
 
     }

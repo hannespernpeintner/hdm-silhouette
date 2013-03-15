@@ -16,6 +16,7 @@ using Silhouette.GameMechs;
 using Silhouette.Engine.Manager;
 
 using Silhouette.Engine.Effects;
+using Silhouette.Engine.PartikelEngine;
 
 namespace Silhouette.Engine
 {
@@ -25,9 +26,9 @@ namespace Silhouette.Engine
 
         public void initializeInEditor() { }
 
-        public void loadContentInEditor(GraphicsDevice graphics, ContentManager content)
+        public void loadContentInEditor(GraphicsDeviceManager graphicsM, GraphicsDevice graphics, ContentManager content)
         {
-            //particleRenderer = new ParticleRenderer();
+            particleRenderer = new ParticleRenderer(graphicsM);
             Rt = new RenderTarget2D(graphics, graphics.Viewport.Width, graphics.Viewport.Height);
 
             foreach (LevelObject lo in loList)
@@ -37,8 +38,14 @@ namespace Silhouette.Engine
                     DrawableLevelObject dlo = (DrawableLevelObject)lo;
                     dlo.loadContentInEditor(graphics);
                 }
+                else if (lo is ParticleObject)
+                {
+                    ParticleObject p = (ParticleObject)lo;
+                    particleRenderer.addParticleObjects(p);
+                }
             }
 
+            particleRenderer.initializeParticles();
             Effects = new List<EffectObject>();
 
             foreach (EffectObject eo in Effects)
@@ -61,6 +68,19 @@ namespace Silhouette.Engine
                     if (dlo.isVisible)
                         dlo.drawInEditor(spriteBatch);
                 }
+
+
+                particleRenderer.drawParticles();
+            }
+        }
+
+        public void updateLayerInEditor(GameTime gameTime)
+        {
+            particleRenderer.updateParticles(gameTime);
+
+            foreach (EffectObject eo in Effects)
+            {
+                eo.UpdateInEditor(gameTime);
             }
         }
 

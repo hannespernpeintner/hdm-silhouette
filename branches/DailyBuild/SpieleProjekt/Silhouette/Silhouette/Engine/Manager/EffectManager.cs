@@ -177,8 +177,8 @@ namespace Silhouette.Engine.Manager
                 //Tom player = GameLoop.gameInstance.playerInstance;
             }
             catch (Exception e)
-            { 
-            
+            {
+
             }
 
             float fadeOrange = 0;
@@ -400,6 +400,146 @@ namespace Silhouette.Engine.Manager
             }
             return colorChange;
         }
+
+        public static Effect BlurrerInEditor(GraphicsDevice graphics)
+        {
+            blurrer.Parameters["BlurDistance"].SetValue(0.002f);
+            AllEffects[Effects.Blur].Type = "Normal";
+            return AllEffects[Effects.Blur].EffectInEditor(graphics);
+            return blurrer;
+        }
+
+        public static Effect WeakBlurrerInEditor(GraphicsDevice graphics)
+        {
+            weakBlurrer.Parameters["BlurDistance"].SetValue(0.001f);
+            AllEffects[Effects.Blur].Type = "Weak";
+            return AllEffects[Effects.Blur].EffectInEditor(graphics);
+            return weakBlurrer;
+        }
+
+        public static Effect StrongBlurrerInEditor(GraphicsDevice graphics)
+        {
+            strongBlurrer.Parameters["BlurDistance"].SetValue(0.006f);
+            AllEffects[Effects.Blur].Type = "Strong";
+            return AllEffects[Effects.Blur].EffectInEditor(graphics);
+            return strongBlurrer;
+        }
+
+        public static Effect BleachInEditor(GraphicsDevice graphics)
+        {
+            Player player = null;
+            try
+            {
+                player = GameLoop.gameInstance.playerInstance;
+                //Tom player = GameLoop.gameInstance.playerInstance;
+            }
+            catch (Exception e)
+            {
+
+            }
+
+            float fadeOrange = 0;
+            float fadeBlue = 0;
+
+
+            if (player != null)
+            {
+                //Tom player = GameLoop.gameInstance.playerInstance;
+                fadeOrange = player.fadeOrange / 1000; // zählen beide von 0 bis 1
+                fadeBlue = player.fadeBlue / 1000;
+            }
+
+            bleach.Parameters["fadeOrange"].SetValue(fadeOrange);
+            bleach.Parameters["fadeBlue"].SetValue(fadeBlue);
+            bleach.Parameters["amount"].SetValue(0.5f);
+
+            return bleach;
+        }
+
+        public static Effect WeakBleachInEditor(GraphicsDevice graphics)
+        {
+            Player player = null;
+            try
+            {
+                player = GameLoop.gameInstance.playerInstance;
+                //Tom player = GameLoop.gameInstance.playerInstance;
+            }
+            catch (Exception e)
+            {
+
+            }
+
+            float fadeOrange = 0;
+            float fadeBlue = 0;
+
+
+            if (player != null)
+            {
+                //Tom player = GameLoop.gameInstance.playerInstance;
+                fadeOrange = player.fadeOrange / 1000; // zählen beide von 0 bis 1
+                fadeBlue = player.fadeBlue / 1000;
+            }
+
+            bleach.Parameters["fadeOrange"].SetValue(fadeOrange);
+            bleach.Parameters["fadeBlue"].SetValue(fadeBlue);
+            bleach.Parameters["amount"].SetValue(0.3f);
+
+            return weakBleach;
+        }
+
+        public static Effect StrongBleachInEditor(GraphicsDevice graphics)
+        {
+            Player player = null;
+            try
+            {
+                player = GameLoop.gameInstance.playerInstance;
+                //Tom player = GameLoop.gameInstance.playerInstance;
+            }
+            catch (Exception e)
+            {
+
+            }
+            float fadeOrange = 0;
+            float fadeBlue = 0;
+
+
+            if (player != null)
+            {
+                //Tom player = GameLoop.gameInstance.playerInstance;
+                fadeOrange = player.fadeOrange / 1000; // zählen beide von 0 bis 1
+                fadeBlue = player.fadeBlue / 1000;
+            }
+
+            bleach.Parameters["fadeOrange"].SetValue(fadeOrange);
+            bleach.Parameters["fadeBlue"].SetValue(fadeBlue);
+            bleach.Parameters["amount"].SetValue(0.6f);
+
+            return weakBleach;
+        }
+
+        public static Effect BleachBlurInEditor(GraphicsDevice graphics)
+        {
+            bleachBlur.Parameters["BlurDistance"].SetValue(0.003f);
+            return bleachBlur;
+        }
+
+
+        public static Effect WaterInEditor(GraphicsDevice graphics)
+        {
+            if (gameTime != null)
+            {
+                float temp = (float)Math.Sin((float)gameTime.ElapsedGameTime.TotalMilliseconds * 0.001f);
+                //Console.WriteLine(temp);
+                water.Parameters["Time"].SetValue(temp);
+            }
+            else
+            {
+                water.Parameters["Time"].SetValue(0);
+            }
+            return water;
+        }
+
+        
         
 
         public static void setOverallBlur(bool b)

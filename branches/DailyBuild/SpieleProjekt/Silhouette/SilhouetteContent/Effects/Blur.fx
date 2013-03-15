@@ -1,6 +1,5 @@
-float BlurDistance = 1;
-float factor = 0.0051;
-int Samples = 4;
+float BlurDistanceInShaderCoords = 0.05;
+float BlurStrength = 0.5;
 sampler ColorMapSampler : register(s0);
 sampler Bokeh : register(s4);
 
@@ -78,18 +77,18 @@ float4 blurpoisson(float2 Tex: TEXCOORD0) : COLOR
 
 	float4 Color = float4(0,0,0,0);
 	{
-		float bd = BlurDistance*factor;
+		float bd = BlurDistanceInShaderCoords;
 		
 		Color = float4(0,0,0,0);
 
-		for(int i = 0; i < 15; i++)
+		for(int i = 0; i < 64; i++)
 		{
-			Color += tex2D( ColorMapSampler, float2(Tex.x + poissonDisk[i].x*bd, Tex.y + poissonDisk[i].y*bd));
+			Color.rgba += tex2D( ColorMapSampler, float2(Tex.x + poissonDisk[i].x*bd, Tex.y + poissonDisk[i].y*bd)).rgba;
 		}
 	}
     
-	Color = Color / (15);
- 
+	Color.rgba = Color.rgba / (64);
+	Color.a *= 1 + BlurStrength;
 	return Color;
 }
 float4 blurpoisson2(float2 Tex: TEXCOORD0) : COLOR
@@ -97,28 +96,29 @@ float4 blurpoisson2(float2 Tex: TEXCOORD0) : COLOR
 
 	float4 Color = float4(0,0,0,0);
 	{
-		float bd = BlurDistance*2*factor;
+		float bd = BlurDistanceInShaderCoords;
 		
 		Color = float4(0,0,0,0);
 
-		for(int i = 40; i < 55; i++)
+		for(int i = 0; i < 64; i++)
 		{
 			Color += tex2D( ColorMapSampler, float2(Tex.x + poissonDisk[i].x*bd, Tex.y + poissonDisk[i].y*bd));
 		}
 	}
     
-	Color = Color / (15);
- 
+	Color.rgba = Color.rgba / (64);
+	Color.a *= 1 + BlurStrength;
 	return Color;
 }
 
 
-float4 blurgauss(float2 Tex: TEXCOORD0) : COLOR
+float4 blurgaussbokeh(float2 Tex: TEXCOORD0) : COLOR
 {
 
-	float4 Color;
+	float4 Color = tex2D( ColorMapSampler, float2(Tex.x, Tex.y));
+	if (Color.r*Color.g*Color.b*Color.a > 0.01)
 	{
-		float bd = BlurDistance*factor;
+		float bd = BlurDistanceInShaderCoords;
 		
 		Color = tex2D( ColorMapSampler, float2(Tex.x-bd, Tex.y-bd));
 		Color += 2*tex2D( ColorMapSampler, float2(Tex.x-bd, Tex.y));
@@ -131,25 +131,34 @@ float4 blurgauss(float2 Tex: TEXCOORD0) : COLOR
 		Color += tex2D( ColorMapSampler, float2(Tex.x+bd, Tex.y-bd));
 		Color += 2*tex2D( ColorMapSampler, float2(Tex.x+bd, Tex.y));
 		Color += tex2D( ColorMapSampler, float2(Tex.x+bd, Tex.y+bd));
+		Color = Color / (16);
+		Color = float4(1,0,0,1);
 	}
     
-	Color = Color / (16);
  
 	return Color;
 }
- 
+
+ float4x4 MatrixTransform : register(vs, c0);
+
+void SpriteVertexShader(inout float4 color    : COLOR0, 
+                        inout float2 texCoord : TEXCOORD0, 
+                        inout float4 position : SV_Position) 
+{
+	{
+		position = mul(position, MatrixTransform); 
+	} 
+}
 technique PostProcess
 {
        pass P1
        {
-             PixelShader = compile ps_2_0 blurpoisson();
+			VertexShader = compile vs_3_0 SpriteVertexShader();
+             PixelShader = compile ps_3_0 blurpoisson();
        }
        pass P1
        {
-             PixelShader = compile ps_2_0 blurpoisson2();
-       }
-       pass P1
-       {
-             PixelShader = compile ps_2_0 blurpoisson();
+			VertexShader = compile vs_3_0 SpriteVertexShader();
+             PixelShader = compile ps_3_0 blurpoisson2();
        }
 }

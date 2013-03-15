@@ -20,7 +20,7 @@ namespace SilhouetteEditor
         /* Sascha:
          * Zentrale Klasse zur Kommunikation zwischen Windows Forms und dem XNA Framework.
         */
-        GraphicsDeviceManager graphics;
+        public GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         static EditorLoop _editorLoopInstance;
         public Form winform;

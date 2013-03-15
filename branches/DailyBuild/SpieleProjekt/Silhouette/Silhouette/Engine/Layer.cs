@@ -73,7 +73,7 @@ namespace Silhouette.Engine
 
         [NonSerialized]
         [Browsable(false)]
-        ParticleRenderer particleRenderer;
+        public ParticleRenderer particleRenderer;
 
         public Layer()
         {
@@ -113,7 +113,7 @@ namespace Silhouette.Engine
         }
         public void loadLayerInEditor()
         {
-            //particleRenderer = new ParticleRenderer();
+            particleRenderer = new ParticleRenderer();
             Rt = new RenderTarget2D(GameLoop.gameInstance.GraphicsDevice, GameSettings.Default.resolutionWidth, GameSettings.Default.resolutionHeight);
 
             foreach (LevelObject lo in loList)
@@ -151,7 +151,7 @@ namespace Silhouette.Engine
 
             foreach (EffectObject eo in Effects)
             {
-                eo.Uddate(gameTime);
+                eo.Update(gameTime);
             }
         }
 
@@ -184,6 +184,7 @@ namespace Silhouette.Engine
                 }
             }
 
+            particleRenderer.drawParticles();
         }
 
         public Effect getShaderByType(ShaderType shaderType)
@@ -210,7 +211,36 @@ namespace Silhouette.Engine
                     return EffectManager.StrongBlurrer();
                 case ShaderType.BleachBlur:
                     return EffectManager.BleachBlur();
-                
+
+                default:
+                    return null;
+            }
+        }
+        public Effect getShaderByTypeInEditor(ShaderType shaderType, GraphicsDevice graphics)
+        {
+            switch (shaderType)
+            {
+                case ShaderType.None:
+                    return null;
+                case ShaderType.Water:
+                    return EffectManager.WaterInEditor(graphics);
+                case ShaderType.ColorChange:
+                    return EffectManager.ColorChange();
+                case ShaderType.WeakBleach:
+                    return EffectManager.WeakBleachInEditor(graphics);
+                case ShaderType.Bleach:
+                    return EffectManager.BleachInEditor(graphics);
+                case ShaderType.StrongBleach:
+                    return EffectManager.StrongBleachInEditor(graphics);
+                case ShaderType.WeakBlur:
+                    return EffectManager.WeakBlurrerInEditor(graphics);
+                case ShaderType.Blur:
+                    return EffectManager.BlurrerInEditor(graphics);
+                case ShaderType.StrongBlur:
+                    return EffectManager.StrongBlurrerInEditor(graphics);
+                case ShaderType.BleachBlur:
+                    return EffectManager.BleachBlurInEditor(graphics);
+
                 default:
                     return null;
             }

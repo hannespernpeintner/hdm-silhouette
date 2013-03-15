@@ -6,6 +6,7 @@ float Weight = 0.152f;
 float Exposure = .15f;
 float NoiseMove = 1;
 float LightPositionX = 0.5f;
+float LightPositionY = 0.0f;
 
 
 
