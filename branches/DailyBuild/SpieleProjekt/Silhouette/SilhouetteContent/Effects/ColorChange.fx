@@ -17,10 +17,22 @@ float4 PS_CC(float2 texCoord: TEXCOORD0): COLOR
 	return color;
 }
 
+ float4x4 MatrixTransform : register(vs, c0);
+
+void SpriteVertexShader(inout float4 color    : COLOR0, 
+                        inout float2 texCoord : TEXCOORD0, 
+                        inout float4 position : SV_Position) 
+{
+	{
+		position = mul(position, MatrixTransform); 
+	} 
+}
+
 technique BlendShader
 {
 	pass pass0
 	{
-		PixelShader = compile ps_2_0 PS_CC();
+		VertexShader = compile vs_3_0 SpriteVertexShader();
+		PixelShader = compile ps_3_0 PS_CC();
 	}
 }

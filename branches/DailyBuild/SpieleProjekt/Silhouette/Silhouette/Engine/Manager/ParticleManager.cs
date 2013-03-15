@@ -36,12 +36,19 @@ namespace Silhouette.Engine.Manager
         private static ParticleEffect heavyrain;
         private static ParticleEffect smoke;
 
-        public static void initialize() 
+        public static void initialize()
         {
             waterfall = GameLoop.gameInstance.Content.Load<ParticleEffect>("ParticleEffects/WaterJet");
             rain = GameLoop.gameInstance.Content.Load<ParticleEffect>("ParticleEffects/Rain");
             heavyrain = GameLoop.gameInstance.Content.Load<ParticleEffect>("ParticleEffects/heavyrain");
             smoke = GameLoop.gameInstance.Content.Load<ParticleEffect>("ParticleEffects/Smoke");
+        }
+        public static void initializeInEditor(ContentManager content)
+        {
+            waterfall = content.Load<ParticleEffect>("ParticleEffects/WaterJet");
+            rain = content.Load<ParticleEffect>("ParticleEffects/Rain");
+            heavyrain = content.Load<ParticleEffect>("ParticleEffects/heavyrain");
+            smoke = content.Load<ParticleEffect>("ParticleEffects/Smoke");
         }
 
         public static ParticleEffect getParticleEffect(ParticleType particleType) 

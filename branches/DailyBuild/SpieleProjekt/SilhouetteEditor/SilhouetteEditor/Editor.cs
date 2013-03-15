@@ -49,6 +49,7 @@ namespace SilhouetteEditor
 
         //Video
         Play,
+        ChangeEffect,
 
         Death,
         SaveState,
@@ -892,7 +893,7 @@ namespace SilhouetteEditor
                 level.name = name;
 
             level.InitializeInEditor(EditorLoop.EditorLoopInstance.GraphicsDevice, spriteBatch, MainForm.Default.GameView.Width, MainForm.Default.GameView.Height);
-            level.LoadContentInEditor(EditorLoop.EditorLoopInstance.GraphicsDevice, EditorLoop.EditorLoopInstance.Content);
+            level.LoadContentInEditor(EditorLoop.EditorLoopInstance.graphics, EditorLoop.EditorLoopInstance.GraphicsDevice, EditorLoop.EditorLoopInstance.Content);
             MainForm.Default.UpdateTreeView();
         }
 
@@ -907,7 +908,7 @@ namespace SilhouetteEditor
                 if (level != null)
                 {
                     level.InitializeInEditor(EditorLoop.EditorLoopInstance.GraphicsDevice, spriteBatch, MainForm.Default.GameView.Width, MainForm.Default.GameView.Height);
-                    level.LoadContentInEditor(EditorLoop.EditorLoopInstance.GraphicsDevice, EditorLoop.EditorLoopInstance.Content);
+                    level.LoadContentInEditor(EditorLoop.EditorLoopInstance.graphics, EditorLoop.EditorLoopInstance.GraphicsDevice, EditorLoop.EditorLoopInstance.Content);
                     editorState = EditorState.IDLE;
                     MainForm.Default.UpdateTreeView();
                 }
@@ -951,7 +952,7 @@ namespace SilhouetteEditor
             l.level = level;
             l.initializeInEditor();
             //l.loadLayerInEditor();
-            l.loadContentInEditor(EditorLoop.EditorLoopInstance.GraphicsDevice, EditorLoop.EditorLoopInstance.Content);
+            l.loadContentInEditor(EditorLoop.EditorLoopInstance.graphics, EditorLoop.EditorLoopInstance.GraphicsDevice, EditorLoop.EditorLoopInstance.Content);
             level.layerList.Add(l);
             selectLayer(level.layerList.Last());
             MainForm.Default.UpdateTreeView();
@@ -1207,6 +1208,16 @@ namespace SilhouetteEditor
                 po.name = po.getPrefix() + selectedLayer.getNextObjectNumber();
                 po.layer = selectedLayer;
                 AddLevelObject(po);
+                selectedLayer.particleRenderer.addParticleObjects(po);
+                po.Initialise();
+                po.LoadContent();
+
+                if (po.particleEffect != null)
+                {
+                    //po.particleEffect.Initialise();
+                    //po.particleEffect.LoadContent(EditorLoop.EditorLoopInstance.Content);
+                    selectedLayer.particleRenderer.initializeParticles();
+                }
                 selectedLevelObjects.Clear();
                 selectedLevelObjects.Add(po);
             }
@@ -1473,6 +1484,13 @@ namespace SilhouetteEditor
                     e15.layer = selectedLayer;
                     selectedLayer.loList.Add(e15);
                     selectLevelObject(e15);
+                    break;
+                case EventType.ChangeEffect:
+                    ChangeEffectEvent e16 = new ChangeEffectEvent(Extensions.RectangleFromVectors(clickedPoints[0], clickedPoints[1]));
+                    e16.name = e16.getPrefix() + selectedLayer.getNextObjectNumber();
+                    e16.layer = selectedLayer;
+                    selectedLayer.loList.Add(e16);
+                    selectLevelObject(e16);
                     break;
             }
             MainForm.Default.UpdateTreeView();

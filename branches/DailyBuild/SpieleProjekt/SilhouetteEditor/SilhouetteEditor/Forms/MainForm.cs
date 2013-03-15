@@ -34,6 +34,7 @@ namespace SilhouetteEditor.Forms
             Default = this;
             InitializeComponent();
             TypeDescriptor.AddAttributes(typeof(LevelObject), new EditorAttribute(typeof(LevelObjectUITypeEditor), typeof(UITypeEditor)));
+            TypeDescriptor.AddAttributes(typeof(ChangeEffectEvent), new EditorAttribute(typeof(LevelObjectUITypeEditor), typeof(UITypeEditor)));
         }
 
         public IntPtr getDrawSurface()
@@ -659,6 +660,10 @@ namespace SilhouetteEditor.Forms
         {
             Editor.Default.AddEvents(EventType.ChangeBodyType);
         }
+        private void changeEffectToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Editor.Default.AddEvents(EventType.ChangeEffect);
+        }
 
         private void fadeToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -856,6 +861,31 @@ namespace SilhouetteEditor.Forms
             {
                 Editor.Default.deleteLevelObjects();
             }
+        }
+
+        private void LayerContextMenu_Opening(object sender, CancelEventArgs e)
+        {
+
+        }
+
+        private void addEffectToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            new AddEffect().ShowDialog();
+        }
+
+        private void LevelContextMenu_Opening(object sender, CancelEventArgs e)
+        {
+
+        }
+
+        private void addEffectToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            new AddEffect().ShowDialog();
+        }
+
+        private void addEffectToolStripMenuItem2_Click_1(object sender, EventArgs e)
+        {
+
         }
     }
 }

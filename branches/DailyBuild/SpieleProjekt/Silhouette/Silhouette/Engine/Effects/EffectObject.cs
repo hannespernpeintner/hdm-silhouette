@@ -10,11 +10,16 @@ using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 using System.Text;
 
+using Silhouette.GameMechs;
+
 namespace Silhouette.Engine.Effects
 {
     [Serializable]
-    public abstract class EffectObject
+    public abstract class EffectObject : LevelObject
     {
+        [NonSerialized]
+        protected GraphicsDevice _graphics;
+
         private List<String> _types;
         public List<String> Types
         {
@@ -36,11 +41,16 @@ namespace Silhouette.Engine.Effects
             set { _path = value; }
         }
 
+        [NonSerialized]
         private Effect _effect;
         public virtual Effect Effect
         {
             get { return _effect; }
             set { _effect = value; }
+        }
+        public virtual Effect EffectInEditor(GraphicsDevice graphics)
+        {
+            return Effect;
         }
 
         private bool _active;
@@ -49,11 +59,18 @@ namespace Silhouette.Engine.Effects
             get { return _active; }
             set { _active = value; }
         }
+        private float _factor;
+        public float Factor
+        {
+            get { return _factor; }
+            set { _factor = value; }
+        }
 
         // Bitte initialisiert im Types-Array immer den Default-Type als ERSTES ELEMENT bei Index 0.
-        public abstract void Initialise();
-        public abstract void LoadContent();
-        public abstract void Uddate(GameTime gameTime);
+        public override void Initialise() { Factor = 1.0f; }
+        public override void LoadContent() { }
+        public override void Update(GameTime gameTime){}
+        public virtual void UpdateInEditor(GameTime gameTime) {this.Update(gameTime);}
         public virtual void loadContentInEditor(GraphicsDevice graphics, ContentManager content) { }
 
     }

@@ -19,6 +19,7 @@ using Silhouette.GameMechs;
 using Silhouette.Engine.Manager;
 using Silhouette.Engine.Screens;
 using Silhouette.Engine;
+using Silhouette.Engine.Effects;
 using System.ComponentModel;
 
 //Physik-Engine Klassen
@@ -64,6 +65,14 @@ namespace Silhouette.Engine
         [Description("Defines the characters starting position.")]
         public Vector2 startPosition { get { return _startPosition; } set { _startPosition = value; } }
 
+
+        private List<EffectObject> _effects;
+        public List<EffectObject> Effects
+        {
+            get { return _effects; }
+            set { _effects = value; }
+        }
+
         public bool isVisible = true;
 
         [NonSerialized]
@@ -103,7 +112,7 @@ namespace Silhouette.Engine
             _layerList = new List<Layer>();
         }
 
-        public void Initialize()
+        public void Initialize(bool editor, ContentManager content)
         {
             renderTargets = new RenderTarget2D[5];
             renderTargets[1] = new RenderTarget2D(GameLoop.gameInstance.GraphicsDevice, GameSettings.Default.resolutionWidth, GameSettings.Default.resolutionHeight);
@@ -120,7 +129,14 @@ namespace Silhouette.Engine
             Camera.initialize(GameSettings.Default.resolutionWidth, GameSettings.Default.resolutionHeight);
             Camera.Position = new Vector2(GameSettings.Default.resolutionWidth / 2, GameSettings.Default.resolutionHeight / 2);
             Camera.Scale = GameSettings.Default.gameCamScale;
-            ParticleManager.initialize();
+            if (editor) 
+            {
+                ParticleManager.initializeInEditor(content);
+            }
+            else
+            {
+                ParticleManager.initialize();
+            }
 
             this.GraphicsEnabled = true;
             this.DebugViewEnabled = false;
@@ -145,6 +161,22 @@ namespace Silhouette.Engine
             if (bossLayer != null)
                 AddBoss(bossLayer);
 
+            Effects = new List<EffectObject>();
+            EffectObject e0 = new GodRays();
+            EffectObject e1 = new Bloom();
+            EffectObject e2 = new VignettenBlur();
+            EffectObject e3 = new ColorFade();
+            Effects.Add(e0);
+            Effects.Add(e1);
+            Effects.Add(e2);
+            Effects.Add(e3);
+
+            foreach (EffectObject eo in Effects)
+            {
+                eo.Initialise();
+                eo.LoadContent();
+            }
+
             foreach (Layer l in layerList)
             {
                 l.loadLayer();
@@ -161,7 +193,10 @@ namespace Silhouette.Engine
                 l.updateLayer(gameTime);
             }
 
-
+            foreach (EffectObject eo in Effects)
+            {
+                eo.Update(gameTime);
+            }
 
             EffectManager.Update(gameTime);
 
@@ -205,7 +240,7 @@ namespace Silhouette.Engine
             {
                 //GameLoop.gameInstance.GraphicsDevice.SetRenderTarget(renderTargets[1]);
 
-                _flipFlop.Draw(layerList);
+                _flipFlop.Draw(this);
 
                 GameLoop.gameInstance.GraphicsDevice.SetRenderTarget(null);
                 GameLoop.gameInstance.GraphicsDevice.Clear(Color.White);

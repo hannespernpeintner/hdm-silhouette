@@ -103,7 +103,7 @@ namespace Silhouette
                 
                 this.levelPath = GameLoop.gameInstance.parameterLevelToLoad;
                 currentLevel = Level.LoadLevelFile(GameLoop.gameInstance.parameterLevelToLoad);
-                currentLevel.Initialize();
+                currentLevel.Initialize(false, GameLoop.gameInstance.Content);
                 currentLevel.LoadContent();
                 currentGameState = GameState.InGame;
                 GameLoop.gameInstance.parameterLevelToLoad = null;
@@ -183,7 +183,7 @@ namespace Silhouette
             string temp = "12345";
             this.levelPath = temp;
             currentLevel = Level.LoadLevelFile(temp);
-            currentLevel.Initialize();
+            currentLevel.Initialize(false, GameLoop.gameInstance.Content);
             currentLevel.LoadContent();
             currentGameState = GameState.InGame;
         }
@@ -193,7 +193,7 @@ namespace Silhouette
             string temp = levelName;
             this.levelPath = temp;
             currentLevel = Level.LoadLevelFile(temp);
-            currentLevel.Initialize();
+            currentLevel.Initialize(false, GameLoop.gameInstance.Content);
             currentLevel.LoadContent();
             currentGameState = GameState.InGame;
         }
@@ -205,7 +205,7 @@ namespace Silhouette
             if (SaveGame.Default.levelToContinue.Length > 0)
             {
                 currentLevel = Level.LoadLevelFile(SaveGame.Default.levelToContinue);
-                currentLevel.Initialize();
+                currentLevel.Initialize(false, GameLoop.gameInstance.Content);
                 currentLevel.LoadContent();
             }
         }

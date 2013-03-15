@@ -94,6 +94,7 @@ namespace SilhouetteEditor.Forms
             this.playToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.deathToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.loadLevelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.changeEffectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cameraToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.JointButton = new System.Windows.Forms.ToolStripDropDownButton();
             this.RevoluteJointButton = new System.Windows.Forms.ToolStripMenuItem();
@@ -123,12 +124,15 @@ namespace SilhouetteEditor.Forms
             this.addLayerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.renameToolStripMenuItem = new System.Windows.Forms.ToolStripSeparator();
             this.renameToolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
+            this.addEffectToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.LayerContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.renameToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.moveUpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.moveDownToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
+            this.addEffectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ObjectContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.renameToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.copyToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
@@ -139,6 +143,7 @@ namespace SilhouetteEditor.Forms
             this.deleteToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.addObjectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.addEffectToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             this.StatusBar.SuspendLayout();
             this.MenuBar.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -562,6 +567,7 @@ namespace SilhouetteEditor.Forms
             this.videoToolStripMenuItem,
             this.deathToolStripMenuItem,
             this.loadLevelToolStripMenuItem,
+            this.changeEffectToolStripMenuItem,
             this.cameraToolStripMenuItem});
             this.EventButton.Image = global::SilhouetteEditor.Properties.Resource.AddEvent;
             this.EventButton.ImageTransparentColor = System.Drawing.Color.Magenta;
@@ -576,7 +582,7 @@ namespace SilhouetteEditor.Forms
             this.moveRotateToolStripMenuItem,
             this.changeVisibilityToolStripMenuItem});
             this.objectToolStripMenuItem.Name = "objectToolStripMenuItem";
-            this.objectToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
+            this.objectToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
             this.objectToolStripMenuItem.Text = "Object";
             // 
             // moveRotateToolStripMenuItem
@@ -599,7 +605,7 @@ namespace SilhouetteEditor.Forms
             this.changeBodyTypeToolStripMenuItem,
             this.applyForceToolStripMenuItem});
             this.physicToolStripMenuItem.Name = "physicToolStripMenuItem";
-            this.physicToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
+            this.physicToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
             this.physicToolStripMenuItem.Text = "Physic";
             // 
             // changeBodyTypeToolStripMenuItem
@@ -627,7 +633,7 @@ namespace SilhouetteEditor.Forms
             this.setVolumeToolStripMenuItem,
             this.reverbToolStripMenuItem});
             this.audioToolStripMenuItem.Name = "audioToolStripMenuItem";
-            this.audioToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
+            this.audioToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
             this.audioToolStripMenuItem.Text = "Audio";
             // 
             // fadeToolStripMenuItem
@@ -684,7 +690,7 @@ namespace SilhouetteEditor.Forms
             this.videoToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.playToolStripMenuItem});
             this.videoToolStripMenuItem.Name = "videoToolStripMenuItem";
-            this.videoToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
+            this.videoToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
             this.videoToolStripMenuItem.Text = "Video";
             // 
             // playToolStripMenuItem
@@ -697,21 +703,28 @@ namespace SilhouetteEditor.Forms
             // deathToolStripMenuItem
             // 
             this.deathToolStripMenuItem.Name = "deathToolStripMenuItem";
-            this.deathToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
+            this.deathToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
             this.deathToolStripMenuItem.Text = "Death";
             this.deathToolStripMenuItem.Click += new System.EventHandler(this.deathToolStripMenuItem_Click);
             // 
             // loadLevelToolStripMenuItem
             // 
             this.loadLevelToolStripMenuItem.Name = "loadLevelToolStripMenuItem";
-            this.loadLevelToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
+            this.loadLevelToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
             this.loadLevelToolStripMenuItem.Text = "LoadLevel";
             this.loadLevelToolStripMenuItem.Click += new System.EventHandler(this.loadLevelToolStripMenuItem_Click);
+            // 
+            // changeEffectToolStripMenuItem
+            // 
+            this.changeEffectToolStripMenuItem.Name = "changeEffectToolStripMenuItem";
+            this.changeEffectToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+            this.changeEffectToolStripMenuItem.Text = "Change Effect";
+            this.changeEffectToolStripMenuItem.Click += new System.EventHandler(this.changeEffectToolStripMenuItem_Click);
             // 
             // cameraToolStripMenuItem
             // 
             this.cameraToolStripMenuItem.Name = "cameraToolStripMenuItem";
-            this.cameraToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
+            this.cameraToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
             this.cameraToolStripMenuItem.Text = "Camera";
             this.cameraToolStripMenuItem.Click += new System.EventHandler(this.cameraToolStripMenuItem_Click);
             // 
@@ -830,7 +843,7 @@ namespace SilhouetteEditor.Forms
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(237, 367);
+            this.tabPage2.Size = new System.Drawing.Size(237, 366);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Textures";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -842,7 +855,7 @@ namespace SilhouetteEditor.Forms
             this.TextureView.LargeImageList = this.ImageList32;
             this.TextureView.Location = new System.Drawing.Point(3, 3);
             this.TextureView.Name = "TextureView";
-            this.TextureView.Size = new System.Drawing.Size(231, 338);
+            this.TextureView.Size = new System.Drawing.Size(231, 337);
             this.TextureView.TabIndex = 1;
             this.TextureView.UseCompatibleStateImageBehavior = false;
             this.TextureView.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(this.TextureView_ItemDrag);
@@ -858,7 +871,7 @@ namespace SilhouetteEditor.Forms
             // BrowseButton
             // 
             this.BrowseButton.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.BrowseButton.Location = new System.Drawing.Point(3, 341);
+            this.BrowseButton.Location = new System.Drawing.Point(3, 340);
             this.BrowseButton.Name = "BrowseButton";
             this.BrowseButton.Size = new System.Drawing.Size(231, 23);
             this.BrowseButton.TabIndex = 0;
@@ -873,7 +886,7 @@ namespace SilhouetteEditor.Forms
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(237, 367);
+            this.tabPage3.Size = new System.Drawing.Size(237, 366);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Interactive";
             this.tabPage3.UseVisualStyleBackColor = true;
@@ -881,7 +894,7 @@ namespace SilhouetteEditor.Forms
             // BrowseButton2
             // 
             this.BrowseButton2.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.BrowseButton2.Location = new System.Drawing.Point(3, 341);
+            this.BrowseButton2.Location = new System.Drawing.Point(3, 340);
             this.BrowseButton2.Name = "BrowseButton2";
             this.BrowseButton2.Size = new System.Drawing.Size(231, 23);
             this.BrowseButton2.TabIndex = 1;
@@ -896,7 +909,7 @@ namespace SilhouetteEditor.Forms
             this.InteractiveView.LargeImageList = this.ImageListInteractive32;
             this.InteractiveView.Location = new System.Drawing.Point(3, 3);
             this.InteractiveView.Name = "InteractiveView";
-            this.InteractiveView.Size = new System.Drawing.Size(231, 361);
+            this.InteractiveView.Size = new System.Drawing.Size(231, 360);
             this.InteractiveView.TabIndex = 0;
             this.InteractiveView.UseCompatibleStateImageBehavior = false;
             this.InteractiveView.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(this.InteractiveView_ItemDrag);
@@ -916,7 +929,7 @@ namespace SilhouetteEditor.Forms
             this.tabPageAnimations.Location = new System.Drawing.Point(4, 22);
             this.tabPageAnimations.Name = "tabPageAnimations";
             this.tabPageAnimations.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageAnimations.Size = new System.Drawing.Size(237, 367);
+            this.tabPageAnimations.Size = new System.Drawing.Size(237, 366);
             this.tabPageAnimations.TabIndex = 3;
             this.tabPageAnimations.Text = "Animations";
             this.tabPageAnimations.UseVisualStyleBackColor = true;
@@ -928,7 +941,7 @@ namespace SilhouetteEditor.Forms
             this.TextureViewAnimations.LargeImageList = this.ImageListAnimations32;
             this.TextureViewAnimations.Location = new System.Drawing.Point(3, 3);
             this.TextureViewAnimations.Name = "TextureViewAnimations";
-            this.TextureViewAnimations.Size = new System.Drawing.Size(231, 338);
+            this.TextureViewAnimations.Size = new System.Drawing.Size(231, 337);
             this.TextureViewAnimations.TabIndex = 3;
             this.TextureViewAnimations.UseCompatibleStateImageBehavior = false;
             this.TextureViewAnimations.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(this.TextureViewAnimations_ItemDrag);
@@ -944,7 +957,7 @@ namespace SilhouetteEditor.Forms
             // BrowseButtonAnimations
             // 
             this.BrowseButtonAnimations.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.BrowseButtonAnimations.Location = new System.Drawing.Point(3, 341);
+            this.BrowseButtonAnimations.Location = new System.Drawing.Point(3, 340);
             this.BrowseButtonAnimations.Name = "BrowseButtonAnimations";
             this.BrowseButtonAnimations.Size = new System.Drawing.Size(231, 23);
             this.BrowseButtonAnimations.TabIndex = 0;
@@ -962,7 +975,6 @@ namespace SilhouetteEditor.Forms
             this.GameView.Size = new System.Drawing.Size(999, 678);
             this.GameView.TabIndex = 0;
             this.GameView.TabStop = false;
-            //this.GameView.Click += new System.EventHandler(this.GameView_Click);
             this.GameView.DragEnter += new System.Windows.Forms.DragEventHandler(this.GameView_DragEnter);
             this.GameView.MouseEnter += new System.EventHandler(this.GameView_MouseEnter);
             this.GameView.MouseLeave += new System.EventHandler(this.GameView_MouseLeave);
@@ -973,28 +985,37 @@ namespace SilhouetteEditor.Forms
             this.LevelContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.addLayerToolStripMenuItem,
             this.renameToolStripMenuItem,
-            this.renameToolStripMenuItem3});
+            this.renameToolStripMenuItem3,
+            this.addEffectToolStripMenuItem1});
             this.LevelContextMenu.Name = "contextMenuStrip1";
-            this.LevelContextMenu.Size = new System.Drawing.Size(128, 54);
+            this.LevelContextMenu.Size = new System.Drawing.Size(130, 76);
+            this.LevelContextMenu.Opening += new System.ComponentModel.CancelEventHandler(this.LevelContextMenu_Opening);
             // 
             // addLayerToolStripMenuItem
             // 
             this.addLayerToolStripMenuItem.Name = "addLayerToolStripMenuItem";
-            this.addLayerToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
+            this.addLayerToolStripMenuItem.Size = new System.Drawing.Size(129, 22);
             this.addLayerToolStripMenuItem.Text = "Add Layer";
             this.addLayerToolStripMenuItem.Click += new System.EventHandler(this.LevelToolStrip_AddLayer);
             // 
             // renameToolStripMenuItem
             // 
             this.renameToolStripMenuItem.Name = "renameToolStripMenuItem";
-            this.renameToolStripMenuItem.Size = new System.Drawing.Size(124, 6);
+            this.renameToolStripMenuItem.Size = new System.Drawing.Size(126, 6);
             // 
             // renameToolStripMenuItem3
             // 
             this.renameToolStripMenuItem3.Name = "renameToolStripMenuItem3";
-            this.renameToolStripMenuItem3.Size = new System.Drawing.Size(127, 22);
+            this.renameToolStripMenuItem3.Size = new System.Drawing.Size(129, 22);
             this.renameToolStripMenuItem3.Text = "Rename";
             this.renameToolStripMenuItem3.Click += new System.EventHandler(this.renameToolStripMenuItem3_Click);
+            // 
+            // addEffectToolStripMenuItem1
+            // 
+            this.addEffectToolStripMenuItem1.Name = "addEffectToolStripMenuItem1";
+            this.addEffectToolStripMenuItem1.Size = new System.Drawing.Size(129, 22);
+            this.addEffectToolStripMenuItem1.Text = "Add Effect";
+            this.addEffectToolStripMenuItem1.Click += new System.EventHandler(this.addEffectToolStripMenuItem1_Click);
             // 
             // LayerContextMenu
             // 
@@ -1003,9 +1024,12 @@ namespace SilhouetteEditor.Forms
             this.deleteToolStripMenuItem,
             this.toolStripSeparator5,
             this.moveUpToolStripMenuItem,
-            this.moveDownToolStripMenuItem});
+            this.moveDownToolStripMenuItem,
+            this.toolStripSeparator4,
+            this.addEffectToolStripMenuItem});
             this.LayerContextMenu.Name = "LayerContextMenu";
-            this.LayerContextMenu.Size = new System.Drawing.Size(139, 98);
+            this.LayerContextMenu.Size = new System.Drawing.Size(139, 126);
+            this.LayerContextMenu.Opening += new System.ComponentModel.CancelEventHandler(this.LayerContextMenu_Opening);
             // 
             // renameToolStripMenuItem2
             // 
@@ -1040,6 +1064,18 @@ namespace SilhouetteEditor.Forms
             this.moveDownToolStripMenuItem.Text = "Move Down";
             this.moveDownToolStripMenuItem.Click += new System.EventHandler(this.moveDownToolStripMenuItem_Click);
             // 
+            // toolStripSeparator4
+            // 
+            this.toolStripSeparator4.Name = "toolStripSeparator4";
+            this.toolStripSeparator4.Size = new System.Drawing.Size(135, 6);
+            // 
+            // addEffectToolStripMenuItem
+            // 
+            this.addEffectToolStripMenuItem.Name = "addEffectToolStripMenuItem";
+            this.addEffectToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
+            this.addEffectToolStripMenuItem.Text = "Add Effect";
+            this.addEffectToolStripMenuItem.Click += new System.EventHandler(this.addEffectToolStripMenuItem_Click);
+            // 
             // ObjectContextMenu
             // 
             this.ObjectContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -1052,21 +1088,21 @@ namespace SilhouetteEditor.Forms
             // renameToolStripMenuItem1
             // 
             this.renameToolStripMenuItem1.Name = "renameToolStripMenuItem1";
-            this.renameToolStripMenuItem1.Size = new System.Drawing.Size(117, 22);
+            this.renameToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
             this.renameToolStripMenuItem1.Text = "Rename";
             this.renameToolStripMenuItem1.Click += new System.EventHandler(this.renameToolStripMenuItem1_Click);
             // 
             // copyToolStripMenuItem1
             // 
             this.copyToolStripMenuItem1.Name = "copyToolStripMenuItem1";
-            this.copyToolStripMenuItem1.Size = new System.Drawing.Size(117, 22);
+            this.copyToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
             this.copyToolStripMenuItem1.Text = "Copy";
             this.copyToolStripMenuItem1.Click += new System.EventHandler(this.copyToolStripMenuItem1_Click);
             // 
             // deleteToolStripMenuItem1
             // 
             this.deleteToolStripMenuItem1.Name = "deleteToolStripMenuItem1";
-            this.deleteToolStripMenuItem1.Size = new System.Drawing.Size(117, 22);
+            this.deleteToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
             this.deleteToolStripMenuItem1.Text = "Delete";
             this.deleteToolStripMenuItem1.Click += new System.EventHandler(this.deleteToolStripMenuItem1_Click);
             // 
@@ -1077,9 +1113,10 @@ namespace SilhouetteEditor.Forms
             this.copyToolStripMenuItem,
             this.deleteToolStripMenuItem2,
             this.toolStripSeparator3,
-            this.addObjectToolStripMenuItem});
+            this.addObjectToolStripMenuItem,
+            this.addEffectToolStripMenuItem2});
             this.EventContextMenü.Name = "EventContextMenü";
-            this.EventContextMenü.Size = new System.Drawing.Size(155, 98);
+            this.EventContextMenü.Size = new System.Drawing.Size(155, 142);
             // 
             // renameToolStripMenuItem4
             // 
@@ -1113,6 +1150,13 @@ namespace SilhouetteEditor.Forms
             this.addObjectToolStripMenuItem.Size = new System.Drawing.Size(154, 22);
             this.addObjectToolStripMenuItem.Text = "Manage Events";
             this.addObjectToolStripMenuItem.Click += new System.EventHandler(this.addObjectToolStripMenuItem_Click);
+            // 
+            // addEffectToolStripMenuItem2
+            // 
+            this.addEffectToolStripMenuItem2.Name = "addEffectToolStripMenuItem2";
+            this.addEffectToolStripMenuItem2.Size = new System.Drawing.Size(154, 22);
+            this.addEffectToolStripMenuItem2.Text = "Add Effect";
+            this.addEffectToolStripMenuItem2.Click += new System.EventHandler(this.addEffectToolStripMenuItem2_Click_1);
             // 
             // MainForm
             // 
@@ -1264,8 +1308,13 @@ namespace SilhouetteEditor.Forms
         private System.Windows.Forms.ToolStripMenuItem moveRotateToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem changeVisibilityToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem applyForceToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem changeEffectToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem saveStateToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem loadLevelToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
+        private System.Windows.Forms.ToolStripMenuItem addEffectToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem addEffectToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem addEffectToolStripMenuItem2;
 
     }
 }
