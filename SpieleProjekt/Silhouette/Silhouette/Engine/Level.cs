@@ -102,7 +102,7 @@ namespace Silhouette.Engine
         {
             _layerList = new List<Layer>();
         }
-        
+
         public void Initialize()
         {
             renderTargets = new RenderTarget2D[5];
@@ -261,7 +261,9 @@ namespace Silhouette.Engine
             }
             catch (Exception e)
             {
+                DebugLogManager.writeToLogFile("LoadLevelFile Exception: " + e.Message);
                 return new Level();
+
             }
         }
 
