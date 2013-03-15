@@ -34,7 +34,7 @@ namespace SilhouetteEditor
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             GameSettings.Initialise();
-            GameSettings.ApplyChanges(ref graphics); 
+            GameSettings.ApplyChanges(ref graphics);
             this.drawSurface = drawSurface;
             graphics.PreparingDeviceSettings += new EventHandler<PreparingDeviceSettingsEventArgs>(graphics_PreparingDeviceSettings);
             winform = (Form)Form.FromHandle(Window.Handle);
@@ -58,7 +58,7 @@ namespace SilhouetteEditor
             DebugViewXNA.LoadContent(EditorLoop.EditorLoopInstance.GraphicsDevice, EditorLoop.EditorLoopInstance.Content);
         }
 
-        protected override void UnloadContent() {}
+        protected override void UnloadContent() { }
 
         protected override void Update(GameTime gameTime)
         {

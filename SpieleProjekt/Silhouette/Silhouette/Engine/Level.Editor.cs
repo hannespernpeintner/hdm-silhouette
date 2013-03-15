@@ -94,14 +94,28 @@ namespace Silhouette.Engine
 
         public void SaveLevel(string fullPath)
         {
-            FileStream file = FileManager.SaveLevelFile(fullPath);
-
-            if (file != null)
+            //transactional saving
+            try
             {
-                BinaryFormatter serializer = new BinaryFormatter();
-                serializer.Serialize(file, this);
-                file.Close();
+                FileStream file = FileManager.SaveLevelFile(fullPath + ".tmp");
+
+                if (file != null)
+                {
+                    BinaryFormatter serializer = new BinaryFormatter();
+                    serializer.Serialize(file, this);
+                    file.Close();
+                }
             }
+            catch
+            {
+                throw new Exception(@"Something went terribly wrong while saving your file!");
+            }
+
+            if (System.IO.File.Exists(fullPath))
+            {
+                System.IO.File.Delete(fullPath);
+            }
+            System.IO.File.Move(fullPath + ".tmp", fullPath);
         }
 
         public Layer getLayerByName(string name)
