@@ -122,7 +122,16 @@
   <ItemGroup>
     <Compile Include="DebugViewXNA.cs" />
     <Compile Include="Engine\AnimationWithFixture.cs" />
+
+    <Compile Include="Engine\Effects\Bleach.cs" />
+    <Compile Include="Engine\Effects\Bloom.cs" />
+    <Compile Include="Engine\Effects\GodRays.cs" />
+    <Compile Include="Engine\Effects\ColorFade.cs" />
+    <Compile Include="Engine\Effects\Water.cs" />
+    <Compile Include="Engine\Effects\VignettenBlur.cs" />
+
     <Compile Include="Engine\Manager\DebugLogManager.cs" />
+
     <Compile Include="Engine\RenderTargetFlipFlop.cs" />
     <Compile Include="Engine\Timer.cs" />
     <Compile Include="Engine\Camera.cs" />
@@ -164,6 +173,7 @@
     <Compile Include="GameMechs\Events\ChangeVisibilityEvent.cs" />
     <Compile Include="GameMechs\Events\DeathEvent.cs" />
     <Compile Include="GameMechs\Events\Event.cs" />
+    <Compile Include="GameMechs\Events\ChangeEffectEvent.cs" />
     <Compile Include="GameMechs\Events\LoadLevelEvent.cs" />
     <Compile Include="GameMechs\Events\PhysicApplyForceEvent.cs" />
     <Compile Include="GameMechs\Events\PhysicChangeBodyTypeEvent.cs" />

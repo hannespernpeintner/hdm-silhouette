@@ -16,6 +16,7 @@ using Microsoft.Xna.Framework.Media;
 
 using Silhouette.Engine.Manager;
 using Silhouette.Engine.Screens;
+using Silhouette.Engine.Effects;
 using Silhouette.Engine;
 
 //Physik-Engine Klassen
@@ -47,13 +48,31 @@ namespace Silhouette.Engine
             }
         }
 
-        public void LoadContentInEditor(GraphicsDevice graphics, ContentManager content)
+        public void LoadContentInEditor(GraphicsDeviceManager graphicsM, GraphicsDevice graphics, ContentManager content)
         {
+            ParticleManager.initializeInEditor(content);
             EffectManager.loadEffectsInEditor(graphics, content);
             proj = Matrix.CreateOrthographicOffCenter(0, GameSettings.Default.resolutionWidth / PixelPerMeter, GameSettings.Default.resolutionHeight / PixelPerMeter, 0, 0, 1);
+
+            Effects = new List<EffectObject>();
+            EffectObject e0 = new GodRays();
+            EffectObject e1 = new Bloom();
+            EffectObject e2 = new VignettenBlur();
+            EffectObject e3 = new ColorFade();
+            Effects.Add(e0);
+            Effects.Add(e1);
+            Effects.Add(e2);
+            Effects.Add(e3);
+
+            foreach (EffectObject eo in Effects)
+            {
+                eo.Initialise();
+                eo.loadContentInEditor(graphics, content);
+            }
+
             foreach (Layer l in layerList)
             {
-                l.loadContentInEditor(graphics, content);
+                l.loadContentInEditor(graphicsM, graphics, content);
                 //l.loadLayerInEditor();
             }
         }
@@ -61,6 +80,10 @@ namespace Silhouette.Engine
         public void UpdateInEditor(GameTime gameTime)
         {
             Physics.Step(Math.Min((float)gameTime.ElapsedGameTime.TotalMilliseconds * 0.001f, (1f / 30f)));
+            foreach (EffectObject eo in Effects)
+            {
+                eo.UpdateInEditor(gameTime);
+            }
         }
 
         public void DrawInEditor(GraphicsDevice graphics, int treeviewOffset)
@@ -79,7 +102,7 @@ namespace Silhouette.Engine
                     spriteBatch.End();
                     Camera.Position = oldCameraPosition;
                 }*/
-                _flipFlop.DrawInEditor(layerList);
+                _flipFlop.DrawInEditor(this);
                 graphics.SetRenderTarget(null);
                 graphics.Clear(Color.White);
                 spriteBatch.Begin();

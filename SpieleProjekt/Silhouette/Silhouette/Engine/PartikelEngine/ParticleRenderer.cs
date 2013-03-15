@@ -35,6 +35,11 @@ namespace Silhouette.Engine.PartikelEngine
             particleRenderer = new SpriteBatchRenderer { GraphicsDeviceService = GameLoop.gameInstance.graphics };
             particlesToRender = new List<LevelObject>();
         }
+        public ParticleRenderer(GraphicsDeviceManager gdm)
+        {
+            particleRenderer = new SpriteBatchRenderer { GraphicsDeviceService = gdm };
+            particlesToRender = new List<LevelObject>();
+        }
 
         public void addParticleObjects(LevelObject lo)
         { 
@@ -66,7 +71,7 @@ namespace Silhouette.Engine.PartikelEngine
             if (!(particlesToRender.Count > 0))
                 return;
 
-            foreach(ParticleObject p in particlesToRender)
+            foreach (ParticleObject p in particlesToRender)
             {
                 if (p.particleEffect != null)
                 {
@@ -75,6 +80,7 @@ namespace Silhouette.Engine.PartikelEngine
                 }
             }
         }
+
 
         public void drawParticles()
         {

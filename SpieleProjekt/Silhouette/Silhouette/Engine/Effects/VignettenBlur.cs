@@ -13,21 +13,21 @@ using System.Text;
 namespace Silhouette.Engine.Effects
 {
     [Serializable]
-    public class Blur : Effects.EffectObject
+    public class VignettenBlur : Effects.EffectObject
     {
-        private float _blurDistanceInPixels;
-        public float BlurDistanceInPixels
+        private bool _overallBlur;
+        public bool OverallBlur
         {
-            get { return _blurDistanceInPixels; }
-            set { _blurDistanceInPixels = value; }
+            get { return _overallBlur; }
+            set { _overallBlur = value; }
+        }
+        private bool _overallVignette;
+        public bool OverallVignette
+        {
+            get { return _overallVignette; }
+            set { _overallVignette = value; }
         }
 
-        private float _blurStrength;
-        public float BlurStrength
-        {
-            get { return _blurStrength; }
-            set { _blurStrength = value; }
-        }
 
 
         [NonSerialized]
@@ -40,8 +40,8 @@ namespace Silhouette.Engine.Effects
                 Matrix halfPixelOffset = Matrix.CreateTranslation(-0.5f, -0.5f, 0);
 
                 _effect.Parameters["MatrixTransform"].SetValue(halfPixelOffset * projection);
-                _effect.Parameters["BlurDistanceInShaderCoords"].SetValue(Factor * BlurDistanceInPixels / _graphics.Viewport.Width);
-                _effect.Parameters["BlurStrength"].SetValue(BlurStrength * Factor);
+                _effect.Parameters["bBlur"].SetValue(OverallBlur);
+                _effect.Parameters["bVignette"].SetValue(OverallVignette);
                 return _effect;
             }
             set { _effect = value; }
@@ -49,12 +49,12 @@ namespace Silhouette.Engine.Effects
         public override Effect EffectInEditor(GraphicsDevice graphics)
         {
             {
-                Matrix projection = Matrix.CreateOrthographicOffCenter(0, _graphics.Viewport.Width, _graphics.Viewport.Height, 0, 0, 1);
+                Matrix projection = Matrix.CreateOrthographicOffCenter(0, graphics.Viewport.Width, graphics.Viewport.Height, 0, 0, 1);
                 Matrix halfPixelOffset = Matrix.CreateTranslation(-0.5f, -0.5f, 0);
 
                 _effect.Parameters["MatrixTransform"].SetValue(halfPixelOffset * projection);
-                _effect.Parameters["BlurDistanceInShaderCoords"].SetValue(Factor * BlurDistanceInPixels / _graphics.Viewport.Width);
-                _effect.Parameters["BlurStrength"].SetValue(BlurStrength * Factor);
+                _effect.Parameters["bBlur"].SetValue(OverallBlur);
+                _effect.Parameters["bVignette"].SetValue(OverallVignette); 
                 return _effect;
             }
         }
@@ -64,9 +64,9 @@ namespace Silhouette.Engine.Effects
         {
             base.Initialise();
             Active = true;
-            Path = "Effects/Blur";
-            BlurStrength = 0.5f;
-            BlurDistanceInPixels = 10;
+            Path = "Effects/VignettenBlur";
+            OverallBlur = true;
+            OverallVignette = true;
         }
         public override void LoadContent()
         {
@@ -77,6 +77,11 @@ namespace Silhouette.Engine.Effects
         {
             Effect = content.Load<Effect>(Path);
             _graphics = graphics;
+        }
+
+        public override void Update(GameTime gameTime)
+        {
+        
         }
 
     }

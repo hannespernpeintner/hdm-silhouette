@@ -48,7 +48,23 @@ namespace Silhouette.GameMechs
         private ParticleType _particleType;
         [DisplayName("Particle Effect"), Category("Particle Data")]
         [Description("The particle effect you want to display.")]
-        public ParticleType particleType { get { return _particleType; } set { _particleType = value; } }
+        public ParticleType particleType 
+        { 
+            get 
+            { 
+                return _particleType; 
+            } 
+            set 
+            { 
+                _particleType = value;
+                try
+                {
+                    LoadContent();
+                }
+                catch (Exception e)
+                { }
+            } 
+        }
 
         private LevelObject _levelObject;
         [DisplayName("LevelObject"), Category("Particle Data")]
