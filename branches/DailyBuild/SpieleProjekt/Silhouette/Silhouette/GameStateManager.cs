@@ -100,6 +100,7 @@ namespace Silhouette
         {
             if ((GameLoop.gameInstance.parameterLevelToLoad != null) && (currentGameState != GameState.InGame))
             {
+                
                 this.levelPath = GameLoop.gameInstance.parameterLevelToLoad;
                 currentLevel = Level.LoadLevelFile(GameLoop.gameInstance.parameterLevelToLoad);
                 currentLevel.Initialize();
