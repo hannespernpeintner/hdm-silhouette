@@ -23,12 +23,19 @@ namespace Silhouette.Engine
     public partial class Layer
     {
         public Level level;
+        [NonSerialized]
+        public GraphicsDeviceManager _graphicsM;
+        [NonSerialized]
+        public ContentManager _contentM;
 
         public void initializeInEditor() { }
 
         public void loadContentInEditor(GraphicsDeviceManager graphicsM, GraphicsDevice graphics, ContentManager content)
         {
             particleRenderer = new ParticleRenderer(graphicsM);
+            particleRenderer.particleRenderer.LoadContent(content);
+            this._graphicsM = graphicsM;
+            this._contentM = content;
             Rt = new RenderTarget2D(graphics, graphics.Viewport.Width, graphics.Viewport.Height);
 
             foreach (LevelObject lo in loList)
@@ -41,11 +48,11 @@ namespace Silhouette.Engine
                 else if (lo is ParticleObject)
                 {
                     ParticleObject p = (ParticleObject)lo;
-                    particleRenderer.addParticleObjects(p);
+                    particleRenderer.addParticleObjectsInEditor(p, content);
                 }
             }
 
-            particleRenderer.initializeParticles();
+            particleRenderer.initializeParticlesInEditor(content);
             Effects = new List<EffectObject>();
 
             foreach (EffectObject eo in Effects)
@@ -69,9 +76,14 @@ namespace Silhouette.Engine
                         dlo.drawInEditor(spriteBatch);
                 }
 
+            }
 
+            if (particleRenderer == null)
+            {
+                particleRenderer = new ParticleRenderer(_graphicsM);
                 //      particleRenderer.drawParticles();
             }
+            particleRenderer.drawParticlesInEditor(_contentM);
         }
 
         public void updateLayerInEditor(GameTime gameTime)
@@ -87,7 +99,7 @@ namespace Silhouette.Engine
             {
                 if (obj.GetType() == typeof(InteractiveObject))
                     ((InteractiveObject)obj).Update(gameTime);
-            }
+        }
         }
 
         public LevelObject getItemAtPosition(Vector2 worldPosition)

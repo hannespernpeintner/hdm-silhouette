@@ -103,11 +103,11 @@ namespace Silhouette.Engine
             }
             DrawToResultTarget(level, level.layerList);
         }
-        public void DrawInEditor(Level level)
+        public void DrawInEditor(Level level, GraphicsDevice graphics)
         {
             foreach (Layer l in level.layerList)
             {
-                DrawInEditor(l);
+                DrawInEditor(l, graphics);
             }
             DrawInEditorToResultTarget(level, level.layerList);
         }
@@ -124,11 +124,15 @@ namespace Silhouette.Engine
             Batch.End();
             Camera.Position = oldCameraPosition;
         }
-        private void DrawInEditor(Layer l)
+        private void DrawInEditor(Layer l, GraphicsDevice graphics)
         {
             Vector2 oldCameraPosition = Camera.Position;
             Camera.Position *= l.ScrollSpeed;
 
+            if (l.Rt == null)
+            {
+                l.Rt = new RenderTarget2D(graphics, graphics.Viewport.Width, graphics.Viewport.Height);
+            }
             _graphics.SetRenderTarget(l.Rt);
             _graphics.Clear(Color.Transparent);
             Batch.Begin(SpriteSortMode.Deferred, null, null, null, null, null, Camera.matrix);

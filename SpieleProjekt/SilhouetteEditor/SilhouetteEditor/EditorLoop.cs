@@ -11,6 +11,7 @@ using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 using Silhouette;
 using Silhouette.Engine;
+using Silhouette.Engine.Manager;
 using SilhouetteEditor.Forms;
 
 //Physik-Engine Klassen

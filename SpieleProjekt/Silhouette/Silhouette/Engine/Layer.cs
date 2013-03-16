@@ -80,9 +80,12 @@ namespace Silhouette.Engine
             scrollSpeed = Vector2.One;
             _loList = new List<LevelObject>();
             shaderType = ShaderType.None;
+            Effects = new List<EffectObject>();
         }
 
-        public void initializeLayer() { }
+        public void initializeLayer()
+        {
+        }
 
         public void loadLayer()
         {
@@ -102,7 +105,6 @@ namespace Silhouette.Engine
 
             particleRenderer.initializeParticles();
 
-            Effects = new List<EffectObject>();
             //Effects.Add(e0);
 
             foreach (EffectObject eo in Effects)

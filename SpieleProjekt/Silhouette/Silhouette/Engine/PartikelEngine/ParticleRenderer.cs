@@ -27,7 +27,7 @@ namespace Silhouette.Engine.PartikelEngine
 {
     public class ParticleRenderer
     {
-        private Renderer particleRenderer;
+        public Renderer particleRenderer;
         private List<LevelObject> particlesToRender;
 
         public ParticleRenderer()
@@ -42,10 +42,38 @@ namespace Silhouette.Engine.PartikelEngine
         }
 
         public void addParticleObjects(LevelObject lo)
-        { 
-            if (!particlesToRender.Contains(lo))
+        {
+            if (!particlesToRender.Contains(lo) && lo is ParticleObject)
             {
-                particlesToRender.Add(lo); 
+                particlesToRender.Add(lo);
+                if (((ParticleObject)(lo)).particleEffect != null)
+                {
+                    ((ParticleObject)(lo)).particleEffect.LoadContent(GameLoop.gameInstance.Content);
+                    ((ParticleObject)(lo)).particleEffect.Initialise();
+                }
+            }
+        }
+
+        public void removeParticleObjectsInEditor(LevelObject lo)
+        {
+            if (particlesToRender.Contains(lo))
+            {
+                particlesToRender.Remove(lo);
+            }
+        }
+
+        public void addParticleObjectsInEditor(LevelObject lo, ContentManager content)
+        {
+            if (!particlesToRender.Contains(lo) && lo is ParticleObject)
+            {
+                particlesToRender.Add(lo);
+                if (((ParticleObject)(lo)).particleEffect != null)
+                {
+                    ((ParticleObject)(lo)).particleEffect.LoadContent(content);
+                    ((ParticleObject)(lo)).particleEffect.Initialise();
+                }
+
+                particleRenderer.LoadContent(content);
             }
         }
 
@@ -58,12 +86,32 @@ namespace Silhouette.Engine.PartikelEngine
             {
                 if (p.particleEffect != null)
                 {
-                    p.particleEffect.Initialise();
                     p.particleEffect.LoadContent(GameLoop.gameInstance.Content);
+                    p.particleEffect.Initialise();
                 }
             }
 
             particleRenderer.LoadContent(GameLoop.gameInstance.Content);
+        }
+
+        public void initializeParticlesInEditor(ContentManager content)
+        {
+            if (!(particlesToRender.Count > 0))
+                return;
+
+            foreach (ParticleObject p in particlesToRender)
+            {
+                //if (p.particleEffect != null)
+                try
+                {
+                    p.particleEffect.LoadContent(content);
+                    p.particleEffect.Initialise();
+                }
+                catch (Exception e)
+                { }
+            }
+
+            particleRenderer.LoadContent(content);
         }
 
         public void updateParticles(GameTime gameTime)
@@ -91,6 +139,20 @@ namespace Silhouette.Engine.PartikelEngine
             {
                 if (p.particleEffect != null)
                     particleRenderer.RenderEffect(p.particleEffect, ref Camera.matrix);
+            }
+        }
+        public void drawParticlesInEditor(ContentManager content)
+        {
+            if (!(particlesToRender.Count > 0))
+                return;
+
+            foreach (ParticleObject p in particlesToRender)
+            {
+                if (p.particleEffect != null)
+                {
+                    particleRenderer.RenderEffect(p.particleEffect, ref Camera.matrix);
+                }
+                
             }
         }
     }

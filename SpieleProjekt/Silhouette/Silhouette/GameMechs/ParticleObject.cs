@@ -59,12 +59,13 @@ namespace Silhouette.GameMechs
                 _particleType = value;
                 try
                 {
-                    LoadContent();
+                    Reload();
                 }
                 catch (Exception e)
                 { }
             } 
         }
+
 
         private LevelObject _levelObject;
         [DisplayName("LevelObject"), Category("Particle Data")]
@@ -81,11 +82,40 @@ namespace Silhouette.GameMechs
             this.radius = 20;
         }
 
+        [NonSerialized]
+        private ContentManager _content;
+
         public override void Initialise() { }
 
-        public override void LoadContent() 
+        public override void LoadContent()
         {
             particleEffect = ParticleManager.getParticleEffect(particleType);
+        }
+        public void LoadContentInEditor(ContentManager content)
+        {
+            _content = content;
+            particleEffect = ParticleManager.getParticleEffect(particleType);
+            if (particleEffect != null)
+            {
+                particleEffect.LoadContent(content);
+                particleEffect.Initialise();
+            }
+        }
+
+        private void Reload()
+        {
+            if (_content != null)
+            {
+                particleEffect = ParticleManager.getParticleEffect(particleType);
+                if (particleEffect != null)
+                {
+                    particleEffect.LoadContent(_content);
+                    particleEffect.Initialise();
+                    layer.particleRenderer.removeParticleObjectsInEditor(this);
+                    layer.particleRenderer.addParticleObjectsInEditor(this, _content);
+                    layer.particleRenderer.particleRenderer.LoadContent(_content);
+                }
+            }
         }
 
         public override void Update(Microsoft.Xna.Framework.GameTime gameTime) 
