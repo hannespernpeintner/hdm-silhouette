@@ -70,7 +70,7 @@ namespace Silhouette.Engine
                 }
 
 
-                particleRenderer.drawParticles();
+                //      particleRenderer.drawParticles();
             }
         }
 
@@ -81,6 +81,12 @@ namespace Silhouette.Engine
             foreach (EffectObject eo in Effects)
             {
                 eo.UpdateInEditor(gameTime);
+            }
+
+            foreach (Object obj in _loList)
+            {
+                if (obj.GetType() == typeof(InteractiveObject))
+                    ((InteractiveObject)obj).Update(gameTime);
             }
         }
 
@@ -95,7 +101,7 @@ namespace Silhouette.Engine
         }
 
         public string getNextObjectNumber()
-        { 
+        {
             int i = loList.Count() + 1;
             return i.ToString("0000");
         }

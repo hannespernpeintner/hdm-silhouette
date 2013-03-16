@@ -144,6 +144,8 @@ namespace SilhouetteEditor.Forms
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.addObjectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.addEffectToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnTogglePhysics = new System.Windows.Forms.Button();
+            this.btnResetPhysics = new System.Windows.Forms.Button();
             this.StatusBar.SuspendLayout();
             this.MenuBar.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -1088,21 +1090,21 @@ namespace SilhouetteEditor.Forms
             // renameToolStripMenuItem1
             // 
             this.renameToolStripMenuItem1.Name = "renameToolStripMenuItem1";
-            this.renameToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
+            this.renameToolStripMenuItem1.Size = new System.Drawing.Size(117, 22);
             this.renameToolStripMenuItem1.Text = "Rename";
             this.renameToolStripMenuItem1.Click += new System.EventHandler(this.renameToolStripMenuItem1_Click);
             // 
             // copyToolStripMenuItem1
             // 
             this.copyToolStripMenuItem1.Name = "copyToolStripMenuItem1";
-            this.copyToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
+            this.copyToolStripMenuItem1.Size = new System.Drawing.Size(117, 22);
             this.copyToolStripMenuItem1.Text = "Copy";
             this.copyToolStripMenuItem1.Click += new System.EventHandler(this.copyToolStripMenuItem1_Click);
             // 
             // deleteToolStripMenuItem1
             // 
             this.deleteToolStripMenuItem1.Name = "deleteToolStripMenuItem1";
-            this.deleteToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
+            this.deleteToolStripMenuItem1.Size = new System.Drawing.Size(117, 22);
             this.deleteToolStripMenuItem1.Text = "Delete";
             this.deleteToolStripMenuItem1.Click += new System.EventHandler(this.deleteToolStripMenuItem1_Click);
             // 
@@ -1116,7 +1118,7 @@ namespace SilhouetteEditor.Forms
             this.addObjectToolStripMenuItem,
             this.addEffectToolStripMenuItem2});
             this.EventContextMenü.Name = "EventContextMenü";
-            this.EventContextMenü.Size = new System.Drawing.Size(155, 142);
+            this.EventContextMenü.Size = new System.Drawing.Size(155, 120);
             // 
             // renameToolStripMenuItem4
             // 
@@ -1158,6 +1160,28 @@ namespace SilhouetteEditor.Forms
             this.addEffectToolStripMenuItem2.Text = "Add Effect";
             this.addEffectToolStripMenuItem2.Click += new System.EventHandler(this.addEffectToolStripMenuItem2_Click_1);
             // 
+            // btnTogglePhysics
+            // 
+            this.btnTogglePhysics.BackColor = System.Drawing.SystemColors.Window;
+            this.btnTogglePhysics.Location = new System.Drawing.Point(255, 4);
+            this.btnTogglePhysics.Name = "btnTogglePhysics";
+            this.btnTogglePhysics.Size = new System.Drawing.Size(98, 22);
+            this.btnTogglePhysics.TabIndex = 4;
+            this.btnTogglePhysics.Text = "Enable Physics";
+            this.btnTogglePhysics.UseVisualStyleBackColor = false;
+            this.btnTogglePhysics.Click += new System.EventHandler(this.btnTogglePhysics_Click);
+            // 
+            // btnResetPhysics
+            // 
+            this.btnResetPhysics.BackColor = System.Drawing.SystemColors.Window;
+            this.btnResetPhysics.Location = new System.Drawing.Point(359, 5);
+            this.btnResetPhysics.Name = "btnResetPhysics";
+            this.btnResetPhysics.Size = new System.Drawing.Size(103, 21);
+            this.btnResetPhysics.TabIndex = 5;
+            this.btnResetPhysics.Text = "Reset Physics";
+            this.btnResetPhysics.UseVisualStyleBackColor = false;
+            this.btnResetPhysics.Click += new System.EventHandler(this.btnResetPhysics_Click);
+            // 
             // MainForm
             // 
             this.AllowDrop = true;
@@ -1165,6 +1189,8 @@ namespace SilhouetteEditor.Forms
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.GrayText;
             this.ClientSize = new System.Drawing.Size(1256, 730);
+            this.Controls.Add(this.btnResetPhysics);
+            this.Controls.Add(this.btnTogglePhysics);
             this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.StatusBar);
             this.Controls.Add(this.MenuBar);
@@ -1311,10 +1337,12 @@ namespace SilhouetteEditor.Forms
         private System.Windows.Forms.ToolStripMenuItem changeEffectToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem saveStateToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem loadLevelToolStripMenuItem;
+        private System.Windows.Forms.Button btnTogglePhysics;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
         private System.Windows.Forms.ToolStripMenuItem addEffectToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem addEffectToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem addEffectToolStripMenuItem2;
+        private System.Windows.Forms.Button btnResetPhysics;
 
     }
 }

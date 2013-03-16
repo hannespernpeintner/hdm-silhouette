@@ -67,6 +67,11 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Sprites\fallback.dds">
+      <Name>fallback</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
     <None Include="Sprites\foehre_01.png">
       <Name>foehre_01</Name>
       <Importer>TextureImporter</Importer>
