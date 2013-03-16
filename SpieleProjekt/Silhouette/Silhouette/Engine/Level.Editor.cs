@@ -18,12 +18,14 @@ using Silhouette.Engine.Manager;
 using Silhouette.Engine.Screens;
 using Silhouette.Engine.Effects;
 using Silhouette.Engine;
+using Silhouette.GameMechs;
 
 //Physik-Engine Klassen
 using FarseerPhysics;
 using FarseerPhysics.Dynamics;
 using FarseerPhysics.Factories;
 using FarseerPhysics.Collision;
+
 
 namespace Silhouette.Engine
 {
@@ -77,12 +79,39 @@ namespace Silhouette.Engine
             }
         }
 
-        public void UpdateInEditor(GameTime gameTime)
+        public void UpdateInEditor(GameTime gameTime, Boolean physicsEnabled) //<---- This is so fuckin ugly, but our software design is MESSED UP BEYOND BELIEVE!!!!!!!!
         {
-            Physics.Step(Math.Min((float)gameTime.ElapsedGameTime.TotalMilliseconds * 0.001f, (1f / 30f)));
+
+            if (physicsEnabled)
+            {
+                Physics.Step(Math.Min((float)gameTime.ElapsedGameTime.TotalMilliseconds * 0.001f, (1f / 30f)));
+
+                foreach (Layer layer in _layerList)
+                {
+                    layer.updateLayerInEditor(gameTime);
+                }
+            }
+
             foreach (EffectObject eo in Effects)
             {
                 eo.UpdateInEditor(gameTime);
+            }
+
+        }
+
+        public void resetPhysics()
+        {
+            foreach (Layer layer in _layerList)
+            {
+                foreach (LevelObject go in layer.loList)
+                {
+                    if (go is InteractiveObject)
+                    {
+                        go.Initialise();
+                        go.LoadContent();
+
+                    }
+                }
             }
         }
 

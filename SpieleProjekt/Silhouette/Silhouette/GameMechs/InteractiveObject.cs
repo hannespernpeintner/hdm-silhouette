@@ -19,13 +19,13 @@ using FarseerPhysics.Dynamics.Contacts;
 namespace Silhouette.GameMechs
 {
     public enum PhysicAccuracy
-    { 
+    {
         Low,
         High
     }
 
     [Serializable]
-    public partial class InteractiveObject: DrawableLevelObject
+    public partial class InteractiveObject : DrawableLevelObject
     {
         /* Sascha:
          * InteractiveObjects sind Texturen mit physikalischem Verhalten. Der Spieler kann so mit ihnen direkt interagieren, 
@@ -64,7 +64,7 @@ namespace Silhouette.GameMechs
         private Vector2 _origin;
         [DisplayName("Origin"), Category("Texture Data")]
         [Description("The sprite origin. Default is (0,0), which is the upper left corner.")]
-        public Vector2 origin { get { return _origin; } set { _origin = value; transformed(); } } 
+        public Vector2 origin { get { return _origin; } set { _origin = value; transformed(); } }
 
         private float _density;
         [DisplayName("Mass"), Category("Physical Behavior")]
@@ -110,7 +110,7 @@ namespace Silhouette.GameMechs
             accuracy = PhysicAccuracy.Low;
         }
 
-        public override void Initialise() {}
+        public override void Initialise() { }
 
         public override void LoadContent()
         {
@@ -120,7 +120,7 @@ namespace Silhouette.GameMechs
             }
             catch (Exception e1)
             {
-               
+
                 try
                 {
                     texture = GameLoop.gameInstance.Content.Load<Texture2D>(fullPath);
@@ -142,7 +142,14 @@ namespace Silhouette.GameMechs
             }
 
             if (texture != null)
+            {
                 origin = new Vector2((float)(texture.Width / 2), (float)(texture.Height / 2));
+            }
+            else
+            {
+                DebugLogManager.writeToLogFile(@"Unable to load texture: " + assetName + @" . Using fallback!");
+                texture = GameLoop.gameInstance.Content.Load<Texture2D>(@"Sprites/fallback");
+            }
             this.ToFixture();
 
             if (fixture != null)
@@ -225,7 +232,7 @@ namespace Silhouette.GameMechs
                 try
                 {
                     string p = Path.Combine(layer.level.contentPath, Path.GetFileName(fullPath));
-                    texture = TextureManager.Instance.LoadFromFile(p, graphics); 
+                    texture = TextureManager.Instance.LoadFromFile(p, graphics);
                     this.fullPath = p;
                 }
                 catch (Exception e)
