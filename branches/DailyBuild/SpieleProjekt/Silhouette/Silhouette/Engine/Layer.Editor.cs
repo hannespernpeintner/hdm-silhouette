@@ -43,7 +43,15 @@ namespace Silhouette.Engine
                 if (lo is DrawableLevelObject)
                 {
                     DrawableLevelObject dlo = (DrawableLevelObject)lo;
-                    dlo.loadContentInEditor(graphics);
+                    try
+                    {
+                        dlo.loadContentInEditor(graphics);
+                    }
+                    catch (Exception e)
+                    {
+                        DebugLogManager.writeToLogFile("Wasn't able to load " + dlo.name + " in Layer " + this.name);
+                    }
+                    
                 }
                 else if (lo is ParticleObject)
                 {
@@ -53,7 +61,7 @@ namespace Silhouette.Engine
             }
 
             particleRenderer.initializeParticlesInEditor(content);
-            Effects = new List<EffectObject>();
+            //Effects = new List<EffectObject>();
 
             foreach (EffectObject eo in Effects)
             {
