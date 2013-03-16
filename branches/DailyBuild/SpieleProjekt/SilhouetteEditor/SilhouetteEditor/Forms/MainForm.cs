@@ -11,6 +11,7 @@ using Silhouette.GameMechs;
 using System.IO;
 using Silhouette.GameMechs.Events;
 using System.Drawing.Design;
+using Silhouette.Engine.Effects;
 
 //Physik-Engine Klassen
 using FarseerPhysics;
@@ -34,7 +35,6 @@ namespace SilhouetteEditor.Forms
             Default = this;
             InitializeComponent();
             TypeDescriptor.AddAttributes(typeof(LevelObject), new EditorAttribute(typeof(LevelObjectUITypeEditor), typeof(UITypeEditor)));
-            TypeDescriptor.AddAttributes(typeof(ChangeEffectEvent), new EditorAttribute(typeof(LevelObjectUITypeEditor), typeof(UITypeEditor)));
         }
 
         public IntPtr getDrawSurface()
@@ -880,14 +880,14 @@ namespace SilhouetteEditor.Forms
 
         private void addEffectToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            new AddEffect().ShowDialog();
+            new AddEffect(true).ShowDialog();
         }
 
         private void addEffectToolStripMenuItem2_Click_1(object sender, EventArgs e)
         {
-
+            new SelectEffect().ShowDialog();
         }
-
+        
         private void btnTogglePhysics_Click(object sender, EventArgs e)
         {
             if (Editor.Default.EditorPhysicsEnabled == false)
@@ -901,5 +901,11 @@ namespace SilhouetteEditor.Forms
                 Editor.Default.EditorPhysicsEnabled = false;
             }
         }
+        private void btnResetPhysics_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        
     }
 }

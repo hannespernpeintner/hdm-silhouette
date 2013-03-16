@@ -131,7 +131,7 @@ namespace Silhouette.Engine
                     spriteBatch.End();
                     Camera.Position = oldCameraPosition;
                 }*/
-                _flipFlop.DrawInEditor(this);
+                _flipFlop.DrawInEditor(this, graphics);
                 graphics.SetRenderTarget(null);
                 graphics.Clear(Color.White);
                 spriteBatch.Begin();
@@ -158,9 +158,9 @@ namespace Silhouette.Engine
                     file.Close();
                 }
             }
-            catch
+            catch (Exception e)
             {
-                throw new Exception(@"Something went terribly wrong while saving your file!");
+                throw new Exception(@"Something went terribly wrong while saving your file! " + e.Message);
             }
 
             if (System.IO.File.Exists(fullPath))

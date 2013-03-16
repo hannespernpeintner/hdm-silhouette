@@ -154,6 +154,7 @@ namespace SilhouetteEditor
             NewLevel("");
             MainForm.Default.EditorStatus.Text = "Editorstatus: IDLE";
             MainForm.Default.ZoomStatus.Text = "Zoom: 100%";
+            //ParticleManager.initializeInEditor(EditorLoop.EditorLoopInstance.Content);
         }
 
         public void Update(GameTime gameTime)
@@ -1230,15 +1231,17 @@ namespace SilhouetteEditor
                 po.name = po.getPrefix() + selectedLayer.getNextObjectNumber();
                 po.layer = selectedLayer;
                 AddLevelObject(po);
-                selectedLayer.particleRenderer.addParticleObjects(po);
+                selectedLayer.particleRenderer.addParticleObjectsInEditor(po, EditorLoop.EditorLoopInstance.Content);
                 po.Initialise();
-                po.LoadContent();
+                po.LoadContentInEditor(EditorLoop.EditorLoopInstance.Content);
+                
 
                 if (po.particleEffect != null)
                 {
                     //po.particleEffect.Initialise();
                     //po.particleEffect.LoadContent(EditorLoop.EditorLoopInstance.Content);
-                    selectedLayer.particleRenderer.initializeParticles();
+                    selectedLayer.particleRenderer.initializeParticlesInEditor(EditorLoop.EditorLoopInstance.Content);
+                    selectedLayer.particleRenderer.particleRenderer.LoadContent(EditorLoop.EditorLoopInstance.Content);
                 }
                 selectedLevelObjects.Clear();
                 selectedLevelObjects.Add(po);

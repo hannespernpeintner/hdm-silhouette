@@ -67,6 +67,7 @@ namespace Silhouette
 
             gameStateManager = new GameStateManager();
             gameStateManager.Initialize();
+            TimerManager.initialize();
 
             base.Initialize();
         }
@@ -90,6 +91,7 @@ namespace Silhouette
             SoundManager.Update(gameTime);
 
             gameStateManager.Update(gameTime);
+            TimerManager.Update(gameTime);
 
             base.Update(gameTime);
         }

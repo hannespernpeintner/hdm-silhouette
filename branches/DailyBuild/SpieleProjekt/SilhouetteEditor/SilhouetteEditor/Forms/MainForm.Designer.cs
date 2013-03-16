@@ -1157,7 +1157,7 @@ namespace SilhouetteEditor.Forms
             // 
             this.addEffectToolStripMenuItem2.Name = "addEffectToolStripMenuItem2";
             this.addEffectToolStripMenuItem2.Size = new System.Drawing.Size(154, 22);
-            this.addEffectToolStripMenuItem2.Text = "Add Effect";
+            this.addEffectToolStripMenuItem2.Text = "Select Effects";
             this.addEffectToolStripMenuItem2.Click += new System.EventHandler(this.addEffectToolStripMenuItem2_Click_1);
             // 
             // btnTogglePhysics

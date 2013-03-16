@@ -11,6 +11,7 @@ using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 using Silhouette.Engine;
 using Silhouette.GameMechs;
+using Silhouette.Engine.Manager;
 
 namespace Silhouette.Engine
 {
@@ -109,6 +110,7 @@ namespace Silhouette.Engine
             RepeatInterval = repeatInterval;
             RepeatCount = repeatCount;
             Active = true;
+            TimerManager.Timers.Add(this);
         }
 
         public override void Update(GameTime gameTime)

@@ -149,6 +149,7 @@ namespace Silhouette.Engine
             State = AnimationState.Stop;
             Timer.OnTimeout del = StartOnTimeOut;
             StartTimer = new Timer(StartInMiliseconds, del);
+            TimerManager.Timers.Remove(StartTimer);
             StartTimer.Active = false;
         }
 
@@ -171,6 +172,7 @@ namespace Silhouette.Engine
 
             Timer.OnTimeout del = StartOnTimeOut;
             StartTimer = new Timer(StartInMiliseconds, del);
+            TimerManager.Timers.Remove(StartTimer);
             StartTimer.Active = false;
         }
 

@@ -41,7 +41,7 @@ namespace Silhouette.Engine.Effects
         public override Effect EffectInEditor(GraphicsDevice graphics)
         {
             {
-                Matrix projection = Matrix.CreateOrthographicOffCenter(0, _graphics.Viewport.Width, _graphics.Viewport.Height, 0, 0, 1);
+                Matrix projection = Matrix.CreateOrthographicOffCenter(0, graphics.Viewport.Width, graphics.Viewport.Height, 0, 0, 1);
                 Matrix halfPixelOffset = Matrix.CreateTranslation(-0.5f, -0.5f, 0);
 
                 _effect.Parameters["MatrixTransform"].SetValue(halfPixelOffset * projection);

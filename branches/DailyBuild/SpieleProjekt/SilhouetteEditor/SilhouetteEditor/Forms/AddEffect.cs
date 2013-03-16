@@ -7,78 +7,96 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
+using Silhouette.Engine.Effects;
+
 namespace SilhouetteEditor.Forms
 {
     public partial class AddEffect : Form
     {
+        public bool forLevel = false;
         public AddEffect()
         {
             InitializeComponent();
+        }
+        public AddEffect(bool forLevel)
+        {
+            InitializeComponent();
+            this.forLevel = forLevel;
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
             string selectedEffect = (string) selectEffect.SelectedItem;
+            Silhouette.Engine.Effects.EffectObject effectObject = null;
 
             switch (selectedEffect)
             {
                 case "GodRays":
                 {
-                    Silhouette.Engine.Effects.EffectObject effectObject = new Silhouette.Engine.Effects.GodRays();
+                    effectObject = new Silhouette.Engine.Effects.GodRays();
                     effectObject.Initialise();
                     effectObject.loadContentInEditor(EditorLoop.EditorLoopInstance.GraphicsDevice, EditorLoop.EditorLoopInstance.Content);
-                    Editor.Default.selectedLayer.Effects.Add(effectObject);
+                    
                     break;
                 }
                 case "Bleach":
                 {
-                    Silhouette.Engine.Effects.EffectObject effectObject = new Silhouette.Engine.Effects.Bleach();
+                    effectObject = new Silhouette.Engine.Effects.Bleach();
                     effectObject.Initialise();
                     effectObject.loadContentInEditor(EditorLoop.EditorLoopInstance.GraphicsDevice, EditorLoop.EditorLoopInstance.Content);
-                    Editor.Default.selectedLayer.Effects.Add(effectObject);
                     break;
                 }
                 case "Bloom":
                 {
-                    Silhouette.Engine.Effects.EffectObject effectObject = new Silhouette.Engine.Effects.Bloom();
+                    effectObject = new Silhouette.Engine.Effects.Bloom();
                     effectObject.Initialise();
                     effectObject.loadContentInEditor(EditorLoop.EditorLoopInstance.GraphicsDevice, EditorLoop.EditorLoopInstance.Content);
-                    Editor.Default.selectedLayer.Effects.Add(effectObject);
                     break;
                 }
                 case "Blur":
                 {
-                    Silhouette.Engine.Effects.EffectObject effectObject = new Silhouette.Engine.Effects.Blur();
+                    effectObject = new Silhouette.Engine.Effects.Blur();
                     effectObject.Initialise();
                     effectObject.loadContentInEditor(EditorLoop.EditorLoopInstance.GraphicsDevice, EditorLoop.EditorLoopInstance.Content);
-                    Editor.Default.selectedLayer.Effects.Add(effectObject);
                     break;
                 }
                 case "ColorFade":
                 {
-                    Silhouette.Engine.Effects.EffectObject effectObject = new Silhouette.Engine.Effects.ColorFade();
+                    effectObject = new Silhouette.Engine.Effects.ColorFade();
                     effectObject.Initialise();
                     effectObject.loadContentInEditor(EditorLoop.EditorLoopInstance.GraphicsDevice, EditorLoop.EditorLoopInstance.Content);
-                    Editor.Default.selectedLayer.Effects.Add(effectObject);
                     break;
                 }
                 case "VignettenBlur":
                 {
-                    Silhouette.Engine.Effects.EffectObject effectObject = new Silhouette.Engine.Effects.VignettenBlur();
+                    effectObject = new Silhouette.Engine.Effects.VignettenBlur();
                     effectObject.Initialise();
                     effectObject.loadContentInEditor(EditorLoop.EditorLoopInstance.GraphicsDevice, EditorLoop.EditorLoopInstance.Content);
-                    Editor.Default.selectedLayer.Effects.Add(effectObject);
                     break;
                 }
                 case "Water":
                 {
-                    Silhouette.Engine.Effects.EffectObject effectObject = new Silhouette.Engine.Effects.Water();
+                    effectObject = new Silhouette.Engine.Effects.Water();
                     effectObject.Initialise();
                     effectObject.loadContentInEditor(EditorLoop.EditorLoopInstance.GraphicsDevice, EditorLoop.EditorLoopInstance.Content);
-                    Editor.Default.selectedLayer.Effects.Add(effectObject);
                     break;
                 }
             }
+
+            if (forLevel && effectObject != null)
+            {
+                Editor.Default.level.Effects.Add(effectObject);
+            }
+            else if (effectObject != null)
+            {
+                if (Editor.Default.selectedLayer.Effects == null)
+                {
+                    Editor.Default.selectedLayer.Effects = new List<EffectObject>();
+                }
+                Editor.Default.selectedLayer.Effects.Add(effectObject);
+            }
+
+            this.Hide();
         }
 
         private void button2_Click(object sender, EventArgs e)
