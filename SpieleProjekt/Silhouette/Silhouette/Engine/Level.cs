@@ -238,7 +238,6 @@ namespace Silhouette.Engine
 
             if (GraphicsEnabled)
             {
-                //GameLoop.gameInstance.GraphicsDevice.SetRenderTarget(renderTargets[1]);
 
                 _flipFlop.Draw(this);
 

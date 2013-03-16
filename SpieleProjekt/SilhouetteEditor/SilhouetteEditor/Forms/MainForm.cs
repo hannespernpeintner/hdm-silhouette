@@ -870,7 +870,7 @@ namespace SilhouetteEditor.Forms
 
         private void addEffectToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            new AddEffect().ShowDialog();
+            new AddEffect(false).ShowDialog();
         }
 
         private void LevelContextMenu_Opening(object sender, CancelEventArgs e)
