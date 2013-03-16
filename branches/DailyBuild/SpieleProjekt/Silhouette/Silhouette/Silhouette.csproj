@@ -122,16 +122,14 @@
   <ItemGroup>
     <Compile Include="DebugViewXNA.cs" />
     <Compile Include="Engine\AnimationWithFixture.cs" />
-
     <Compile Include="Engine\Effects\Bleach.cs" />
     <Compile Include="Engine\Effects\Bloom.cs" />
     <Compile Include="Engine\Effects\GodRays.cs" />
     <Compile Include="Engine\Effects\ColorFade.cs" />
     <Compile Include="Engine\Effects\Water.cs" />
     <Compile Include="Engine\Effects\VignettenBlur.cs" />
-
     <Compile Include="Engine\Manager\DebugLogManager.cs" />
-
+    <Compile Include="Engine\Manager\TimerManager.cs" />
     <Compile Include="Engine\RenderTargetFlipFlop.cs" />
     <Compile Include="Engine\Timer.cs" />
     <Compile Include="Engine\Camera.cs" />

@@ -66,8 +66,10 @@ namespace Silhouette.Engine.Effects
             set { _factor = value; }
         }
 
+        protected static int _effectCounter = 0;
+
         // Bitte initialisiert im Types-Array immer den Default-Type als ERSTES ELEMENT bei Index 0.
-        public override void Initialise() { Factor = 1.0f; }
+        public override void Initialise() { Factor = 1.0f; name = "EffectOject" + ++_effectCounter; }
         public override void LoadContent() { }
         public override void Update(GameTime gameTime){}
         public virtual void UpdateInEditor(GameTime gameTime) {this.Update(gameTime);}

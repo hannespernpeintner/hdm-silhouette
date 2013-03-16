@@ -57,6 +57,7 @@ namespace Silhouette.Engine.Effects
         }
         public override void LoadContent()
         {
+            _graphics = GameLoop.gameInstance.GraphicsDevice;
             Effect = GameLoop.gameInstance.Content.Load<Effect>(Path);
         }
         public override void loadContentInEditor(GraphicsDevice graphics, ContentManager content)

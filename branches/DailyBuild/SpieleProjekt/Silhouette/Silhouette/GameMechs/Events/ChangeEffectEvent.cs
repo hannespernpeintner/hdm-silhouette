@@ -32,6 +32,11 @@ namespace Silhouette.GameMechs.Events
     [Serializable]
     public class ChangeEffectEvent : Event
     {
+        private List<EffectObject> _effectList;
+        [DisplayName("Effects List"), Category("Event Data")]
+        [Description("The list of Effects which are affected by the event.")]
+        public List<EffectObject> EffectList { get { return _effectList; } set { _effectList = value; } }
+
         private float _targetFactor;
         [DisplayName("TargetFactor"), Category("Event Data")]
         [Description("Affects the effect's strength, from 0 to 100%.")]
@@ -53,6 +58,8 @@ namespace Silhouette.GameMechs.Events
         private int CurrentDuration { get { return _currentDuration; } set { _currentDuration = value; } }
 
         private static int _updateInterval = 10;
+        [NonSerialized]
+        private Timer _timer;
 
         public ChangeEffectEvent(Rectangle rectangle)
         {
@@ -60,7 +67,7 @@ namespace Silhouette.GameMechs.Events
             position = rectangle.Location.ToVector2();
             width = rectangle.Width;
             height = rectangle.Height;
-            list = new List<LevelObject>();
+            EffectList = new List<EffectObject>();
             TargetFactor = 0.5f;
             Duration = 1000;
             CurrentDuration = 0;
@@ -69,11 +76,11 @@ namespace Silhouette.GameMechs.Events
 
         public override void AddLevelObject(LevelObject lo)
         {
-            if (this.list != null)
+            if (this.EffectList != null)
             {
-                if (!this.list.Contains(lo) && lo is EffectObject)
+                if (!this.EffectList.Contains(lo) && lo is EffectObject)
                 {
-                    this.list.Add(lo);
+                    this.EffectList.Add((EffectObject)lo);
                     this.StartFactor = ((EffectObject)lo).Factor;
                 }
             }
@@ -96,9 +103,9 @@ namespace Silhouette.GameMechs.Events
             if (b.isEvent)
             {
 
-                foreach (EffectObject eo in this.list)
+                foreach (EffectObject eo in this.EffectList)
                 {
-                    new Timer(_updateInterval, _updateInterval, (int)(Duration / _updateInterval), _setFactor);
+                    _timer = new Timer(_updateInterval, _updateInterval, (int)(Duration / _updateInterval), _setFactor);
                 }
             }
 
@@ -109,10 +116,10 @@ namespace Silhouette.GameMechs.Events
 
         public void SetFactor()
         {
-            foreach (EffectObject eo in this.list)
+            foreach (EffectObject eo in this.EffectList)
             {
                 CurrentDuration += _updateInterval;
-                eo.Factor += (Duration - CurrentDuration) * (TargetFactor - StartFactor);
+                eo.Factor += (CurrentDuration / Duration) * (TargetFactor - StartFactor);
 
             }
         }

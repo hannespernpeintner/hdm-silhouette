@@ -130,7 +130,10 @@ namespace Silhouette.GameMechs
                 try
                 {
                     string p = Path.Combine(layer.level.contentPath, Path.GetFileName(fullPath));
-                    texture = TextureManager.Instance.LoadFromFile(p, graphics);
+                    //texture = TextureManager.Instance.LoadFromFile(p, graphics);
+
+
+                    texture = TextureManager.Instance.LoadFromFile(Path.Combine(Directory.GetCurrentDirectory(), "Content", "Sprites", assetName + Path.GetExtension(fullPath)));
                     if (texture == null)
                     {
                         texture = TextureManager.Instance.LoadFromFile(fullPath, graphics);
@@ -145,7 +148,8 @@ namespace Silhouette.GameMechs
 
             if (texture.Width != 1280 && texture.Height != 768)
             {
-                collisionData = TextureManager.Instance.GetCollisionData(fullPath);
+                //collisionData = TextureManager.Instance.GetCollisionData(fullPath);
+                collisionData = TextureManager.Instance.GetCollisionData(Path.Combine(Directory.GetCurrentDirectory(), "Content", "Sprites", assetName + Path.GetExtension(fullPath)));
             }
             transformed();
         }
