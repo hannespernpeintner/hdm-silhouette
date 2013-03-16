@@ -13,6 +13,11 @@ using Silhouette;
 using Silhouette.Engine;
 using SilhouetteEditor.Forms;
 
+//Physik-Engine Klassen
+using FarseerPhysics;
+using FarseerPhysics.Dynamics;
+using FarseerPhysics.Factories;
+using FarseerPhysics.Collision;
 namespace SilhouetteEditor
 {
     public class EditorLoop : Microsoft.Xna.Framework.Game
@@ -25,7 +30,7 @@ namespace SilhouetteEditor
         static EditorLoop _editorLoopInstance;
         public Form winform;
         public static EditorLoop EditorLoopInstance { get { return _editorLoopInstance; } }
-
+        public World Physics { get; set; }
         private IntPtr drawSurface;
 
         public EditorLoop(IntPtr drawSurface)
@@ -49,6 +54,8 @@ namespace SilhouetteEditor
         {
             Primitives.Instance.Initialize(this.GraphicsDevice);
             Editor.Default.Initialize();
+            Physics = new World(new Vector2(0.0f, 9.8f));
+
             base.Initialize();
         }
 

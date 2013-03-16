@@ -106,6 +106,8 @@ namespace SilhouetteEditor
             }
         }
 
+        public bool EditorPhysicsEnabled { get; set; }
+
         SpriteBatch spriteBatch;
 
         EditorState editorState;
@@ -148,7 +150,7 @@ namespace SilhouetteEditor
             initialScale = new List<Vector2>();
             initialRotation = new List<float>();
             editorState = EditorState.IDLE;
-
+            EditorPhysicsEnabled = false;
             NewLevel("");
             MainForm.Default.EditorStatus.Text = "Editorstatus: IDLE";
             MainForm.Default.ZoomStatus.Text = "Zoom: 100%";
@@ -166,7 +168,7 @@ namespace SilhouetteEditor
              * Startet die Updatefunktionen aller Elemente des Levels. Es gibt jeweils verschiedene für Spiel und Editor. 
             */
 
-            level.UpdateInEditor(gameTime);
+            level.UpdateInEditor(gameTime, Editor.Default.EditorPhysicsEnabled);
 
             /* Sascha:
              * Diese Funktion kontrolliert die Camera im Editor-Viewport. Benutzt wird dabei die statische Klasse Camera aus der Spielengine.
@@ -750,6 +752,20 @@ namespace SilhouetteEditor
                     }
                     else
                         lo.position = newPosition;
+                    if (lo.GetType() == typeof(InteractiveObject))
+                    {
+
+                        //     System.Console.WriteLine(@"Position: " + lo.position);
+                        //     System.Console.WriteLine(@"NewPosition: " + newPosition);
+                        //    System.Console.WriteLine(@"fixture Position: " + ((InteractiveObject)lo).fixture.Body.Position);
+
+
+                        ((InteractiveObject)lo).bodyType = BodyType.Kinematic;
+                        ((InteractiveObject)lo).fixture.Body.Position = FixtureManager.ToMeter(newPosition);
+                        ((InteractiveObject)lo).bodyType = BodyType.Dynamic;
+
+
+                    }
 
                     i++;
                 }
@@ -1198,6 +1214,12 @@ namespace SilhouetteEditor
                 AddLevelObject(io);
                 selectedLevelObjects.Clear();
                 selectedLevelObjects.Add(io);
+
+                io.Initialise();
+                io.LoadContent();
+
+                System.Console.WriteLine(@"Position: " + io.position);
+                System.Console.WriteLine(@"Fixture Position: " + io.fixture.Body.Position);
             }
             if (currentObject is ParticleObject)
             {
@@ -1511,6 +1533,9 @@ namespace SilhouetteEditor
                     l1.layer = selectedLayer;
                     selectedLayer.loList.Add(l1);
                     selectLevelObject(l1);
+
+                    l1.Initialise();
+                    l1.LoadContent();
                     break;
                 case FixtureType.Circle:
                     LevelObject l2 = new CircleCollisionObject(clickedPoints[0], (MouseWorldPosition - clickedPoints[0]).Length());

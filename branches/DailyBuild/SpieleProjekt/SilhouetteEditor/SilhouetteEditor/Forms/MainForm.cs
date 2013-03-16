@@ -887,5 +887,19 @@ namespace SilhouetteEditor.Forms
         {
 
         }
+
+        private void btnTogglePhysics_Click(object sender, EventArgs e)
+        {
+            if (Editor.Default.EditorPhysicsEnabled == false)
+            {
+                btnTogglePhysics.Text = @"Disable Physics ";
+                Editor.Default.EditorPhysicsEnabled = true;
+            }
+            else
+            {
+                btnTogglePhysics.Text = @"Enable Physics ";
+                Editor.Default.EditorPhysicsEnabled = false;
+            }
+        }
     }
 }
