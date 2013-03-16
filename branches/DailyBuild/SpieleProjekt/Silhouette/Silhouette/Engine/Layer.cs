@@ -131,7 +131,7 @@ namespace Silhouette.Engine
 
             particleRenderer.initializeParticles();
 
-            Effects = new List<EffectObject>();
+            //Effects = new List<EffectObject>();
             //Effects.Add(e0);
 
             foreach (EffectObject eo in Effects)

@@ -122,15 +122,7 @@ namespace Silhouette.Engine
 
             if (!GraphicsEnabled)
             {
-                /*foreach (Layer l in layerList)
-                {
-                    Vector2 oldCameraPosition = Camera.Position;
-                    Camera.Position *= l.ScrollSpeed;
-                    spriteBatch.Begin(SpriteSortMode.Deferred, null, null, null, null, null, Camera.matrix);
-                    l.drawInEditor(spriteBatch);
-                    spriteBatch.End();
-                    Camera.Position = oldCameraPosition;
-                }*/
+
                 _flipFlop.DrawInEditor(this, graphics);
                 graphics.SetRenderTarget(null);
                 graphics.Clear(Color.White);
