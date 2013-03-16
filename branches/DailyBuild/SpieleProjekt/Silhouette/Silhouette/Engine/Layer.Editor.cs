@@ -61,7 +61,10 @@ namespace Silhouette.Engine
             }
 
             particleRenderer.initializeParticlesInEditor(content);
-            //Effects = new List<EffectObject>();
+            if (Effects == null)
+            {
+                Effects = new List<EffectObject>();
+            }
 
             foreach (EffectObject eo in Effects)
             {

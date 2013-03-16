@@ -129,10 +129,6 @@ namespace Silhouette.Engine
             Vector2 oldCameraPosition = Camera.Position;
             Camera.Position *= l.ScrollSpeed;
 
-            if (l.Rt == null)
-            {
-                l.Rt = new RenderTarget2D(graphics, graphics.Viewport.Width, graphics.Viewport.Height);
-            }
             _graphics.SetRenderTarget(l.Rt);
             _graphics.Clear(Color.Transparent);
             Batch.Begin(SpriteSortMode.Deferred, null, null, null, null, null, Camera.matrix);
@@ -190,7 +186,6 @@ namespace Silhouette.Engine
             FlipTarget();
             foreach (Layer l in layerList)
             {
-                //Batch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, null, null, null, l.getShaderByType(l.shaderType));
                 Batch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, null, null, null, null);
                 Batch.Draw(l.Rt, Vector2.Zero, Color.White);
                 Batch.End();
@@ -219,15 +214,11 @@ namespace Silhouette.Engine
         }
         private void DrawInEditorToResultTarget(Level level, List<Layer> layerList)
         {
+            
             FlipTargetInEditor();
             foreach (Layer l in layerList)
             {
-                if (l.Rt == null)
-                {
-                    Console.WriteLine("Rendertarget is null at Layer " + l.name);
-                    continue;
-                }
-                //Batch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, null, null, null, l.getShaderByTypeInEditor(l.shaderType, _graphics));
+
                 Batch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, null, null, null, null);
                 Batch.Draw(l.Rt, Vector2.Zero, Color.White);
                 Batch.End();
