@@ -731,6 +731,11 @@ namespace SilhouetteEditor.Forms
             Editor.Default.AddEvents(EventType.ApplyForce);
         }
 
+        private void changeGlobalGravityToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Editor.Default.AddEvents(EventType.ChangeGlobalGravity);
+        }
+
         private void saveStateToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Editor.Default.AddEvents(EventType.SaveState);
