@@ -79,6 +79,13 @@ namespace Silhouette.Engine
             set { _repeatCount = value; }
         }
 
+        private int _startTime;
+        public int StartTime
+        {
+            get { return _startTime; }
+            set { _startTime = value; }
+        }
+
         // Simplest timer ever: starts right now, executes delegate after timed out.
         public Timer(int MiliSeconds, OnTimeout PassedDelegate)
             : this(TimerType.CountDown, 0, MiliSeconds, 0, 0, PassedDelegate)
@@ -115,6 +122,10 @@ namespace Silhouette.Engine
 
         public override void Update(GameTime gameTime)
         {
+            if (StartTime == null)
+            {
+                StartTime = gameTime.TotalGameTime.Milliseconds;
+            }
 
             if(!Active)
             {

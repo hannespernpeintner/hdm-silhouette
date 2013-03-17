@@ -107,9 +107,14 @@ namespace Silhouette.Engine
 
             //Effects.Add(e0);
 
+            if (Effects == null)
+            {
+                Effects = new List<EffectObject>();
+            }
+
             foreach (EffectObject eo in Effects)
             {
-                eo.Initialise();
+                //eo.Initialise();
                 eo.LoadContent();
             }
         }
@@ -136,7 +141,7 @@ namespace Silhouette.Engine
 
             foreach (EffectObject eo in Effects)
             {
-                eo.Initialise();
+                //eo.Initialise();
                 eo.LoadContent();
             }
         }

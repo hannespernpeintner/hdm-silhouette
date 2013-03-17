@@ -56,19 +56,14 @@ namespace Silhouette.Engine
             EffectManager.loadEffectsInEditor(graphics, content);
             proj = Matrix.CreateOrthographicOffCenter(0, GameSettings.Default.resolutionWidth / PixelPerMeter, GameSettings.Default.resolutionHeight / PixelPerMeter, 0, 0, 1);
 
-            Effects = new List<EffectObject>();
-            EffectObject e0 = new GodRays();
-            EffectObject e1 = new Bloom();
-            EffectObject e2 = new VignettenBlur();
-            EffectObject e3 = new ColorFade();
-            Effects.Add(e0);
-            Effects.Add(e1);
-            Effects.Add(e2);
-            Effects.Add(e3);
+            if (Effects == null)
+            {
+                Effects = new List<EffectObject>();
+            }
 
             foreach (EffectObject eo in Effects)
             {
-                eo.Initialise();
+                //eo.Initialise();
                 eo.loadContentInEditor(graphics, content);
             }
 
