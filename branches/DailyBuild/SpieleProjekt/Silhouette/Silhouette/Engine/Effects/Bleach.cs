@@ -30,7 +30,7 @@ namespace Silhouette.Engine.Effects
                 Matrix halfPixelOffset = Matrix.CreateTranslation(-0.5f, -0.5f, 0);
 
                 _effect.Parameters["MatrixTransform"].SetValue(halfPixelOffset * projection);
-                _effect.Parameters["BleachAdditionAmount"].SetValue(BleachAdditionAmount - (BleachAdditionAmount * Factor));
+                _effect.Parameters["BleachAdditionAmount"].SetValue((BleachAdditionAmount * (0 + Factor)));
                 return _effect;
             }
             set { _effect = value; }
@@ -42,7 +42,7 @@ namespace Silhouette.Engine.Effects
                 Matrix halfPixelOffset = Matrix.CreateTranslation(-0.5f, -0.5f, 0);
 
                 _effect.Parameters["MatrixTransform"].SetValue(halfPixelOffset * projection);
-                _effect.Parameters["BleachAdditionAmount"].SetValue(BleachAdditionAmount - (BleachAdditionAmount * Factor));
+                _effect.Parameters["BleachAdditionAmount"].SetValue((BleachAdditionAmount * (0 + Factor)));
                 return _effect;
             }
         }
