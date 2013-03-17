@@ -68,7 +68,7 @@ namespace Silhouette.Engine
 
             foreach (EffectObject eo in Effects)
             {
-                eo.Initialise();
+                //eo.Initialise();
                 eo.loadContentInEditor(graphics, content);
             }
         }

@@ -72,6 +72,7 @@ namespace Silhouette.GameMechs.Events
             Duration = 1000;
             CurrentDuration = 0;
             _setFactor += SetFactor;
+            StartFactor = -11.1f;
         }
 
         public override void AddLevelObject(LevelObject lo)
@@ -81,7 +82,6 @@ namespace Silhouette.GameMechs.Events
                 if (!this.EffectList.Contains(lo) && lo is EffectObject)
                 {
                     this.EffectList.Add((EffectObject)lo);
-                    this.StartFactor = ((EffectObject)lo).Factor;
                 }
             }
         }
@@ -105,6 +105,7 @@ namespace Silhouette.GameMechs.Events
 
                 foreach (EffectObject eo in this.EffectList)
                 {
+                    this.StartFactor = ((EffectObject)eo).Factor;
                     _timer = new Timer(_updateInterval, _updateInterval, (int)(Duration / _updateInterval), _setFactor);
                 }
             }
@@ -118,8 +119,22 @@ namespace Silhouette.GameMechs.Events
         {
             foreach (EffectObject eo in this.EffectList)
             {
+
                 CurrentDuration += _updateInterval;
-                eo.Factor += (CurrentDuration / Duration) * (TargetFactor - StartFactor);
+                eo.Factor += ((float)CurrentDuration / (float)Duration) * (TargetFactor - StartFactor);
+                //Console.WriteLine(CurrentDuration + " Factor - " + eo.Factor);
+                if ((Duration - CurrentDuration) <= 0)
+                {
+                    _timer.Active = false;
+                    CurrentDuration = 0;
+                    eo.Factor = TargetFactor;
+                }
+                if ((TargetFactor < StartFactor && eo.Factor < TargetFactor) || (TargetFactor > StartFactor && eo.Factor > TargetFactor))
+                {
+                    _timer.Active = false;
+                    CurrentDuration = 0;
+                    eo.Factor = TargetFactor;
+                }
 
             }
         }

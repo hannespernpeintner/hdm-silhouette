@@ -106,6 +106,10 @@ namespace Silhouette.GameMechs
 
         public override void Draw(SpriteBatch spriteBatch)
         {
+            if (texture == null)
+            {
+                texture = GameLoop.gameInstance.Content.Load<Texture2D>(@"Sprites/fallback");
+            }
             spriteBatch.Draw(texture, position, null, Color.White, rotation, origin, scale, SpriteEffects.None, 1);
         }
 
