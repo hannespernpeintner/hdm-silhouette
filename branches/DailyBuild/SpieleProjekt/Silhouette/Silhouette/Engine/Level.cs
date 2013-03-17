@@ -58,13 +58,30 @@ namespace Silhouette.Engine
         private Vector2 _Gravitation;
         [DisplayName("Gravition"), Category("General")]
         [Description("The Gravitation controls the force vectors applied to every dynamic fixture.")]
-        public Vector2 Gravitation { get { return _Gravitation; } set { _Gravitation = value; } }
+        public Vector2 Gravitation {
+            get 
+            { 
+                return _Gravitation;
+            } 
+            set 
+            { 
+                _Gravitation = value;
+                Physics.Gravity = _Gravitation;
+            } 
+        }
 
         private Vector2 _startPosition;
         [DisplayName("Start Position"), Category("General")]
         [Description("Defines the characters starting position.")]
         public Vector2 startPosition { get { return _startPosition; } set { _startPosition = value; } }
 
+        [NonSerialized]
+        private float _orientation;
+        public float Orientation
+        {
+            get { return _orientation; }
+            set { _orientation = value; }
+        }
 
         private List<EffectObject> _effects;
         public List<EffectObject> Effects
@@ -176,6 +193,7 @@ namespace Silhouette.Engine
         public void Update(GameTime gameTime)
         {
 
+            CalcOrientation();
             Physics.Step(Math.Min((float)gameTime.ElapsedGameTime.TotalMilliseconds * 0.001f, (1f / 30f)));
 
             foreach (Layer l in layerList)
@@ -259,6 +277,20 @@ namespace Silhouette.Engine
             player.layer = layer;
             GameLoop.gameInstance.playerInstance = player;
             layer.loList.Add(player);
+        }
+
+        private void CalcOrientation()
+        {
+            Vector2 orientationReference = new Vector2(1, 0);
+
+            Vector2 grav = Physics.Gravity;
+            Gravitation = grav;
+            grav.Normalize();
+            orientationReference.Normalize();
+            float angle = 0f;
+            Vector2.Dot(ref grav, ref orientationReference, out angle);
+            //angle = (float) Math.Cos((double) angle);
+            Camera.Rotation = angle ;
         }
 
         public void AddBoss(Layer layer)
