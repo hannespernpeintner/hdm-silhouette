@@ -161,7 +161,10 @@ namespace Silhouette.Engine
             if (bossLayer != null)
                 AddBoss(bossLayer);
 
-
+            if (Effects == null)
+            {
+                Effects = new List<EffectObject>();
+            }
 
             foreach (EffectObject eo in Effects)
             {
