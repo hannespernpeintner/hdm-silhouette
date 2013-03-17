@@ -114,12 +114,7 @@ namespace Silhouette.Engine
 
         public void Initialize(bool editor, ContentManager content)
         {
-            renderTargets = new RenderTarget2D[5];
-            renderTargets[1] = new RenderTarget2D(GameLoop.gameInstance.GraphicsDevice, GameSettings.Default.resolutionWidth, GameSettings.Default.resolutionHeight);
-            renderTargets[2] = new RenderTarget2D(GameLoop.gameInstance.GraphicsDevice, GameSettings.Default.resolutionWidth, GameSettings.Default.resolutionHeight);
-            renderTargets[3] = new RenderTarget2D(GameLoop.gameInstance.GraphicsDevice, GameSettings.Default.resolutionWidth, GameSettings.Default.resolutionHeight);
-            renderTargets[4] = new RenderTarget2D(GameLoop.gameInstance.GraphicsDevice, GameSettings.Default.resolutionWidth, GameSettings.Default.resolutionHeight);
-
+            
             this.spriteBatch = new SpriteBatch(GameLoop.gameInstance.GraphicsDevice);
             _flipFlop = new RenderTargetFlipFlop(ref spriteBatch);
             _flipFlop.Initialise();

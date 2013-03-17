@@ -36,6 +36,7 @@ namespace SilhouetteEditor
         //Physic
         ChangeBodyType,
         ApplyForce,
+        ChangeGlobalGravity,
 
 
         //Audio
@@ -1488,6 +1489,13 @@ namespace SilhouetteEditor
                     e12.layer = selectedLayer;
                     selectedLayer.loList.Add(e12);
                     selectLevelObject(e12);
+                    break;
+                case EventType.ChangeGlobalGravity:
+                    ChangeGlobalGravityEvent e122 = new ChangeGlobalGravityEvent(Extensions.RectangleFromVectors(clickedPoints[0], clickedPoints[1]));
+                    e122.name = e122.getPrefix() + selectedLayer.getNextObjectNumber();
+                    e122.layer = selectedLayer;
+                    selectedLayer.loList.Add(e122);
+                    selectLevelObject(e122);
                     break;
                 case EventType.ChangeVisibility:
                     ChangeVisibilityEvent e13 = new ChangeVisibilityEvent(Extensions.RectangleFromVectors(clickedPoints[0], clickedPoints[1]));
