@@ -73,6 +73,8 @@ namespace Silhouette.GameMechs.Events
             CurrentDuration = 0;
             _setFactor += SetFactor;
             StartFactor = -11.1f;
+            isActivated = true;
+            OnlyOnPlayerCollision = true;
         }
 
         public override void AddLevelObject(LevelObject lo)
@@ -100,7 +102,7 @@ namespace Silhouette.GameMechs.Events
 
         public bool OnCollision(Fixture a, Fixture b, Contact contact)
         {
-            if (b.isEvent)
+            if (isActivated && ((OnlyOnPlayerCollision && b.isPlayer) || !OnlyOnPlayerCollision))
             {
 
                 foreach (EffectObject eo in this.EffectList)

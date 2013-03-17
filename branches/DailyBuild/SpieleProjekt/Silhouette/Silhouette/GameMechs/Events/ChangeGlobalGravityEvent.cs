@@ -88,6 +88,7 @@ namespace Silhouette.GameMechs.Events
             height = rectangle.Height;
             list = new List<LevelObject>();
             isActivated = true;
+            OnlyOnPlayerCollision = true;
             Duration = 1000f;
             SetXHandler += SetX;
             SetYHandler += SetY;
@@ -96,7 +97,7 @@ namespace Silhouette.GameMechs.Events
         private static int _timerIntervalMS = 10;
         public bool OnCollision(Fixture a, Fixture b, Contact contact)
         {
-            if (isActivated)
+            if (isActivated && ((OnlyOnPlayerCollision && b.isPlayer) || !OnlyOnPlayerCollision))
             {
                 if (!_initialized)
                 {

@@ -61,6 +61,11 @@ namespace Silhouette.GameMechs.Events
         [Description("The list of Objects which are affected by the event.")]
         public List<LevelObject> list { get { return _list; } set { _list = value; } }
 
+        private bool _onlyOnPlayerCollision;
+        [DisplayName("OnlyOnPlayerCollision"), Category("Event Data")]
+        [Description("True, if the event should only be triggered by collision with the Player.")]
+        public bool OnlyOnPlayerCollision { get { return _onlyOnPlayerCollision; } set { _onlyOnPlayerCollision = value; } }
+
         public override void Initialise() { }
         public override void LoadContent() { ToFixture(); }
         public override void Update(GameTime gameTime) { }
