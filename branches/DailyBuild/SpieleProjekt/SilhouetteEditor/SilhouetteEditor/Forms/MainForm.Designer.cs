@@ -82,6 +82,7 @@ namespace SilhouetteEditor.Forms
             this.physicToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.changeBodyTypeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.applyForceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.changeGlobalGravityToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.audioToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.fadeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.crossfaderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -605,7 +606,8 @@ namespace SilhouetteEditor.Forms
             // 
             this.physicToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.changeBodyTypeToolStripMenuItem,
-            this.applyForceToolStripMenuItem});
+            this.applyForceToolStripMenuItem,
+            this.changeGlobalGravityToolStripMenuItem});
             this.physicToolStripMenuItem.Name = "physicToolStripMenuItem";
             this.physicToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
             this.physicToolStripMenuItem.Text = "Physic";
@@ -623,6 +625,13 @@ namespace SilhouetteEditor.Forms
             this.applyForceToolStripMenuItem.Size = new System.Drawing.Size(171, 22);
             this.applyForceToolStripMenuItem.Text = "Apply Force";
             this.applyForceToolStripMenuItem.Click += new System.EventHandler(this.applyForceToolStripMenuItem_Click);
+            // 
+            // changeGlobalGravityToolStripMenuItem
+            // 
+            this.changeGlobalGravityToolStripMenuItem.Name = "changeGlobalGravityToolStripMenuItem";
+            this.changeGlobalGravityToolStripMenuItem.Size = new System.Drawing.Size(171, 22);
+            this.changeGlobalGravityToolStripMenuItem.Text = "Change global gravity";
+            this.changeGlobalGravityToolStripMenuItem.Click += new System.EventHandler(this.changeGlobalGravityToolStripMenuItem_Click);
             // 
             // audioToolStripMenuItem
             // 
@@ -1333,6 +1342,7 @@ namespace SilhouetteEditor.Forms
         private System.Windows.Forms.ToolStripMenuItem objectToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem moveRotateToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem changeVisibilityToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem changeGlobalGravityToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem applyForceToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem changeEffectToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem saveStateToolStripMenuItem;
