@@ -9,7 +9,7 @@ float4 PS_BLEACH(float2 texCoord: TEXCOORD0): COLOR
 	float4 fAmount = float4(BleachAdditionAmount, BleachAdditionAmount, BleachAdditionAmount, 0);
 
 	{
-		color += (fAmount);
+		color.rgb += (fAmount).rgb;
 		return color;
 	}
 }
