@@ -38,6 +38,7 @@ namespace Silhouette.GameMechs.Events
             height = rectangle.Height;
             list = new List<LevelObject>();
             isActivated = true;
+            OnlyOnPlayerCollision = true;
         }
 
         public override string getPrefix()

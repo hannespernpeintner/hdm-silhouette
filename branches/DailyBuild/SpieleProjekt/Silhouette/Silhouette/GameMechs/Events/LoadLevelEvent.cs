@@ -46,6 +46,7 @@ namespace Silhouette.GameMechs.Events
             height = rectangle.Height;
             list = new List<LevelObject>();
             isActivated = true;
+            OnlyOnPlayerCollision = true;
             LevelName = "12345";
         }
 
@@ -63,7 +64,7 @@ namespace Silhouette.GameMechs.Events
 
         public bool OnCollision(Fixture a, Fixture b, Contact contact)
         {
-            if (b.isEvent)
+            if (((OnlyOnPlayerCollision && b.isPlayer) || !OnlyOnPlayerCollision))
             {
                 if (isActivated)
                 {

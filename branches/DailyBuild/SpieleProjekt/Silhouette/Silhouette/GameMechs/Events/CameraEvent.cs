@@ -62,6 +62,7 @@ namespace Silhouette.GameMechs.Events
             width = rectangle.Width;
             height = rectangle.Height;
             isActivated = true;
+            OnlyOnPlayerCollision = true;
         }
 
         public override void Update(GameTime gameTime)
@@ -143,7 +144,7 @@ namespace Silhouette.GameMechs.Events
 
         public bool OnCollision(Fixture a, Fixture b, Contact contact)
         {
-            if (b.isEvent)
+            if (isActivated && ((OnlyOnPlayerCollision && b.isPlayer) || !OnlyOnPlayerCollision))
             {
                 counter = endValue;
                 isUpdate = true;

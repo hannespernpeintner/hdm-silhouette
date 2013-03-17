@@ -62,6 +62,7 @@ namespace Silhouette.GameMechs.Events
             height = rectangle.Height;
             list = new List<LevelObject>();
             isActivated = true;
+            OnlyOnPlayerCollision = true;
 
             _fCenter = 0.0f;
             _fBandwidth = 0.0f;
@@ -80,7 +81,7 @@ namespace Silhouette.GameMechs.Events
 
         public bool OnCollision(Fixture a, Fixture b, Contact contact)
         {
-            if (isActivated)
+            if (isActivated && ((OnlyOnPlayerCollision && b.isPlayer) || !OnlyOnPlayerCollision))
             {
                 foreach (SoundObject so in this.list)
                 {
