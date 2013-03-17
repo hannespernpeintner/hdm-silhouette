@@ -39,14 +39,14 @@ namespace SilhouetteEditor.Forms
 
             foreach (Layer layer in Editor.Default.level.layerList)
             {
-                foreach(LevelObject lo in layer.loList)
+                foreach(EffectObject eo in layer.Effects)
                 {
-                    if (lo.name.Equals(selectedEffect) && lo is EffectObject)
+                    if (eo.name.Equals(selectedEffect) && eo is EffectObject)
                     {
                         LevelObject levelObject = Editor.Default.selectedLevelObjects[0];
                         if (levelObject is ChangeEffectEvent)
                         {
-                            ((ChangeEffectEvent)levelObject).EffectList.Add((EffectObject)lo);
+                            ((ChangeEffectEvent)levelObject).EffectList.Add((EffectObject)eo);
                         }
                     }
                 }
