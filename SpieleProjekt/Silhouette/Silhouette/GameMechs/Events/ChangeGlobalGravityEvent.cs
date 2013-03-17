@@ -122,7 +122,7 @@ namespace Silhouette.GameMechs.Events
 
         public void SetX()
         {
-            Console.WriteLine(TimerX.RepeatCount + " | " + TimerX.RepeatInterval + " GravityX: " + Level.Physics.Gravity.X);
+            //Console.WriteLine(TimerX.RepeatCount + " | " + TimerX.RepeatInterval + " GravityX: " + Level.Physics.Gravity.X);
             Level.Physics.Gravity.X += StepAmountX;
             if ((StartForce.X < TargetForce.X && Level.Physics.Gravity.X >= TargetForce.X)
                 || (StartForce.X > TargetForce.X && Level.Physics.Gravity.X <= TargetForce.X))
@@ -135,7 +135,7 @@ namespace Silhouette.GameMechs.Events
 
         public void SetY()
         {
-            Console.WriteLine(TimerY.RepeatCount + " | " + TimerY.RepeatInterval + " GravityY: " + Level.Physics.Gravity.Y);
+            //Console.WriteLine(TimerY.RepeatCount + " | " + TimerY.RepeatInterval + " GravityY: " + Level.Physics.Gravity.Y);
             Level.Physics.Gravity.Y += StepAmountY;
             if ((StartForce.X < TargetForce.Y && Level.Physics.Gravity.Y >= TargetForce.Y)
                 || (StartForce.Y > TargetForce.Y && Level.Physics.Gravity.Y <= TargetForce.Y))
