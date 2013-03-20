@@ -49,11 +49,14 @@ namespace Silhouette.Engine.Effects
         public override Effect EffectInEditor(GraphicsDevice graphics)
         {
             {
-                Matrix projection = Matrix.CreateOrthographicOffCenter(0, _graphics.Viewport.Width, _graphics.Viewport.Height, 0, 0, 1);
+                Matrix projection = Matrix.CreateOrthographicOffCenter(0, graphics.Viewport.Width, graphics.Viewport.Height, 0, 0, 1);
                 Matrix halfPixelOffset = Matrix.CreateTranslation(-0.5f, -0.5f, 0);
-
+                if (_effect == null)
+                {
+                    return null;
+                }
                 _effect.Parameters["MatrixTransform"].SetValue(halfPixelOffset * projection);
-                _effect.Parameters["BlurDistanceInShaderCoords"].SetValue(Factor * BlurDistanceInPixels / _graphics.Viewport.Width);
+                _effect.Parameters["BlurDistanceInShaderCoords"].SetValue(Factor * BlurDistanceInPixels / graphics.Viewport.Width);
                 _effect.Parameters["BlurStrength"].SetValue(BlurStrength * Factor);
                 return _effect;
             }

@@ -1,5 +1,6 @@
 float Wavelength = 0.01f;
 float Time = 0;
+float Time2 = 0;
 
 sampler2D frameSampler: register(s0){
 };
@@ -12,7 +13,8 @@ float distance1(float x1, float y1, float x2, float y2)
 
 float4 PS(float2 Tex: TEXCOORD0) : COLOR
 {
-	float4 Color = tex2D(frameSampler, float2( Tex.x+(cos(Tex.x*50))*(0.13)*(Time), Tex.y+(sin(Tex.y*20))*(0.13)*(Time)));
+	float4 Color = tex2D(frameSampler, float2( Tex.x+(cos(Tex.x*50))*(0.13)*(Time), Tex.y+(sin(Tex.y*20))*(0.13)*(Time2)));
+	Color.a *= tex2D(frameSampler, float2( Tex.x, Tex.y)).a;
 	return Color;
 }
 
