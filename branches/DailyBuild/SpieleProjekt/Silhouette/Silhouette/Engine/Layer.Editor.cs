@@ -92,7 +92,7 @@ namespace Silhouette.Engine
             if (particleRenderer == null)
             {
                 particleRenderer = new ParticleRenderer(_graphicsM);
-                //      particleRenderer.drawParticles();
+                      particleRenderer.drawParticles();
             }
             particleRenderer.drawParticlesInEditor(_contentM);
         }

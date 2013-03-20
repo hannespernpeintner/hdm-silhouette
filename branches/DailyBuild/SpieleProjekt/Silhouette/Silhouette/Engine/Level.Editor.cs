@@ -81,10 +81,12 @@ namespace Silhouette.Engine
             {
                 Physics.Step(Math.Min((float)gameTime.ElapsedGameTime.TotalMilliseconds * 0.001f, (1f / 30f)));
 
-                foreach (Layer layer in _layerList)
-                {
-                    layer.updateLayerInEditor(gameTime);
-                }
+            }
+
+
+            foreach (Layer layer in _layerList)
+            {
+                layer.updateLayerInEditor(gameTime);
             }
 
             foreach (EffectObject eo in Effects)
