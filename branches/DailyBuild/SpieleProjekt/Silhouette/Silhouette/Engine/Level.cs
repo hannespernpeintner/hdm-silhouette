@@ -256,7 +256,10 @@ namespace Silhouette.Engine
                 spriteBatch.Draw(_flipFlop.Result, Vector2.Zero, Color.White);
                 Primitives.Instance.drawBoxFilled(spriteBatch, new Rectangle(0, 0, GameSettings.Default.resolutionWidth, 96), Color.Black);
                 Primitives.Instance.drawBoxFilled(spriteBatch, new Rectangle(0, GameSettings.Default.resolutionHeight - 96, GameSettings.Default.resolutionWidth, 96), Color.Black);
-
+                if (GameLoop.gameInstance.playerInstance.mState != null)
+                {
+                    Primitives.Instance.drawCircleFilled(spriteBatch, new Vector2(GameLoop.gameInstance.playerInstance.mState.X, GameLoop.gameInstance.playerInstance.mState.Y), 5, Color.Gray);
+                }
                 spriteBatch.End();
 
 

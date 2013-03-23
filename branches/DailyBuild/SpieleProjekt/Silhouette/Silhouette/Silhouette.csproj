@@ -185,6 +185,7 @@
     <Compile Include="GameMechs\LevelObject.cs" />
     <Compile Include="GameMechs\ParticleObject.cs" />
     <Compile Include="GameMechs\Player.cs" />
+    <Compile Include="GameMechs\PlayerRope.cs" />
     <Compile Include="GameMechs\PrimitiveObject.cs" />
     <Compile Include="GameMechs\SoundObject.cs" />
     <Compile Include="GameMechs\TextureObject.cs" />
