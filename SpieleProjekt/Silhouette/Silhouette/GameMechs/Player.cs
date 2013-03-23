@@ -43,9 +43,12 @@ namespace Silhouette.GameMechs
         public RopeJoint joint2;
         public RopeJoint joint3;
         public AngleJoint joint4;           // Joint, der die Camera nicht zu weit rotieren lässt
+        public PlayerRope playerRope;
 
         public KeyboardState oldState;
         public KeyboardState kState;
+        public MouseState oldMouseState;
+        public MouseState mState;
         public Vector2 oldPosition;
         public Vector2 movement;            // Bewegung des Characters. Wichtig zur Statusveränderungserkennung.
 
@@ -129,6 +132,7 @@ namespace Silhouette.GameMechs
             // position = Vector2.Zero;
             // position = new Vector2(200, 200);
 
+
             idle_left = new Animation();
             idle_right = new Animation();
             idleb_left = new Animation();
@@ -196,6 +200,7 @@ namespace Silhouette.GameMechs
 
         public override void LoadContent()
         {
+
             // Hier müssen alle Sprites geladen werden.
             idle_left.Load(6, "Sprites/Player/idleA_left_", 15, true);
             idle_right.Load(6, "Sprites/Player/idleA_right_", 15, true);
@@ -340,6 +345,7 @@ namespace Silhouette.GameMechs
             if (!isDying && !isScriptedMoving)
             {
                 UpdateControls(gameTime);
+
             }
             if (!isDying && !isScriptedMoving)
             {
@@ -387,9 +393,34 @@ namespace Silhouette.GameMechs
         private void UpdateControls(GameTime gameTime)
         {
             kState = Keyboard.GetState();
+            mState = Mouse.GetState();
 
             if (!controlsEnabled) {
                 return;
+            }
+
+            if (mState.LeftButton == ButtonState.Pressed && (oldMouseState.LeftButton != ButtonState.Pressed))
+            {
+                bool portContainsMouse = GameLoop.gameInstance.GraphicsDevice.Viewport.Bounds.Contains(new Point(mState.X, mState.Y));
+                if (portContainsMouse)
+                {
+                    if (playerRope != null)
+                    {
+                        playerRope.delete();
+                    }
+                    playerRope = new PlayerRope(Mouse.GetState().X, Mouse.GetState().Y);
+                }
+            }
+            else if (mState.RightButton == ButtonState.Pressed && (oldMouseState.RightButton != ButtonState.Pressed))
+            {
+                bool portContainsMouse = GameLoop.gameInstance.GraphicsDevice.Viewport.Bounds.Contains(new Point(mState.X, mState.Y));
+                if (portContainsMouse)
+                {
+                    if (playerRope != null)
+                    {
+                        playerRope.delete();
+                    }
+                }
             }
 
             // LEFT ARROW
@@ -594,6 +625,7 @@ namespace Silhouette.GameMechs
             else { charRect.Friction = 0.1f; }
 
             oldState = kState;
+            oldMouseState = mState;
             oldPosition = charRect.Body.Position;
         }
 
@@ -1510,6 +1542,12 @@ namespace Silhouette.GameMechs
         public override void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(activeAnimation.activeTexture, position, null, Color.White, tempRotation, new Vector2(250, 250), 1, SpriteEffects.None, 1);
+            if (playerRope != null)
+            {
+                playerRope.Draw(spriteBatch);
+            }
+
+
             //Das auskommentierte hier kann als Debugview dienen.
             /*
             spriteBatch.DrawString(FontManager.Arial, "Standing: " + isIdle.ToString(), position+new Vector2(300, 20), Color.Black);
