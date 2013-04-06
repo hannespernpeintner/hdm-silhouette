@@ -8,6 +8,11 @@ sampler MaskSampler : register(s1);
 
 bool bBlur;
 bool bVignette;
+
+float bN = 0;
+float bE = 0;
+float bS = 0;
+float bW = 0;
  
 float4 PS(float2 Tex: TEXCOORD0) : COLOR
 {
@@ -18,6 +23,7 @@ float4 PS(float2 Tex: TEXCOORD0) : COLOR
 	float4 Vignette = tex2D(MaskSampler, Tex);
 	// Vignette ist schwarz-weiﬂ. Abh. vom blau-Wert wird Blurst‰rke ausgew‰hlt
 	float BlurDistance = 0.005 * (1-Vignette.b);
+	float mbv = (1-Vignette.b); // MotionBlurVignette
 
 if (bVignette)
 {
@@ -25,14 +31,28 @@ if (bVignette)
  
 	// Get the texel from ColorMapSampler using a modified texture coordinate. This
 	// gets the texels at the neighbour texels and adds it to Color.
-
+	Color = tex2D( ColorMapSampler, float2(Tex.x, Tex.y));
 	if (bBlur)
 	{
-       Color  = tex2D( ColorMapSampler, float2(Tex.x+BlurDistance, Tex.y+BlurDistance));
-       Color += tex2D( ColorMapSampler, float2(Tex.x-BlurDistance, Tex.y-BlurDistance));
-       Color += tex2D( ColorMapSampler, float2(Tex.x+BlurDistance, Tex.y-BlurDistance));
-		Color += tex2D( ColorMapSampler, float2(Tex.x-BlurDistance, Tex.y+BlurDistance));
-		Color = Color / 4;
+       Color  += tex2D( ColorMapSampler, float2(Tex.x-BlurDistance+bW*mbv, Tex.y-BlurDistance+bS*mbv));
+       Color  += tex2D( ColorMapSampler, float2(Tex.x, Tex.y-BlurDistance));
+       Color  += tex2D( ColorMapSampler, float2(Tex.x+BlurDistance+bE*mbv, Tex.y-BlurDistance+bS*mbv));
+	   
+       Color  += tex2D( ColorMapSampler, float2(Tex.x-BlurDistance+bW*mbv, Tex.y));
+       Color  += tex2D( ColorMapSampler, float2(Tex.x, Tex.y));
+       Color  += tex2D( ColorMapSampler, float2(Tex.x+BlurDistance+bE*mbv, Tex.y));
+	   
+       Color  += tex2D( ColorMapSampler, float2(Tex.x-BlurDistance+bW*mbv, Tex.y+BlurDistance+bN*mbv));
+       Color  += tex2D( ColorMapSampler, float2(Tex.x, Tex.y+BlurDistance+bN*mbv));
+       Color  += tex2D( ColorMapSampler, float2(Tex.x+BlurDistance+bE*mbv, Tex.y+BlurDistance+bN*mbv));
+
+	   
+       Color  += tex2D( ColorMapSampler, float2(Tex.x, Tex.y+2*BlurDistance+bS*mbv));
+       Color  += tex2D( ColorMapSampler, float2(Tex.x, Tex.y-2*BlurDistance+bN*mbv));
+       Color  += tex2D( ColorMapSampler, float2(Tex.x+2*BlurDistance+bW*mbv, Tex.y));
+       Color  += tex2D( ColorMapSampler, float2(Tex.x-2*BlurDistance+bE*mbv, Tex.y));
+
+		Color = Color / 14;
 	}
 
 Color *= Vignette;
