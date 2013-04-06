@@ -28,6 +28,30 @@ namespace Silhouette.Engine.Effects
             set { _overallVignette = value; }
         }
 
+        private float _motionBlurNorth;
+        public float MotionBlurNorth
+        {
+            get { return _motionBlurNorth; }
+            set { _motionBlurNorth = value; }
+        }
+        private float _motionBlurEast;
+        public float MotionBlurEast
+        {
+            get { return _motionBlurEast; }
+            set { _motionBlurEast = value; }
+        }
+        private float _motionBlurSouth;
+        public float MotionBlurSouth
+        {
+            get { return _motionBlurSouth; }
+            set { _motionBlurSouth = value; }
+        }
+        private float _motionBlurWest;
+        public float MotionBlurWest
+        {
+            get { return _motionBlurWest; }
+            set { _motionBlurWest = value; }
+        }
 
 
         [NonSerialized]
@@ -42,6 +66,10 @@ namespace Silhouette.Engine.Effects
                 _effect.Parameters["MatrixTransform"].SetValue(halfPixelOffset * projection);
                 _effect.Parameters["bBlur"].SetValue(OverallBlur);
                 _effect.Parameters["bVignette"].SetValue(OverallVignette);
+                _effect.Parameters["bN"].SetValue(MotionBlurNorth);
+                _effect.Parameters["bE"].SetValue(MotionBlurEast);
+                _effect.Parameters["bS"].SetValue(MotionBlurSouth);
+                _effect.Parameters["bW"].SetValue(MotionBlurWest);
                 return _effect;
             }
             set { _effect = value; }
@@ -67,6 +95,10 @@ namespace Silhouette.Engine.Effects
             Path = "Effects/VignettenBlur";
             OverallBlur = true;
             OverallVignette = true;
+            MotionBlurNorth = 0;
+            MotionBlurEast = 0;
+            MotionBlurSouth = 0;
+            MotionBlurWest = 0;
         }
         public override void LoadContent()
         {
@@ -81,8 +113,49 @@ namespace Silhouette.Engine.Effects
 
         public override void Update(GameTime gameTime)
         {
-        
+            Vector2 velo = GameLoop.gameInstance.playerInstance.charRect.Body.LinearVelocity;
+            if (velo.X > 0)
+            {
+                MotionBlurEast = velo.X;
+                MotionBlurWest = 0;
+            }
+            else if (velo.X < 0)
+            {
+                MotionBlurWest = velo.X;
+                MotionBlurEast = 0;
+            }
+            else
+            {
+                MotionBlurWest = 0;
+                MotionBlurEast = 0;
+            }
+
+            if (velo.Y > 0)
+            {
+                MotionBlurNorth = velo.Y;
+                MotionBlurSouth = 0;
+            }
+            else if (velo.Y < 0)
+            {
+                MotionBlurSouth = velo.Y;
+                MotionBlurNorth = 0;
+            }
+            else
+            {
+                MotionBlurSouth = 0;
+                MotionBlurNorth = 0;
+            }
+
+            float blurFactor = 200;
+            MotionBlurNorth /= blurFactor;
+            MotionBlurEast /= blurFactor;
+            MotionBlurSouth /= blurFactor;
+            MotionBlurWest /= blurFactor;
         }
 
+        public override void UpdateInEditor(GameTime gameTime)
+        {
+            
+        }
     }
 }
