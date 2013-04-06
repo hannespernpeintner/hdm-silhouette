@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<XnaContent>
+  <Asset Type="ProjectMercury.ParticleEffect">
+    <Item Type="ProjectMercury.Emitters.RectEmitter">
+      <Name>Particles</Name>
+      <Budget>20</Budget>
+      <Term>1</Term>
+      <ReleaseQuantity>1</ReleaseQuantity>
+      <Enabled>True</Enabled>
+      <ReleaseSpeed>
+        <Value>5</Value>
+        <Variation>5</Variation>
+      </ReleaseSpeed>
+      <ReleaseColour>
+        <Value>1 1 1</Value>
+        <Variation>0 0 0</Variation>
+      </ReleaseColour>
+      <ReleaseOpacity>
+        <Value>1</Value>
+        <Variation>0</Variation>
+      </ReleaseOpacity>
+      <ReleaseScale>
+        <Value>16</Value>
+        <Variation>0</Variation>
+      </ReleaseScale>
+      <ReleaseRotation>
+        <Value>0</Value>
+        <Variation>0</Variation>
+      </ReleaseRotation>
+      <ReleaseImpulse>0 0</ReleaseImpulse>
+      <ParticleTextureAssetName>ParticleEffects/ParticleTextures/bokeh</ParticleTextureAssetName>
+      <Modifiers>
+        <Item Type="ProjectMercury.Modifiers.OpacityInterpolatorModifier">
+          <InitialOpacity>0</InitialOpacity>
+          <MiddleOpacity>0.6</MiddleOpacity>
+          <MiddlePosition>0.4</MiddlePosition>
+          <FinalOpacity>0</FinalOpacity>
+        </Item>
+      </Modifiers>
+      <BlendMode>Add</BlendMode>
+      <TriggerOffset>0 0</TriggerOffset>
+      <MinimumTriggerPeriod>0</MinimumTriggerPeriod>
+      <Width>1000</Width>
+      <Height>1250</Height>
+      <Rotation>0</Rotation>
+      <Frame>false</Frame>
+    </Item>
+    <Name>Beam Me Up</Name>
+    <Author>Matt Davey</Author>
+    <Description />
+  </Asset>
+</XnaContent>

@@ -32,6 +32,7 @@ namespace Silhouette.GameMechs
         Waterfall,
         Smoke,
         HeavyRain,
+        Bokeh,
         Rain
     }
 
