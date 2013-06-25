@@ -152,15 +152,18 @@ namespace FarseerPhysics.Factories
         /// <param name="localAnchorB">The local anchor B.</param>
         /// <param name="connectFirstAndLast">if set to <c>true</c> [connect first and last].</param>
         /// <param name="collideConnected">if set to <c>true</c> [collide connected].</param>
-        public static void AttachBodiesWithRevoluteJoint(World world, List<Body> bodies, Vector2 localAnchorA,
+        public static List<RevoluteJoint> AttachBodiesWithRevoluteJoint(World world, List<Body> bodies, Vector2 localAnchorA,
                                                          Vector2 localAnchorB, bool connectFirstAndLast,
                                                          bool collideConnected)
         {
+            List<RevoluteJoint> jointList = new List<RevoluteJoint>();
+
             for (int i = 1; i < bodies.Count; i++)
             {
                 RevoluteJoint joint = new RevoluteJoint(bodies[i], bodies[i - 1], localAnchorA, localAnchorB);
                 joint.CollideConnected = collideConnected;
                 world.AddJoint(joint);
+                jointList.Add(joint);
             }
 
             if (connectFirstAndLast)
@@ -169,7 +172,10 @@ namespace FarseerPhysics.Factories
                                                             localAnchorB);
                 lastjoint.CollideConnected = collideConnected;
                 world.AddJoint(lastjoint);
+                jointList.Add(lastjoint);
             }
+
+            return jointList;
         }
 
         /// <summary>
@@ -181,15 +187,18 @@ namespace FarseerPhysics.Factories
         /// <param name="localAnchorB">The local anchor B.</param>
         /// <param name="connectFirstAndLast">if set to <c>true</c> [connect first and last].</param>
         /// <param name="collideConnected">if set to <c>true</c> [collide connected].</param>
-        public static void AttachBodiesWithSliderJoint(World world, List<Body> bodies, Vector2 localAnchorA,
+        public static List<SliderJoint> AttachBodiesWithSliderJoint(World world, List<Body> bodies, Vector2 localAnchorA,
                                                          Vector2 localAnchorB, bool connectFirstAndLast,
                                                          bool collideConnected, float minLength, float maxLength)
         {
+            List<SliderJoint> jointList = new List<SliderJoint>();
+
             for (int i = 1; i < bodies.Count; i++)
             {
                 SliderJoint joint = new SliderJoint(bodies[i], bodies[i - 1], localAnchorA, localAnchorB, minLength, maxLength);
                 joint.CollideConnected = collideConnected;
                 world.AddJoint(joint);
+                jointList.Add(joint);
             }
 
             if (connectFirstAndLast)
@@ -197,7 +206,10 @@ namespace FarseerPhysics.Factories
                 SliderJoint lastjoint = new SliderJoint(bodies[0], bodies[bodies.Count - 1], localAnchorA, localAnchorB, minLength, maxLength);
                 lastjoint.CollideConnected = collideConnected;
                 world.AddJoint(lastjoint);
+                jointList.Add(lastjoint);
             }
+
+            return jointList;
         }
     }
 }

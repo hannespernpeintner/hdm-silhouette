@@ -407,6 +407,7 @@ namespace Silhouette.GameMechs
                     if (playerRope != null)
                     {
                         playerRope.delete();
+                        playerRope = null;
                     }
                     playerRope = new PlayerRope(Mouse.GetState().X, Mouse.GetState().Y);
                 }
