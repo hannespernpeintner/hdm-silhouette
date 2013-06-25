@@ -95,7 +95,7 @@ namespace Silhouette.Engine
         [NonSerialized]
         private DebugViewXNA debugView;
         [NonSerialized]
-        private bool DebugViewEnabled;
+        public bool DebugViewEnabled;
         [NonSerialized]
         private bool GraphicsEnabled;
         [NonSerialized]
@@ -256,10 +256,10 @@ namespace Silhouette.Engine
                 spriteBatch.Draw(_flipFlop.Result, Vector2.Zero, Color.White);
                 Primitives.Instance.drawBoxFilled(spriteBatch, new Rectangle(0, 0, GameSettings.Default.resolutionWidth, 96), Color.Black);
                 Primitives.Instance.drawBoxFilled(spriteBatch, new Rectangle(0, GameSettings.Default.resolutionHeight - 96, GameSettings.Default.resolutionWidth, 96), Color.Black);
-                if (GameLoop.gameInstance.playerInstance.mState != null)
+                /*if (GameLoop.gameInstance.playerInstance.mState != null)
                 {
                     Primitives.Instance.drawCircleFilled(spriteBatch, new Vector2(GameLoop.gameInstance.playerInstance.mState.X, GameLoop.gameInstance.playerInstance.mState.Y), 5, Color.Gray);
-                }
+                }*/
                 spriteBatch.End();
 
 
@@ -272,8 +272,8 @@ namespace Silhouette.Engine
 
         public void AddPlayer(Layer layer)
         {
-            Player player = new Player();
-            //Tom player = new Tom();
+            //Player player = new Player();
+            Tom player = new Tom();
             player.position = startPosition;
             player.Initialise();
             //player.position = startPosition;
