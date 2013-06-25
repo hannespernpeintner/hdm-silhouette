@@ -128,11 +128,12 @@ namespace Silhouette.Engine.Effects
 
         public override void Update(GameTime gameTime)
         {
-            Player player = null;
+            //Player player = null;
+            Tom player = null;
             try
             {
+                //player = GameLoop.gameInstance.playerInstance;
                 player = GameLoop.gameInstance.playerInstance;
-                //Tom player = GameLoop.gameInstance.playerInstance;
             }
             catch (Exception e)
             {

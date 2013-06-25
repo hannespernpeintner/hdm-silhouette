@@ -113,7 +113,7 @@ namespace Silhouette.Engine.Effects
 
         public override void Update(GameTime gameTime)
         {
-            Vector2 velo = GameLoop.gameInstance.playerInstance.charRect.Body.LinearVelocity;
+            Vector2 velo = GameLoop.gameInstance.playerInstance.CharFix.Body.LinearVelocity;
             if (velo.X > 0)
             {
                 MotionBlurEast = velo.X;
