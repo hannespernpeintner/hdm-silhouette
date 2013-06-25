@@ -48,9 +48,10 @@ namespace Silhouette.GameMechs
             set { _jointOnCollision = value; }
         }
 
-
+        
         public PlayerRope(int mouseX, int mouseY)
         {
+            /*
             Vector2 force = new Vector2(GameLoop.gameInstance.GraphicsDevice.Viewport.Width / 2, GameLoop.gameInstance.GraphicsDevice.Viewport.Height / 2) - new Vector2(mouseX, mouseY);
             //force /= 15;
             force.Normalize();
@@ -59,7 +60,7 @@ namespace Silhouette.GameMechs
 
             Circle = new CirclePrimitiveObject(position, JointObject.radius);
             Length = 100;
-            Segments = 10;
+            Segments = 20;
             Width = 5;
 
 
@@ -82,10 +83,16 @@ namespace Silhouette.GameMechs
             Bodies = new List<Body>();
             Bodies.AddRange(PathManager.EvenlyDistributeShapesAlongPath(Level.Physics, Path, shapes, BodyType.Dynamic, Segments));
             //Bodies.Add(RopeSensor.Body);
-            PathManager.AttachBodiesWithRevoluteJoint(Level.Physics, Bodies, new Vector2(0, 0.25f), new Vector2(0, -0.25f), false, false);
+            //List<RevoluteJoint> revoluteJoints = PathManager.AttachBodiesWithRevoluteJoint(Level.Physics, Bodies, new Vector2(0, 0.25f), new Vector2(0, -0.25f), false, false);
+            List<SliderJoint> sliderJoints = PathManager.AttachBodiesWithSliderJoint(Level.Physics, Bodies, new Vector2(0, 0.25f), new Vector2(0, -0.25f), false, false, 1f, 1f);
 
             Joint1 = JointFactory.CreateWeldJoint(Level.Physics, GameLoop.gameInstance.playerInstance.charRect.Body, Bodies.ElementAt(0), Vector2.Zero, Vector2.Zero);
             Joint2 = JointFactory.CreateWeldJoint(Level.Physics, RopeSensor.Body, Bodies.ElementAt(Bodies.Count-1), Vector2.Zero, Vector2.Zero);
+
+            foreach (SliderJoint sj in sliderJoints)
+            {
+                sj.DampingRatio = 0.0f;
+            }
 
             foreach (Body body in Bodies)
             {
@@ -102,11 +109,14 @@ namespace Silhouette.GameMechs
                     fix.IgnoreCollisionWith(GameLoop.gameInstance.playerInstance.sRect);
                     fix.IgnoreCollisionWith(GameLoop.gameInstance.playerInstance.wRect);
                     fix.IgnoreCollisionWith(RopeSensor);
+
                 }
             }
 
+            
 
             RopeSensor.Body.ApplyForce(ref force);
+            */
         }
 
         public override void Draw(Microsoft.Xna.Framework.Graphics.SpriteBatch spriteBatch)
@@ -123,7 +133,6 @@ namespace Silhouette.GameMechs
 
         public void delete()
         {
-
             if (Joint1 != null)
             {
                 Level.Physics.RemoveJoint(Joint1);
@@ -132,6 +141,7 @@ namespace Silhouette.GameMechs
             {
                 Level.Physics.RemoveJoint(Joint2);
             }
+            //Level.Physics.RemoveBody(RopeSensor.Body);
             foreach(Body body in Bodies)
             {
                 /*foreach(Joint joint in Level.Physics.JointList)
@@ -141,9 +151,11 @@ namespace Silhouette.GameMechs
                         Level.Physics.RemoveJoint(joint);
                     }
                 }*/
-                //body.Active = false;
+                body.Active = false;
                 //Level.Physics.RemoveBody(body);
             }
+            //Level.Physics.RemoveBody(RopeSensor.Body);
+            RopeSensor.Body.Active = false;
         }
 
         public override void Initialise()
