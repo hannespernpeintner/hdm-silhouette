@@ -170,7 +170,8 @@ namespace Silhouette.Engine.Manager
 
         public static Effect Bleach()
         {
-            Player player = null;
+            //Player player = null;
+            Tom player = null;
             try
             {
                 player = GameLoop.gameInstance.playerInstance;
@@ -201,7 +202,8 @@ namespace Silhouette.Engine.Manager
 
         public static Effect WeakBleach()
         {
-            Player player = null;
+            //Player player = null;
+            Tom player = null;
             try
             {
                 player = GameLoop.gameInstance.playerInstance;
@@ -232,7 +234,8 @@ namespace Silhouette.Engine.Manager
 
         public static Effect StrongBleach()
         {
-            Player player = null;
+            //Player player = null;
+            Tom player = null;
             try
             {
                 player = GameLoop.gameInstance.playerInstance;
@@ -361,7 +364,8 @@ namespace Silhouette.Engine.Manager
 
         public static Effect ColorChange()
         {
-            Player player = null;
+            //Player player = null;
+            Tom player = null;
             try
             {
                 player = GameLoop.gameInstance.playerInstance;
@@ -427,7 +431,8 @@ namespace Silhouette.Engine.Manager
 
         public static Effect BleachInEditor(GraphicsDevice graphics)
         {
-            Player player = null;
+            //Player player = null;
+            Tom player = null;
             try
             {
                 player = GameLoop.gameInstance.playerInstance;
@@ -458,7 +463,8 @@ namespace Silhouette.Engine.Manager
 
         public static Effect WeakBleachInEditor(GraphicsDevice graphics)
         {
-            Player player = null;
+            //Player player = null;
+            Tom player = null;
             try
             {
                 player = GameLoop.gameInstance.playerInstance;
@@ -489,7 +495,8 @@ namespace Silhouette.Engine.Manager
 
         public static Effect StrongBleachInEditor(GraphicsDevice graphics)
         {
-            Player player = null;
+            //Player player = null;
+            Tom player = null;
             try
             {
                 player = GameLoop.gameInstance.playerInstance;
