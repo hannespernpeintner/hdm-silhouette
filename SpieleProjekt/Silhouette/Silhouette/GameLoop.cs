@@ -33,8 +33,8 @@ namespace Silhouette
     public class GameLoop : Microsoft.Xna.Framework.Game
     {
         public GraphicsDeviceManager graphics;
-        public GameMechs.Player playerInstance;
-        //public GameMechs.Tom playerInstance;
+        //public GameMechs.Player playerInstance;
+        public GameMechs.Tom playerInstance;
 
         public static GameLoop gameInstance;
 
