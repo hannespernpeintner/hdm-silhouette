@@ -76,6 +76,10 @@ namespace Silhouette.GameMechs
 
         public virtual bool OnCollision(Fixture fixtureA, Fixture fixtureB, Contact contact)
         {
+            if (fixtureB.isDeadly)
+            {
+                tom.Kill();
+            }
             return true;
         }
 
@@ -101,14 +105,26 @@ namespace Silhouette.GameMechs
             return true;
         }
 
+        public virtual void sOnSeperation(Fixture fixtureA, Fixture fixtureB)
+        {
+            
+        }
+
         public virtual bool ewOnCollision(Fixture fixtureA, Fixture fixtureB, Contact contact)
         {
-
+            if (fixtureB.isClimbable) 
+            {
+                tom.CanClimb = true;
+            }
             return true;
         }
 
         public virtual void ewOnSeparation(Fixture fixtureA, Fixture fixtureB)
         {
+            if (fixtureB.isClimbable)
+            {
+                tom.CanClimb = false;
+            }
 
         }
 

@@ -10,6 +10,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 
+using FarseerPhysics.Dynamics;
 using Silhouette.Engine;
 using Silhouette.GameMechs;
 
@@ -21,6 +22,15 @@ namespace Silhouette.GameMechs
             : base(tom, animationLeft, animationRight)
         {
         }
+
+        public override void sOnSeperation(Fixture fixtureA, Fixture fixtureB) 
+        {
+            if (tom.CharFix.Body.LinearVelocity.Y >= PlayerFallingState.FALLINGTHRESHOLD) 
+            {
+                tom.State = tom.FallingState;
+            }
+        }
+
         public override void handleInput(KeyboardState cbs, KeyboardState oks)
         {
             if (cbs.IsKeyDown(Keys.Space) && oks.IsKeyUp(Keys.Space))

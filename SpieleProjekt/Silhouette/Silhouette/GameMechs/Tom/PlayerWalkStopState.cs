@@ -12,6 +12,8 @@ using Microsoft.Xna.Framework.Media;
 
 using Silhouette.Engine;
 
+using FarseerPhysics.Dynamics;
+
 namespace Silhouette.GameMechs
 {
     public class PlayerWalkStopState : PlayerState
@@ -22,6 +24,15 @@ namespace Silhouette.GameMechs
             animationLeft.Handler = new Animation.OnFinish(SwitchToIdleAnimation);
             animationRight.Handler = new Animation.OnFinish(SwitchToIdleAnimation);
         }
+
+        public override void sOnSeperation(Fixture fixtureA, Fixture fixtureB)
+        {
+            if (tom.CharFix.Body.LinearVelocity.Y >= PlayerFallingState.FALLINGTHRESHOLD)
+            {
+                tom.State = tom.FallingState;
+            }
+        }
+
         public override void handleInput(KeyboardState cbs, KeyboardState oks)
         {
             if (cbs.IsKeyDown(Keys.Space) && oks.IsKeyUp(Keys.Space))

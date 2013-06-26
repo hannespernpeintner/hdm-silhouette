@@ -193,6 +193,8 @@
     <Compile Include="GameMechs\PrimitiveObject.cs" />
     <Compile Include="GameMechs\SoundObject.cs" />
     <Compile Include="GameMechs\TextureObject.cs" />
+    <Compile Include="GameMechs\Tom\PlayerClimbingState.cs" />
+    <Compile Include="GameMechs\Tom\PlayerDyingState.cs" />
     <Compile Include="GameMechs\Tom\PlayerHangingState2.cs" />
     <Compile Include="GameMechs\Tom\Move.cs" />
     <Compile Include="GameMechs\Tom\PlayerHangingState.cs" />
