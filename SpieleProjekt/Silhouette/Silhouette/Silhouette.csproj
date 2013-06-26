@@ -19,10 +19,14 @@
     <ApplicationIcon>GameThumbNail.ico</ApplicationIcon>
     <Thumbnail>GameThumbnail.png</Thumbnail>
     <IsWebBootstrapper>false</IsWebBootstrapper>
-    <SccProjectName>Svn</SccProjectName>
-    <SccLocalPath>Svn</SccLocalPath>
-    <SccAuxPath>Svn</SccAuxPath>
-    <SccProvider>SubversionScc</SccProvider>
+    <SccProjectName>
+    </SccProjectName>
+    <SccLocalPath>
+    </SccLocalPath>
+    <SccAuxPath>
+    </SccAuxPath>
+    <SccProvider>
+    </SccProvider>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -189,7 +193,15 @@
     <Compile Include="GameMechs\PrimitiveObject.cs" />
     <Compile Include="GameMechs\SoundObject.cs" />
     <Compile Include="GameMechs\TextureObject.cs" />
-    <Compile Include="GameMechs\Tom.cs" />
+    <Compile Include="GameMechs\Tom\PlayerWalkStopState.cs" />
+    <Compile Include="GameMechs\Tom\PlayerLandingState.cs" />
+    <Compile Include="GameMechs\Tom\PlayerJumpState.cs" />
+    <Compile Include="GameMechs\Tom\PlayerWalkStartState.cs" />
+    <Compile Include="GameMechs\Tom\PlayerFallingState.cs" />
+    <Compile Include="GameMechs\Tom\PlayerWalkState.cs" />
+    <Compile Include="GameMechs\Tom\PlayerIdleState.cs" />
+    <Compile Include="GameMechs\Tom\Tom.cs" />
+    <Compile Include="GameMechs\Tom\PlayerState.cs" />
     <Compile Include="GameMechs\VideoObject.cs" />
     <Compile Include="GameSettings.cs" />
     <Compile Include="GameStateManager.cs" />
