@@ -43,5 +43,14 @@ namespace Silhouette.GameMechs
             }
             return true;
         }
+
+        public override void handleInput(KeyboardState cbs, KeyboardState oks)
+        {
+    
+            if (cbs.IsKeyDown(Keys.H))
+            {
+                tom.State = tom.HangingState;
+            }
+        }
     }
 }

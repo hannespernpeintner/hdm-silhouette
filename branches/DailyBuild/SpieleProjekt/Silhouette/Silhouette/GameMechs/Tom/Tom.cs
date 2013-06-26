@@ -46,6 +46,8 @@ namespace Silhouette.GameMechs
         public PlayerWalkState WalkState;
         public PlayerWalkStartState WalkStartState;
         public PlayerWalkStopState WalkStopState;
+        public PlayerHangingState HangingState;
+        public PlayerHangingState2 HangingState2;
 
         private PlayerState _state;
         public PlayerState State
@@ -346,10 +348,10 @@ namespace Silhouette.GameMechs
             climbing_left.Load(21, "Sprites/Player/climb_left_", 15, false);
             climbing_right.Load(21, "Sprites/Player/climb_right_", 15, false);
 
-            hang_left.Load(5, "Sprites/Player/hang_left_", 15, false);
-            hang_right.Load(5, "Sprites/Player/hang_right_", 15, false);
-            hang2_left.Load(1, "Sprites/Player/hang2_left_", 10, false);
-            hang2_right.Load(1, "Sprites/Player/hang2_right_", 10, false);
+            hang_left.Load(5, "Sprites/Player/hang_left_", 8, true);
+            hang_right.Load(5, "Sprites/Player/hang_right_", 8, true);
+            hang2_left.Load(1, "Sprites/Player/hang2_left_", 10, true);
+            hang2_right.Load(1, "Sprites/Player/hang2_right_", 10, true);
             pullup.Load(13, "Sprites/Player/pullup_left_", 10, false);
 
             dying_left.Load(4, "Sprites/Player/die_left_", 10, false);
@@ -430,6 +432,8 @@ namespace Silhouette.GameMechs
             WalkState = new PlayerWalkState(this, running_left, running_right);
             WalkStartState = new PlayerWalkStartState(this, runStarting_left, runStarting_right);
             WalkStopState = new PlayerWalkStopState(this, runStopping_left, runStopping_right);
+            HangingState = new PlayerHangingState(this, hang_left, hang_right);
+            HangingState2 = new PlayerHangingState2(this, hang2_left, hang2_right);
             _state = IdleState;
         }
 
