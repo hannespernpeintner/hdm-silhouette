@@ -34,22 +34,22 @@
           <DampingCoefficient>0.95</DampingCoefficient>
         </Item>
         <Item Type="ProjectMercury.Modifiers.ScaleModifier">
-          <InitialScale>764</InitialScale>
-          <UltimateScale>1000</UltimateScale>
+          <InitialScale>1764</InitialScale>
+          <UltimateScale>2000</UltimateScale>
         </Item>
         <Item Type="ProjectMercury.Modifiers.LinearGravityModifier">
-          <Gravity>0 -200</Gravity>
+          <Gravity>0 -20</Gravity>
         </Item>
         <Item Type="ProjectMercury.Modifiers.OpacityInterpolatorModifier">
           <InitialOpacity>0</InitialOpacity>
-          <MiddleOpacity>0.5</MiddleOpacity>
-          <MiddlePosition>0.1</MiddlePosition>
+          <MiddleOpacity>0.2</MiddleOpacity>
+          <MiddlePosition>0.4</MiddlePosition>
           <FinalOpacity>0</FinalOpacity>
         </Item>
       </Modifiers>
-      <BlendMode>Alpha</BlendMode>
+      <BlendMode>Add</BlendMode>
       <TriggerOffset>-200 0</TriggerOffset>
-      <MinimumTriggerPeriod>0,2</MinimumTriggerPeriod>
+      <MinimumTriggerPeriod>0,8</MinimumTriggerPeriod>
       <Direction>-1.57</Direction>
       <ConeAngle>2</ConeAngle>
     </Item>
@@ -65,7 +65,7 @@
       </ReleaseSpeed>
       <ReleaseColour>
         <Value>0.5019608 0.5019608 0.5019608</Value>
-        <Variation>0 0 0</Variation>
+        <Variation>0.1 0.1 0.1</Variation>
       </ReleaseColour>
       <ReleaseOpacity>
         <Value>0</Value>
@@ -86,16 +86,16 @@
           <DampingCoefficient>0.95</DampingCoefficient>
         </Item>
         <Item Type="ProjectMercury.Modifiers.ScaleModifier">
-          <InitialScale>764</InitialScale>
-          <UltimateScale>1000</UltimateScale>
+          <InitialScale>1764</InitialScale>
+          <UltimateScale>2000</UltimateScale>
         </Item>
         <Item Type="ProjectMercury.Modifiers.LinearGravityModifier">
-          <Gravity>0 -200</Gravity>
+          <Gravity>80 -200</Gravity>
         </Item>
         <Item Type="ProjectMercury.Modifiers.OpacityInterpolatorModifier">
           <InitialOpacity>0</InitialOpacity>
-          <MiddleOpacity>0.5</MiddleOpacity>
-          <MiddlePosition>0.1</MiddlePosition>
+          <MiddleOpacity>0.4</MiddleOpacity>
+          <MiddlePosition>0.5</MiddlePosition>
           <FinalOpacity>0</FinalOpacity>
         </Item>
       </Modifiers>
