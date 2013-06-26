@@ -29,6 +29,7 @@ namespace Silhouette.GameMechs.Move
             _tom = tom;
             Step = targetDistance / duration;
             DurationLeft = duration;
+            TargetDistance = targetDistance;
         }
 
         public void Update(int ms) 
@@ -70,7 +71,7 @@ namespace Silhouette.GameMechs.Move
                 return;
             }
 
-            Move stackTop = _moves.ElementAt(_moves.Count - 1);
+            Move stackTop = _moves.ElementAt(0);
             if (stackTop != null && !stackTop.Finished()) 
             {
                 stackTop.Update(ms);
