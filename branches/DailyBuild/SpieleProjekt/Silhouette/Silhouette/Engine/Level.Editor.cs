@@ -144,6 +144,7 @@ namespace Silhouette.Engine
                 {
                     BinaryFormatter serializer = new BinaryFormatter();
                     serializer.Serialize(file, this);
+
                     file.Close();
                 }
             }

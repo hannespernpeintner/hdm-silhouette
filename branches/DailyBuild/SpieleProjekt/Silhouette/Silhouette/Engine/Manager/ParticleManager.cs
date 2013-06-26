@@ -36,6 +36,7 @@ namespace Silhouette.Engine.Manager
         private static ParticleEffect heavyrain;
         private static ParticleEffect smoke;
         private static ParticleEffect bokeh;
+        private static ParticleEffect fireflies;
 
         public static void initialize()
         {
@@ -44,6 +45,7 @@ namespace Silhouette.Engine.Manager
             heavyrain = GameLoop.gameInstance.Content.Load<ParticleEffect>("ParticleEffects/heavyrain");
             smoke = GameLoop.gameInstance.Content.Load<ParticleEffect>("ParticleEffects/Smoke");
             bokeh = GameLoop.gameInstance.Content.Load<ParticleEffect>("ParticleEffects/bokeh");
+            fireflies = GameLoop.gameInstance.Content.Load<ParticleEffect>("ParticleEffects/fireflies");
         }
         public static void initializeInEditor(ContentManager content)
         {
@@ -70,6 +72,8 @@ namespace Silhouette.Engine.Manager
                     return smoke.DeepCopy();
                 case ParticleType.Bokeh:
                     return bokeh.DeepCopy();
+                case ParticleType.FireFlies:
+                    return fireflies.DeepCopy();
             }
 
             return null;
