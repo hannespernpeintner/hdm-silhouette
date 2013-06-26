@@ -48,6 +48,8 @@ namespace Silhouette.GameMechs
         public PlayerWalkStopState WalkStopState;
         public PlayerHangingState HangingState;
         public PlayerHangingState2 HangingState2;
+        public PlayerDyingState DyingState;
+        public PlayerClimbingState ClimbingState;
 
         private PlayerState _state;
         public PlayerState State
@@ -114,7 +116,7 @@ namespace Silhouette.GameMechs
             set { _camFix = value; }
         }
 
-        private Fixture sRect;
+        public Fixture sRect;
         private Fixture nRect;
         private Fixture eRect;
         private Fixture wRect;
@@ -251,8 +253,12 @@ namespace Silhouette.GameMechs
         {
 
         }
+        public void Kill()
+        {
+            State = DyingState;
+        }
 
-        private void Reset()
+        public void Reset()
         {
             this.position = GameStateManager.Default.currentLevel.startPosition;
             this.CharFix.Body.Position = GameStateManager.Default.currentLevel.startPosition / Level.PixelPerMeter;
@@ -332,8 +338,8 @@ namespace Silhouette.GameMechs
             falling_right.Load(2, "Sprites/Player/falling_right_", 10, true);
             landing_left.Load(8, "Sprites/Player/landing_left_", 7, false);
             landing_right.Load(8, "Sprites/Player/landing_right_", 7, false);
-            landing_left_fast.Load(8, "Sprites/Player/landing_left_", 11, false);
-            landing_right_fast.Load(8, "Sprites/Player/landing_right_", 11, false);
+            landing_left_fast.Load(8, "Sprites/Player/landing_left_", 25, false);
+            landing_right_fast.Load(8, "Sprites/Player/landing_right_", 25, false);
 
             running_left.Load(8, "Sprites/Player/walk_left_", 18, true);
             running_right.Load(8, "Sprites/Player/walk_right_", 18, true);
@@ -418,6 +424,7 @@ namespace Silhouette.GameMechs
             CharFix.OnCollision += this.OnCollision;
             nRect.OnCollision += this.nOnCollision;
             sRect.OnCollision += this.sOnCollision;
+            sRect.OnSeparation += this.sOnSeparation;
             landRect.OnCollision += this.landOnCollision;
             wRect.OnCollision += this.ewOnCollision;
             wRect.OnSeparation += this.ewOnSeparation;
@@ -434,6 +441,8 @@ namespace Silhouette.GameMechs
             WalkStopState = new PlayerWalkStopState(this, runStopping_left, runStopping_right);
             HangingState = new PlayerHangingState(this, hang_left, hang_right);
             HangingState2 = new PlayerHangingState2(this, hang2_left, hang2_right);
+            DyingState = new PlayerDyingState(this, dying_left, dying_right);
+            ClimbingState = new PlayerClimbingState(this, climbing_left, climbing_right);
             _state = IdleState;
         }
 
@@ -566,8 +575,7 @@ namespace Silhouette.GameMechs
         public bool OnCollision(Fixture fixtureA, Fixture fixtureB, Contact contact)
         {
 
-
-            return true;
+            return State.OnCollision(fixtureA, fixtureB, contact);
         }
 
         public void OnSeperation(Fixture fixtureA, Fixture fixtureB)
@@ -593,6 +601,11 @@ namespace Silhouette.GameMechs
         {
 
             return State.sOnCollision(fixtureA, fixtureB, contact);
+        }
+
+        public virtual void sOnSeparation(Fixture fixtureA, Fixture fixtureB)
+        {
+            State.sOnSeperation(fixtureA, fixtureB);
         }
 
         private bool ewOnCollision(Fixture fixtureA, Fixture fixtureB, Contact contact)

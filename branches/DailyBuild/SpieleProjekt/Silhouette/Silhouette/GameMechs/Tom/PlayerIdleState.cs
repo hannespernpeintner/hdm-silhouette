@@ -37,6 +37,13 @@ namespace Silhouette.GameMechs
                 tom.Facing = Tom.FacingState.Left;
                 tom.State = tom.WalkState;
             }
+            else if (cbs.IsKeyDown(Keys.W))
+            {
+                if (tom.CanClimb)
+                {
+                    tom.State = tom.ClimbingState;
+                }
+            }
         }
     }
 }
