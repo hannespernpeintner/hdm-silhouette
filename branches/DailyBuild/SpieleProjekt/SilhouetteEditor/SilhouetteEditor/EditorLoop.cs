@@ -73,6 +73,7 @@ namespace SilhouetteEditor
             if (!MainForm.Default.GameView.ContainsFocus) return;
 
             Editor.Default.Update(gameTime);
+            TimerManager.UpdateInEditor(gameTime);
             base.Update(gameTime);
         }
 
