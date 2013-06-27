@@ -136,8 +136,8 @@ namespace Silhouette.GameMechs
                     string p = Path.Combine(layer.level.contentPath, Path.GetFileName(fullPath));
                     //texture = TextureManager.Instance.LoadFromFile(p, graphics);
 
-
-                    texture = TextureManager.Instance.LoadFromFile(Path.Combine(Directory.GetCurrentDirectory(), "Content", "Sprites", assetName + Path.GetExtension(fullPath)));
+                    String combined = Path.Combine(Directory.GetCurrentDirectory(), "Content", "Sprites", assetName + Path.GetExtension(fullPath));
+                    texture = TextureManager.Instance.LoadFromFile(combined, graphics);
                     if (texture == null)
                     {
                         texture = TextureManager.Instance.LoadFromFile(fullPath, graphics);

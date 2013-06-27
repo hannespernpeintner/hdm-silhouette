@@ -235,15 +235,15 @@ namespace Silhouette.Engine
 
         public override void loadContentInEditor(GraphicsDevice graphics)
         {
-            Load();
+            Load(graphics);
         }
 
         public override void LoadContent()
         {
-            Load();
+            Load(GameLoop.gameInstance.GraphicsDevice);
         }
 
-        public void Load()
+        public void Load(GraphicsDevice graphics)
         {
             StartTimer.StartInMiliSeconds = StartInMiliseconds;
             String pathCut = Fullpath;
@@ -275,7 +275,7 @@ namespace Silhouette.Engine
                     try 
                     {
                         //Texture2D t = GameLoop.gameInstance.Content.Load<Texture2D>("Sprites/Menu/Animations/" + assetName);
-                        Texture2D t = TextureManager.Instance.LoadFromFile(Path.Combine(Directory.GetCurrentDirectory(), "Content", "Sprites", "Animations", assetName));
+                        Texture2D t = TextureManager.Instance.LoadFromFile(Path.Combine(Directory.GetCurrentDirectory(), "Content", "Sprites", "Animations", assetName), graphics);
                         if (t != null)
                         {
                             amount++;
@@ -283,7 +283,7 @@ namespace Silhouette.Engine
                         }
                     } catch (Exception e)
                     {
-                        Texture2D t = TextureManager.Instance.LoadFromFile(temp);
+                        Texture2D t = TextureManager.Instance.LoadFromFile(temp, graphics);
                         if (t != null)
                         {
                             amount++;
@@ -299,7 +299,7 @@ namespace Silhouette.Engine
                     try 
                     {
                         //Texture2D t = GameLoop.gameInstance.Content.Load<Texture2D>(temp);
-                        Texture2D t = TextureManager.Instance.LoadFromFile(Path.Combine(Directory.GetCurrentDirectory(), "Content", "Sprites", "Animations", assetName));                    
+                        Texture2D t = TextureManager.Instance.LoadFromFile(Path.Combine(Directory.GetCurrentDirectory(), "Content", "Sprites", "Animations", assetName), graphics);                    
                         if (t != null)
                         {
                             amount++;
@@ -309,7 +309,7 @@ namespace Silhouette.Engine
                     }
                     catch (Exception e)
                     {
-                        Texture2D t = TextureManager.Instance.LoadFromFile(temp);
+                        Texture2D t = TextureManager.Instance.LoadFromFile(temp, graphics);
                         if (t != null)
                         {
                             amount++;
