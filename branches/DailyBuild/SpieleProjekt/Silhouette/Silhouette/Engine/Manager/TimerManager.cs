@@ -23,7 +23,7 @@ namespace Silhouette.Engine.Manager
 
     public static class TimerManager
     {
-        private static List<Timer> _timers;
+        private static List<Timer> _timers = new List<Timer>();
 
         public static List<Timer> Timers
         {
@@ -37,6 +37,7 @@ namespace Silhouette.Engine.Manager
         }
         public static void initializeInEditor(ContentManager content)
         {
+            Timers = new List<Timer>();
         }
         public static void Update(GameTime gameTime)
         {
@@ -47,6 +48,10 @@ namespace Silhouette.Engine.Manager
         }
         public static void UpdateInEditor(GameTime gameTime)
         {
+            foreach (Timer t in Timers)
+            {
+                t.Update(gameTime);
+            }
         }
     }
 }

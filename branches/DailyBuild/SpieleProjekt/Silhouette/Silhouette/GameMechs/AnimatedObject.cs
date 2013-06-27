@@ -127,7 +127,34 @@ namespace Silhouette.GameMechs
             animation.StartInMiliseconds = StartInMiliseonds;
 
             animation.Fullpath = fullPath;
-            animation.Load();
+            animation.LoadContent();
+            texture = animation.activeTexture;
+            //animation.Load(amount, path, speed, false);
+            ToFixture();
+            if (texture != null)
+                origin = new Vector2((float)(texture.Width / 2), (float)(texture.Height / 2));
+            transformed();
+            if (isSensor)
+            {
+                animation.stop();
+            }
+            else
+            {
+                animation.start();
+            }
+        }
+
+        public override void loadContentInEditor(GraphicsDevice graphics)
+        {
+            animation = new Animation();
+            animation.Speed = speed;
+            animation.Looped = looped;
+            animation.Pingpong = pingpong;
+            animation.Backwards = backwards;
+            animation.StartInMiliseconds = StartInMiliseonds;
+
+            animation.Fullpath = fullPath;
+            animation.Load(graphics);
             texture = animation.activeTexture;
             //animation.Load(amount, path, speed, false);
             ToFixture();
@@ -149,7 +176,7 @@ namespace Silhouette.GameMechs
             {
                 animation = new Animation();
             }
-            animation.Load();
+            animation.LoadContent();
 
             //ToFixture();
         }
@@ -168,6 +195,7 @@ namespace Silhouette.GameMechs
         public override void drawInEditor(SpriteBatch spriteBatch)
         {
             Color color = Color.White;
+
             if (mouseOn) color = Constants.onHover;
 
             if (texture == null)
@@ -175,7 +203,7 @@ namespace Silhouette.GameMechs
                 return;
             }
             origin = new Vector2((float)(texture.Width / 2), (float)(texture.Height / 2));
-            spriteBatch.Draw(texture, position, null, color, rotation, origin, getScale(), SpriteEffects.None, 1);
+            spriteBatch.Draw(animation.activeTexture, position, null, color, rotation, origin, getScale(), SpriteEffects.None, 1);
         }
 
         public override string getPrefix()
