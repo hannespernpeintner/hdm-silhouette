@@ -109,8 +109,15 @@ namespace Silhouette.Engine
             foreach (Object obj in _loList)
             {
                 if (obj.GetType() == typeof(InteractiveObject))
+                {
                     ((InteractiveObject)obj).Update(gameTime);
-        }
+                }
+                else if (obj.GetType() == typeof(AnimatedObject)) 
+                {
+                    ((AnimatedObject)obj).Update(gameTime);
+                }
+                
+            }
         }
 
         public LevelObject getItemAtPosition(Vector2 worldPosition)
