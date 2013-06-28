@@ -10,6 +10,8 @@ float4 PS_BLEACH(float2 texCoord: TEXCOORD0): COLOR
 
 	{
 		color.rgb += (fAmount).rgb;
+		color.rgb *= color.a;
+
 		return color;
 	}
 }
