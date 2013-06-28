@@ -34,7 +34,8 @@ namespace Silhouette.GameMechs
         HeavyRain,
         Bokeh,
         Rain,
-        FireFlies
+        FireFlies,
+        Clouds
     }
 
     [Serializable]
