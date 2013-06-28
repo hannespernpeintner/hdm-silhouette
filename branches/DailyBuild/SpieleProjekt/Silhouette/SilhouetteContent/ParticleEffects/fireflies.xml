@@ -37,10 +37,10 @@
           <FinalOpacity>0</FinalOpacity>
         </Item>
         <Item Type="ProjectMercury.Modifiers.ScaleInterpolatorModifier">
-          <InitialScale>16</InitialScale>
-          <MiddleScale>32</MiddleScale>
+          <InitialScale>116</InitialScale>
+          <MiddleScale>232</MiddleScale>
           <MiddlePosition>0.5</MiddlePosition>
-          <FinalScale>16</FinalScale>
+          <FinalScale>116</FinalScale>
         </Item>
       </Modifiers>
       <BlendMode>Add</BlendMode>
