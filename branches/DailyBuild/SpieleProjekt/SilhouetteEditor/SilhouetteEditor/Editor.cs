@@ -1389,6 +1389,7 @@ namespace SilhouetteEditor
                 selectedLevelObjects.Add(rjo);
             }
 
+            MainForm.Default.UpdateTreeView();
         }
 
         /* Sascha:
