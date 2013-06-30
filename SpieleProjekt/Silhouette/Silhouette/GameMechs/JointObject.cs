@@ -158,8 +158,21 @@ namespace Silhouette.GameMechs
         {
             if (Joint == null)
             {
-                Object1.bodyType = BodyType.Static;
-                Joint = JointFactory.CreateRevoluteJoint(Level.Physics, Object1.fixture.Body, Object2.fixture.Body, Vector2.Zero);
+                if (Object1 == null) 
+                {
+                    return;
+                }
+                if (Object2 == null)
+                {
+                    Fixture referenceObject = FixtureFactory.CreateRectangle(Level.Physics, 0.1f, 0.1f, 0);
+                    referenceObject.Body.Position = Object1.fixture.Body.Position;
+                    referenceObject.Body.BodyType = BodyType.Static;
+                    Joint = JointFactory.CreateRevoluteJoint(Level.Physics, Object1.fixture.Body, referenceObject.Body, Vector2.Zero);
+                }
+                else 
+                {
+                    Joint = JointFactory.CreateRevoluteJoint(Level.Physics, Object1.fixture.Body, Object2.fixture.Body, Vector2.Zero);
+                }
                 ((RevoluteJoint)Joint).LowerLimit = MinAngle;
                 ((RevoluteJoint)Joint).UpperLimit = MaxAngle;
                 ((RevoluteJoint)Joint).LimitEnabled = EnableLimit;
@@ -475,7 +488,7 @@ namespace Silhouette.GameMechs
         public override void loadContentInEditor(GraphicsDevice graphics) { }
         public override void Update(GameTime gameTime)
         {
-            if (Joint == null)
+            if (Joint == null && Object1 != null && Object2 != null)
             {
                 Joint = JointFactory.CreateDistanceJoint(Level.Physics, Object1.fixture.Body, Object2.fixture.Body, AnchorA, AnchorB);
                 ((DistanceJoint)Joint).DampingRatio = DampingRatio;
@@ -629,9 +642,9 @@ namespace Silhouette.GameMechs
         public override void loadContentInEditor(GraphicsDevice graphics) { }
         public override void Update(GameTime gameTime)
         {
-            if (Joint == null)
+            if (Joint == null && Object1 != null && Object2 != null)
             {
-                Object1.bodyType = BodyType.Static;
+                //Object1.bodyType = BodyType.Static;
                 Vector2 axis = Object1.fixture.Body.WorldCenter - Object2.fixture.Body.WorldCenter;
                 axis.Normalize();
                 Joint = JointFactory.CreatePrismaticJoint(Level.Physics, Object1.fixture.Body, Object2.fixture.Body, AnchorB, axis);
