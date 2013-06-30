@@ -183,7 +183,13 @@ namespace SilhouetteEditor.Forms
             {
                 LevelObject lo = (LevelObject)e.Node.Tag;
                 Editor.Default.selectLevelObject(lo);
-                Camera.Position = lo.position / lo.layer.ScrollSpeed;
+                if (lo.layer != null)
+                {
+                    Camera.Position = lo.position / lo.layer.ScrollSpeed;
+                }
+                else {
+                    Camera.Position = lo.position;
+                }
             }
         }
 
