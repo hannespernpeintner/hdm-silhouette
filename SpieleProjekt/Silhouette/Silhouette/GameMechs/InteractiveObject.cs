@@ -130,7 +130,10 @@ namespace Silhouette.GameMechs
                     try
                     {
                         string p = Path.Combine(layer.level.contentPath, Path.GetFileName(fullPath));
-                        texture = TextureManager.Instance.LoadFromFile(p);
+                        //texture = TextureManager.Instance.LoadFromFile(p);
+                        texture = TextureManager.Instance.LoadFromFile(Path.Combine(Directory.GetCurrentDirectory(), "Content", "Sprites", assetName + Path.GetExtension(fullPath)));
+                        
+                        
                         if (texture == null)
                             throw new Exception();
                     }
@@ -232,7 +235,9 @@ namespace Silhouette.GameMechs
                 try
                 {
                     string p = Path.Combine(layer.level.contentPath, Path.GetFileName(fullPath));
-                    texture = TextureManager.Instance.LoadFromFile(p, graphics);
+                    //texture = TextureManager.Instance.LoadFromFile(p, graphics);
+                    texture = TextureManager.Instance.LoadFromFile(Path.Combine(Directory.GetCurrentDirectory(), "Content", "Sprites", assetName + Path.GetExtension(fullPath)));
+                        
                     this.fullPath = p;
                 }
                 catch (Exception e)
