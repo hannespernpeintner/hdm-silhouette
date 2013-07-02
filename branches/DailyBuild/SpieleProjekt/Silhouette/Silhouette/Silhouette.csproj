@@ -132,6 +132,7 @@
     <Compile Include="Engine\Effects\ColorFade.cs" />
     <Compile Include="Engine\Effects\Water.cs" />
     <Compile Include="Engine\Effects\VignettenBlur.cs" />
+    <Compile Include="Engine\Interpolator.cs" />
     <Compile Include="Engine\Manager\DebugLogManager.cs" />
     <Compile Include="Engine\Manager\TimerManager.cs" />
     <Compile Include="Engine\RenderTargetFlipFlop.cs" />
