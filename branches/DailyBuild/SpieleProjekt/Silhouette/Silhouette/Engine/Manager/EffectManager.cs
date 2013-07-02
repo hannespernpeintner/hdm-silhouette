@@ -186,12 +186,6 @@ namespace Silhouette.Engine.Manager
             float fadeBlue = 0;
 
 
-            if (player != null)
-            {
-                //Tom player = GameLoop.gameInstance.playerInstance;
-                fadeOrange = player.fadeOrange / 1000; // zählen beide von 0 bis 1
-                fadeBlue = player.fadeBlue / 1000;
-            }
 
             bleach.Parameters["fadeOrange"].SetValue(fadeOrange);
             bleach.Parameters["fadeBlue"].SetValue(fadeBlue);
@@ -218,13 +212,6 @@ namespace Silhouette.Engine.Manager
             float fadeBlue = 0;
 
 
-            if (player != null)
-            {
-                //Tom player = GameLoop.gameInstance.playerInstance;
-                fadeOrange = player.fadeOrange / 1000; // zählen beide von 0 bis 1
-                fadeBlue = player.fadeBlue / 1000;
-            }
-
             bleach.Parameters["fadeOrange"].SetValue(fadeOrange);
             bleach.Parameters["fadeBlue"].SetValue(fadeBlue);
             bleach.Parameters["amount"].SetValue(0.3f);
@@ -248,13 +235,6 @@ namespace Silhouette.Engine.Manager
             float fadeOrange = 0;
             float fadeBlue = 0;
 
-
-            if (player != null)
-            {
-                //Tom player = GameLoop.gameInstance.playerInstance;
-                fadeOrange = player.fadeOrange / 1000; // zählen beide von 0 bis 1
-                fadeBlue = player.fadeBlue / 1000;
-            }
 
             bleach.Parameters["fadeOrange"].SetValue(fadeOrange);
             bleach.Parameters["fadeBlue"].SetValue(fadeBlue);
@@ -379,13 +359,6 @@ namespace Silhouette.Engine.Manager
             float fadeBlue = 0;
 
 
-            if (player != null)
-            {
-                //Tom player = GameLoop.gameInstance.playerInstance;
-                fadeOrange = player.fadeOrange / 1000; // zählen beide von 0 bis 1
-                fadeBlue = player.fadeBlue / 1000;
-            }
-
             float orangeTargetRed = 0f;
             float orangeTargetGreen = -0.32f;
             float orangeTargetBlue = -0.45f;
@@ -447,12 +420,6 @@ namespace Silhouette.Engine.Manager
             float fadeBlue = 0;
 
 
-            if (player != null)
-            {
-                //Tom player = GameLoop.gameInstance.playerInstance;
-                fadeOrange = player.fadeOrange / 1000; // zählen beide von 0 bis 1
-                fadeBlue = player.fadeBlue / 1000;
-            }
 
             bleach.Parameters["fadeOrange"].SetValue(fadeOrange);
             bleach.Parameters["fadeBlue"].SetValue(fadeBlue);
@@ -479,13 +446,6 @@ namespace Silhouette.Engine.Manager
             float fadeBlue = 0;
 
 
-            if (player != null)
-            {
-                //Tom player = GameLoop.gameInstance.playerInstance;
-                fadeOrange = player.fadeOrange / 1000; // zählen beide von 0 bis 1
-                fadeBlue = player.fadeBlue / 1000;
-            }
-
             bleach.Parameters["fadeOrange"].SetValue(fadeOrange);
             bleach.Parameters["fadeBlue"].SetValue(fadeBlue);
             bleach.Parameters["amount"].SetValue(0.3f);
@@ -510,12 +470,6 @@ namespace Silhouette.Engine.Manager
             float fadeBlue = 0;
 
 
-            if (player != null)
-            {
-                //Tom player = GameLoop.gameInstance.playerInstance;
-                fadeOrange = player.fadeOrange / 1000; // zählen beide von 0 bis 1
-                fadeBlue = player.fadeBlue / 1000;
-            }
 
             bleach.Parameters["fadeOrange"].SetValue(fadeOrange);
             bleach.Parameters["fadeBlue"].SetValue(fadeBlue);
