@@ -41,9 +41,11 @@ namespace Silhouette.Engine.Manager
         }
         public static void Update(GameTime gameTime)
         {
-            foreach (Timer t in Timers)
+            
+
+            for (int i = 0; i < Timers.Count; i++ )
             {
-                t.Update(gameTime);
+                Timers.ElementAt(i).Update(gameTime);
             }
         }
         public static void UpdateInEditor(GameTime gameTime)

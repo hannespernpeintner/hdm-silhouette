@@ -16,6 +16,7 @@ using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 using Silhouette.Engine;
 using Silhouette.Engine.Manager;
+using Silhouette.Engine.Effects;
 
 namespace Silhouette.GameMechs
 {
@@ -30,7 +31,7 @@ namespace Silhouette.GameMechs
             Left
         }
 
-        private enum SuperpowerState
+        public enum SuperpowerState
         {
             Remembers,
             Regrets,
@@ -62,7 +63,21 @@ namespace Silhouette.GameMechs
                 value.onSet(Facing);
             }
         }
-        
+
+        public static int REMEMBERDURATION = 4000;
+        public static int REMEMBERCLIMAX = 1500;
+        public static int RECOVERDURATION = 8000;
+        public static int RECOVERCLIMAX = 2500;
+        public static int BACKTONORMALTIME = 600;
+
+
+        public Interpolator RedInterpolator;
+        public Interpolator GreenInterpolator;
+        public Interpolator BlueInterpolator;
+
+        public Timer RememberingTimer = new Timer(0, null);
+        public Timer RecoveringTimer = new Timer(0, null);
+
         public FacingState _facing;
         public FacingState Facing
         {
@@ -71,7 +86,7 @@ namespace Silhouette.GameMechs
         }
 
         private SuperpowerState _superpower;
-        private SuperpowerState Superpower
+        public SuperpowerState Superpower
         {
             get { return _superpower; }
             set { _superpower = value; }
@@ -188,13 +203,6 @@ namespace Silhouette.GameMechs
         private Animation dying2_left;
         private Animation dying2_right;
         #endregion
-        #region Altlasten
-        public float sJTimer = 0;
-        public float sJRecoveryTimer = 0;
-        public float fadeBlue = 0;
-        public float fadeOrange = 0;
-        #endregion
-
 
         public void MoveLeft()
         {
@@ -475,6 +483,7 @@ namespace Silhouette.GameMechs
             //ObserveAnimations();
             ObserveRotation();
             ObserveMovement();
+            UpdateInterpolators(gameTime);
         }
 
         private void UpdatePositions()
@@ -490,6 +499,22 @@ namespace Silhouette.GameMechs
             UpdateCamera();
 
 
+        }
+
+        private void UpdateInterpolators(GameTime gameTime)
+        {
+            if (RedInterpolator != null)
+            {
+                RedInterpolator.Update(gameTime.ElapsedGameTime.Milliseconds);
+            }
+            if (GreenInterpolator != null)
+            {
+                GreenInterpolator.Update(gameTime.ElapsedGameTime.Milliseconds);
+            }
+            if (BlueInterpolator != null)
+            {
+                BlueInterpolator.Update(gameTime.ElapsedGameTime.Milliseconds);
+            }
         }
 
         private void UpdateAnimation(GameTime gameTime)
@@ -570,6 +595,46 @@ namespace Silhouette.GameMechs
             {
                 Reset();
             }
+            else if (cbs.IsKeyDown(Keys.L) && Superpower == SuperpowerState.None)
+            {
+                SetRemembering();
+            }
+        }
+
+        private void SetRemembering()
+        {
+            Superpower = SuperpowerState.Remembers;
+            RememberingTimer = new Timer(REMEMBERDURATION, SetRecoveringDelegate);
+            RedInterpolator = new Interpolator(0, ColorFade.OrangeTargetRed, REMEMBERCLIMAX);
+            GreenInterpolator = new Interpolator(0, ColorFade.OrangeTargetGreen, REMEMBERCLIMAX);
+            BlueInterpolator = new Interpolator(0, ColorFade.OrangeTargetBlue, REMEMBERCLIMAX);
+            new Timer(REMEMBERCLIMAX, FadeToBlue);
+        }
+
+        public void SetRecoveringDelegate()
+        {
+            Superpower = SuperpowerState.Regrets;
+            RecoveringTimer = new Timer(RECOVERDURATION, SetNoneDelegate);
+        }
+
+        public void FadeToBlue()
+        {
+            RedInterpolator = new Interpolator(RedInterpolator.CurrentValue, ColorFade.BlueTargetRed, REMEMBERDURATION - REMEMBERCLIMAX);
+            GreenInterpolator = new Interpolator(GreenInterpolator.CurrentValue, ColorFade.BlueTargetGreen, REMEMBERDURATION - REMEMBERCLIMAX);
+            BlueInterpolator = new Interpolator(BlueInterpolator.CurrentValue, ColorFade.BlueTargetBlue, RECOVERDURATION + REMEMBERDURATION - REMEMBERCLIMAX);
+            new Timer(RECOVERDURATION + REMEMBERDURATION - REMEMBERCLIMAX, FadeToNone);
+        }
+
+        public void FadeToNone()
+        {
+            RedInterpolator = new Interpolator(RedInterpolator.CurrentValue, 0, BACKTONORMALTIME);
+            GreenInterpolator = new Interpolator(GreenInterpolator.CurrentValue, 0, BACKTONORMALTIME);
+            BlueInterpolator = new Interpolator(BlueInterpolator.CurrentValue, 0, BACKTONORMALTIME);
+        }
+
+        public void SetNoneDelegate()
+        {
+            Superpower = SuperpowerState.None;
         }
 
         public bool OnCollision(Fixture fixtureA, Fixture fixtureB, Contact contact)

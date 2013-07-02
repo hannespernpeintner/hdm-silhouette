@@ -12,57 +12,17 @@ namespace Silhouette.Engine.Effects
     [Serializable]
     public class ColorFade : Effects.EffectObject
     {
-        private float _orangeTargetRed;
-        public float OrangeTargetRed
-        {
-            get { return _orangeTargetRed; }
-            set { _orangeTargetRed = value; }
-        }
-        private float _orangeTargetGreen;
-        public float OrangeTargetGreen
-        {
-            get { return _orangeTargetGreen; }
-            set { _orangeTargetGreen = value; }
-        }
-        private float _orangeTargetBlue;
-        public float OrangeTargetBlue
-        {
-            get { return _orangeTargetBlue; }
-            set { _orangeTargetBlue = value; }
-        }
 
-        private float _blueTargetRed;
-        public float BlueTargetRed
-        {
-            get { return _blueTargetRed; }
-            set { _blueTargetRed = value; }
-        }
-        private float _blueTargetGreen;
-        public float BlueTargetGreen
-        {
-            get { return _blueTargetGreen; }
-            set { _blueTargetGreen = value; }
-        }
-        private float _blueTargetBlue;
-        public float BlueTargetBlue
-        {
-            get { return _blueTargetBlue; }
-            set { _blueTargetBlue = value; }
-        }
+        public static int BlueTargetRed = 50;
+        public static int BlueTargetGreen = 60;
+        public static int BlueTargetBlue = 900;
+        public static int OrangeTargetRed = 870;
+        public static int OrangeTargetGreen = 210;
+        public static int OrangeTargetBlue = 0;
 
-        private float _fadeOrange;
-        public float FadeOrange
-        {
-            get { return _fadeOrange; }
-            set { _fadeOrange = value; }
-        }
-        private float _fadeBlue;
-        public float FadeBlue
-        {
-            get { return _fadeBlue; }
-            set { _fadeBlue = value; }
-        }
-
+        public float CurrentRed { get; set; }
+        public float CurrentGreen { get; set; }
+        public float CurrentBlue { get; set; }
 
         [NonSerialized]
         private Effect _effect;
@@ -76,9 +36,9 @@ namespace Silhouette.Engine.Effects
                 _effect.Parameters["MatrixTransform"].SetValue(halfPixelOffset * projection);
                 _effect.Parameters["bla"].SetValue(true);
                 _effect.Parameters["alpha"].SetValue(0);
-                _effect.Parameters["targetRed"].SetValue(FadeOrange * OrangeTargetRed + FadeBlue * BlueTargetRed);
-                _effect.Parameters["targetGreen"].SetValue(FadeOrange * OrangeTargetGreen + FadeBlue * BlueTargetGreen);
-                _effect.Parameters["targetBlue"].SetValue(FadeOrange * OrangeTargetBlue + FadeBlue * BlueTargetBlue);
+                _effect.Parameters["targetRed"].SetValue(CurrentRed);
+                _effect.Parameters["targetGreen"].SetValue(CurrentGreen);
+                _effect.Parameters["targetBlue"].SetValue(CurrentBlue);
                 
                 return _effect;
             }
@@ -93,9 +53,9 @@ namespace Silhouette.Engine.Effects
                 _effect.Parameters["MatrixTransform"].SetValue(halfPixelOffset * projection);
                 _effect.Parameters["bla"].SetValue(true);
                 _effect.Parameters["alpha"].SetValue(0);
-                _effect.Parameters["targetRed"].SetValue(FadeOrange * OrangeTargetRed + FadeBlue * BlueTargetRed);
-                _effect.Parameters["targetGreen"].SetValue(FadeOrange * OrangeTargetGreen + FadeBlue * BlueTargetGreen);
-                _effect.Parameters["targetBlue"].SetValue(FadeOrange * OrangeTargetBlue + FadeBlue * BlueTargetBlue);
+                _effect.Parameters["targetRed"].SetValue(CurrentRed);
+                _effect.Parameters["targetGreen"].SetValue(CurrentGreen);
+                _effect.Parameters["targetBlue"].SetValue(CurrentBlue);
                 return _effect;
             }
         }
@@ -106,14 +66,9 @@ namespace Silhouette.Engine.Effects
             Active = true;
             Path = "Effects/ColorChange";
 
-            OrangeTargetRed = 0f;
-            OrangeTargetGreen = -0.32f;
-            OrangeTargetBlue = -0.45f;
-            BlueTargetRed = -0.47f;
-            BlueTargetGreen = -0.41f;
-            BlueTargetBlue = -0.31f;
-            FadeBlue = 0;
-            FadeOrange = 0;
+            CurrentRed = 0;
+            CurrentGreen = 0;
+            CurrentBlue = 0;
         }
         public override void LoadContent()
         {
@@ -139,11 +94,14 @@ namespace Silhouette.Engine.Effects
             {
 
             }
-            if (player != null)
+            if (player != null && player.RedInterpolator != null)
             {
-                //Tom player = GameLoop.gameInstance.playerInstance;
-                FadeOrange = player.fadeOrange / 1000; // zählen beide von 0 bis 1
-                FadeBlue = player.fadeBlue / 1000;
+                {
+                    CurrentRed = player.RedInterpolator.CurrentValue * 0.001f;
+                    CurrentGreen = player.GreenInterpolator.CurrentValue * 0.001f;
+                    CurrentBlue = player.BlueInterpolator.CurrentValue * 0.001f;
+                    //Console.WriteLine(CurrentRed + ", " + CurrentGreen + ", " + CurrentBlue);
+                }
             }
         }
 

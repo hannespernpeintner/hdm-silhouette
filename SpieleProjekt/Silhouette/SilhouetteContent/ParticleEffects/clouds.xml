@@ -1,0 +1,155 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<XnaContent>
+  <Asset Type="ProjectMercury.ParticleEffect">
+    <Item Type="ProjectMercury.Emitters.ConeEmitter">
+      <Name>Smoke 1</Name>
+      <Budget>500</Budget>
+      <Term>3</Term>
+      <ReleaseQuantity>1</ReleaseQuantity>
+      <Enabled>True</Enabled>
+      <ReleaseSpeed>
+        <Value>10</Value>
+        <Variation>20</Variation>
+      </ReleaseSpeed>
+      <ReleaseColour>
+        <Value>1 1 1</Value>
+        <Variation>0 0 0</Variation>
+      </ReleaseColour>
+      <ReleaseOpacity>
+        <Value>1</Value>
+        <Variation>0</Variation>
+      </ReleaseOpacity>
+      <ReleaseScale>
+        <Value>16</Value>
+        <Variation>0</Variation>
+      </ReleaseScale>
+      <ReleaseRotation>
+        <Value>0</Value>
+        <Variation>10</Variation>
+      </ReleaseRotation>
+      <ReleaseImpulse>1 0</ReleaseImpulse>
+      <ParticleTextureAssetName>ParticleEffects/ParticleTextures/Cloud001</ParticleTextureAssetName>
+      <Modifiers>
+        <Item Type="ProjectMercury.Modifiers.DampingModifier">
+          <DampingCoefficient>0.95</DampingCoefficient>
+        </Item>
+        <Item Type="ProjectMercury.Modifiers.ScaleModifier">
+          <InitialScale>150</InitialScale>
+          <UltimateScale>180</UltimateScale>
+        </Item>
+        <Item Type="ProjectMercury.Modifiers.OpacityInterpolatorModifier">
+          <InitialOpacity>0</InitialOpacity>
+          <MiddleOpacity>0.2</MiddleOpacity>
+          <MiddlePosition>0.75</MiddlePosition>
+          <FinalOpacity>0</FinalOpacity>
+        </Item>
+      </Modifiers>
+      <BlendMode>Alpha</BlendMode>
+      <TriggerOffset>0 0</TriggerOffset>
+      <MinimumTriggerPeriod>1.4</MinimumTriggerPeriod>
+      <Direction>-3</Direction>
+      <ConeAngle>0.1</ConeAngle>
+    </Item>
+    <Item Type="ProjectMercury.Emitters.ConeEmitter">
+      <Name>Copy of Smoke 1</Name>
+      <Budget>500</Budget>
+      <Term>3</Term>
+      <ReleaseQuantity>1</ReleaseQuantity>
+      <Enabled>True</Enabled>
+      <ReleaseSpeed>
+        <Value>15</Value>
+        <Variation>20</Variation>
+      </ReleaseSpeed>
+      <ReleaseColour>
+        <Value>1 1 1</Value>
+        <Variation>0 0 0</Variation>
+      </ReleaseColour>
+      <ReleaseOpacity>
+        <Value>1</Value>
+        <Variation>0</Variation>
+      </ReleaseOpacity>
+      <ReleaseScale>
+        <Value>16</Value>
+        <Variation>0</Variation>
+      </ReleaseScale>
+      <ReleaseRotation>
+        <Value>0</Value>
+        <Variation>30</Variation>
+      </ReleaseRotation>
+      <ReleaseImpulse>1 0</ReleaseImpulse>
+      <ParticleTextureAssetName>ParticleEffects/ParticleTextures/Cloud004</ParticleTextureAssetName>
+      <Modifiers>
+        <Item Type="ProjectMercury.Modifiers.DampingModifier">
+          <DampingCoefficient>0.95</DampingCoefficient>
+        </Item>
+        <Item Type="ProjectMercury.Modifiers.ScaleModifier">
+          <InitialScale>200</InitialScale>
+          <UltimateScale>180</UltimateScale>
+        </Item>
+        <Item Type="ProjectMercury.Modifiers.OpacityInterpolatorModifier">
+          <InitialOpacity>0</InitialOpacity>
+          <MiddleOpacity>0.2</MiddleOpacity>
+          <MiddlePosition>0.75</MiddlePosition>
+          <FinalOpacity>0</FinalOpacity>
+        </Item>
+      </Modifiers>
+      <BlendMode>Alpha</BlendMode>
+      <TriggerOffset>50 50</TriggerOffset>
+      <MinimumTriggerPeriod>1</MinimumTriggerPeriod>
+      <Direction>-3</Direction>
+      <ConeAngle>0.1</ConeAngle>
+    </Item>
+    <Item Type="ProjectMercury.Emitters.ConeEmitter">
+      <Name>Copy of Copy of Smoke 1</Name>
+      <Budget>500</Budget>
+      <Term>3</Term>
+      <ReleaseQuantity>1</ReleaseQuantity>
+      <Enabled>True</Enabled>
+      <ReleaseSpeed>
+        <Value>1</Value>
+        <Variation>20</Variation>
+      </ReleaseSpeed>
+      <ReleaseColour>
+        <Value>1 1 1</Value>
+        <Variation>0 0 0</Variation>
+      </ReleaseColour>
+      <ReleaseOpacity>
+        <Value>1</Value>
+        <Variation>0</Variation>
+      </ReleaseOpacity>
+      <ReleaseScale>
+        <Value>16</Value>
+        <Variation>0</Variation>
+      </ReleaseScale>
+      <ReleaseRotation>
+        <Value>0</Value>
+        <Variation>30</Variation>
+      </ReleaseRotation>
+      <ReleaseImpulse>1 0</ReleaseImpulse>
+      <ParticleTextureAssetName>ParticleEffects/ParticleTextures/Cloud004</ParticleTextureAssetName>
+      <Modifiers>
+        <Item Type="ProjectMercury.Modifiers.DampingModifier">
+          <DampingCoefficient>0.5</DampingCoefficient>
+        </Item>
+        <Item Type="ProjectMercury.Modifiers.ScaleModifier">
+          <InitialScale>300</InitialScale>
+          <UltimateScale>280</UltimateScale>
+        </Item>
+        <Item Type="ProjectMercury.Modifiers.OpacityInterpolatorModifier">
+          <InitialOpacity>0</InitialOpacity>
+          <MiddleOpacity>0.2</MiddleOpacity>
+          <MiddlePosition>0.5</MiddlePosition>
+          <FinalOpacity>0</FinalOpacity>
+        </Item>
+      </Modifiers>
+      <BlendMode>Alpha</BlendMode>
+      <TriggerOffset>150 -50</TriggerOffset>
+      <MinimumTriggerPeriod>1.1</MinimumTriggerPeriod>
+      <Direction>-3</Direction>
+      <ConeAngle>0.1</ConeAngle>
+    </Item>
+    <Name>BasicSmokePlume</Name>
+    <Author>Matt Davey</Author>
+    <Description>A basic plume of smoke.</Description>
+  </Asset>
+</XnaContent>
