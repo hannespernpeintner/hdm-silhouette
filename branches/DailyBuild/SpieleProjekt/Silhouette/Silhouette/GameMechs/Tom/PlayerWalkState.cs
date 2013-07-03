@@ -23,9 +23,10 @@ namespace Silhouette.GameMechs
         {
         }
 
-        public override void sOnSeperation(Fixture fixtureA, Fixture fixtureB) 
+        public override void Update(GameTime gt)
         {
-            if (tom.CharFix.Body.LinearVelocity.Y >= PlayerFallingState.FALLINGTHRESHOLD) 
+            base.Update(gt);
+            if (tom.CharFix.Body.LinearVelocity.Y >= PlayerFallingState.FALLINGTHRESHOLD)
             {
                 tom.State = tom.FallingState;
             }
