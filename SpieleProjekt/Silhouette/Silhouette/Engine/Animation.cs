@@ -483,6 +483,9 @@ namespace Silhouette.Engine
                                     if (activeFrameNumber == 0)
                                     {
                                         backwards = false;
+                                        playedOnce = true;
+                                        State = AnimationState.Pause;
+                                        DoOnFinish();
                                     }
                                     else
                                     {

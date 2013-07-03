@@ -21,7 +21,7 @@ namespace Silhouette.GameMechs
 {
     public class PlayerFallingState : PlayerState
     {
-        public static float FALLINGTHRESHOLD = 1.8f;
+        public static float FALLINGTHRESHOLD = 2.0f;
 
         public PlayerFallingState(Tom tom, Animation animationLeft, Animation animationRight) 
             : base(tom, animationLeft, animationRight)

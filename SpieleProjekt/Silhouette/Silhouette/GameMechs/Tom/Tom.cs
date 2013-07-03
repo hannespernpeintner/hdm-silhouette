@@ -64,19 +64,18 @@ namespace Silhouette.GameMechs
             }
         }
 
+        #region Superpowerstuff
         public static int REMEMBERDURATION = 4000;
         public static int REMEMBERCLIMAX = 1500;
         public static int RECOVERDURATION = 8000;
         public static int RECOVERCLIMAX = 2500;
         public static int BACKTONORMALTIME = 600;
-
-
         public Interpolator RedInterpolator;
         public Interpolator GreenInterpolator;
         public Interpolator BlueInterpolator;
-
         public Timer RememberingTimer = new Timer(0, null);
         public Timer RecoveringTimer = new Timer(0, null);
+        #endregion
 
         public FacingState _facing;
         public FacingState Facing
@@ -490,7 +489,7 @@ namespace Silhouette.GameMechs
         {
             Vector2 centerPosition = new Vector2(CharFix.Body.Position.X * Level.PixelPerMeter, CharFix.Body.Position.Y * Level.PixelPerMeter);
             position = new Vector2(centerPosition.X, centerPosition.Y);
-            sRect.Body.Position = CharFix.Body.Position + new Vector2(0, 120 / Level.PixelPerMeter);
+            sRect.Body.Position = CharFix.Body.Position + new Vector2(0, 105 / Level.PixelPerMeter);
             nRect.Body.Position = CharFix.Body.Position + new Vector2(0, -85 / Level.PixelPerMeter);
             wRect.Body.Position = CharFix.Body.Position + new Vector2(-110 / Level.PixelPerMeter, 0);
             eRect.Body.Position = CharFix.Body.Position + new Vector2(105 / Level.PixelPerMeter, 0);
@@ -649,6 +648,8 @@ namespace Silhouette.GameMechs
             {
                 CharFix.IsSensor = false;
             }
+
+            State.OnSeperation(fixtureA, fixtureB);
         }
 
         private bool landOnCollision(Fixture fixtureA, Fixture fixtureB, Contact contact)
