@@ -211,7 +211,14 @@ namespace SilhouetteEditor.Forms
                 {
                     LevelObject lo = (LevelObject)treeView1.SelectedNode.Tag;
                     Editor.Default.selectLevelObject(lo);
-                    Camera.Position = lo.position / lo.layer.ScrollSpeed;
+                    if (lo.layer != null)
+                    {
+                        Camera.Position = lo.position / lo.layer.ScrollSpeed;
+                    }
+                    else
+                    {
+                        Camera.Position = lo.position;
+                    }
                 }
             }
         }
