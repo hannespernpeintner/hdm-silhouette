@@ -40,6 +40,7 @@ namespace Silhouette.GameMechs
         #endregion
         #region States
         public PlayerJumpState JumpState;
+        public PlayerJumpTryState JumpTryState;
         public PlayerFallingState FallingState;
         public PlayerLandingState LandingFastState;
         public PlayerLandingState LandingState;
@@ -391,7 +392,7 @@ namespace Silhouette.GameMechs
             nRect.IsSensor = true;
             nRect.isPlayer = true;
 
-            sRect = FixtureManager.CreateRectangle(100, 10, new Vector2(position.X, position.Y + 120), BodyType.Dynamic, 0);
+            sRect = FixtureManager.CreateRectangle(135, 35, new Vector2(position.X, position.Y + 120), BodyType.Dynamic, 0);
             sRect.Body.FixedRotation = true;
             sRect.IsSensor = true;
             sRect.isPlayer = true;
@@ -440,6 +441,7 @@ namespace Silhouette.GameMechs
 
             IdleState = new PlayerIdleState(this, idle_left, idle_right);
             JumpState = new PlayerJumpState(this, jumpStarting_left, jumpStarting_right);
+            JumpTryState = new PlayerJumpTryState(this, noJumpIdle_left, noJumpIdle_right);
             FallingState = new PlayerFallingState(this, falling_left, falling_right);
             LandingFastState = new PlayerLandingState(this, landing_left_fast, landing_right_fast);
             LandingState = new PlayerLandingState(this, landing_left, landing_right);
@@ -614,6 +616,7 @@ namespace Silhouette.GameMechs
         {
             Superpower = SuperpowerState.Regrets;
             RecoveringTimer = new Timer(RECOVERDURATION, SetNoneDelegate);
+            Console.WriteLine("Remembers...");
         }
 
         public void FadeToBlue()
