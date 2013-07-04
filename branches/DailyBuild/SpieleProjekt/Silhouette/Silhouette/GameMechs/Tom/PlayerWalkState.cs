@@ -34,7 +34,7 @@ namespace Silhouette.GameMechs
 
         public override void handleInput(KeyboardState cbs, KeyboardState oks)
         {
-            if (cbs.IsKeyDown(Keys.Space) && oks.IsKeyUp(Keys.Space))
+            if (cbs.IsKeyDown(Keys.Space) && oks.IsKeyUp(Keys.Space) )
             {
                 tom.State = tom.JumpState;
             }
