@@ -271,6 +271,7 @@ namespace Silhouette.GameMechs
             this.position = GameStateManager.Default.currentLevel.startPosition;
             this.CharFix.Body.Position = GameStateManager.Default.currentLevel.startPosition / Level.PixelPerMeter;
             this.CharFix.Body.LinearVelocity = Vector2.Zero;
+            this.CharFix.Body.BodyType = BodyType.Dynamic;
             this.State = IdleState;
         }
 
