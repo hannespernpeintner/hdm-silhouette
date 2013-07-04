@@ -21,15 +21,17 @@ namespace Silhouette.GameMechs
 {
     public class PlayerFallingState : PlayerState
     {
-        public static float FALLINGTHRESHOLD = 2.0f;
+        public static float FALLINGTHRESHOLD = 2.5f;
 
         public PlayerFallingState(Tom tom, Animation animationLeft, Animation animationRight) 
             : base(tom, animationLeft, animationRight)
         {
         }
 
+
         public override bool sOnCollision(Fixture fixtureA, Fixture fixtureB, Contact contact)
         {
+            base.sOnCollision(fixtureA, fixtureB, contact);
             if (!fixtureB.IsSensor)
             {
                 tom.State = tom.LandingFastState;

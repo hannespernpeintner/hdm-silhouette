@@ -21,6 +21,15 @@ namespace Silhouette.GameMechs
         {
         }
 
+        public override void Update(GameTime gt)
+        {
+            base.Update(gt);
+            if (tom.CharFix.Body.LinearVelocity.Y >= PlayerFallingState.FALLINGTHRESHOLD)
+            {
+                tom.State = tom.FallingState;
+            }
+        }
+
         public override void handleInput(KeyboardState cbs, KeyboardState oks)
         {
             if (cbs.IsKeyDown(Keys.Space) && oks.IsKeyUp(Keys.Space) )

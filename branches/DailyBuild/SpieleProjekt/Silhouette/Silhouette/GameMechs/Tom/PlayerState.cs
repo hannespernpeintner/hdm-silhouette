@@ -95,6 +95,10 @@ namespace Silhouette.GameMechs
 
         public virtual bool nOnCollision(Fixture fixtureA, Fixture fixtureB, Contact contact)
         {
+            if (fixtureB.isHalfTransparent)
+            {
+                fixtureB.IsSensor = true;
+            }
             return true;
 
         }
@@ -102,6 +106,10 @@ namespace Silhouette.GameMechs
         public virtual bool sOnCollision(Fixture fixtureA, Fixture fixtureB, Contact contact)
         {
 
+            if (fixtureB.isHalfTransparent && fixtureB.IsSensor)
+            {
+                fixtureB.IsSensor = false;
+            }
             return true;
         }
 

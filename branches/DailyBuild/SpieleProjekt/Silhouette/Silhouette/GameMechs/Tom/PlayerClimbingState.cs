@@ -45,6 +45,7 @@ namespace Silhouette.GameMechs
             tom.CharFix.Body.BodyType = BodyType.Dynamic;
         }
 
+
         public override void onSet(Tom.FacingState facingState)
         {
             base.onSet(facingState);
@@ -61,7 +62,7 @@ namespace Silhouette.GameMechs
             else 
             {
                 moves.push(new Move.Move(tom, new Vector2(-110, 0), 500));
-                moves.push(new Move.Move(tom, new Vector2(-110, -145), 600));
+                moves.push(new Move.Move(tom, new Vector2(-110, -142), 600));
             }
             
         }
