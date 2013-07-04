@@ -29,6 +29,10 @@ namespace Silhouette.GameMechs
         }
         public override void onSet(Tom.FacingState facing)
         {
+            if (tom.Superpower == Tom.SuperpowerState.Regrets) 
+            {
+                tom.State = tom.JumpTryState;
+            }
             base.onSet(facing);
             tom.Jump();
         }
